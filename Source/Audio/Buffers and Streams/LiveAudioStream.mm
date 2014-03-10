@@ -113,14 +113,23 @@ void LiveAudioStream::setParameter(int sampleID, int effectID, int parameterID, 
 
 void LiveAudioStream::addAudioEffect(int sampleID, int effectPosition, int effectID)
 {
-    if (effectPosition < (MIN_NUM_EFFECTS - 1))
+    if (effectID == 0)
     {
-        audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+        audioEffectSource.set(effectPosition, nullptr);
     }
+    
     
     else
     {
-        audioEffectSource.add(new AudioEffectSource(effectID, 2));
+        if (effectPosition < (MIN_NUM_EFFECTS - 1))
+        {
+            audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+        }
+        
+        else
+        {
+            audioEffectSource.add(new AudioEffectSource(effectID, 2));
+        }
     }
 }
 

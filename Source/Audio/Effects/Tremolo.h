@@ -14,6 +14,7 @@
 #define __Tremolo_hdr__
 
 #include "LFO.h"
+#include "Macros.h"
 #include <Math.h>
 
 /*	Tremolo

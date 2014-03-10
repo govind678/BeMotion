@@ -37,11 +37,20 @@
 		FC5C6C7018CDB4D500CA9B79 /* Delay.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C662F18CDB32700CA9B79 /* Delay.mm */; };
 		FC5C6C7118CDB4D500CA9B79 /* Tremolo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663118CDB32700CA9B79 /* Tremolo.mm */; };
 		FC5C6C7218CDB4D500CA9B79 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663518CDB32700CA9B79 /* LFO.mm */; };
-		FC5C6C7318CDB4D500CA9B79 /* GestureControllerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663B18CDB32700CA9B79 /* GestureControllerViewController.mm */; };
 		FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663F18CDB32700CA9B79 /* GestureControllerInterface.mm */; };
 		FC5C6C7518CDB4D500CA9B79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5C665218CDB34000CA9B79 /* main.m */; };
+		FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF018CE00F6002370AC /* Wah.mm */; };
+		FC6EEAF518CE05D3002370AC /* Vibrato.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF318CE05D3002370AC /* Vibrato.mm */; };
+		FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */; };
+		FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */; };
+		FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */; };
+		FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */; };
+		FC6EEB0818CE2248002370AC /* Playback0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0318CE223C002370AC /* Playback0.wav */; };
+		FC6EEB0918CE2248002370AC /* Playback1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0418CE223C002370AC /* Playback1.wav */; };
+		FC6EEB0A18CE2248002370AC /* Playback2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0518CE223C002370AC /* Playback2.wav */; };
+		FC6EEB0B18CE2248002370AC /* Playback3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0618CE223C002370AC /* Playback3.wav */; };
+		FC6EEB0C18CE2248002370AC /* Playback4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0718CE223C002370AC /* Playback4.wav */; };
 		FCC507C918CDC036006B2898 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC507C818CDC036006B2898 /* CoreMIDI.framework */; };
-		FCC507D118CDD4AC006B2898 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC507CE18CDD48B006B2898 /* MainStoryboard.storyboard */; };
 		FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCD695F118CDF33A009DD591 /* AudioEffectSource.mm */; };
 /* End PBXBuildFile section */
 
@@ -83,8 +92,6 @@
 		FC5C663418CDB32700CA9B79 /* LFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFO.h; sourceTree = "<group>"; };
 		FC5C663518CDB32700CA9B79 /* LFO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LFO.mm; sourceTree = "<group>"; };
 		FC5C663618CDB32700CA9B79 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
-		FC5C663A18CDB32700CA9B79 /* GestureControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureControllerViewController.h; sourceTree = "<group>"; };
-		FC5C663B18CDB32700CA9B79 /* GestureControllerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GestureControllerViewController.mm; sourceTree = "<group>"; };
 		FC5C663D18CDB32700CA9B79 /* GestureControllerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GestureControllerHeader.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FC5C663E18CDB32700CA9B79 /* GestureControllerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GestureControllerInterface.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FC5C663F18CDB32700CA9B79 /* GestureControllerInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = GestureControllerInterface.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1053,9 +1060,24 @@
 		FC5C6C5D18CDB40000CA9B79 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FC5C6C7618CDB60900CA9B79 /* GestureController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GestureController-Info.plist"; sourceTree = "<group>"; };
 		FC5C6C7718CDB60900CA9B79 /* GestureController-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GestureController-Prefix.pch"; sourceTree = "<group>"; };
+		FC6EEAF018CE00F6002370AC /* Wah.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wah.mm; sourceTree = "<group>"; };
+		FC6EEAF118CE00F6002370AC /* Wah.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah.h; sourceTree = "<group>"; };
+		FC6EEAF318CE05D3002370AC /* Vibrato.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Vibrato.mm; sourceTree = "<group>"; };
+		FC6EEAF418CE05D3002370AC /* Vibrato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vibrato.h; sourceTree = "<group>"; };
+		FC6EEAF718CE0D9C002370AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/MainStoryboard 2.storyboard"; sourceTree = "<group>"; };
+		FC6EEAF918CE0DB0002370AC /* EffectSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectSettingsViewController.h; sourceTree = "<group>"; };
+		FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectSettingsViewController.mm; sourceTree = "<group>"; };
+		FC6EEAFB18CE0DB0002370AC /* SharedLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedLibraryViewController.h; sourceTree = "<group>"; };
+		FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharedLibraryViewController.mm; sourceTree = "<group>"; };
+		FC6EEAFD18CE0DB0002370AC /* UserInterfaceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterfaceData.h; sourceTree = "<group>"; };
+		FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UserInterfaceData.mm; sourceTree = "<group>"; };
+		FC6EEB0318CE223C002370AC /* Playback0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback0.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback0.wav"; sourceTree = "<group>"; };
+		FC6EEB0418CE223C002370AC /* Playback1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback1.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback1.wav"; sourceTree = "<group>"; };
+		FC6EEB0518CE223C002370AC /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback2.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback2.wav"; sourceTree = "<group>"; };
+		FC6EEB0618CE223C002370AC /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback3.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback3.wav"; sourceTree = "<group>"; };
+		FC6EEB0718CE223C002370AC /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback4.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback4.wav"; sourceTree = "<group>"; };
 		FCC507C718CDBD54006B2898 /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		FCC507C818CDC036006B2898 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
-		FCC507CF18CDD48B006B2898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		FCD695F018CDF33A009DD591 /* AudioEffectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectSource.h; sourceTree = "<group>"; };
 		FCD695F118CDF33A009DD591 /* AudioEffectSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioEffectSource.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1092,6 +1114,7 @@
 		FC5C65D718CDB1C300CA9B79 = {
 			isa = PBXGroup;
 			children = (
+				FC6EEB0218CE222E002370AC /* Media */,
 				FC5C665818CDB35700CA9B79 /* Juce Library */,
 				FC5C661818CDB32700CA9B79 /* Source */,
 				FC5C664F18CDB34000CA9B79 /* Supporting Files */,
@@ -1183,6 +1206,10 @@
 				FC5C662F18CDB32700CA9B79 /* Delay.mm */,
 				FC5C663018CDB32700CA9B79 /* Tremolo.h */,
 				FC5C663118CDB32700CA9B79 /* Tremolo.mm */,
+				FC6EEAF018CE00F6002370AC /* Wah.mm */,
+				FC6EEAF118CE00F6002370AC /* Wah.h */,
+				FC6EEAF318CE05D3002370AC /* Vibrato.mm */,
+				FC6EEAF418CE05D3002370AC /* Vibrato.h */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1201,9 +1228,13 @@
 		FC5C663718CDB32700CA9B79 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				FCC507CE18CDD48B006B2898 /* MainStoryboard.storyboard */,
-				FC5C663A18CDB32700CA9B79 /* GestureControllerViewController.h */,
-				FC5C663B18CDB32700CA9B79 /* GestureControllerViewController.mm */,
+				FC6EEAF918CE0DB0002370AC /* EffectSettingsViewController.h */,
+				FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */,
+				FC6EEAFB18CE0DB0002370AC /* SharedLibraryViewController.h */,
+				FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */,
+				FC6EEAFD18CE0DB0002370AC /* UserInterfaceData.h */,
+				FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */,
+				FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -2938,6 +2969,18 @@
 			path = windows;
 			sourceTree = "<group>";
 		};
+		FC6EEB0218CE222E002370AC /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				FC6EEB0318CE223C002370AC /* Playback0.wav */,
+				FC6EEB0418CE223C002370AC /* Playback1.wav */,
+				FC6EEB0518CE223C002370AC /* Playback2.wav */,
+				FC6EEB0618CE223C002370AC /* Playback3.wav */,
+				FC6EEB0718CE223C002370AC /* Playback4.wav */,
+			);
+			name = Media;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3015,9 +3058,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCC507D118CDD4AC006B2898 /* MainStoryboard.storyboard in Resources */,
+				FC6EEB0818CE2248002370AC /* Playback0.wav in Resources */,
+				FC6EEB0918CE2248002370AC /* Playback1.wav in Resources */,
+				FC6EEB0A18CE2248002370AC /* Playback2.wav in Resources */,
+				FC6EEB0B18CE2248002370AC /* Playback3.wav in Resources */,
+				FC6EEB0C18CE2248002370AC /* Playback4.wav in Resources */,
 				FC5C6C5518CDB3C200CA9B79 /* InfoPlist.strings in Resources */,
 				FC5C6C5618CDB3CB00CA9B79 /* Images.xcassets in Resources */,
+				FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3035,18 +3083,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */,
 				FC5C6C6818CDB4D500CA9B79 /* GestureControllerAppDelegate.mm in Sources */,
 				FC5C6C6918CDB4D500CA9B79 /* AudioEngine.mm in Sources */,
 				FC5C6C6A18CDB4D500CA9B79 /* AudioFileStream.mm in Sources */,
+				FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */,
 				FC5C6C6C18CDB4D500CA9B79 /* AudioFileRecord.mm in Sources */,
+				FC6EEAF518CE05D3002370AC /* Vibrato.mm in Sources */,
 				FC5C6C6D18CDB4D500CA9B79 /* AudioMixerPlayer.mm in Sources */,
 				FC5C6C6E18CDB4D500CA9B79 /* LiveAudioStream.mm in Sources */,
 				FC5C6C7018CDB4D500CA9B79 /* Delay.mm in Sources */,
 				FC5C6C7118CDB4D500CA9B79 /* Tremolo.mm in Sources */,
 				FC5C6C7218CDB4D500CA9B79 /* LFO.mm in Sources */,
-				FC5C6C7318CDB4D500CA9B79 /* GestureControllerViewController.mm in Sources */,
 				FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */,
 				FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */,
+				FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */,
+				FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */,
 				FC5C6C7518CDB4D500CA9B79 /* main.m in Sources */,
 				FC5C6C5F18CDB4B000CA9B79 /* juce_audio_basics.mm in Sources */,
 				FC5C6C6018CDB4B000CA9B79 /* juce_audio_devices.mm in Sources */,
@@ -3086,12 +3138,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		FCC507CE18CDD48B006B2898 /* MainStoryboard.storyboard */ = {
+		FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FCC507CF18CDD48B006B2898 /* Base */,
+				FC6EEAF718CE0D9C002370AC /* Base */,
 			);
-			name = MainStoryboard.storyboard;
+			name = "MainStoryboard 2.storyboard";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

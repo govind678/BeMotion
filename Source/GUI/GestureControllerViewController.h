@@ -1,6 +1,6 @@
 //
-//  TransducerMusicViewController.h
-//  TransducerMusic
+//  GestureControllerViewController.h
+//  GestureController
 //
 //  Created by Govinda Ram Pingali on 11/10/13.
 //  Copyright (c) 2013 GTCMT. All rights reserved.
@@ -8,22 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
-#include "OSCCom.h"
+#include "GestureControllerInterface.h"
 
-
-@interface TransducerMusicViewController : UIViewController
+@interface GestureControllerViewController : UIViewController
 {
-    OSCCom *osc;
-    
-    NSString* hostIPAddress;
-    int oscPortNumber;
-    
     UIColor* blackColour;
     UIColor* redColour;
     UIColor* greenColour;
     UIColor* blueColour;
     UIColor* yellowColour;
-
+    
+    GestureControllerInterface*     backEndInterface;
+    
+    bool m_bAudioToggleStatus_1;
+    bool m_bAudioToggleStatus_2;
+    
+    int m_iAudioEffectsStatus_1;
+    int m_iAudioEffectsStatus_2;
 }
 
 

@@ -25,6 +25,11 @@ GestureControllerInterface::~GestureControllerInterface()
 }
 
 
+void GestureControllerInterface::loadAudioFile(int sampleID, NSString *filepath)
+{
+    audioEngine->loadAudioFile(sampleID, String([filepath UTF8String]));
+}
+
 void GestureControllerInterface::setParameter(int sampleID, int effectPosition, int parameterID, float value)
 {
     audioEngine->setParameter(sampleID, effectPosition, parameterID, value);
@@ -43,6 +48,12 @@ void GestureControllerInterface::removeAudioEffect(int sampleID, int effectPosit
 }
 
 
+
+
+//==============================================================================
+// Transport Controls
+// Start/Stop Playback or Recording
+//==============================================================================
 
 void GestureControllerInterface::startPlayback(int sampleID)
 {
@@ -66,8 +77,6 @@ void GestureControllerInterface::stopRecording(int sampleID)
 {
     audioEngine->stopRecordingAudioSample(sampleID);
 }
-
-
 
 
 

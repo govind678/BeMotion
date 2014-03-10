@@ -36,9 +36,9 @@ AudioEngine::AudioEngine()
     for (int i = 0; i < NUM_SAMPLE_SOURCES; i++)
     {
         recordingFilePathArray.add(currentRecordingPath + String(i) + ".wav");
-        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
+//        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
         
-        audioMixer->loadAudioFile(i, playbackFilePathArray.getUnchecked(i));
+//        audioMixer->loadAudioFile(i, playbackFilePathArray.getUnchecked(i));
 //        std::cout << playbackFilePathArray.getUnchecked(i) << std::endl;
     }
 }

@@ -8,15 +8,8 @@
 
 #import  <UIKit/UIKit.h>
 #include  "UserInterfaceData.h"
-
-
-# define NUM_EFFECTS_PARAMS  3
-# define NUM_EFFECTS         4
-
-# define DELAY_EFFECT        1
-# define TREMOLO_EFFECT      2
-# define VIBRATO_EFFECT      3
-# define WAH_EFFECT          4
+#include "GestureControllerInterface.h"
+#include "Macros.h"
 
 
 @interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>{
@@ -28,6 +21,9 @@
 //                                        // which will be passed from the UserInterfaceData class
     
 }
+
+@property (nonatomic, assign) GestureControllerInterface* backEndInterface;
+@property (nonatomic, assign) int  m_iCurrentSampleID;
 
 @property (nonatomic,assign) SampleInfo *currentData;
 

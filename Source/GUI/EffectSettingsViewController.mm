@@ -21,29 +21,56 @@
 @property (retain, nonatomic) IBOutlet UILabel *slider3CurrentValue;
 @property (retain, nonatomic) IBOutlet UILabel *effectBeingModifiedLabel;
 
+
 @end
 
 
 static BOOL  m_bEffectBypassToggle[NUM_EFFECTS];
 static int   m_iCurrentEffectChosen[NUM_EFFECTS];
 static int   m_iCurrentEffectPosition;
-static float m_fSliderValues[NUM_EFFECTS_PARAMS]; // these are just indicators, they will be mapped to actual effects params
+//static float m_fSliderValues[NUM_EFFECTS_PARAMS]; // these are just indicators, they will be mapped to actual effects params
 // which will be passed from the UserInterfaceData class
-
 
 
 @implementation EffectSettingsViewController
 
-- (IBAction)Slider1Changed:(UISlider *)sender {
+@synthesize m_iCurrentSampleID;
 
+
+- (IBAction)Slider1Changed:(UISlider *)sender
+{
+     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
     //redSample.sampleID = [NSNumber numberWithFloat:10];
 }
+
+
 - (IBAction)Slider2Changed:(UISlider *)sender {
-}
-- (IBAction)Slider3Changed:(UISlider *)sender {
+     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+
+- (IBAction)Slider3Changed:(UISlider *)sender {
+     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
+}
+
+
+- (IBAction)gainSliderChanged:(UISlider *)sender
+{
+    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_GAIN, sender.value);
+}
+
+
+- (IBAction)loopingToggleButtonChanged:(UISwitch *)sender {
+    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_LOOP, sender.on);
+}
+
+
+- (IBAction)bypassToggleButtonChanged:(UISwitch *)sender {
+    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
     return 1; // Only 1 component
 }
 
@@ -65,36 +92,48 @@ static float m_fSliderValues[NUM_EFFECTS_PARAMS]; // these are just indicators, 
     
     switch (row) {
         case 0:
-            [self.slider1EffectParam setText:@"Delay Time"];
-            [self.slider2EffectParam setText:@"Feedback"];
-            [self.slider3EffectParam setText:@"WetDry"];
-            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = DELAY_EFFECT;
+            [self.slider1EffectParam setText:@"Null"];
+            [self.slider2EffectParam setText:@"Null"];
+            [self.slider3EffectParam setText:@"Null"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_NONE;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
         case 1:
-            [self.slider1EffectParam setText:@"Depth"];
-            [self.slider2EffectParam setText:@"Frequency"];
-            [self.slider3EffectParam setText:@"Signal"];
-            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = TREMOLO_EFFECT;
+            [self.slider1EffectParam setText:@"Frequency"];
+            [self.slider2EffectParam setText:@"Depth"];
+            [self.slider3EffectParam setText:@"Signal(n)"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_TREMOLO;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
         case 2:
-            [self.slider1EffectParam setText:@"Width"];
-            [self.slider2EffectParam setText:@"Frequency"];
-            [self.slider3EffectParam setText:@"Signal"];
-            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = VIBRATO_EFFECT;
+            [self.slider1EffectParam setText:@"Time"];
+            [self.slider2EffectParam setText:@"Feedback"];
+            [self.slider3EffectParam setText:@"Wet/Dry"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_DELAY;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
         case 3:
-            [self.slider1EffectParam setText:@"Frequency"];
-            [self.slider2EffectParam setText:@"Gain"];
-            [self.slider3EffectParam setText:@"Resonance"];
-            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = WAH_EFFECT;
+            [self.slider1EffectParam setText:@"Rate"];
+            [self.slider2EffectParam setText:@"Width"];
+            [self.slider3EffectParam setText:@"Null"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_VIBRATO;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
+        
+        case 4:
+            [self.slider1EffectParam setText:@"Frequency"];
+            [self.slider2EffectParam setText:@"Resonance"];
+            [self.slider3EffectParam setText:@"Gain"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_WAH;
+            [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
+            break;
+            
         default:
             break;
     }
+    
+    
+    _backEndInterface->addAudioEffect(m_iCurrentSampleID, m_iCurrentEffectPosition, row);
     
 }
 
@@ -140,35 +179,39 @@ static float m_fSliderValues[NUM_EFFECTS_PARAMS]; // these are just indicators, 
     }
     return self;
 }
+
 - (IBAction)bypassButton:(UISwitch *)sender {
     NSLog(@"Bypass is pressed");
+    
     switch(m_iCurrentEffectChosen[m_iCurrentEffectPosition]){
-        case DELAY_EFFECT:
-            self.currentData.delayEffect.bypass   = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+        case EFFECT_TREMOLO:
+            self.currentData.tremoloEffect.bypass   = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
             m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
             break;
-        case TREMOLO_EFFECT:
-            self.currentData.tremoloEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+        case EFFECT_DELAY:
+            self.currentData.delayEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
             m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
             break;
-        case VIBRATO_EFFECT:
+        case EFFECT_VIBRATO:
             self.currentData.vibratoEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
             m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
             break;
-        case WAH_EFFECT:
+        case EFFECT_WAH:
             self.currentData.wahEffect.bypass     = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
             m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
             break;
         default:
             break;
     }
+    
+    _backEndInterface->setParameter(_currentData.sampleID.intValue, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    m_iCurrentEffectChosen[0] = DELAY_EFFECT;
-    self.effects  = @[@"Delay" , @"Tremolo" , @"Vibrato", @"Wah"];
+    m_iCurrentEffectChosen[0] = EFFECT_NONE;
+    self.effects  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah"];
 
 	// Do any additional setup after loading the view.
     
@@ -197,6 +240,9 @@ static float m_fSliderValues[NUM_EFFECTS_PARAMS]; // these are just indicators, 
     [_slider3Object release];
     [_bypassButtonObject release];
     [_pickerObject release];
+    
+//    delete _backEndInterface;
+
     [super dealloc];
 }
 @end

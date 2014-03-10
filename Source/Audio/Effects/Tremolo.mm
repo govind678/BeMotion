@@ -34,17 +34,19 @@ void CTremolo::setType(CLFO::LFO_Type type)
 {
 	LFO->setLFOType(type);
 }
- 
+
+
 void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
 {
 	switch(type)
 	{
-		case 0:
-			m_fDepth = value;
+		case PARAM_1:
+			m_fRate = (20.0 * value);
+            LFO->setFrequencyinHz(m_fRate);
 		break;
             
-		case 1:
-			m_fRate = value;
+		case PARAM_2:
+            m_fDepth = value;
 		break;
             
 		default: 
@@ -54,6 +56,8 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
 
 void CTremolo::process(float **inputBuffer, int numFrames, bool bypass)
 {
+    if (!bypass)
+    {
 	// generate the LFO:
 	LFO->generate(numFrames);
 
@@ -65,6 +69,8 @@ void CTremolo::process(float **inputBuffer, int numFrames, bool bypass)
 			inputBuffer[c][i] = (1 + m_fDepth*LFO->getLFOSampleData(i))*(inputBuffer[c][i]);
 		}
 	}
+        
+    }
 
 }
 
@@ -73,12 +79,12 @@ float CTremolo::getParam(int type)
 {
     switch(type)
 	{
-		case 0:
-			return m_fDepth;
+		case PARAM_1:
+			return m_fRate;
             break;
             
-		case 1:
-			return m_fRate;
+		case PARAM_2:
+            return m_fDepth;
             break;
             
 		default:

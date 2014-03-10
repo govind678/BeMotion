@@ -27,7 +27,12 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
             break;
         }
             
-        
+        case EFFECT_VIBRATO:
+        {
+            vibratoEffect   =   new CVibrato(numChannels);
+            break;
+        }
+            
         default:
         {
             break;
@@ -43,6 +48,7 @@ AudioEffectSource::~AudioEffectSource()
 {
     delayEffect     =   nullptr;
     tremoloEffect   =   nullptr;
+    vibratoEffect   =   nullptr;
 }
 
 
@@ -58,6 +64,9 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             delayEffect->setParam(parameterID, value);
             break;
            
+        case EFFECT_VIBRATO:
+            vibratoEffect->setParam(parameterID, value);
+            break;
             
         default:
             break;
@@ -82,6 +91,9 @@ float AudioEffectSource::getParameter(int parameterID)
             return delayEffect->getParam(parameterID);
             break;
             
+        case EFFECT_VIBRATO:
+            return vibratoEffect->getParam(parameterID);
+            
         default:
             return 0.0f;
             break;
@@ -101,16 +113,24 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
 {
     switch (m_iEffectID)
     {
+        
         case EFFECT_TREMOLO:
             tremoloEffect->prepareToPlay(sampleRate);
             break;
+            
             
         case EFFECT_DELAY:
             delayEffect->prepareToPlay(sampleRate);
             break;
             
+            
+        case EFFECT_VIBRATO:
+            vibratoEffect->prepareToPlay(sampleRate);
+            break;
+            
         default:
             break;
+            
     }
 }
 
@@ -127,6 +147,7 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassS
 {
     switch (m_iEffectID)
     {
+        
         case EFFECT_TREMOLO:
             tremoloEffect->process(audioBuffer, blockSize, bypassState);
             break;
@@ -136,6 +157,10 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassS
             delayEffect->process(audioBuffer, blockSize, bypassState);
             break;
             
+            
+        case EFFECT_VIBRATO:
+            vibratoEffect->process(audioBuffer, blockSize, bypassState);
+            break;
             
         default:
             break;

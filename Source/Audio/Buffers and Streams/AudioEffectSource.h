@@ -19,6 +19,7 @@
 //------- Effect Headers -------//
 #include "Delay.h"
 #include "Tremolo.h"
+#include "Vibrato.h"
 
 //------------------------------//
 
@@ -44,6 +45,7 @@ private:
     
     ScopedPointer<CDelay>   delayEffect;
     ScopedPointer<CTremolo> tremoloEffect;
+    ScopedPointer<CVibrato> vibratoEffect;
     
     int m_iEffectID;
 };

@@ -7,15 +7,14 @@
 //
 
 #import  <UIKit/UIKit.h>
-#include "SharedLibraryInterface.h"
+#include "GestureControllerInterface.h"
 #import  "UserInterfaceData.h"
 #import  "EffectSettingsViewController.h"
+#import <CoreMotion/CoreMotion.h>
 
 @interface SharedLibraryViewController : UIViewController
 {
-    SharedLibraryInterface*     backEndInterface;
-
-
+    GestureControllerInterface*     backEndInterface;
     
     bool m_bRedButtonToggleStatus;  // is red button pressed
     bool m_bBlueButtonToggleStatus; // is blue button pressed
@@ -23,6 +22,11 @@
 }
 
 
+@property (strong, nonatomic) CMMotionManager *motionManager;
+
+- (void)motionDeviceUpdate: (CMDeviceMotion*) deviceMotion;
+
+- (void)processUserAcceleration: (CMAcceleration) userAcceleration;
 
 //@property (retain, nonatomic) IBOutlet UIButton *toggleAudioButton;
 //- (IBAction)toggleAudioButtonClicked:(UIButton *)sender;

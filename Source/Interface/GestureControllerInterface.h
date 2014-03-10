@@ -25,6 +25,8 @@ public:
     
     
     //============== GUI to Backend Methods ==================
+    void loadAudioFile(int sampleID, NSString* filepath);
+    
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
     
@@ -51,6 +53,7 @@ public:
 private:
     
     AudioEngine*    audioEngine;
+    
 };
 
 #endif /* defined(__GestureController__GestureControllerInterface__) */

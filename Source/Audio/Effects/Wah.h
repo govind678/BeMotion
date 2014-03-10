@@ -9,6 +9,25 @@
 #ifndef __GestureController__Wah__
 #define __GestureController__Wah__
 
-#include <iostream>
+
+
+class CWah
+{
+    
+public:
+    
+    CWah();
+    ~CWah();
+    
+    
+    void prepareToPlay(float sampleRate);
+    void process(float** audioBuffer, int numSample, bool bypassState);
+    void finishedPlaying();
+    
+    
+private:
+    
+    
+};
 
 #endif /* defined(__GestureController__Wah__) */

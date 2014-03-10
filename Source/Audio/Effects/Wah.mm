@@ -7,3 +7,30 @@
 //
 
 #include "Wah.h"
+
+CWah::CWah()
+{
+    
+}
+
+
+CWah::~CWah()
+{
+    
+}
+
+
+void CWah::prepareToPlay(float sampleRate)
+{
+    
+}
+
+void CWah::process(float **audioBuffer, int numSample, bool bypassState)
+{
+    
+}
+
+void CWah::finishedPlaying()
+{
+    
+}

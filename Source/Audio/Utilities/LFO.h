@@ -12,6 +12,11 @@
 #if !defined(__CLFO_hdr__)
 #define __CLFO_hdr__
 
+
+# define MIN_MOD_FREQ           0.001
+# define MAX_MOD_WIDTH          500
+
+
 class CLFO
 {
 public:

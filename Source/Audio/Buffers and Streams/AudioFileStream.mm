@@ -61,7 +61,10 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
     if (reader != nullptr)
     {
         currentAudioFileSource = new AudioFormatReaderSource (reader, true);
-        currentAudioFileSource->setLooping(true);
+        if (m_iSampleID != 4)
+        {
+            currentAudioFileSource->setLooping(true);
+        }
         transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
     }
 }
@@ -75,14 +78,23 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
 
 void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
 {
-    if (effectPosition < (MIN_NUM_EFFECTS - 1))
+    if (effectID == 0)
     {
-        audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+        audioEffectSource.set(effectPosition, nullptr);
     }
+    
     
     else
     {
-        audioEffectSource.add(new AudioEffectSource(effectID, 2));
+        if (effectPosition < (MIN_NUM_EFFECTS - 1))
+        {
+            audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+        }
+        
+        else
+        {
+            audioEffectSource.add(new AudioEffectSource(effectID, 2));
+        }
     }
 }
 
@@ -199,9 +211,14 @@ void AudioFileStream::setParameter(int effectPosition, int parameterID, float va
         transportSource.setGain(value);
     }
     
+    else if (parameterID == PARAM_LOOP)
+    {
+        currentAudioFileSource->setLooping(bool(value));
+    }
+    
     else
     {
-        audioEffectSource.getUnchecked(effectPosition)->setParameter((parameterID - 2), value);
+        audioEffectSource.getUnchecked(effectPosition)->setParameter((parameterID), value);
     }
 }
 
@@ -219,9 +236,14 @@ float AudioFileStream::getParameter(int effectPosition, int parameterID)
         return transportSource.getGain();
     }
     
+    else if (parameterID == PARAM_LOOP)
+    {
+        return float(currentAudioFileSource->isLooping());
+    }
+    
     else
     {
-        return audioEffectSource.getUnchecked(effectPosition)->getParameter(parameterID - 2);
+        return audioEffectSource.getUnchecked(effectPosition)->getParameter(parameterID);
     }
 }
 
