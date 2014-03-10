@@ -45,11 +45,11 @@
 		FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */; };
 		FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */; };
 		FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */; };
-		FC6EEB0818CE2248002370AC /* Playback0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0318CE223C002370AC /* Playback0.wav */; };
-		FC6EEB0918CE2248002370AC /* Playback1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0418CE223C002370AC /* Playback1.wav */; };
-		FC6EEB0A18CE2248002370AC /* Playback2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0518CE223C002370AC /* Playback2.wav */; };
-		FC6EEB0B18CE2248002370AC /* Playback3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0618CE223C002370AC /* Playback3.wav */; };
-		FC6EEB0C18CE2248002370AC /* Playback4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0718CE223C002370AC /* Playback4.wav */; };
+		FC6EEB1218CE49F7002370AC /* Playback0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0D18CE49F7002370AC /* Playback0.wav */; };
+		FC6EEB1318CE49F7002370AC /* Playback1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0E18CE49F7002370AC /* Playback1.wav */; };
+		FC6EEB1418CE49F7002370AC /* Playback2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB0F18CE49F7002370AC /* Playback2.wav */; };
+		FC6EEB1518CE49F7002370AC /* Playback3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB1018CE49F7002370AC /* Playback3.wav */; };
+		FC6EEB1618CE49F7002370AC /* Playback4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEB1118CE49F7002370AC /* Playback4.wav */; };
 		FCC507C918CDC036006B2898 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC507C818CDC036006B2898 /* CoreMIDI.framework */; };
 		FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCD695F118CDF33A009DD591 /* AudioEffectSource.mm */; };
 /* End PBXBuildFile section */
@@ -1071,11 +1071,11 @@
 		FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharedLibraryViewController.mm; sourceTree = "<group>"; };
 		FC6EEAFD18CE0DB0002370AC /* UserInterfaceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterfaceData.h; sourceTree = "<group>"; };
 		FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UserInterfaceData.mm; sourceTree = "<group>"; };
-		FC6EEB0318CE223C002370AC /* Playback0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback0.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback0.wav"; sourceTree = "<group>"; };
-		FC6EEB0418CE223C002370AC /* Playback1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback1.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback1.wav"; sourceTree = "<group>"; };
-		FC6EEB0518CE223C002370AC /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback2.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback2.wav"; sourceTree = "<group>"; };
-		FC6EEB0618CE223C002370AC /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback3.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback3.wav"; sourceTree = "<group>"; };
-		FC6EEB0718CE223C002370AC /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback4.wav; path = "../../../../../../Library/Application Support/iPhone Simulator/7.0.3/Applications/AFCADB2C-6CE9-4390-A7FD-69C201DD122C/Documents/Playback4.wav"; sourceTree = "<group>"; };
+		FC6EEB0D18CE49F7002370AC /* Playback0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback0.wav; path = ../Media/Playback0.wav; sourceTree = "<group>"; };
+		FC6EEB0E18CE49F7002370AC /* Playback1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback1.wav; path = ../Media/Playback1.wav; sourceTree = "<group>"; };
+		FC6EEB0F18CE49F7002370AC /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback2.wav; path = ../Media/Playback2.wav; sourceTree = "<group>"; };
+		FC6EEB1018CE49F7002370AC /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback3.wav; path = ../Media/Playback3.wav; sourceTree = "<group>"; };
+		FC6EEB1118CE49F7002370AC /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Playback4.wav; path = ../Media/Playback4.wav; sourceTree = "<group>"; };
 		FCC507C718CDBD54006B2898 /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		FCC507C818CDC036006B2898 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		FCD695F018CDF33A009DD591 /* AudioEffectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectSource.h; sourceTree = "<group>"; };
@@ -2972,11 +2972,11 @@
 		FC6EEB0218CE222E002370AC /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				FC6EEB0318CE223C002370AC /* Playback0.wav */,
-				FC6EEB0418CE223C002370AC /* Playback1.wav */,
-				FC6EEB0518CE223C002370AC /* Playback2.wav */,
-				FC6EEB0618CE223C002370AC /* Playback3.wav */,
-				FC6EEB0718CE223C002370AC /* Playback4.wav */,
+				FC6EEB0D18CE49F7002370AC /* Playback0.wav */,
+				FC6EEB0E18CE49F7002370AC /* Playback1.wav */,
+				FC6EEB0F18CE49F7002370AC /* Playback2.wav */,
+				FC6EEB1018CE49F7002370AC /* Playback3.wav */,
+				FC6EEB1118CE49F7002370AC /* Playback4.wav */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -3058,14 +3058,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC6EEB0818CE2248002370AC /* Playback0.wav in Resources */,
-				FC6EEB0918CE2248002370AC /* Playback1.wav in Resources */,
-				FC6EEB0A18CE2248002370AC /* Playback2.wav in Resources */,
-				FC6EEB0B18CE2248002370AC /* Playback3.wav in Resources */,
-				FC6EEB0C18CE2248002370AC /* Playback4.wav in Resources */,
+				FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */,
 				FC5C6C5518CDB3C200CA9B79 /* InfoPlist.strings in Resources */,
 				FC5C6C5618CDB3CB00CA9B79 /* Images.xcassets in Resources */,
-				FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */,
+				FC6EEB1218CE49F7002370AC /* Playback0.wav in Resources */,
+				FC6EEB1318CE49F7002370AC /* Playback1.wav in Resources */,
+				FC6EEB1418CE49F7002370AC /* Playback2.wav in Resources */,
+				FC6EEB1618CE49F7002370AC /* Playback4.wav in Resources */,
+				FC6EEB1518CE49F7002370AC /* Playback3.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
