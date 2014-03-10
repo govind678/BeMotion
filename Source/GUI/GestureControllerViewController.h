@@ -1,41 +1,57 @@
-//==============================================================================
 //
-//  GestureControllerViewController.h
-//  GestureController
+//  TransducerMusicViewController.h
+//  TransducerMusic
 //
-//  Created by Anand Mahadevan on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Created by Govinda Ram Pingali on 11/10/13.
+//  Copyright (c) 2013 GTCMT. All rights reserved.
 //
-//==============================================================================
-
 
 #import <UIKit/UIKit.h>
-#include "GestureControllerInterface.h"
+#import <CoreMotion/CoreMotion.h>
+#include "OSCCom.h"
 
-@interface GestureControllerViewController : UIViewController
+
+@interface TransducerMusicViewController : UIViewController
 {
-    GestureControllerInterface*     backEndInterface;
+    OSCCom *osc;
     
-    bool m_bAudioToggleStatus_1;
-    bool m_bAudioToggleStatus_2;
+    NSString* hostIPAddress;
+    int oscPortNumber;
     
-    int m_iAudioEffectsStatus_1;
-    int m_iAudioEffectsStatus_2;
-    
-    int m_iPlayRecordStatus;
+    UIColor* blackColour;
+    UIColor* redColour;
+    UIColor* greenColour;
+    UIColor* blueColour;
+    UIColor* yellowColour;
+
 }
 
 
+//--- Motion Processing ---//
 
-@property (retain, nonatomic) IBOutlet UIButton *toggleAudioButton;
-- (IBAction)toggleAudioButtonClicked:(UIButton *)sender;
+@property (strong, nonatomic) CMMotionManager *motionManager;
+
+- (void)motionDeviceUpdate: (CMDeviceMotion*) deviceMotion;
+
+- (void)processUserAcceleration: (CMAcceleration) userAcceleration;
 
 
-- (IBAction)addEffectButtonClicked:(UIButton *)sender;
 
-@property (retain, nonatomic) IBOutlet UIButton *removeEffectButton;
-- (IBAction)removeEffectButtonClicked:(UIButton *)sender;
+//--- UI Actions ---//
 
-- (IBAction)playRecordButtonClicked:(UIButton *)sender;
+- (UIColor*)colorFromHexString : (NSString*)hexString;
+
+- (IBAction)redButtonDown:(UIButton *)sender;
+- (IBAction)redButtonUp:(UIButton *)sender;
+
+- (IBAction)greenButtonDown:(UIButton *)sender;
+- (IBAction)greenButtonUp:(UIButton *)sender;
+
+- (IBAction)blueButtonDown:(id)sender;
+- (IBAction)blueButtonUp:(UIButton *)sender;
+
+- (IBAction)yellowButtonDown:(UIButton *)sender;
+- (IBAction)yellowButtonUp:(UIButton *)sender;
+
 
 @end

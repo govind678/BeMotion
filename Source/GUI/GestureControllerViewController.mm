@@ -1,176 +1,201 @@
-//==============================================================================
 //
-//  GestureControllerViewController.mm
-//  GestureController
+//  TransducerMusicViewController.m
+//  TransducerMusic
 //
-//  Created by Anand Mahadevan on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Created by Govinda Ram Pingali on 11/10/13.
+//  Copyright (c) 2013 GTCMT. All rights reserved.
 //
-//==============================================================================
 
+#import "TransducerMusicViewController.h"
 
-#import "GestureControllerViewController.h"
+#define SAMPLING_RATE 0.1
+#define IPHONE  0
 
-@interface GestureControllerViewController ()
+@interface TransducerMusicViewController ()
 
 @end
 
-@implementation GestureControllerViewController
+@implementation TransducerMusicViewController
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
     
-    backEndInterface    =   new GestureControllerInterface;
+    // iPod     : 6787, 6786
+    // iPhone   : 6789, 6788
     
-    m_bAudioToggleStatus_1  =   false;
-    m_bAudioToggleStatus_2  =   false;
-    m_iAudioEffectsStatus_1 =   0;
-    m_iAudioEffectsStatus_2 =   0;
-    m_iPlayRecordStatus     =   0;
+    osc =[[OSCCom alloc] init];
+    
+#if IPHONE
+    [osc initialize: @"10.0.0.9" : 6789];
+#else
+    [osc initialize: @"10.0.0.9" : 6787];
+#endif
+    
+    
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.deviceMotionUpdateInterval = SAMPLING_RATE;
+    
+    
+    [self.motionManager startDeviceMotionUpdatesToQueue: [NSOperationQueue currentQueue]
+                                            withHandler:^ (CMDeviceMotion *deviceMotion, NSError *error) {
+                                                [self motionDeviceUpdate:deviceMotion];
+                                                if(error){
+                                                    NSLog(@"%@", error);
+                                                }
+                                            }];
+    
+    
+    blackColour = [self colorFromHexString:@"#000000"];
+    redColour = [self colorFromHexString:@"#420000"];
+    greenColour = [self colorFromHexString:@"#004200"];
+    blueColour = [self colorFromHexString:@"#000042"];
+    yellowColour = [self colorFromHexString:@"#424200"];
 }
+
+
+
+//--- Motion Processing Methods ---//
+
+- (void) motionDeviceUpdate: (CMDeviceMotion*) deviceMotion
+{
+
+    double attitude[3];
+    
+    attitude[0] = deviceMotion.attitude.roll;
+    attitude[1] = deviceMotion.attitude.pitch;
+    attitude[2] = deviceMotion.attitude.yaw;
+    [osc sendFloat:@"/attitude" : attitude : 3];
+    
+    
+    double acceleration[3];
+    
+    acceleration[0] = deviceMotion.userAcceleration.x;
+    acceleration[1] = deviceMotion.userAcceleration.y;
+    acceleration[2] = deviceMotion.userAcceleration.z;
+    [self processUserAcceleration:deviceMotion.userAcceleration];
+    [osc sendFloat:@"/acceleration" : acceleration : 3];
+    
+    
+    double quaternion[4];
+    
+    quaternion[0] = deviceMotion.attitude.quaternion.w;
+    quaternion[1] = deviceMotion.attitude.quaternion.x;
+    quaternion[2] = deviceMotion.attitude.quaternion.y;
+    quaternion[3] = deviceMotion.attitude.quaternion.z;
+    [osc sendFloat:@"/quaternion" : quaternion : 4];
+    
+    
+    double rotationRate[3];
+    rotationRate[0] = deviceMotion.rotationRate.x;
+    rotationRate[1] = deviceMotion.rotationRate.y;
+    rotationRate[2] = deviceMotion.rotationRate.z;
+    [osc sendFloat:@"/rotationRate" : rotationRate : 3];
+    
+    
+    double gravity[3];
+    gravity[0] = deviceMotion.gravity.x;
+    gravity[1] = deviceMotion.gravity.y;
+    gravity[2] = deviceMotion.gravity.z;
+    [osc sendFloat:@"/gravity" : gravity : 3];
+
+}
+
+
+- (void)processUserAcceleration: (CMAcceleration) userAcceleration
+{
+    // iPhone   : 10
+    // iPod     : 9
+    double threshold;
+    
+#if IPHONE
+    threshold = 10;
+#else
+    threshold = 10;
+#endif
+    
+    
+    double amplitude = pow( (pow(userAcceleration.x, 2) + pow(userAcceleration.y, 2) + pow(userAcceleration.z, 2)), 0.5);
+    
+    if (amplitude > threshold || amplitude < -threshold) {
+        [osc sendBang:@"/trigger"];
+    }
+}
+
+
+
+
+
+//--- UI Action Methods ---//
+
+- (UIColor*)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+    
+}
+
+
+- (IBAction)redButtonDown:(UIButton *)sender {
+    self.view.backgroundColor = redColour;
+    [osc sendToggle:@"/red" : true];
+}
+
+
+- (IBAction)redButtonUp:(UIButton *)sender {
+    self.view.backgroundColor = blackColour;
+    [osc sendToggle:@"/red" : false];
+}
+
+
+- (IBAction)greenButtonDown:(UIButton *)sender {
+    self.view.backgroundColor = greenColour;
+    [osc sendToggle:@"/green" : true];
+}
+
+
+- (IBAction)greenButtonUp:(UIButton *)sender {
+    self.view.backgroundColor = blackColour;
+    [osc sendToggle:@"/green" : false];
+}
+
+
+- (IBAction)blueButtonDown:(id)sender {
+    self.view.backgroundColor = blueColour;
+    [osc sendToggle:@"/blue" : true];
+}
+
+
+- (IBAction)blueButtonUp:(UIButton *)sender {
+    self.view.backgroundColor = blackColour;
+    [osc sendToggle:@"/blue" : false];
+}
+
+
+- (IBAction)yellowButtonDown:(UIButton *)sender {
+    self.view.backgroundColor = yellowColour;
+    [osc sendToggle:@"/yellow" : true];
+}
+
+
+- (IBAction)yellowButtonUp:(UIButton *)sender {
+    self.view.backgroundColor = blackColour;
+    [osc sendToggle:@"/yellow" : false];
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)toggleAudioButtonClicked:(UIButton *)sender
-{
-    if (!m_bAudioToggleStatus_1)
-    {
-        backEndInterface->startPlayback(0);
-        m_bAudioToggleStatus_1    =   true;
-    }
-    
-    else
-    {
-        backEndInterface->stopPlayback(0);
-        m_bAudioToggleStatus_1    =   false;
-    }
-    
-}
-
-- (IBAction)addEffectButtonClicked:(UIButton *)sender
-{
-    //--- Sample 0 ---//
-    
-    // Add Audio Effect :   Sample ID, Audio Effect Position, Audio Effect ID
-    // Remove Audio Effect: Sample ID, Effect Position
-    
-    if (m_iAudioEffectsStatus_1 == 0)
-    {
-        // Add Tremolo at 0
-        backEndInterface->addAudioEffect(0, 0, 0);
-    }
-    
-    else if (m_iAudioEffectsStatus_1 == 1)
-    {
-        // Add Delay at 0
-        backEndInterface->addAudioEffect(0, 0, 1);
-    }
-    
-    else if (m_iAudioEffectsStatus_1 == 2)
-    {
-        // Add Tremolo at 0 and Delay at 1
-        backEndInterface->addAudioEffect(0, 0, 0);
-        backEndInterface->addAudioEffect(0, 1, 1);
-    }
-    
-    else if (m_iAudioEffectsStatus_1 == 3)
-    {
-        // Add Delay at 0 and Tremolo at 1
-        backEndInterface->addAudioEffect(0, 0, 1);
-        backEndInterface->addAudioEffect(0, 1, 0);
-    }
-    
-    else if (m_iAudioEffectsStatus_1 == 4)
-    {
-        // Remove all effects
-        backEndInterface->removeAudioEffect(0, 0);
-        backEndInterface->removeAudioEffect(0, 1);
-    }
-
-    m_iAudioEffectsStatus_1   =   (m_iAudioEffectsStatus_1 + 1) % 5;
 }
 
 
 
-
-- (IBAction)removeEffectButtonClicked:(UIButton *)sender
-{
-    //--- Sample 1 ---//
-    
-    // Add Audio Effect :   Sample ID, Audio Effect Position, Audio Effect ID
-    // Remove Audio Effect: Sample ID, Effect Position
-    
-    if (m_iAudioEffectsStatus_2 == 0)
-    {
-        // Add Tremolo at 0
-        backEndInterface->addAudioEffect(1, 0, 0);
-    }
-    
-    else if (m_iAudioEffectsStatus_2 == 1)
-    {
-        // Add Delay at 0
-        backEndInterface->addAudioEffect(1, 0, 1);
-    }
-    
-    else if (m_iAudioEffectsStatus_2 == 2)
-    {
-        // Add Tremolo at 0 and Delay at 1
-        backEndInterface->addAudioEffect(1, 0, 0);
-        backEndInterface->addAudioEffect(1, 1, 1);
-    }
-    
-    else if (m_iAudioEffectsStatus_2 == 3)
-    {
-        // Add Delay at 0 and Tremolo at 1
-        backEndInterface->addAudioEffect(1, 0, 1);
-        backEndInterface->addAudioEffect(1, 1, 0);
-    }
-    
-    else if (m_iAudioEffectsStatus_2 == 4)
-    {
-        // Remove all effects
-        backEndInterface->removeAudioEffect(1, 0);
-        backEndInterface->removeAudioEffect(1, 1);
-    }
-    
-    m_iAudioEffectsStatus_2   =   (m_iAudioEffectsStatus_2 + 1) % 5;
-}
-
-
-
-
-- (IBAction)playRecordButtonClicked:(UIButton *)sender
-{
-    if (!m_bAudioToggleStatus_2)
-    {
-        backEndInterface->startPlayback(1);
-        m_bAudioToggleStatus_2   =   true;
-    }
-    
-    else
-    {
-        backEndInterface->stopPlayback(1);
-        m_bAudioToggleStatus_2   =   false;
-    }
-}
-
-
-
-- (void)dealloc
-{
-    
-    [_toggleAudioButton release];
-    
-    delete backEndInterface;
-    
-    
-    [_removeEffectButton release];
-    [super dealloc];
-}
 @end
