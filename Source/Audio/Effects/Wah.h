@@ -2,7 +2,7 @@
 #define __Wah_hdr__
 
 #include <Math.h>
-#define M_PI 3.14159
+
 /*	Wah
 	----------------
 	Paramaters:	
