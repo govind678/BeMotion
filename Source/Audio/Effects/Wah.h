@@ -1,33 +1,53 @@
-//
-//  Wah.h
-//  GestureController
-//
-//  Created by Govinda Ram Pingali on 3/10/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
-//
+#if !defined(__Wah_hdr__)
+#define __Wah_hdr__
 
-#ifndef __GestureController__Wah__
-#define __GestureController__Wah__
-
-
+#include <Math.h>
+#define M_PI 3.14159
+/*	Wah
+	----------------
+	Paramaters:	
+		- Gain
+		- Theta "Pedal Value"
+*/
 
 class CWah
 {
-    
 public:
-    
-    CWah();
-    ~CWah();
-    
-    
-    void prepareToPlay(float sampleRate);
-    void process(float** audioBuffer, int numSample, bool bypassState);
-    void finishedPlaying();
-    
-    
+
+	CWah(int NumChannels);
+	~CWah ();
+
+	// set:
+	void setParam(/*hFile::enumType type*/ int type, float value);
+
+	void prepareToPlay(float sampleRate);
+
+	void initDefaults();
+
+	// process:
+	void process(float **inputBuffer, int numFrames, bool bypass);
+
 private:
-    
-    
+
+	float **buff;
+
+	float m_fTempVal;
+
+	float m_fSampleRate;
+	int   m_iNumChannels;
+
+	float m_fGain;
+	float m_fTheta;		// pedal value
+
+	float m_fReso;
+	float m_fQ;
+
+	float m_fPoleAngle;
+
+	float m_fFrn;
+
+	float m_fCoeff2;
+	float m_fCoeff3;
 };
 
-#endif /* defined(__GestureController__Wah__) */
+#endif
