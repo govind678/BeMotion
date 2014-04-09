@@ -13,23 +13,42 @@
 
 AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 {
+    m_pcTremolo     =   nullptr;
+    m_pcDelay       =   nullptr;
+    m_pcVibrato     =   nullptr;
+    m_pcWah         =   nullptr;
+    
+    
+    for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+    {
+        m_pcParameter.add(new Parameter());
+        m_pcParameter.getUnchecked(i)->setAlpha(0.5);
+    }
+    
+    
     switch (effectID)
     {
         case EFFECT_TREMOLO:
         {
-            tremoloEffect   =   new CTremolo(numChannels);
+            m_pcTremolo   =   new CTremolo(numChannels);
             break;
         }
           
         case EFFECT_DELAY:
         {
-            delayEffect     =   new CDelay(numChannels);
+            m_pcDelay     =   new CDelay(numChannels);
             break;
         }
             
         case EFFECT_VIBRATO:
         {
-            vibratoEffect   =   new CVibrato(numChannels);
+            m_pcVibrato   =   new CVibrato(numChannels);
+            break;
+        }
+            
+        case EFFECT_WAH:
+        {
+            m_pcWah       = new CWah(numChannels);
             break;
         }
             
@@ -46,26 +65,41 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 
 AudioEffectSource::~AudioEffectSource()
 {
-    delayEffect     =   nullptr;
-    tremoloEffect   =   nullptr;
-    vibratoEffect   =   nullptr;
+    m_pcTremolo     =   nullptr;
+    m_pcDelay       =   nullptr;
+    m_pcVibrato     =   nullptr;
+    m_pcWah         =   nullptr;
+
+    m_pcParameter.clear();
 }
+
+
+void AudioEffectSource::setSmoothing(int parameterID, float smoothing)
+{
+    m_pcParameter.getUnchecked(parameterID - 4)->setAlpha(smoothing);
+}
+
 
 
 void AudioEffectSource::setParameter(int parameterID, float value)
 {
+    std::cout << "Param" << parameterID-4 << " Unsmooth: " << value << "\tSmooth: ";
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            tremoloEffect->setParam(parameterID, value);
+            m_pcTremolo->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
             break;
         
         case EFFECT_DELAY:
-            delayEffect->setParam(parameterID, value);
+            m_pcDelay->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
             break;
            
         case EFFECT_VIBRATO:
-            vibratoEffect->setParam(parameterID, value);
+            m_pcVibrato->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
+            break;
+            
+        case EFFECT_WAH:
+            m_pcWah->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
             break;
             
         default:
@@ -77,22 +111,25 @@ void AudioEffectSource::setParameter(int parameterID, float value)
 
 
 
-
-
 float AudioEffectSource::getParameter(int parameterID)
 {
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            return tremoloEffect->getParam(parameterID);
+            return m_pcTremolo->getParam(parameterID);
             break;
             
         case EFFECT_DELAY:
-            return delayEffect->getParam(parameterID);
+            return m_pcDelay->getParam(parameterID);
             break;
             
         case EFFECT_VIBRATO:
-            return vibratoEffect->getParam(parameterID);
+            return m_pcVibrato->getParam(parameterID);
+            
+        case EFFECT_WAH:
+//            return m_pcWah->getParam(parameterID);
+            return 0.0f;
+            break;
             
         default:
             return 0.0f;
@@ -115,17 +152,21 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
     {
         
         case EFFECT_TREMOLO:
-            tremoloEffect->prepareToPlay(sampleRate);
+            m_pcTremolo->prepareToPlay(sampleRate);
             break;
             
             
         case EFFECT_DELAY:
-            delayEffect->prepareToPlay(sampleRate);
+            m_pcDelay->prepareToPlay(sampleRate);
             break;
             
             
         case EFFECT_VIBRATO:
-            vibratoEffect->prepareToPlay(sampleRate);
+            m_pcVibrato->prepareToPlay(sampleRate);
+            break;
+            
+        case EFFECT_WAH:
+            m_pcWah->prepareToPlay(sampleRate);
             break;
             
         default:
@@ -147,19 +188,22 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassS
 {
     switch (m_iEffectID)
     {
-        
         case EFFECT_TREMOLO:
-            tremoloEffect->process(audioBuffer, blockSize, bypassState);
+            m_pcTremolo->process(audioBuffer, blockSize, bypassState);
             break;
            
             
         case EFFECT_DELAY:
-            delayEffect->process(audioBuffer, blockSize, bypassState);
+            m_pcDelay->process(audioBuffer, blockSize, bypassState);
             break;
             
             
         case EFFECT_VIBRATO:
-            vibratoEffect->process(audioBuffer, blockSize, bypassState);
+            m_pcVibrato->process(audioBuffer, blockSize, bypassState);
+            break;
+        
+        case EFFECT_WAH:
+            m_pcWah->process(audioBuffer, blockSize, bypassState);
             break;
             
         default:

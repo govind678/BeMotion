@@ -52,7 +52,7 @@
  */
 static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16])
 {
-	register FLAC__uint32 a, b, c, d;
+	 FLAC__uint32 a, b, c, d;
 
 	a = buf[0];
 	b = buf[1];
@@ -137,7 +137,7 @@ static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16])
 //@@@@@@ OPT: use bswap/intrinsics
 static void byteSwap(FLAC__uint32 *buf, unsigned words)
 {
-	register FLAC__uint32 x;
+	 FLAC__uint32 x;
 	do {
 		x = *buf;
 		x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff);
@@ -146,7 +146,7 @@ static void byteSwap(FLAC__uint32 *buf, unsigned words)
 }
 static void byteSwapX16(FLAC__uint32 *buf)
 {
-	register FLAC__uint32 x;
+	 FLAC__uint32 x;
 
 	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
 	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
@@ -273,8 +273,8 @@ void FLAC__MD5Final(FLAC__byte digest[16], FLAC__MD5Context *ctx)
 static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], unsigned channels, unsigned samples, unsigned bytes_per_sample)
 {
 	unsigned channel, sample;
-	register FLAC__int32 a_word;
-	register FLAC__byte *buf_ = buf;
+	 FLAC__int32 a_word;
+	 FLAC__byte *buf_ = buf;
 
 #if WORDS_BIGENDIAN
 #else

@@ -39,6 +39,11 @@ public:
     void stopPlayback();
     void setLooping(bool looping);
     
+    bool isPlaying();
+    
+    void setMode(ButtonMode mode);
+    ButtonMode getMode();
+    
     void addAudioEffect(int effectPosition, int effectID);
     void removeAudioEffect(int effectPosition);
     void setAudioEffectBypassState(int effectPosition, bool bypassState);
@@ -48,7 +53,7 @@ public:
     float getParameter(int effectPosition, int parameterID);
     int   getEffectType(int effectPosition);
 
-
+    void setSmoothing(int effecPosition, int parameterID, float value);
     
     
 private:
@@ -67,6 +72,8 @@ private:
     int m_iSampleID;
     String  m_sCurrentFilePath;
     bool m_bAudioCurrentlyPlaying;
+    
+    ButtonMode                  m_eButtonMode;
     
     
 };

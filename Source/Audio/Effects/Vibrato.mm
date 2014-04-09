@@ -7,6 +7,8 @@
 //
 
 #include "Vibrato.h"
+#include <stdio.h>
+#include <iostream>
 
 CVibrato::CVibrato(int iNumChannels)
 
@@ -137,9 +139,10 @@ void CVibrato::initializeDefaults()
 
 void CVibrato::setModulationWidth_ms(int current_mod_width_ms)
 {
-	m_iModulation_Width_Samples = long ((current_mod_width_ms * m_fSampleRate) / 1000);
+	m_iModulation_Width_Samples =  int(((current_mod_width_ms * m_fSampleRate) / 1000.0f) + 0.5f);
 	
-	for (int channel=0; channel < m_iNumChannels; channel++) {
+	for (int channel=0; channel < m_iNumChannels; channel++)
+    {
 		m_CRingBuffer[channel] -> setWriteIdx(m_CRingBuffer[channel]->getReadIdx() + (2 * m_iModulation_Width_Samples));
     }
 }

@@ -37,6 +37,8 @@ public:
     
     void startRecording(int sampleID);
     void stopRecording(int sampleID);
+    
+    void beat(int beatNo);
     //========================================================
     
 

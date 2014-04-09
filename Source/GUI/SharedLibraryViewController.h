@@ -10,6 +10,8 @@
 #include "GestureControllerInterface.h"
 #import  "UserInterfaceData.h"
 #import  "EffectSettingsViewController.h"
+
+#import "Metronome.h"
 #import <CoreMotion/CoreMotion.h>
 
 @interface SharedLibraryViewController : UIViewController
@@ -19,6 +21,8 @@
     bool m_bRedButtonToggleStatus;  // is red button pressed
     bool m_bBlueButtonToggleStatus; // is blue button pressed
     bool m_bModeToggleStatus;       // if settings mode, segue to effectSettings scene, else start playback
+    
+    Metronome*                      metronome;
 }
 
 
@@ -33,5 +37,10 @@
 //
 //
 //- (IBAction)addEffectButtonClicked:(UIButton *)sender;
+
+
+- (IBAction)toggleMetronome:(UISwitch *)sender;
+
+- (void) beat:  (int) beatNo;
 
 @end

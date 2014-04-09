@@ -28,6 +28,8 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
         audioEffectSource.add(nullptr);
     }
     
+    m_eButtonMode       =   ButtonMode::Loop;
+    
     thread.startThread(3);
 }
 
@@ -113,6 +115,11 @@ void AudioFileStream::setAudioEffectBypassState(int effectPosition, bool bypassS
 
 
 
+bool AudioFileStream::isPlaying()
+{
+    return m_bAudioCurrentlyPlaying;
+}
+
 
 
 //==============================================================================
@@ -143,7 +150,7 @@ void AudioFileStream::releaseResources()
 void AudioFileStream::getNextAudioBlock(const AudioSourceChannelInfo &audioSourceChannelInfo)
 {
     transportSource.getNextAudioBlock(audioSourceChannelInfo);
-    processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfChannels(), audioSourceChannelInfo.numSamples);
+    processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
 }
 
 
@@ -247,6 +254,23 @@ float AudioFileStream::getParameter(int effectPosition, int parameterID)
     }
 }
 
+
+void AudioFileStream::setMode(ButtonMode mode)
+{
+    m_eButtonMode = mode;
+}
+
+ButtonMode AudioFileStream::getMode()
+{
+    return m_eButtonMode;
+}
+
+
+
+void AudioFileStream::setSmoothing(int effectPosition, int parameterID, float smoothing)
+{
+    audioEffectSource.getUnchecked(effectPosition)->setSmoothing(parameterID, smoothing);
+}
 
 int AudioFileStream::getEffectType(int effectPosition)
 {

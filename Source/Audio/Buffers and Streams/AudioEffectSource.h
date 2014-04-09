@@ -15,12 +15,13 @@
 
 #include "GestureControllerHeader.h"
 #include "Macros.h"
+#include "Parameter.h"
 
 //------- Effect Headers -------//
 #include "Delay.h"
 #include "Tremolo.h"
 #include "Vibrato.h"
-
+#include "Wah.h"
 //------------------------------//
 
 
@@ -33,6 +34,7 @@ public:
     ~AudioEffectSource();
     
     void setParameter(int parameterID, float value);
+    void setSmoothing(int parameterID, float smoothing);
     
     float getParameter(int parameterID);
     int   getEffectType();
@@ -43,9 +45,12 @@ public:
     
 private:
     
-    ScopedPointer<CDelay>   delayEffect;
-    ScopedPointer<CTremolo> tremoloEffect;
-    ScopedPointer<CVibrato> vibratoEffect;
+    ScopedPointer<CDelay>       m_pcDelay;
+    ScopedPointer<CTremolo>     m_pcTremolo;
+    ScopedPointer<CVibrato>     m_pcVibrato;;
+    ScopedPointer<CWah>         m_pcWah;
+    
+    OwnedArray<Parameter>       m_pcParameter;
     
     int m_iEffectID;
 };

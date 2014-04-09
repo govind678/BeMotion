@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
 
-#define SAMPLING_RATE 0.1
+#define SAMPLING_RATE 1.0f
 
 
 #import "SharedLibraryViewController.h"
@@ -83,6 +83,10 @@
     m_bModeToggleStatus       = true; // settings mode by default
     
     
+    
+    
+    metronome   =   [[Metronome alloc] init];
+    [metronome setDelegate:self];
     
     
     
@@ -304,7 +308,7 @@
 //    [osc sendFloat:@"/attitude" : attitude : 3];
 //    backEndInterface->setParameter(0, 1, 0, ((attitude[0] + M_PI/2) * 2.0f));
 //    backEndInterface->setParameter(1, 1, 0, ((attitude[1] + M_PI/2) * 2.0f));
-//    backEndInterface->setParameter(<#int sampleID#>, <#int effectPosition#>, <#int parameterID#>, <#float value#>)
+//    backEndInterface->setParameter(int sampleID, int effectPosition, int parameterID, float value)
     
     double acceleration[3];
     
@@ -364,10 +368,33 @@
     
 //    [_toggleAudioButton release];
     
+    [metronome dealloc];
+    
     delete backEndInterface;
-
     
     [super dealloc];
 }
+
+
+
+- (IBAction)toggleMetronome:(UISwitch *)sender
+{
+    if (sender.on)
+    {
+        [metronome startClock];
+    }
+    
+    else
+    {
+        [metronome stopClock];
+    }
+}
+
+
+- (void) beat:(int)beatNo
+{
+    backEndInterface->beat(beatNo);
+}
+
 
 @end

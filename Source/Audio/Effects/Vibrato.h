@@ -14,6 +14,7 @@
 #include "Macros.h"
 
 #define DEFAULT_SAMPLING_RATE   44100
+#define MAX_MOD_WIDTH           500
 
 class CVibrato
 {
@@ -65,7 +66,7 @@ private:
     float       m_fModulatingSample;
     float       m_fFloatIndex;
 	float		m_iModulation_Freq_Hz;
-	long        m_iModulation_Width_Samples;
+	int         m_iModulation_Width_Samples;
     int         m_iNumChannels;
     
     float fPhase;

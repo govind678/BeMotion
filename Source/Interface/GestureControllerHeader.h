@@ -20,5 +20,13 @@
 #define NUM_OUTPUT_CHANNELS         2
 
 
+//--- Sample Button Mode ---//
+enum ButtonMode
+{
+    Trigger,
+    Loop,
+    BeatRepeat,
+    Recording
+};
 
 #endif

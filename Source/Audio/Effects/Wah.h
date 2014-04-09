@@ -2,6 +2,7 @@
 #define __Wah_hdr__
 
 #include <Math.h>
+#include "Macros.h"
 
 /*	Wah
 	----------------

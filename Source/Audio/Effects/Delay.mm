@@ -10,6 +10,8 @@
 
 
 #include "Delay.h"
+#include <stdio.h>
+#include <iostream>
 
 CDelay::CDelay(int numChannels)
 {

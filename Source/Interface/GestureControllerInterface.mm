@@ -79,6 +79,11 @@ void GestureControllerInterface::stopRecording(int sampleID)
 }
 
 
+void GestureControllerInterface::beat(int beatNo)
+{
+    audioEngine->beat(beatNo);
+}
+
 
 //==============================================================================
 // Get Methods to update GUI

@@ -31,6 +31,8 @@ AudioEngine::AudioEngine()
     
     recordingFilePathArray.clear();
     playbackFilePathArray.clear();
+
+    
     
     
     for (int i = 0; i < NUM_SAMPLE_SOURCES; i++)
@@ -123,7 +125,7 @@ int AudioEngine::getEffectType(int sampleID, int effectPosition)
 void AudioEngine::startRecordingAudioSample(int sampleID)
 {
     audioMixer->stopPlayback(sampleID);
-    audioFileRecorder->startRecording(recordingFilePathArray.getUnchecked(sampleID));
+    audioFileRecorder->startRecording(recordingFilePathArray.getReference(sampleID));
 }
 
 
@@ -144,3 +146,20 @@ void AudioEngine::stopPlayback(int sampleID)
 {
     audioMixer->stopPlayback(sampleID);
 }
+
+void AudioEngine::setButtonMode(int sampleID, ButtonMode mode)
+{
+    audioMixer->setButtonMode(sampleID, mode);
+}
+
+ButtonMode AudioEngine::getButtonMode(int sampleID)
+{
+    return audioMixer->getButtonMode(sampleID);
+}
+
+
+void AudioEngine::beat(int beatNo)
+{
+    audioMixer->beat(beatNo);
+}
+

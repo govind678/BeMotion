@@ -36,9 +36,11 @@ public:
     
     void loadAudioFile(int sampleID, String filePath);
     
+    void setButtonMode(int sampleID, ButtonMode mode);
+    ButtonMode getButtonMode(int sampleID);
+    
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);
-    
     
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
@@ -47,8 +49,11 @@ public:
     float getParameter(int sampleID, int effectPosition, int parameterID);
     int getEffectType(int sampleID, int effectPosition);
     
+    void setSmoothing(int sampleID, int effectPosition, int parameterID, float smoothing);
+    
     void setAudioEffectBypassState(int sampleID, int effectPosition, bool bypassState);
     
+    void beat(int beatNo);
     
     
     
@@ -59,6 +64,10 @@ private:
     MixerAudioSource                    audioMixer;
     OwnedArray<AudioFileStream>         audioFileStream;
     AudioSourcePlayer                   audioSourcePlayer;
+    
+    Array<ButtonMode>                   buttonModes;
+    Array<bool>                         buttonStates;
+    
 };
 
 

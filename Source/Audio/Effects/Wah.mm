@@ -1,4 +1,6 @@
 #include "Wah.h"
+#include <stdio.h>
+#include <iostream>
 
 CWah::CWah(int numChannels)
 {
@@ -30,14 +32,14 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 {
 	switch(type)
 	{
-		case 0:
+		case PARAM_1:
 
 			if (0 <= value && value <= 1)
 				m_fGain = 0.1*(powf(value, m_fTheta));
 
 		break;
 
-		case 1:
+		case PARAM_2:
 
 			if (0 <= value && value <= 1){
 				m_fTheta = value;	// "pedal" value

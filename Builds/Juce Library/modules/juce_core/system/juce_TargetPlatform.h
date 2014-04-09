@@ -44,13 +44,13 @@
 
 //==============================================================================
 #if (defined (_WIN32) || defined (_WIN64))
-  #define       JUCE_WIN32 0
-  #define       JUCE_WINDOWS 0
+  #define       JUCE_WIN32 1
+  #define       JUCE_WINDOWS 1
 #elif defined (JUCE_ANDROID)
   #undef        JUCE_ANDROID
-  #define       JUCE_ANDROID 0
+  #define       JUCE_ANDROID 1
 #elif defined (LINUX) || defined (__linux__)
-  #define     JUCE_LINUX 0
+  #define     JUCE_LINUX 1
 #elif defined (__APPLE_CPP__) || defined(__APPLE_CC__)
   #define Point CarbonDummyPointName // (workaround to avoid definition of "Point" by old Carbon headers)
   #define Component CarbonDummyCompName
@@ -173,7 +173,7 @@
 
 #ifdef __clang__
  #define JUCE_CLANG 1
- #define JUCE_GCC 0
+ #define JUCE_GCC 1
 #elif defined (__GNUC__)
   #define JUCE_GCC 1
 #elif defined (_MSC_VER)

@@ -20,12 +20,12 @@
 #include "AudioMixerPlayer.h"
 
 class AudioEngine
-
 {
 public:
     
     AudioEngine();
     ~AudioEngine();
+    
     
     void startLiveAudioStreaming();
     void stopLiveAudioStreaming();
@@ -45,15 +45,22 @@ public:
     void startRecordingAudioSample(int sampleID);
     void stopRecordingAudioSample(int sampleID);
     
+    void setButtonMode(int sampleID, ButtonMode mode);
+    ButtonMode getButtonMode(int sampleID);
+    
+    void beat(int beatNo);
+    
+    
 private:
+
     
 //    ScopedPointer<LiveAudioStream>  liveAudioStream;
     
     ScopedPointer<AudioFileRecord>      audioFileRecorder;
     ScopedPointer<AudioMixerPlayer>     audioMixer;
     
-    Array<String>       recordingFilePathArray;
-    Array<String>       playbackFilePathArray;
+    StringArray         recordingFilePathArray;
+    StringArray         playbackFilePathArray;
     
     
     String  currentRecordingPath;
@@ -62,7 +69,6 @@ private:
     AudioDeviceManager sharedAudioDeviceManager;
     
     bool m_bLiveAudioThreadRunning;
-    
     
 };
 

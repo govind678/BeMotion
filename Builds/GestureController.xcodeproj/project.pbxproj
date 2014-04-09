@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC2E8B7718F4C58E00F09FEC /* Parameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7618F4C58E00F09FEC /* Parameter.mm */; };
+		FC2E8B7D18F5234300F09FEC /* Metronome.m in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7C18F5234300F09FEC /* Metronome.m */; };
 		FC5C65E418CDB1C300CA9B79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E318CDB1C300CA9B79 /* Foundation.framework */; };
 		FC5C65E618CDB1C300CA9B79 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */; };
 		FC5C65E818CDB1C300CA9B79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E718CDB1C300CA9B79 /* UIKit.framework */; };
@@ -65,6 +67,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC2E8B7518F4C58E00F09FEC /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
+		FC2E8B7618F4C58E00F09FEC /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
+		FC2E8B7B18F5234300F09FEC /* Metronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome.h; sourceTree = "<group>"; };
+		FC2E8B7C18F5234300F09FEC /* Metronome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Metronome.m; sourceTree = "<group>"; };
 		FC5C65E018CDB1C300CA9B79 /* GestureController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GestureController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5C65E318CDB1C300CA9B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1166,6 +1172,8 @@
 				FC5C661A18CDB32700CA9B79 /* Images.xcassets */,
 				FC5C661B18CDB32700CA9B79 /* GestureControllerAppDelegate.h */,
 				FC5C661C18CDB32700CA9B79 /* GestureControllerAppDelegate.mm */,
+				FC2E8B7B18F5234300F09FEC /* Metronome.h */,
+				FC2E8B7C18F5234300F09FEC /* Metronome.m */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1206,10 +1214,10 @@
 				FC5C662F18CDB32700CA9B79 /* Delay.mm */,
 				FC5C663018CDB32700CA9B79 /* Tremolo.h */,
 				FC5C663118CDB32700CA9B79 /* Tremolo.mm */,
-				FC6EEAF018CE00F6002370AC /* Wah.mm */,
 				FC6EEAF118CE00F6002370AC /* Wah.h */,
-				FC6EEAF318CE05D3002370AC /* Vibrato.mm */,
+				FC6EEAF018CE00F6002370AC /* Wah.mm */,
 				FC6EEAF418CE05D3002370AC /* Vibrato.h */,
+				FC6EEAF318CE05D3002370AC /* Vibrato.mm */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1217,6 +1225,8 @@
 		FC5C663218CDB32700CA9B79 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FC2E8B7518F4C58E00F09FEC /* Parameter.h */,
+				FC2E8B7618F4C58E00F09FEC /* Parameter.mm */,
 				FC5C663318CDB32700CA9B79 /* CUtil.h */,
 				FC5C663418CDB32700CA9B79 /* LFO.h */,
 				FC5C663518CDB32700CA9B79 /* LFO.mm */,
@@ -3026,7 +3036,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = GestureController;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = GTCMT;
 				TargetAttributes = {
 					FC5C660018CDB1C300CA9B79 = {
@@ -3084,8 +3094,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */,
+				FC2E8B7718F4C58E00F09FEC /* Parameter.mm in Sources */,
 				FC5C6C6818CDB4D500CA9B79 /* GestureControllerAppDelegate.mm in Sources */,
 				FC5C6C6918CDB4D500CA9B79 /* AudioEngine.mm in Sources */,
+				FC2E8B7D18F5234300F09FEC /* Metronome.m in Sources */,
 				FC5C6C6A18CDB4D500CA9B79 /* AudioFileStream.mm in Sources */,
 				FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */,
 				FC5C6C6C18CDB4D500CA9B79 /* AudioFileRecord.mm in Sources */,
@@ -3153,7 +3165,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3192,7 +3203,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3254,7 +3264,6 @@
 		FC5C661618CDB1C300CA9B79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GestureController.app/GestureController";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -3277,7 +3286,6 @@
 		FC5C661718CDB1C300CA9B79 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GestureController.app/GestureController";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

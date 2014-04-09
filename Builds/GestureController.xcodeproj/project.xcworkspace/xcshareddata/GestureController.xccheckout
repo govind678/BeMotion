@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>18CC1693-DCE2-453E-B95C-8015F3B0C8C7</string>
+	<string>90663A5F-5801-4CB7-A56B-0D820DA46C46</string>
 	<key>IDESourceControlProjectName</key>
 	<string>GestureController</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C09FB137-2F50-4D4A-A9A7-5D0D7434CD1B</key>
-		<string>https://github.com/govind678/GestureController</string>
+		<key>05DDCCDE-A0BC-4ADF-9C6D-8F58E8B89FEA</key>
+		<string>https://github.com/govind678/MotionMusic.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Builds/GestureController.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C09FB137-2F50-4D4A-A9A7-5D0D7434CD1B</key>
+		<key>05DDCCDE-A0BC-4ADF-9C6D-8F58E8B89FEA</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/govind678/GestureController</string>
+	<string>https://github.com/govind678/MotionMusic.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C09FB137-2F50-4D4A-A9A7-5D0D7434CD1B</string>
+	<string>05DDCCDE-A0BC-4ADF-9C6D-8F58E8B89FEA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C09FB137-2F50-4D4A-A9A7-5D0D7434CD1B</string>
+			<string>05DDCCDE-A0BC-4ADF-9C6D-8F58E8B89FEA</string>
 			<key>IDESourceControlWCCName</key>
-			<string>GestureController</string>
+			<string>MotionMusic</string>
 		</dict>
 	</array>
 </dict>
