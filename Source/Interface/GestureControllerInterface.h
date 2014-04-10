@@ -30,7 +30,9 @@ public:
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
     
-    void setParameter(int sampleID, int effectPosition, int parameterID, float value);
+    void setMode(int sampleID, int mode);
+    void setEffectParameter(int sampleID, int effectPosition, int parameterID, float value);
+    void setSampleParameter(int sampleID, int parameterID, float value);
     
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);

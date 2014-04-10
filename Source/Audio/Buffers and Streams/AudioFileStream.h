@@ -37,26 +37,33 @@ public:
     
     void startPlayback();
     void stopPlayback();
-    void setLooping(bool looping);
     
     bool isPlaying();
     
-    void setMode(ButtonMode mode);
-    ButtonMode getMode();
+    void setMode(int mode);
+    int getMode();
     
     void addAudioEffect(int effectPosition, int effectID);
     void removeAudioEffect(int effectPosition);
     void setAudioEffectBypassState(int effectPosition, bool bypassState);
     
-    void setParameter(int effectPosition, int parameterID, float value);
+    void setEffectParameter(int effectPosition, int parameterID, float value);
+    void setSampleParameter(int parameterID, float value);
     
-    float getParameter(int effectPosition, int parameterID);
-    int   getEffectType(int effectPosition);
+    float getEffectParameter(int effectPosition, int parameterID);
+    float getSampleParameter(int parameterID);
+    
+    int  getEffectType(int effectPosition);
 
     void setSmoothing(int effecPosition, int parameterID, float value);
+
+    void beat(int beatNum);
     
     
 private:
+    
+    void setLooping(bool looping);
+    
     
     AudioDeviceManager&     deviceManager;
     
@@ -66,15 +73,17 @@ private:
     
     OwnedArray<AudioEffectSource>   audioEffectSource;
     Array<bool>                     m_pbBypassStateArray;
+    Array<bool>                     audioEffectInitialized;
     
     TimeSliceThread thread;
     
-    int m_iSampleID;
-    String  m_sCurrentFilePath;
-    bool m_bAudioCurrentlyPlaying;
+    int                             m_iSampleID;
+    String                          m_sCurrentFilePath;
+    bool                            m_bAudioCurrentlyPlaying;
+    int                             m_iQuantization;
+    int                             m_iButtonMode;
     
-    ButtonMode                  m_eButtonMode;
-    
+    int                             m_iBeat;
     
 };
 

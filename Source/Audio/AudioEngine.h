@@ -35,9 +35,11 @@ public:
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);
     
-    void setParameter(int sampleID, int effectPosition, int parameterID, float value);
+    void setEffectParameter(int sampleID, int effectPosition, int parameterID, float value);
     float getParameter(int sampleID, int effectPosition, int parameterID);
     int getEffectType(int sampleID, int effectPosition);
+    
+    void setSampleParameter(int sampleID, int parameterID, float value);
     
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
@@ -45,8 +47,8 @@ public:
     void startRecordingAudioSample(int sampleID);
     void stopRecordingAudioSample(int sampleID);
     
-    void setButtonMode(int sampleID, ButtonMode mode);
-    ButtonMode getButtonMode(int sampleID);
+    void setButtonMode(int sampleID, int mode);
+    int getButtonMode(int sampleID);
     
     void beat(int beatNo);
     

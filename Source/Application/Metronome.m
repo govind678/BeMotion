@@ -19,8 +19,6 @@
     {
         tempo               =   DEFAULT_TEMPO;
         numerator           =   DEFAULT_NUMERATOR;
-        denominator         =   DEFAULT_DENOMINATOR;
-        quantization        =   DEFAULT_QUANTIZATION;
         status              =   NO;
         
         beat                =   0;
@@ -49,7 +47,6 @@
     bar     = 0;
     
     timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval_s target:self selector:@selector(timerCallback) userInfo:nil repeats:YES];
-    [self timerCallback];
     
     status  =   YES;
 }
@@ -58,7 +55,6 @@
 - (void) stopClock
 {
     [timer invalidate];
-    
     status  =   NO;
 }
 
@@ -72,24 +68,15 @@
 }
 
 
-- (void) setNumerator:(int)newNumerator
+- (void) setMeter:(int)newMeter
 {
-    numerator = newNumerator;
-    [self updateTimer];
-}
-
-
-- (void) setDenominator:(int)newDenominator
-{
-    denominator = newDenominator;
-    [self updateTimer];
+    numerator = newMeter;
 }
 
 
 - (void) updateTimer
 {
-    timeInterval_s = 240.0f / (denominator * tempo);
-    
+    timeInterval_s = 60.0f / (MAX_QUANTIZATION * tempo);
     if (status)
     {
         [self stopClock];

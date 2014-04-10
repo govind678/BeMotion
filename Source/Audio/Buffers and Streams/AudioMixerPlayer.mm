@@ -15,22 +15,11 @@
 AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   :   deviceManager(sharedDeviceManager)
 {
     audioFileStream.clear(true);
-    buttonModes.clear();
-    buttonStates.clear();
     
-    
-    for (int sampleNo = 0; sampleNo < NUM_SAMPLE_SOURCES;   sampleNo++)
+    for (int sampleNo = 0; sampleNo < NUM_SAMPLE_SOURCES; sampleNo++)
     {
         audioFileStream.add(new AudioFileStream(sampleNo, deviceManager));
-        buttonModes.add(Loop);
-        buttonStates.add(false);
     }
-    buttonModes.set(NUM_SAMPLE_SOURCES - 1, Trigger);
-    
-    
-    // TODO: Debug Remove
-    buttonModes.set(2, BeatRepeat);
-    
     
     
     audioSourcePlayer.setSource(&audioMixer);
@@ -42,7 +31,6 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
 AudioMixerPlayer::~AudioMixerPlayer()
 {
     deviceManager.removeAudioCallback(this);
-    buttonModes.clear();
     audioFileStream.clear(true);
     audioSourcePlayer.setSource(0);
     
@@ -69,13 +57,7 @@ void AudioMixerPlayer::loadAudioFile(int sampleID, String filePath)
 
 void AudioMixerPlayer::startPlayback(int sampleID)
 {
-    if (buttonModes.getUnchecked(sampleID) != BeatRepeat)
-    {
-        audioFileStream.getUnchecked(sampleID)->startPlayback();
-    }
-    
-    buttonStates.set(sampleID, true);
-    
+    audioFileStream.getUnchecked(sampleID)->startPlayback();
 }
 
 
@@ -83,19 +65,23 @@ void AudioMixerPlayer::startPlayback(int sampleID)
 void AudioMixerPlayer::stopPlayback(int sampleID)
 {
     audioFileStream.getUnchecked(sampleID)->stopPlayback();
-    buttonStates.set(sampleID, false);
 }
 
 
-void AudioMixerPlayer::setParameter(int sampleID, int effectPosition, int parameterID, float value)
+void AudioMixerPlayer::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)
 {
-    audioFileStream.getUnchecked(sampleID)->setParameter(effectPosition, parameterID, value);
+    audioFileStream.getUnchecked(sampleID)->setEffectParameter(effectPosition, parameterID, value);
+}
+
+void AudioMixerPlayer::setSampleParameter(int sampleID, int parameterID, float value)
+{
+    audioFileStream.getUnchecked(sampleID)->setSampleParameter(parameterID, value);
 }
 
 
 float AudioMixerPlayer::getParameter(int sampleID, int effectPosition, int parameterID)
 {
-    return audioFileStream.getUnchecked(sampleID)->getParameter(effectPosition, parameterID);
+    return audioFileStream.getUnchecked(sampleID)->getEffectParameter(effectPosition, parameterID);
 }
 
 int AudioMixerPlayer::getEffectType(int sampleID, int effectPosition)
@@ -110,12 +96,12 @@ void AudioMixerPlayer::setSmoothing(int sampleID, int effectPosition, int parame
 }
 
 
-void AudioMixerPlayer::setButtonMode(int sampleID, ButtonMode mode)
+void AudioMixerPlayer::setButtonMode(int sampleID, int mode)
 {
     audioFileStream.getUnchecked(sampleID)->setMode(mode);
 }
 
-ButtonMode AudioMixerPlayer::getButtonMode(int sampleID)
+int AudioMixerPlayer::getButtonMode(int sampleID)
 {
     return audioFileStream.getUnchecked(sampleID)->getMode();
 }
@@ -124,15 +110,20 @@ ButtonMode AudioMixerPlayer::getButtonMode(int sampleID)
 
 void AudioMixerPlayer::beat(int beatNo)
 {
+//    for (int i=0; i < NUM_SAMPLE_SOURCES - 1; i++)
+//    {
+//        if (buttonModes.getUnchecked(i) == BeatRepeat)
+//        {
+//            if (buttonStates.getUnchecked(i))
+//            {
+//                audioFileStream.getUnchecked(i)->startPlayback();
+//            }
+//        }
+//    }
+//
     for (int i=0; i < NUM_SAMPLE_SOURCES - 1; i++)
     {
-        if (buttonModes.getUnchecked(i) == BeatRepeat)
-        {
-            if (buttonStates.getUnchecked(i))
-            {
-                audioFileStream.getUnchecked(i)->startPlayback();
-            }
-        }
+        audioFileStream.getUnchecked(i)->beat(beatNo);
     }
 }
 

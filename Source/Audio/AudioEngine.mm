@@ -102,10 +102,17 @@ void AudioEngine::loadAudioFile(int sampleID, String filePath)
 
 
 
-void AudioEngine::setParameter(int sampleID, int effectPosition, int parameterID, float value)
+void AudioEngine::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)
 {
     // TODO: Implement Parameter Smoothing
-    audioMixer->setParameter(sampleID, effectPosition, parameterID, value);
+    audioMixer->setEffectParameter(sampleID, effectPosition, parameterID, value);
+}
+
+
+void AudioEngine::setSampleParameter(int sampleID, int parameterID, float value)
+{
+    // TODO: Implement Parameter Smoothing
+    audioMixer->setSampleParameter(sampleID, parameterID, value);
 }
 
 
@@ -147,12 +154,12 @@ void AudioEngine::stopPlayback(int sampleID)
     audioMixer->stopPlayback(sampleID);
 }
 
-void AudioEngine::setButtonMode(int sampleID, ButtonMode mode)
+void AudioEngine::setButtonMode(int sampleID, int mode)
 {
     audioMixer->setButtonMode(sampleID, mode);
 }
 
-ButtonMode AudioEngine::getButtonMode(int sampleID)
+int AudioEngine::getButtonMode(int sampleID)
 {
     return audioMixer->getButtonMode(sampleID);
 }

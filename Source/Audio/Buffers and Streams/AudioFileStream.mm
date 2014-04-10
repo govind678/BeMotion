@@ -18,18 +18,23 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     m_iSampleID =   sampleID;
     m_bAudioCurrentlyPlaying    =   false;
     
+    m_iButtonMode               =   MODE_LOOP;
+    m_iQuantization             =   1;
+    m_iBeat                     =   1;
+    
     transportSource.setSource(nullptr);
     formatManager.registerBasicFormats();
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
+    audioEffectInitialized.clear();
     
     for (int effectNo = 0; effectNo < MIN_NUM_EFFECTS; effectNo++)
     {
         audioEffectSource.add(nullptr);
+        audioEffectInitialized.add(false);
     }
     
-    m_eButtonMode       =   ButtonMode::Loop;
-    
+
     thread.startThread(3);
 }
 
@@ -39,6 +44,8 @@ AudioFileStream::~AudioFileStream()
     transportSource.setSource(nullptr);
     
     currentAudioFileSource  =   nullptr;
+    
+    audioEffectInitialized.clear();
     
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
@@ -63,11 +70,15 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
     if (reader != nullptr)
     {
         currentAudioFileSource = new AudioFormatReaderSource (reader, true);
+        
+//        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
+        transportSource.setSource(currentAudioFileSource, 32768, &thread, reader->sampleRate);
+        transportSource.setGain(0.2);
+        
         if (m_iSampleID != 4)
         {
             currentAudioFileSource->setLooping(true);
         }
-        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
     }
 }
 
@@ -83,6 +94,7 @@ void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
     if (effectID == 0)
     {
         audioEffectSource.set(effectPosition, nullptr);
+        audioEffectInitialized.set(effectPosition, false);
     }
     
     
@@ -91,11 +103,13 @@ void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
         if (effectPosition < (MIN_NUM_EFFECTS - 1))
         {
             audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+            audioEffectInitialized.set(effectPosition, true);
         }
         
         else
         {
             audioEffectSource.add(new AudioEffectSource(effectID, 2));
+            audioEffectInitialized.add(true);
         }
     }
 }
@@ -104,6 +118,7 @@ void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
 void AudioFileStream::removeAudioEffect(int effectPosition)
 {
     audioEffectSource.set(effectPosition, nullptr);
+    audioEffectInitialized.set(effectPosition, false);
 }
 
 
@@ -135,7 +150,7 @@ void AudioFileStream::prepareToPlay(int samplesPerBlockExpected, double sampleRa
     {
         if (audioEffectSource.getUnchecked(effectNo) != nullptr)
         {
-            audioEffectSource.getUnchecked(effectNo)->audioDeviceAboutToStart(float(deviceManager.getCurrentAudioDevice()->getCurrentSampleRate()));
+            audioEffectSource.getUnchecked(effectNo)->audioDeviceAboutToStart(sampleRate);
         }
     }
 }
@@ -183,8 +198,12 @@ void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
 void AudioFileStream::startPlayback()
 {
     m_bAudioCurrentlyPlaying    =   true;
-    transportSource.setPosition(0);
-    transportSource.start();
+    
+    if (m_iButtonMode != MODE_BEATREPEAT)
+    {
+        transportSource.setPosition(0);
+        transportSource.start();
+    }
 }
 
 void AudioFileStream::stopPlayback()
@@ -206,46 +225,44 @@ void AudioFileStream::setLooping(bool looping)
 // Set and Get Audio Effect Parameters
 //==============================================================================
 
-void AudioFileStream::setParameter(int effectPosition, int parameterID, float value)
+void AudioFileStream::setEffectParameter(int effectPosition, int parameterID, float value)
 {
     if (parameterID == PARAM_BYPASS)
     {
         m_pbBypassStateArray.set(effectPosition, bool(value));
     }
     
-    else if (parameterID == PARAM_GAIN)
-    {
-        transportSource.setGain(value);
-    }
-    
-    else if (parameterID == PARAM_LOOP)
-    {
-        currentAudioFileSource->setLooping(bool(value));
-    }
-    
     else
     {
-        audioEffectSource.getUnchecked(effectPosition)->setParameter((parameterID), value);
+        if (audioEffectInitialized.getUnchecked(effectPosition))
+        {
+            audioEffectSource.getUnchecked(effectPosition)->setParameter((parameterID), value);
+        }
+    }
+}
+
+
+void AudioFileStream::setSampleParameter(int parameterID, float value)
+{
+    if (parameterID == PARAM_GAIN)
+    {
+        transportSource.setGain(value / 5.0f);
+    }
+    
+    else if (parameterID == PARAM_QUANTIZATION)
+    {
+        m_iQuantization = int(powf(2, int(MAX_QUANTIZATION - value + 0.5f)));
+//        std::cout << "Sample " << m_iSampleID << ": "<< m_iQuantization << std::endl;
     }
 }
 
 
 
-float AudioFileStream::getParameter(int effectPosition, int parameterID)
+float AudioFileStream::getEffectParameter(int effectPosition, int parameterID)
 {
     if (parameterID == PARAM_BYPASS)
     {
         return m_pbBypassStateArray.getUnchecked(effectPosition);
-    }
-    
-    else if (parameterID == PARAM_GAIN)
-    {
-        return transportSource.getGain();
-    }
-    
-    else if (parameterID == PARAM_LOOP)
-    {
-        return float(currentAudioFileSource->isLooping());
     }
     
     else
@@ -255,14 +272,43 @@ float AudioFileStream::getParameter(int effectPosition, int parameterID)
 }
 
 
-void AudioFileStream::setMode(ButtonMode mode)
+float AudioFileStream::getSampleParameter(int parameterID)
 {
-    m_eButtonMode = mode;
+    if (parameterID == PARAM_GAIN)
+    {
+        return transportSource.getGain();
+    }
+    
+    else if (parameterID == PARAM_QUANTIZATION)
+    {
+        return int(log2f(m_iQuantization + MAX_QUANTIZATION) + 0.5f);
+    }
+    
+    else
+    {
+        return 0.0f;
+    }
 }
 
-ButtonMode AudioFileStream::getMode()
+
+void AudioFileStream::setMode(int mode)
 {
-    return m_eButtonMode;
+    m_iButtonMode = mode;
+    
+    if (m_iButtonMode != MODE_LOOP)
+    {
+        setLooping(false);
+    }
+    
+    else
+    {
+        setLooping(true);
+    }
+}
+
+int AudioFileStream::getMode()
+{
+    return m_iButtonMode;
 }
 
 
@@ -275,4 +321,22 @@ void AudioFileStream::setSmoothing(int effectPosition, int parameterID, float sm
 int AudioFileStream::getEffectType(int effectPosition)
 {
     return audioEffectSource.getUnchecked(effectPosition)->getEffectType();
+}
+
+
+void AudioFileStream::beat(int beatNum)
+{
+    m_iBeat = beatNum % m_iQuantization;
+    
+    if (m_iButtonMode == MODE_BEATREPEAT)
+    {
+        if (m_bAudioCurrentlyPlaying)
+        {
+            if (m_iBeat == 0)
+            {
+                transportSource.setPosition(0);
+                transportSource.start();
+            }
+        }
+    }
 }

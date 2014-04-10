@@ -39,35 +39,32 @@ static int   m_iCurrentEffectPosition;
 
 - (IBAction)Slider1Changed:(UISlider *)sender
 {
-     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
+     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
     //redSample.sampleID = [NSNumber numberWithFloat:10];
 }
 
 
 - (IBAction)Slider2Changed:(UISlider *)sender {
-     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
+     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
 }
 
 
 - (IBAction)Slider3Changed:(UISlider *)sender {
-     _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
+     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
 }
 
 
 - (IBAction)gainSliderChanged:(UISlider *)sender
 {
-    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_GAIN, sender.value);
+    _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_GAIN, sender.value);
 }
-
-
-- (IBAction)loopingToggleButtonChanged:(UISwitch *)sender {
-    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_LOOP, sender.on);
-}
-
 
 - (IBAction)bypassToggleButtonChanged:(UISwitch *)sender {
-    _backEndInterface->setParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
+    _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
 }
+
+
+
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -133,7 +130,7 @@ static int   m_iCurrentEffectPosition;
     }
     
     
-    _backEndInterface->addAudioEffect(m_iCurrentSampleID, m_iCurrentEffectPosition, row);
+    _backEndInterface->addAudioEffect(m_iCurrentSampleID, m_iCurrentEffectPosition, (int)row);
     
 }
 
@@ -170,6 +167,35 @@ static int   m_iCurrentEffectPosition;
 
 }
 
+// Segmented Control for Button Mode
+- (IBAction)buttonModeChanged:(UISegmentedControl *)sender
+{
+    switch ((int)sender.selectedSegmentIndex)
+    {
+        case 0:
+            _backEndInterface->setMode(m_iCurrentSampleID, MODE_LOOP);
+            break;
+            
+        case 1:
+            _backEndInterface->setMode(m_iCurrentSampleID, MODE_TRIGGER);
+            break;
+            
+        case 2:
+            _backEndInterface->setMode(m_iCurrentSampleID, MODE_BEATREPEAT);
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+- (IBAction)quantizationSliderChanged:(UISlider *)sender
+{
+    _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION, (int)sender.value);
+}
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -204,7 +230,7 @@ static int   m_iCurrentEffectPosition;
             break;
     }
     
-    _backEndInterface->setParameter(_currentData.sampleID.intValue, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
+    _backEndInterface->setEffectParameter(_currentData.sampleID.intValue, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
 }
 
 - (void)viewDidLoad

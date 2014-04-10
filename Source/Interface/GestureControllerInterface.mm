@@ -30,11 +30,21 @@ void GestureControllerInterface::loadAudioFile(int sampleID, NSString *filepath)
     audioEngine->loadAudioFile(sampleID, String([filepath UTF8String]));
 }
 
-void GestureControllerInterface::setParameter(int sampleID, int effectPosition, int parameterID, float value)
+void GestureControllerInterface::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)
 {
-    audioEngine->setParameter(sampleID, effectPosition, parameterID, value);
+    audioEngine->setEffectParameter(sampleID, effectPosition, parameterID, value);
 }
 
+void GestureControllerInterface::setSampleParameter(int sampleID, int parameterID, float value)
+{
+    audioEngine->setSampleParameter(sampleID, parameterID, value);
+}
+
+
+void GestureControllerInterface::setMode(int sampleID, int mode)
+{
+    audioEngine->setButtonMode(sampleID, mode);
+}
 
 void GestureControllerInterface::addAudioEffect(int sampleID, int effectPosition, int effectID)
 {

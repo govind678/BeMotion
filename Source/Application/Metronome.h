@@ -12,8 +12,6 @@
 {
     float   tempo;
     int     numerator;
-    int     denominator;
-    int     quantization;
     BOOL    status;
     
     int         beat;
@@ -31,8 +29,7 @@
 
 
 - (void) setTempo           :   (float) newTempo;
-- (void) setNumerator       :   (int) newNumerator;
-- (void) setDenominator     :   (int) newDenominator;
+- (void) setMeter           :   (int)   newMeter;
 
 - (void) updateTimer;
 

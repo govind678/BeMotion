@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
 
-#define SAMPLING_RATE 1.0f
+# define SAMPLING_RATE 0.1f
+# define LIN_ACC_THRESHOLD  8.0f
 
 
 #import "SharedLibraryViewController.h"
@@ -222,19 +223,18 @@
 
 
 
-
 - (IBAction)modeSwitchToggled:(UISwitch *)sender
 {
     if (sender.on)
     {
         m_bModeToggleStatus = true;
-        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
+//        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
     }
     
     else
     {
         m_bModeToggleStatus = false;
-        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
+//        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
     }
     
 }
@@ -300,45 +300,51 @@
 - (void) motionDeviceUpdate: (CMDeviceMotion*) deviceMotion
 {
     
-    double attitude[3];
+//    double attitude[3];
     
-    attitude[0] = deviceMotion.attitude.roll;
-    attitude[1] = deviceMotion.attitude.pitch;
-    attitude[2] = deviceMotion.attitude.yaw;
+//    attitude[0] = deviceMotion.attitude.roll;
+//    attitude[1] = deviceMotion.attitude.pitch;
+//    attitude[2] = deviceMotion.attitude.yaw;
 //    [osc sendFloat:@"/attitude" : attitude : 3];
-//    backEndInterface->setParameter(0, 1, 0, ((attitude[0] + M_PI/2) * 2.0f));
+//    backEndInterface->setEffectParameter(0, 0, PARAM_1, ((deviceMotion.attitude.pitch + M_PI/2) * 2.0f));
+    backEndInterface->setEffectParameter(3, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+    backEndInterface->setEffectParameter(2, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+    backEndInterface->setEffectParameter(1, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+    backEndInterface->setEffectParameter(0, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+    
+    backEndInterface->setSampleParameter(2, PARAM_QUANTIZATION, (((deviceMotion.attitude.roll + M_PI_2) / M_PI) * 2.0f) + 4.0f);
 //    backEndInterface->setParameter(1, 1, 0, ((attitude[1] + M_PI/2) * 2.0f));
-//    backEndInterface->setParameter(int sampleID, int effectPosition, int parameterID, float value)
+//    backEndInterface->setParameter(int sampleID, int effectPosition, int parameterID, float value
     
-    double acceleration[3];
+//    double acceleration[3];
     
-    acceleration[0] = deviceMotion.userAcceleration.x;
-    acceleration[1] = deviceMotion.userAcceleration.y;
-    acceleration[2] = deviceMotion.userAcceleration.z;
+//    acceleration[0] = deviceMotion.userAcceleration.x;
+//    acceleration[1] = deviceMotion.userAcceleration.y;
+//    acceleration[2] = deviceMotion.userAcceleration.z;
     [self processUserAcceleration:deviceMotion.userAcceleration];
 //    [osc sendFloat:@"/acceleration" : acceleration : 3];
     
     
-    double quaternion[4];
+//    double quaternion[4];
     
-    quaternion[0] = deviceMotion.attitude.quaternion.w;
-    quaternion[1] = deviceMotion.attitude.quaternion.x;
-    quaternion[2] = deviceMotion.attitude.quaternion.y;
-    quaternion[3] = deviceMotion.attitude.quaternion.z;
+//    quaternion[0] = deviceMotion.attitude.quaternion.w;
+//    quaternion[1] = deviceMotion.attitude.quaternion.x;
+//    quaternion[2] = deviceMotion.attitude.quaternion.y;
+//    quaternion[3] = deviceMotion.attitude.quaternion.z;
 //    [osc sendFloat:@"/quaternion" : quaternion : 4];
     
     
-    double rotationRate[3];
-    rotationRate[0] = deviceMotion.rotationRate.x;
-    rotationRate[1] = deviceMotion.rotationRate.y;
-    rotationRate[2] = deviceMotion.rotationRate.z;
+//    double rotationRate[3];
+//    rotationRate[0] = deviceMotion.rotationRate.x;
+//    rotationRate[1] = deviceMotion.rotationRate.y;
+//    rotationRate[2] = deviceMotion.rotationRate.z;
 //    [osc sendFloat:@"/rotationRate" : rotationRate : 3];
     
     
-    double gravity[3];
-    gravity[0] = deviceMotion.gravity.x;
-    gravity[1] = deviceMotion.gravity.y;
-    gravity[2] = deviceMotion.gravity.z;
+//    double gravity[3];
+//    gravity[0] = deviceMotion.gravity.x;
+//    gravity[1] = deviceMotion.gravity.y;
+//    gravity[2] = deviceMotion.gravity.z;
 //    [osc sendFloat:@"/gravity" : gravity : 3];
     
 }
@@ -348,12 +354,10 @@
 
 - (void)processUserAcceleration: (CMAcceleration) userAcceleration
 {
-    double threshold = 8.0f;
-    
-    
     double amplitude = pow( (pow(userAcceleration.x, 2) + pow(userAcceleration.y, 2) + pow(userAcceleration.z, 2)), 0.5);
     
-    if (amplitude > threshold || amplitude < -threshold) {
+    if (amplitude > LIN_ACC_THRESHOLD || amplitude < -(LIN_ACC_THRESHOLD))
+    {
 //        [osc sendBang:@"/trigger"];
         backEndInterface->startPlayback(4);
     }

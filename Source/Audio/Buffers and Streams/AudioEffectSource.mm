@@ -83,23 +83,22 @@ void AudioEffectSource::setSmoothing(int parameterID, float smoothing)
 
 void AudioEffectSource::setParameter(int parameterID, float value)
 {
-    std::cout << "Param" << parameterID-4 << " Unsmooth: " << value << "\tSmooth: ";
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            m_pcTremolo->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
+            m_pcTremolo->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
             break;
         
         case EFFECT_DELAY:
-            m_pcDelay->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
+            m_pcDelay->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
             break;
            
         case EFFECT_VIBRATO:
-            m_pcVibrato->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
+            m_pcVibrato->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
             break;
             
         case EFFECT_WAH:
-            m_pcWah->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 4)->process(value));
+            m_pcWah->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
             break;
             
         default:
@@ -116,15 +115,15 @@ float AudioEffectSource::getParameter(int parameterID)
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            return m_pcTremolo->getParam(parameterID);
+            return m_pcTremolo->getParam(parameterID - 1);
             break;
             
         case EFFECT_DELAY:
-            return m_pcDelay->getParam(parameterID);
+            return m_pcDelay->getParam(parameterID - 1);
             break;
             
         case EFFECT_VIBRATO:
-            return m_pcVibrato->getParam(parameterID);
+            return m_pcVibrato->getParam(parameterID - 1);
             
         case EFFECT_WAH:
 //            return m_pcWah->getParam(parameterID);
