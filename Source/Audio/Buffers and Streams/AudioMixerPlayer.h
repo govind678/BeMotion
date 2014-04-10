@@ -15,6 +15,8 @@
 #include "GestureControllerHeader.h"
 #include "AudioFileStream.h"
 
+#include "AutoLimiter.h"
+
 class AudioMixerPlayer  :   public AudioIODeviceCallback
 {
     
@@ -66,6 +68,8 @@ private:
     MixerAudioSource                    audioMixer;
     OwnedArray<AudioFileStream>         audioFileStream;
     AudioSourcePlayer                   audioSourcePlayer;
+    
+    ScopedPointer<AutoLimiter<>>        m_pcAutoLimiter;
 };
 
 

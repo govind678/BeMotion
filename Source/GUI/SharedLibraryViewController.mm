@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
 
-# define SAMPLING_RATE 0.1f
+# define SAMPLING_RATE 0.05f
 # define LIN_ACC_THRESHOLD  8.0f
 
 

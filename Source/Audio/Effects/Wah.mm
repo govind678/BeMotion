@@ -76,5 +76,12 @@ void CWah::process(float **inputBuffer, int numFrames, bool bypass)
 
 CWah::~CWah()
 {
-	delete [] buff;
+    for (int i=0; i < m_iNumChannels; i++)
+    {
+        delete [] buff[i];
+    }
+	
+    delete [] buff;
+    
+    buff = nullptr;
 }

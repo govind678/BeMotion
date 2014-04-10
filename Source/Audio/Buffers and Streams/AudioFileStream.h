@@ -15,6 +15,7 @@
 #include "Macros.h"
 
 #include "AudioEffectSource.h"
+#include "AutoLimiter.h"
 
 
 class AudioFileStream        :   public AudioSource
@@ -74,6 +75,8 @@ private:
     OwnedArray<AudioEffectSource>   audioEffectSource;
     Array<bool>                     m_pbBypassStateArray;
     Array<bool>                     audioEffectInitialized;
+    
+    ScopedPointer<AutoLimiter<>>    m_pcAutoLimiter;
     
     TimeSliceThread thread;
     

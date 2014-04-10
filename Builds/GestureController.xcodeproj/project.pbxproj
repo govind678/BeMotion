@@ -76,6 +76,7 @@
 		FC2E8B9818F54AF700F09FEC /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback2.wav; sourceTree = "<group>"; };
 		FC2E8B9918F54AF700F09FEC /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback3.wav; sourceTree = "<group>"; };
 		FC2E8B9A18F54AF700F09FEC /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback4.wav; sourceTree = "<group>"; };
+		FC2E8BA018F6901D00F09FEC /* AutoLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLimiter.h; sourceTree = "<group>"; };
 		FC5C65E018CDB1C300CA9B79 /* GestureController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GestureController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5C65E318CDB1C300CA9B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1252,6 +1253,7 @@
 				FC5C663418CDB32700CA9B79 /* LFO.h */,
 				FC5C663518CDB32700CA9B79 /* LFO.mm */,
 				FC5C663618CDB32700CA9B79 /* RingBuffer.h */,
+				FC2E8BA018F6901D00F09FEC /* AutoLimiter.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";

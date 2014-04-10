@@ -24,6 +24,8 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     
     audioSourcePlayer.setSource(&audioMixer);
     
+    m_pcAutoLimiter =   new AutoLimiter<>();
+    
     deviceManager.addAudioCallback(this);
 }
 
@@ -31,6 +33,9 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
 AudioMixerPlayer::~AudioMixerPlayer()
 {
     deviceManager.removeAudioCallback(this);
+    
+    m_pcAutoLimiter =   nullptr;
+    
     audioFileStream.clear(true);
     audioSourcePlayer.setSource(0);
     
@@ -175,12 +180,15 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
 
 {
 	audioSourcePlayer.audioDeviceIOCallback (inputChannelData, totalNumInputChannels, outputChannelData, totalNumOutputChannels, numSamples);
+    
+//    m_pcAutoLimiter->Process(numSamples, outputChannelData);
 }
 
 
 void AudioMixerPlayer::audioDeviceAboutToStart (AudioIODevice* device)
 {
 	audioSourcePlayer.audioDeviceAboutToStart (device);
+//    m_pcAutoLimiter->Setup(device->getCurrentSampleRate());
 }
 
 

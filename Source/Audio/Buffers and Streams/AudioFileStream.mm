@@ -35,6 +35,8 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     }
     
 
+    m_pcAutoLimiter = new AutoLimiter<>();
+    
     thread.startThread(3);
 }
 
@@ -49,6 +51,8 @@ AudioFileStream::~AudioFileStream()
     
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
+    
+    m_pcAutoLimiter     =   nullptr;
 
     thread.stopThread(20);
 }
@@ -153,6 +157,8 @@ void AudioFileStream::prepareToPlay(int samplesPerBlockExpected, double sampleRa
             audioEffectSource.getUnchecked(effectNo)->audioDeviceAboutToStart(sampleRate);
         }
     }
+    
+//    m_pcAutoLimiter->Setup(sampleRate);
 }
 
 
@@ -185,6 +191,8 @@ void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
         }
         
     }
+    
+//    m_pcAutoLimiter->Process(numSamples, audioBuffer);
 }
 
 

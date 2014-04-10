@@ -75,6 +75,8 @@ private:
     CLFO** m_CLFO;
     
     float* m_pfLFOBuffer;
+    
+    bool       m_bLFOInitialized;
 };
 
 
