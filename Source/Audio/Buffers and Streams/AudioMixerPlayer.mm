@@ -19,12 +19,16 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     for (int sampleNo = 0; sampleNo < NUM_SAMPLE_SOURCES; sampleNo++)
     {
         audioFileStream.add(new AudioFileStream(sampleNo, deviceManager));
+        audioMixer.addInputSource(audioFileStream.getUnchecked(sampleNo), false);
     }
     
     
     audioSourcePlayer.setSource(&audioMixer);
     
-    m_pcAutoLimiter =   new AutoLimiter<>();
+    m_pcAutoLimiter         = new AutoLimiter<>();
+    m_pcAudioFileRecorder   = new AudioFileRecord(deviceManager);
+    
+    m_bRecording            = false;
     
     deviceManager.addAudioCallback(this);
 }
@@ -34,7 +38,8 @@ AudioMixerPlayer::~AudioMixerPlayer()
 {
     deviceManager.removeAudioCallback(this);
     
-    m_pcAutoLimiter =   nullptr;
+    m_pcAutoLimiter         =   nullptr;
+    m_pcAudioFileRecorder   =   nullptr;
     
     audioFileStream.clear(true);
     audioSourcePlayer.setSource(0);
@@ -48,14 +53,8 @@ AudioMixerPlayer::~AudioMixerPlayer()
 
 
 void AudioMixerPlayer::loadAudioFile(int sampleID, String filePath)
-{
-    if (audioFileStream.getUnchecked(sampleID) != nullptr)
-    {
-        audioMixer.removeInputSource(audioFileStream.getUnchecked(sampleID));
-    }
-    
+{    
     audioFileStream.getUnchecked(sampleID)->loadAudioFile(filePath);
-    audioMixer.addInputSource(audioFileStream.getUnchecked(sampleID), true);
 }
 
 
@@ -70,6 +69,19 @@ void AudioMixerPlayer::startPlayback(int sampleID)
 void AudioMixerPlayer::stopPlayback(int sampleID)
 {
     audioFileStream.getUnchecked(sampleID)->stopPlayback();
+}
+
+void AudioMixerPlayer::startRecordingOutput(String filePath)
+{
+    m_pcAudioFileRecorder->startRecording(filePath, false);
+    m_bRecording    =   true;
+    
+}
+
+void AudioMixerPlayer::stopRecordingOutput()
+{
+    m_pcAudioFileRecorder->stopRecording();
+    m_bRecording    =   false;
 }
 
 
@@ -181,6 +193,23 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
 {
 	audioSourcePlayer.audioDeviceIOCallback (inputChannelData, totalNumInputChannels, outputChannelData, totalNumOutputChannels, numSamples);
     
+    
+    if (m_bRecording)
+    {
+        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+        {
+            FloatVectorOperations::multiply(outputChannelData[channel], 4.0f, numSamples);
+        }
+        
+        m_pcAudioFileRecorder->writeBuffer(outputChannelData, numSamples);
+        
+        
+        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+        {
+            FloatVectorOperations::multiply(outputChannelData[channel], 0.25f, numSamples);
+        }
+    }
+    
 //    m_pcAutoLimiter->Process(numSamples, outputChannelData);
 }
 
@@ -188,6 +217,7 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
 void AudioMixerPlayer::audioDeviceAboutToStart (AudioIODevice* device)
 {
 	audioSourcePlayer.audioDeviceAboutToStart (device);
+    m_pcAudioFileRecorder->audioDeviceAboutToStart(device);
 //    m_pcAutoLimiter->Setup(device->getCurrentSampleRate());
 }
 
@@ -195,4 +225,5 @@ void AudioMixerPlayer::audioDeviceAboutToStart (AudioIODevice* device)
 void AudioMixerPlayer::audioDeviceStopped()
 {
 	audioSourcePlayer.audioDeviceStopped();
+    m_pcAudioFileRecorder->audioDeviceStopped();
 }

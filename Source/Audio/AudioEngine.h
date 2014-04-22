@@ -47,6 +47,11 @@ public:
     void startRecordingAudioSample(int sampleID);
     void stopRecordingAudioSample(int sampleID);
     
+    void startRecordingMaster(int sampleID);
+    void stopRecordingMaster(int sampleID);
+    
+    void toggleRecordingPlaybackSample(int sampleID, bool toggle);
+    
     void setButtonMode(int sampleID, int mode);
     int getButtonMode(int sampleID);
     
@@ -65,8 +70,9 @@ private:
     StringArray         playbackFilePathArray;
     
     
-    String  currentRecordingPath;
-    String  currentPlaybackPath;
+    String              currentRecordingPath;
+    String              currentPlaybackPath;
+    
     
     AudioDeviceManager sharedAudioDeviceManager;
     

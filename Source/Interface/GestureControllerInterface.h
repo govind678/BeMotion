@@ -40,6 +40,11 @@ public:
     void startRecording(int sampleID);
     void stopRecording(int sampleID);
     
+    void startRecordingOutput(int sampleID);
+    void stopRecordingOutput(int sampleID);
+    
+    void togglePlaybackRecordingFile(int sampleID, bool toggle);
+    
     void beat(int beatNo);
     //========================================================
     

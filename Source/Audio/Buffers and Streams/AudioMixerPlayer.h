@@ -16,6 +16,7 @@
 #include "AudioFileStream.h"
 
 #include "AutoLimiter.h"
+#include "AudioFileRecord.h"
 
 class AudioMixerPlayer  :   public AudioIODeviceCallback
 {
@@ -44,6 +45,9 @@ public:
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);
     
+    void startRecordingOutput(String filePath);
+    void stopRecordingOutput();
+    
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
     
@@ -70,6 +74,10 @@ private:
     AudioSourcePlayer                   audioSourcePlayer;
     
     ScopedPointer<AutoLimiter<>>        m_pcAutoLimiter;
+    
+    ScopedPointer<AudioFileRecord>      m_pcAudioFileRecorder;
+    
+    bool                                m_bRecording;
 };
 
 

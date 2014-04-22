@@ -29,7 +29,7 @@ AudioFileRecord::~AudioFileRecord()
 }
 
 
-void AudioFileRecord::startRecording(String filePath)
+void AudioFileRecord::startRecording(String filePath, bool internalCallback)
 {
     m_sCurrentFilePath  =   filePath;
     
@@ -37,8 +37,10 @@ void AudioFileRecord::startRecording(String filePath)
     stopRecording();
     File file(m_sCurrentFilePath);
     
-    
-    deviceManager.addAudioCallback(this);
+    if (internalCallback)
+    {
+        deviceManager.addAudioCallback(this);
+    }
     
     if (sampleRate > 0)
     {
@@ -54,18 +56,19 @@ void AudioFileRecord::startRecording(String filePath)
             
             if (writer != nullptr)
             {
+                
                 fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
+                
                 
                 // Now we'll create one of these helper objects which will act as a FIFO buffer, and will
                 // write the data to disk on our background thread.
                 threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, backgroundThread, 32768);
                 
-                // Reset our recording thumbnail
-                nextSampleNum = 0;
                 
                 // And now, swap over our active writer pointer so that the audio callback will start using it..
                 const ScopedLock sl (writerLock);
                 activeWriter = threadedWriter;
+                
             }
         }
     }
@@ -133,6 +136,16 @@ void AudioFileRecord::audioDeviceIOCallback (const float** inputChannelData, int
             FloatVectorOperations::clear (outputChannelData[i], numSamples);
 }
 
+
+void AudioFileRecord::writeBuffer(float **buffer, int blockSize)
+{
+    const ScopedLock sl (writerLock);
+    
+    if (activeWriter != nullptr)
+    {
+        activeWriter->write (buffer, blockSize);
+    }
+}
 
 
 bool AudioFileRecord::isRecording()

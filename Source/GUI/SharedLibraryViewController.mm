@@ -8,6 +8,7 @@
 
 # define SAMPLING_RATE 0.05f
 # define LIN_ACC_THRESHOLD  8.0f
+#define  NUM_BUTTONS        4
 
 
 #import "SharedLibraryViewController.h"
@@ -63,6 +64,15 @@
 
     
     backEndInterface          =   new GestureControllerInterface;
+    
+    m_pbPlaybackToggle        =   new bool [NUM_BUTTONS];
+    m_pbRecordToggle          =   new bool [NUM_BUTTONS];
+    
+    for (int i=0; i < NUM_BUTTONS; i++)
+    {
+        m_pbRecordToggle[i]     = false;
+        m_pbPlaybackToggle[i]   = false;
+    }
 
     
     NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"Playback0" ofType:@"wav"];
@@ -364,6 +374,186 @@
 }
 
 
+- (IBAction)redButtonRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecording(0);
+    
+}
+
+
+- (IBAction)redButtonRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecording(0);
+}
+
+
+
+- (IBAction)redButtonPlaybackFileToggle:(UIButton *)sender {
+    
+    if (m_pbPlaybackToggle[0])
+    {
+        sender.alpha = 0.2f;
+        m_pbPlaybackToggle[0] = false;
+        backEndInterface->togglePlaybackRecordingFile(0, true);
+    }
+    
+    else
+    {
+        sender.alpha = 1.0f;
+        m_pbPlaybackToggle[0] = true;
+        backEndInterface->togglePlaybackRecordingFile(0, false);
+    }
+}
+
+- (IBAction)redButtonMasterRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecordingOutput(0);
+}
+
+- (IBAction)redButtonMasterRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecordingOutput(0);
+}
+
+
+- (IBAction)blueButtonRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecording(1);
+    
+}
+
+- (IBAction)blueButtonRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecording(1);
+}
+
+
+
+- (IBAction)blueButtonPlaybackFileToggle:(UIButton *)sender {
+    
+    if (m_pbPlaybackToggle[1])
+    {
+        sender.alpha = 0.4f;
+        m_pbPlaybackToggle[1] = false;
+        backEndInterface->togglePlaybackRecordingFile(1, true);
+    }
+    
+    else
+    {
+        sender.alpha = 1.0f;
+        m_pbPlaybackToggle[1] = true;
+        backEndInterface->togglePlaybackRecordingFile(1, false);
+    }
+
+}
+
+- (IBAction)blueButtonMasterRecordDown:(UIButton *)sender {
+
+    sender.alpha = 1.0f;
+    backEndInterface->startRecordingOutput(1);
+}
+
+- (IBAction)blueButtonMasterRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecordingOutput(1);
+}
+
+
+
+- (IBAction)greenButtonRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecording(2);
+}
+
+- (IBAction)greenButtonRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.4f;
+    backEndInterface->stopRecording(2);
+}
+
+
+- (IBAction)greenButtonPlaybackFileToggle:(UIButton *)sender {
+    
+    if (m_pbPlaybackToggle[2])
+    {
+        sender.alpha = 0.4f;
+        m_pbPlaybackToggle[2] = false;
+        backEndInterface->togglePlaybackRecordingFile(2, true);
+    }
+    
+    else
+    {
+        sender.alpha = 1.0f;
+        m_pbPlaybackToggle[2] = true;
+        backEndInterface->togglePlaybackRecordingFile(2, false);
+    }
+
+}
+
+- (IBAction)greenButtonMasterRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecordingOutput(2);
+}
+
+- (IBAction)greenButtonMasterRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecordingOutput(2);
+}
+
+
+
+- (IBAction)yellowButtonRecordDown:(UIButton *)sender {
+    sender.alpha = 2.0f;
+    backEndInterface->startRecording(3);
+}
+
+
+- (IBAction)yellowButtonRecordUp:(UIButton *)sender {
+    sender.alpha = 0.4f;
+    backEndInterface->stopRecording(3);
+}
+
+
+- (IBAction)yellowButtonPlaybackFileToggle:(UIButton *)sender {
+    
+    if (m_pbPlaybackToggle[3])
+    {
+        sender.alpha = 0.4f;
+        m_pbPlaybackToggle[3] = false;
+        backEndInterface->togglePlaybackRecordingFile(3, true);
+    }
+    
+    else
+    {
+        sender.alpha = 1.0f;
+        m_pbPlaybackToggle[3] = true;
+        backEndInterface->togglePlaybackRecordingFile(3, false);
+    }
+    
+}
+
+- (IBAction)yellowButtonMasterRecordDown:(UIButton *)sender {
+    
+    sender.alpha = 1.0f;
+    backEndInterface->startRecordingOutput(3);
+}
+
+- (IBAction)yellowButtonMasterRecordUp:(UIButton *)sender {
+    
+    sender.alpha = 0.2f;
+    backEndInterface->stopRecordingOutput(3);
+}
+
 
 
 
@@ -375,6 +565,8 @@
     [metronome dealloc];
     
     delete backEndInterface;
+    delete [] m_pbPlaybackToggle;
+    delete [] m_pbRecordToggle;
     
     [super dealloc];
 }

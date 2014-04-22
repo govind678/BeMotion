@@ -26,8 +26,8 @@ AudioEngine::AudioEngine()
 //    liveAudioStream     =   new AudioStream();
     
     
-    currentRecordingPath =  File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/Recording";
-    currentPlaybackPath  =  File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/Playback";
+    currentRecordingPath        = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/Recording";
+    currentPlaybackPath         = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/Playback";
     
     recordingFilePathArray.clear();
     playbackFilePathArray.clear();
@@ -38,10 +38,7 @@ AudioEngine::AudioEngine()
     for (int i = 0; i < NUM_SAMPLE_SOURCES; i++)
     {
         recordingFilePathArray.add(currentRecordingPath + String(i) + ".wav");
-//        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
-        
-//        audioMixer->loadAudioFile(i, playbackFilePathArray.getUnchecked(i));
-//        std::cout << playbackFilePathArray.getUnchecked(i) << std::endl;
+        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
     }
 }
 
@@ -98,6 +95,21 @@ bool AudioEngine::isLiveAudioRunning()
 void AudioEngine::loadAudioFile(int sampleID, String filePath)
 {
     audioMixer->loadAudioFile(sampleID, filePath);
+    playbackFilePathArray.set(sampleID, filePath);
+}
+
+
+void AudioEngine::toggleRecordingPlaybackSample(int sampleID, bool toggle)
+{
+    if (toggle)
+    {
+        audioMixer->loadAudioFile(sampleID, recordingFilePathArray.getReference(sampleID));
+    }
+    
+    else
+    {
+        audioMixer->loadAudioFile(sampleID, playbackFilePathArray.getReference(sampleID));
+    }
 }
 
 
@@ -132,15 +144,27 @@ int AudioEngine::getEffectType(int sampleID, int effectPosition)
 void AudioEngine::startRecordingAudioSample(int sampleID)
 {
     audioMixer->stopPlayback(sampleID);
-    audioFileRecorder->startRecording(recordingFilePathArray.getReference(sampleID));
+    audioFileRecorder->startRecording(recordingFilePathArray.getReference(sampleID), true);
 }
 
 
 void AudioEngine::stopRecordingAudioSample(int sampleID)
 {
     audioFileRecorder->stopRecording();
+    audioMixer->loadAudioFile(sampleID, recordingFilePathArray.getReference(sampleID));
 }
 
+
+void AudioEngine::startRecordingMaster(int sampleID)
+{
+    audioMixer->startRecordingOutput(recordingFilePathArray.getReference(sampleID));
+}
+
+void AudioEngine::stopRecordingMaster(int sampleID)
+{
+    audioMixer->stopRecordingOutput();
+    audioMixer->loadAudioFile(sampleID, recordingFilePathArray.getReference(sampleID));
+}
 
 
 void AudioEngine::startPlayback(int sampleID)

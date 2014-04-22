@@ -57,7 +57,10 @@ void GestureControllerInterface::removeAudioEffect(int sampleID, int effectPosit
     audioEngine->removeAudioEffect(sampleID, effectPosition);
 }
 
-
+void GestureControllerInterface::togglePlaybackRecordingFile(int sampleID, bool toggle)
+{
+    audioEngine->toggleRecordingPlaybackSample(sampleID, toggle);
+}
 
 
 //==============================================================================
@@ -79,7 +82,7 @@ void GestureControllerInterface::stopPlayback(int sampleID)
 
 void GestureControllerInterface::startRecording(int sampleID)
 {
-    audioEngine->stopRecordingAudioSample(sampleID);
+    audioEngine->startRecordingAudioSample(sampleID);
 }
 
 
@@ -88,6 +91,15 @@ void GestureControllerInterface::stopRecording(int sampleID)
     audioEngine->stopRecordingAudioSample(sampleID);
 }
 
+void GestureControllerInterface::startRecordingOutput(int sampleID)
+{
+    audioEngine->startRecordingMaster(sampleID);
+}
+
+void GestureControllerInterface::stopRecordingOutput(int sampleID)
+{
+    audioEngine->stopRecordingMaster(sampleID);
+}
 
 void GestureControllerInterface::beat(int beatNo)
 {

@@ -22,9 +22,8 @@ public:
     AudioFileRecord(AudioDeviceManager& sharedDeviceManager);
     ~AudioFileRecord();
     
-    void startRecording(String filePath);
+    void startRecording(String filePath, bool internalCallback);
     void stopRecording();
-    
     
     
     void audioDeviceAboutToStart (AudioIODevice* device) override;
@@ -33,6 +32,7 @@ public:
                                 float** outputChannelData, int numOutputChannels,
                                 int numSamples) override;
     
+    void writeBuffer(float** buffer, int blockSize);
     
     bool isRecording();
     

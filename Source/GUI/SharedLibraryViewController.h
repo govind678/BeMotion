@@ -23,6 +23,9 @@
     bool m_bModeToggleStatus;       // if settings mode, segue to effectSettings scene, else start playback
     
     Metronome*                      metronome;
+    
+    bool* m_pbRecordToggle;
+    bool* m_pbPlaybackToggle;
 }
 
 
