@@ -1,4 +1,4 @@
-MotionMusic
+BeMotion
 =================
 
 iOS/Android application that uses motion gestures to control audio effects
