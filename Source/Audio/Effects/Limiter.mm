@@ -71,19 +71,19 @@ void CLimiter::setParam(int type, float value)
 	switch(type)
 	{
 		
-		case 0:
+		case PARAM_1:
 			if (value > 0.0f)
             {
 				m_fAttackInSec	= value;
             }
 		break;
 		            
-		case 1:
+		case PARAM_2:
 			if (value >= 0.0f)
 				m_fReleaseInSec = value;
 		break;
 		      
-		case 2:
+		case PARAM_3:
 			if (value >= 0.0f)
 				m_fThresh = value;
 		break;
@@ -134,17 +134,17 @@ float CLimiter::getParam(int type)
     switch(type)
 	{
 		
-		case 0:
+		case PARAM_1:
             return m_fAttackInSec;
             break;
             
             
-		case 1:
+		case PARAM_2:
 			return m_fReleaseInSec;
             break;
             
             
-		case 2:
+		case PARAM_3:
 			return m_fThresh;
             break;
             

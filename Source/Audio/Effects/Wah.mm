@@ -35,9 +35,9 @@ void CWah::calculateCoeffs()
 	m_fQ			= powf(2.0, 2.5*(1.0 - m_fTheta)+1);
 	m_fReso			= 450.0 * (powf(2.0, 2.0 * m_fQscale * m_fTheta));
 	m_fFrn			= m_fReso / m_fSampleRate;
-	m_fPoleAngle	=  2.0 * 3.14159 /*M_PI*/ * m_fFrn;
-	m_fCoeff2		= -2.0 * (1 - 3.14159 /*M_PI*/* m_fFrn / m_fQ) * cos(m_fPoleAngle);
-	m_fCoeff3		= (1.0 - 3.14159 /*M_PI*/ * m_fFrn / m_fQ)*(1.0 - 3.14159 /*M_PI*/ * m_fFrn / m_fQ);
+	m_fPoleAngle	=  2.0 * M_PI * m_fFrn;
+	m_fCoeff2		= -2.0 * (1 - M_PI* m_fFrn / m_fQ) * cos(m_fPoleAngle);
+	m_fCoeff3		= (1.0 - M_PI * m_fFrn / m_fQ)*(1.0 - M_PI * m_fFrn / m_fQ);
 
 }
 void CWah::setParam(/*hFile::enumType type*/ int type, float value)
@@ -45,7 +45,7 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 	switch(type)
 	{
 		// gain
-		case 0:
+		case PARAM_1:
 
 			if (0.0 <= value && value <= 1.0){
 
@@ -55,7 +55,7 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 				
 		break;
 
-		case 1:
+		case PARAM_2:
 
 			if (0.0 <= value && value <= 1.0){
 
@@ -65,7 +65,7 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 
 		break;
 
-		case 2:
+		case PARAM_3:
 
 			if (0.0 <= value && value <= 1.0){
 
@@ -77,6 +77,30 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 			break;
 	}
 }
+void CWah::getParam(/*hFile::enumType type*/ int type, float value)
+{
+	switch(type)
+	{
+		// gain
+		case PARAM_1:
+
+				return m_fGainScale;
+				break;
+
+		case PARAM_2:
+
+				return m_fTheta;
+				break;
+
+		case PARAM_3:
+
+				return m_fQscale;
+				break;
+		default: 
+			break;
+	}
+}
+
 
 void CWah::process(float **inputBuffer, int numFrames, bool bypass)
 {

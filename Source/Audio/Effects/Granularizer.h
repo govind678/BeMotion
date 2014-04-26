@@ -4,7 +4,7 @@
 #include "RingBuffer.h"
 #include <Math.h>
 #include <stdio.h>
-//#include "Macros.h"
+#include "Macros.h"
 #include <algorithm>
 
 #define MAX_DELAY_SAMPLES 250000

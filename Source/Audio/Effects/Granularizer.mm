@@ -77,20 +77,20 @@ void CGranularizer::setParam(int type, float value)
 	switch(type)
 	{
 		
-		case 0:
+		case PARAM_1:
 			if (0.0f <=value && value <= 1.0f)
             {
 				m_fGrainSize	= value;
             }
 		break;  
 
-		case 1:
+		case PARAM_2:
 			if (value >= 0.05f)
 				m_fGrainTime	= value;
 				//setParam(0, (value + getParam(0)) * 0.5);
 		break;   
 
-		case 2:
+		case PARAM_3:
 			if (0.0f <=value && value <= 1.0f)
 				m_fPoolSize		= value;
 		break;
@@ -141,8 +141,6 @@ void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
 
 			while (m_iCount < numFrames)
 			{
-				//std::cout << m_iCount << std::endl;
-				//std::cout << m_iNextGrain[c] << std::endl
 
 				// check if we still have samples from the grain buffer to read:
 				if (m_ppfGrainBuffer[c]->getReadIdx() != m_ppfGrainBuffer[c]->getWriteIdx())
@@ -198,12 +196,6 @@ void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
 					m_iNextGrainCount[c]	= m_iNextGrainCount[c] - 1;
 				}
 			}
-			/*
-			// the index of the next grain start point could be greater than the block size. if so decrease it by the blocksize:
-			if (m_iNextGrain[c] > numFrames)
-				m_iNextGrain[c] = m_iNextGrain[c] - numFrames;
-				*/
-
 		}   
     }
 }
@@ -213,17 +205,17 @@ float CGranularizer::getParam(int type)
     switch(type)
 	{
 		
-		case 0:
+		case PARAM_1:
             return m_fGrainSize;
             break;
             
             
-		case 1:
+		case PARAM_2:
 			return m_fGrainTime;
             break;
             
             
-		case 2:
+		case PARAM_3:
 			return m_fPoolSize;
             break;
             
