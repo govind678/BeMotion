@@ -48,7 +48,7 @@ void CDelay::initializeWithDefaultParameters()
 {
     m_fFeedBack             =   0.5f;
     m_fWetDry               =   0.5f;
-    m_fDelayTime_s          =   2.0f;
+    m_fDelayTime_s          =   0.5f;
 }
 
 
@@ -71,8 +71,7 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 {
 	switch(type)
 	{
-		case PARAM_1:
-			// delayTime_target	= value;
+		case 0:
 			if (value > 0.0f)
             {
 				m_fDelayTime_s = value;
@@ -80,15 +79,13 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 		break;
             
             
-		case PARAM_2:
-			// feedBack_target		= value;
+		case 1:
 			if (value >= 0 && value <= 1)
 				m_fFeedBack = value;
 		break;
             
             
-		case PARAM_3:
-			// wetDry_target		= value;
+		case 2:
 			if (abs(value) <= 1)
 				m_fWetDry = value;
 		break;
@@ -131,23 +128,29 @@ void CDelay::process(float** audioBuffer, int numFrames, bool bypass)
     }
 }
 
-
+void CDelay::finishPlayback()
+{
+	 for (int n = 0; n < m_iNumChannels; n++)
+    {
+        ringBuffer[n]->resetInstance();
+    }
+}
 
 float CDelay::getParam(int type)
 {
     switch(type)
 	{
-		case PARAM_1:
+		case 0:
             return m_fDelayTime_s;
             break;
             
             
-		case PARAM_2:
+		case 1:
 			return m_fFeedBack;
             break;
             
             
-		case PARAM_3:
+		case 2:
 			return	m_fWetDry;
             break;
             

@@ -13,7 +13,7 @@
 #define __CDelay_hdr__
 
 #include "RingBuffer.h"
-#include "Macros.h"
+//#include "Macros.h"
 
 #define MAX_DELAY_SAMPLES 100000
 
@@ -42,7 +42,7 @@ public:
 	void finishPlaying();
 	void process(float **audioBuffer, int numFrames, bool bypass);
 
-	
+	void finishPlayback();
     
 	
 private:

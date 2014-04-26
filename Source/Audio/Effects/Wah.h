@@ -2,7 +2,7 @@
 #define __Wah_hdr__
 
 #include <Math.h>
-#include "Macros.h"
+//#include "Macros.h"
 
 /*	Wah
 	----------------
@@ -30,6 +30,8 @@ public:
 
 private:
 
+	void calculateCoeffs();
+
 	float **buff;
 
 	float m_fTempVal;
@@ -39,6 +41,8 @@ private:
 
 	float m_fGain;
 	float m_fTheta;		// pedal value
+	float m_fQscale;
+	float m_fGainScale;
 
 	float m_fReso;
 	float m_fQ;

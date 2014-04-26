@@ -24,34 +24,54 @@ void CWah::prepareToPlay(float sampleRate)
 
 void CWah::initDefaults()
 {
-	setParam(0, 1.0);
-	setParam(1, 0.3);
+	setParam(0, 0.0);
+	setParam(1, 1.0);
+	setParam(2, 1.0);
 }
 
+void CWah::calculateCoeffs()
+{
+	m_fGain			= m_fGainScale*0.1*(powf(4.0, m_fTheta+0.1));
+	m_fQ			= powf(2.0, 2.5*(1.0 - m_fTheta)+1);
+	m_fReso			= 450.0 * (powf(2.0, 2.0 * m_fQscale * m_fTheta));
+	m_fFrn			= m_fReso / m_fSampleRate;
+	m_fPoleAngle	=  2.0 * 3.14159 /*M_PI*/ * m_fFrn;
+	m_fCoeff2		= -2.0 * (1 - 3.14159 /*M_PI*/* m_fFrn / m_fQ) * cos(m_fPoleAngle);
+	m_fCoeff3		= (1.0 - 3.14159 /*M_PI*/ * m_fFrn / m_fQ)*(1.0 - 3.14159 /*M_PI*/ * m_fFrn / m_fQ);
+
+}
 void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 {
 	switch(type)
 	{
-		case PARAM_1:
+		// gain
+		case 0:
 
-			if (0 <= value && value <= 1)
-				m_fGain = 0.1*(powf(value, m_fTheta));
+			if (0.0 <= value && value <= 1.0){
 
+				m_fGainScale = value * value;
+				calculateCoeffs();
+			}
+				
 		break;
 
-		case PARAM_2:
+		case 1:
 
-			if (0 <= value && value <= 1){
-				m_fTheta = value;	// "pedal" value
-				m_fQ	 = powf(2.0, 2.0*(1.0 - m_fTheta)+1);
-				m_fReso  = 450.0 * (powf(2.0, 2.3 * m_fTheta));
-				m_fFrn   = m_fReso / m_fSampleRate;
-				m_fPoleAngle =  2.0 * M_PI * m_fFrn;
-				m_fCoeff2	 = -2.0 * (1 - M_PI * m_fFrn / m_fQ) * cos(m_fPoleAngle);
-				m_fCoeff3	 = (1.0 - M_PI * m_fFrn / m_fQ)*(1.0 - M_PI * m_fFrn / m_fQ);
+			if (0.0 <= value && value <= 1.0){
+
+				m_fTheta	= value;	// "pedal" value
+				calculateCoeffs();
 			}
 
 		break;
+
+		case 2:
+
+			if (0.0 <= value && value <= 1.0){
+
+				m_fQscale	 = value;
+				calculateCoeffs();
+			}
 
 		default: 
 			break;
