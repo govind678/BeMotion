@@ -149,6 +149,7 @@ float CLimiter::getParam(int type)
             break;
             
 		default:
+            return 0.0f;
             break;
 		
 

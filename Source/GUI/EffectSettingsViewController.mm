@@ -125,6 +125,16 @@ static int   m_iCurrentEffectPosition;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
             
+            
+        case 5:
+            [self.slider1EffectParam setText:@"Size"];
+            [self.slider2EffectParam setText:@"Interval"];
+            [self.slider3EffectParam setText:@"Pool"];
+            m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_GRANULAR;
+            [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
+            break;
+            
+            
         default:
             break;
     }
@@ -207,28 +217,31 @@ static int   m_iCurrentEffectPosition;
 }
 
 - (IBAction)bypassButton:(UISwitch *)sender {
-    NSLog(@"Bypass is pressed");
     
-    switch(m_iCurrentEffectChosen[m_iCurrentEffectPosition]){
-        case EFFECT_TREMOLO:
-            self.currentData.tremoloEffect.bypass   = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
-            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
-            break;
-        case EFFECT_DELAY:
-            self.currentData.delayEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
-            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
-            break;
-        case EFFECT_VIBRATO:
-            self.currentData.vibratoEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
-            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
-            break;
-        case EFFECT_WAH:
-            self.currentData.wahEffect.bypass     = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
-            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
-            break;
-        default:
-            break;
-    }
+//    switch(m_iCurrentEffectChosen[m_iCurrentEffectPosition]){
+//        case EFFECT_TREMOLO:
+//            self.currentData.tremoloEffect.bypass   = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+//            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
+//            break;
+//        case EFFECT_DELAY:
+//            self.currentData.delayEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+//            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
+//            break;
+//        case EFFECT_VIBRATO:
+//            self.currentData.vibratoEffect.bypass = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+//            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
+//            break;
+//        case EFFECT_WAH:
+//            self.currentData.wahEffect.bypass     = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+//            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
+//            break;
+//        case EFFECT_GRANULAR:
+//            self.currentData.wahEffect.bypass     = (sender.on ? [NSNumber numberWithInt:1]:[NSNumber numberWithInt:0]);
+//            m_bEffectBypassToggle[m_iCurrentEffectPosition] = (sender.on ? 1:0);
+//            break;
+//        default:
+//            break;
+//    }
     
     _backEndInterface->setEffectParameter(_currentData.sampleID.intValue, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
 }
@@ -237,7 +250,7 @@ static int   m_iCurrentEffectPosition;
 {
     [super viewDidLoad];
     m_iCurrentEffectChosen[0] = EFFECT_NONE;
-    self.effects  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah"];
+    self.effects  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer"];
 
 	// Do any additional setup after loading the view.
     

@@ -21,6 +21,7 @@
 # define EFFECT_DELAY            2
 # define EFFECT_VIBRATO          3
 # define EFFECT_WAH              4
+# define EFFECT_GRANULAR         5
 
 
 //========== Effect Parameter IDs ==========//
@@ -45,7 +46,7 @@
 
 //========== Effects Macros ===========//
 # define NUM_EFFECTS_PARAMS     3
-# define NUM_EFFECTS            5      // Including 1 for None
+# define NUM_EFFECTS            6      // Including 1 for None
 
 
 

@@ -35,7 +35,7 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     }
     
 
-    m_pcAutoLimiter = new AutoLimiter<>();
+    m_pcLimiter = new CLimiter(2);
     
     thread.startThread(3);
 }
@@ -52,7 +52,7 @@ AudioFileStream::~AudioFileStream()
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
     
-    m_pcAutoLimiter     =   nullptr;
+    m_pcLimiter     =   nullptr;
 
     thread.stopThread(20);
 }
@@ -77,7 +77,7 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
         transportSource.setSource(currentAudioFileSource, 32768, &thread, reader->sampleRate);
-        transportSource.setGain(0.2);
+        transportSource.setGain(0.707);
         
         if (m_iSampleID != 4)
         {
@@ -158,6 +158,8 @@ void AudioFileStream::prepareToPlay(int samplesPerBlockExpected, double sampleRa
         }
     }
     
+    m_pcLimiter->prepareToPlay(sampleRate);
+    
 //    m_pcAutoLimiter->Setup(sampleRate);
 }
 
@@ -192,6 +194,7 @@ void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
         
     }
     
+    m_pcLimiter->process(audioBuffer, numSamples, false);
 //    m_pcAutoLimiter->Process(numSamples, audioBuffer);
 }
 
@@ -254,7 +257,7 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
 {
     if (parameterID == PARAM_GAIN)
     {
-        transportSource.setGain(value / 5.0f);
+        transportSource.setGain(value * 0.707f);
     }
     
     else if (parameterID == PARAM_QUANTIZATION)

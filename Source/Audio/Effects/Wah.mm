@@ -77,7 +77,9 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 			break;
 	}
 }
-void CWah::getParam(/*hFile::enumType type*/ int type, float value)
+
+
+float CWah::getParam(/*hFile::enumType type*/ int type)
 {
 	switch(type)
 	{
@@ -96,7 +98,9 @@ void CWah::getParam(/*hFile::enumType type*/ int type, float value)
 
 				return m_fQscale;
 				break;
-		default: 
+		
+        default:
+            return 0.0f;
 			break;
 	}
 }

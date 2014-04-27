@@ -25,7 +25,7 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     
     audioSourcePlayer.setSource(&audioMixer);
     
-    m_pcAutoLimiter         = new AutoLimiter<>();
+    m_pcLimiter             = new CLimiter(2);
     m_pcAudioFileRecorder   = new AudioFileRecord(deviceManager);
     
     m_bRecording            = false;
@@ -38,7 +38,7 @@ AudioMixerPlayer::~AudioMixerPlayer()
 {
     deviceManager.removeAudioCallback(this);
     
-    m_pcAutoLimiter         =   nullptr;
+    m_pcLimiter             =   nullptr;
     m_pcAudioFileRecorder   =   nullptr;
     
     audioFileStream.clear(true);
@@ -196,21 +196,21 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
     
     if (m_bRecording)
     {
-        for (int channel = 0; channel < totalNumOutputChannels; channel++)
-        {
-            FloatVectorOperations::multiply(outputChannelData[channel], 4.0f, numSamples);
-        }
+//        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+//        {
+//            FloatVectorOperations::multiply(outputChannelData[channel], 4.0f, numSamples);
+//        }
         
         m_pcAudioFileRecorder->writeBuffer(outputChannelData, numSamples);
         
         
-        for (int channel = 0; channel < totalNumOutputChannels; channel++)
-        {
-            FloatVectorOperations::multiply(outputChannelData[channel], 0.25f, numSamples);
-        }
+//        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+//        {
+//            FloatVectorOperations::multiply(outputChannelData[channel], 0.25f, numSamples);
+//        }
     }
     
-//    m_pcAutoLimiter->Process(numSamples, outputChannelData);
+    m_pcLimiter->process(outputChannelData, numSamples, false);
 }
 
 
@@ -218,7 +218,7 @@ void AudioMixerPlayer::audioDeviceAboutToStart (AudioIODevice* device)
 {
 	audioSourcePlayer.audioDeviceAboutToStart (device);
     m_pcAudioFileRecorder->audioDeviceAboutToStart(device);
-//    m_pcAutoLimiter->Setup(device->getCurrentSampleRate());
+    m_pcLimiter->prepareToPlay(device->getCurrentSampleRate());
 }
 
 

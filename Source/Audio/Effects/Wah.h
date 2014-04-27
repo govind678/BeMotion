@@ -21,7 +21,7 @@ public:
 	// set:
 	void setParam(/*hFile::enumType type*/ int type, float value);
 	//get
-	float getParam(/*hFile::enumType type*/ int type, float value);
+	float getParam(/*hFile::enumType type*/ int type);
 
 	void prepareToPlay(float sampleRate);
 

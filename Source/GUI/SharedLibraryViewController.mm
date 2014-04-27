@@ -317,12 +317,12 @@
 //    attitude[2] = deviceMotion.attitude.yaw;
 //    [osc sendFloat:@"/attitude" : attitude : 3];
 //    backEndInterface->setEffectParameter(0, 0, PARAM_1, ((deviceMotion.attitude.pitch + M_PI/2) * 2.0f));
-    backEndInterface->setEffectParameter(3, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-    backEndInterface->setEffectParameter(2, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-    backEndInterface->setEffectParameter(1, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-    backEndInterface->setEffectParameter(0, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+//    backEndInterface->setEffectParameter(3, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+//    backEndInterface->setEffectParameter(2, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+//    backEndInterface->setEffectParameter(1, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
+//    backEndInterface->setEffectParameter(0, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
     
-    backEndInterface->setSampleParameter(2, PARAM_QUANTIZATION, (((deviceMotion.attitude.roll + M_PI_2) / M_PI) * 2.0f) + 4.0f);
+//    backEndInterface->setSampleParameter(2, PARAM_QUANTIZATION, (((deviceMotion.attitude.roll + M_PI_2) / M_PI) * 2.0f) + 4.0f);
 //    backEndInterface->setParameter(1, 1, 0, ((attitude[1] + M_PI/2) * 2.0f));
 //    backEndInterface->setParameter(int sampleID, int effectPosition, int parameterID, float value
     

@@ -69,11 +69,13 @@ void CDelay::prepareToPlay(float sampleRate)
 
 void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 {
+    
 	switch(type)
 	{
 		case PARAM_1:
 			if (value > 0.0f)
             {
+                std::cout << "Delay Time: " << value << std::endl;
 				m_fDelayTime_s = value;
             }
 		break;

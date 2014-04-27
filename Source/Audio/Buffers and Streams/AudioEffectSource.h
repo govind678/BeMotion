@@ -22,6 +22,7 @@
 #include "Tremolo.h"
 #include "Vibrato.h"
 #include "Wah.h"
+#include "Granularizer.h"
 //------------------------------//
 
 
@@ -45,12 +46,13 @@ public:
     
 private:
     
-    ScopedPointer<CDelay>       m_pcDelay;
-    ScopedPointer<CTremolo>     m_pcTremolo;
-    ScopedPointer<CVibrato>     m_pcVibrato;;
-    ScopedPointer<CWah>         m_pcWah;
+    ScopedPointer<CDelay>           m_pcDelay;
+    ScopedPointer<CTremolo>         m_pcTremolo;
+    ScopedPointer<CVibrato>         m_pcVibrato;
+    ScopedPointer<CWah>             m_pcWah;
+    ScopedPointer<CGranularizer>    m_pcGranularizer;
     
-    OwnedArray<Parameter>       m_pcParameter;
+    OwnedArray<Parameter>           m_pcParameter;
     
     int m_iEffectID;
 };

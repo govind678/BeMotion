@@ -225,6 +225,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="JFx-jb-ULP" kind="push" identifier="settingsSegue" id="Hjh-U8-cGQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdq-zQ-o8A">
                                 <rect key="frame" x="62" y="188" width="32" height="90"/>
@@ -284,6 +287,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="660" y="247"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="BH8-RB-AFc">
+            <objects>
+                <viewController id="JFx-jb-ULP" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uwr-IF-D96"/>
+                        <viewControllerLayoutGuide type="bottom" id="TlC-mf-P9T"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oa0-Nd-GuG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lF9-Xq-tHb">
+                                <rect key="frame" x="20" y="75" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="push" id="2i8-6h-5NL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="H6W-hm-1WN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wkP-9C-KUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="1000"/>
         </scene>
         <!--Effect Settings View Controller - Effect Settings-->
         <scene sceneID="ftx-2K-gUu">
@@ -483,5 +517,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="mtc-kW-ce5"/>
+        <segue reference="2i8-6h-5NL"/>
     </inferredMetricsTieBreakers>
 </document>

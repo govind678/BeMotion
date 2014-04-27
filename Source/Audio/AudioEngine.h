@@ -66,11 +66,13 @@ private:
     ScopedPointer<AudioFileRecord>      audioFileRecorder;
     ScopedPointer<AudioMixerPlayer>     audioMixer;
     
-    StringArray         recordingFilePathArray;
+    StringArray         recordingFilePathArray1;
+    StringArray         recordingFilePathArray2;
     StringArray         playbackFilePathArray;
     
     
-    String              currentRecordingPath;
+    String              currentRecordingPath1;
+    String              currentRecordingPath2;
     String              currentPlaybackPath;
     
     

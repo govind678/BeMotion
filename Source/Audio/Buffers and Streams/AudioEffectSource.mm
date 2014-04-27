@@ -13,10 +13,11 @@
 
 AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 {
-    m_pcTremolo     =   nullptr;
-    m_pcDelay       =   nullptr;
-    m_pcVibrato     =   nullptr;
-    m_pcWah         =   nullptr;
+    m_pcTremolo         =   nullptr;
+    m_pcDelay           =   nullptr;
+    m_pcVibrato         =   nullptr;
+    m_pcWah             =   nullptr;
+    m_pcGranularizer    =   nullptr;
     
     
     for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
@@ -30,25 +31,32 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     {
         case EFFECT_TREMOLO:
         {
-            m_pcTremolo   =   new CTremolo(numChannels);
+            m_pcTremolo         =   new CTremolo(numChannels);
             break;
         }
           
         case EFFECT_DELAY:
         {
-            m_pcDelay     =   new CDelay(numChannels);
+            m_pcDelay           =   new CDelay(numChannels);
             break;
         }
             
         case EFFECT_VIBRATO:
         {
-            m_pcVibrato   =   new CVibrato(numChannels);
+            m_pcVibrato         =   new CVibrato(numChannels);
             break;
         }
             
         case EFFECT_WAH:
         {
-            m_pcWah       = new CWah(numChannels);
+            m_pcWah             =   new CWah(numChannels);
+            break;
+        }
+            
+        
+        case EFFECT_GRANULAR:
+        {
+            m_pcGranularizer    =   new CGranularizer(numChannels);
             break;
         }
             
@@ -65,10 +73,11 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 
 AudioEffectSource::~AudioEffectSource()
 {
-    m_pcTremolo     =   nullptr;
-    m_pcDelay       =   nullptr;
-    m_pcVibrato     =   nullptr;
-    m_pcWah         =   nullptr;
+    m_pcTremolo         =   nullptr;
+    m_pcDelay           =   nullptr;
+    m_pcVibrato         =   nullptr;
+    m_pcWah             =   nullptr;
+    m_pcGranularizer    =   nullptr;
 
     m_pcParameter.clear();
 }
@@ -101,6 +110,10 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             m_pcWah->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
             break;
             
+        case EFFECT_GRANULAR:
+            m_pcGranularizer->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            break;
+            
         default:
             break;
     }
@@ -126,8 +139,11 @@ float AudioEffectSource::getParameter(int parameterID)
             return m_pcVibrato->getParam(parameterID - 1);
             
         case EFFECT_WAH:
-//            return m_pcWah->getParam(parameterID);
-            return 0.0f;
+            return m_pcWah->getParam(parameterID - 1);
+            break;
+            
+        case EFFECT_GRANULAR:
+            return m_pcGranularizer->getParam(parameterID - 1);
             break;
             
         default:
@@ -168,6 +184,10 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
             m_pcWah->prepareToPlay(sampleRate);
             break;
             
+        case EFFECT_GRANULAR:
+            m_pcGranularizer->prepareToPlay(sampleRate);
+            break;
+            
         default:
             break;
             
@@ -201,9 +221,16 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassS
             m_pcVibrato->process(audioBuffer, blockSize, bypassState);
             break;
         
+            
         case EFFECT_WAH:
             m_pcWah->process(audioBuffer, blockSize, bypassState);
             break;
+            
+            
+        case EFFECT_GRANULAR:
+            m_pcGranularizer->process(audioBuffer, blockSize, bypassState);
+            break;
+         
             
         default:
             break;
