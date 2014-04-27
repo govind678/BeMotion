@@ -18,7 +18,8 @@ public:
     Parameter();
     ~Parameter();
     
-    void setAlpha(float newAlpha);
+    
+    void setSmoothingParameter(float newAlpha);
     
     float process(float value);
     

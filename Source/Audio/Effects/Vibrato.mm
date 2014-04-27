@@ -111,6 +111,23 @@ void CVibrato::setParam(int parameterID, float value)
             setModulationWidth_ms(value * 200.0);
             break;
             
+        case PARAM_3:
+            if ((value >= 0) && (value < 0.33))
+            {
+                setModulationType(CLFO::kSin);
+            }
+            
+            else if ((value >= 0.33) && (value < 0.66))
+            {
+                setModulationType(CLFO::kTriangle);
+            }
+            
+            else
+            {
+                setModulationType(CLFO::kSquare);
+            }
+            break;
+            
         default:
             break;
     }

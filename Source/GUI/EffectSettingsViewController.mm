@@ -98,7 +98,7 @@ static int   m_iCurrentEffectPosition;
         case 1:
             [self.slider1EffectParam setText:@"Frequency"];
             [self.slider2EffectParam setText:@"Depth"];
-            [self.slider3EffectParam setText:@"Signal(n)"];
+            [self.slider3EffectParam setText:@"LFO"];
             m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_TREMOLO;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
@@ -112,15 +112,15 @@ static int   m_iCurrentEffectPosition;
         case 3:
             [self.slider1EffectParam setText:@"Rate"];
             [self.slider2EffectParam setText:@"Width"];
-            [self.slider3EffectParam setText:@"Null"];
+            [self.slider3EffectParam setText:@"LFO"];
             m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_VIBRATO;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;
         
         case 4:
-            [self.slider1EffectParam setText:@"Frequency"];
-            [self.slider2EffectParam setText:@"Resonance"];
-            [self.slider3EffectParam setText:@"Gain"];
+            [self.slider1EffectParam setText:@"Gain"];
+            [self.slider2EffectParam setText:@"Frequency"];
+            [self.slider3EffectParam setText:@"Resonance"];
             m_iCurrentEffectChosen[m_iCurrentEffectPosition] = EFFECT_WAH;
             [self.currentData.effectChain replaceObjectAtIndex:m_iCurrentEffectPosition withObject:[NSNumber numberWithInt:m_iCurrentEffectChosen[m_iCurrentEffectPosition]]];
             break;

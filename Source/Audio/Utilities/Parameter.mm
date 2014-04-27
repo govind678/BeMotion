@@ -22,7 +22,7 @@ Parameter::~Parameter()
 }
 
 
-void Parameter::setAlpha(float newAlpha)
+void Parameter::setSmoothingParameter(float newAlpha)
 {
     m_fAlpha = newAlpha;
 }

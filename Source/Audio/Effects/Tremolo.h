@@ -38,14 +38,14 @@ public:
 	void prepareToPlay(float sampleRate);
 
 	void initDefaults();
-	
-	void setType(CLFO::LFO_Type type);
 
 	// process:
 	void process(float **inputBuffer, int numFrames, bool bypass);
 
 private:
 
+    void setLFOType(CLFO::LFO_Type type);
+    
 	CLFO *LFO;
 
 	float m_fSampleRate;

@@ -77,7 +77,7 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
         transportSource.setSource(currentAudioFileSource, 32768, &thread, reader->sampleRate);
-        transportSource.setGain(0.707);
+        transportSource.setGain(0.5);
         
         if (m_iSampleID != 4)
         {
@@ -257,7 +257,7 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
 {
     if (parameterID == PARAM_GAIN)
     {
-        transportSource.setGain(value * 0.707f);
+        transportSource.setGain(value * 0.5f);
     }
     
     else if (parameterID == PARAM_QUANTIZATION)

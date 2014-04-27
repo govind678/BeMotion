@@ -30,7 +30,7 @@ void CTremolo::initDefaults()
 	m_fRate		= 5.0;
 }
 
-void CTremolo::setType(CLFO::LFO_Type type)
+void CTremolo::setLFOType(CLFO::LFO_Type type)
 {
 	LFO->setLFOType(type);
 }
@@ -49,7 +49,24 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
             m_fDepth = value;
 		break;
             
-		default: 
+        case PARAM_3:
+            if ((value >= 0) && (value < 0.33))
+            {
+                setLFOType(CLFO::kSin);
+            }
+            
+            else if ((value >= 0.33) && (value < 0.66))
+            {
+                setLFOType(CLFO::kTriangle);
+            }
+            
+            else
+            {
+                setLFOType(CLFO::kSquare);
+            }
+            break;
+            
+		default:
 			break;
 	}
 }

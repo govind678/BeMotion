@@ -23,7 +23,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
     {
         m_pcParameter.add(new Parameter());
-        m_pcParameter.getUnchecked(i)->setAlpha(0.5);
+        m_pcParameter.getUnchecked(i)->setSmoothingParameter(0.5);
     }
     
     
@@ -85,7 +85,7 @@ AudioEffectSource::~AudioEffectSource()
 
 void AudioEffectSource::setSmoothing(int parameterID, float smoothing)
 {
-    m_pcParameter.getUnchecked(parameterID - 4)->setAlpha(smoothing);
+    m_pcParameter.getUnchecked(parameterID - 4)->setSmoothingParameter(smoothing);
 }
 
 

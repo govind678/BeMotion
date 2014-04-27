@@ -80,7 +80,6 @@ void CGranularizer::setParam(int type, float value)
 		case PARAM_1:
 			if (0.0f <=value && value <= 1.0f)
             {
-                std::cout << "Grain Size" << value << std::endl;
 				m_fGrainSize	= value;
             }
 		break;  
@@ -88,7 +87,6 @@ void CGranularizer::setParam(int type, float value)
 		case PARAM_2:
 			if (value >= 0.05f)
             {
-                std::cout << "Grain Interval" << value << std::endl;
 				m_fGrainTime	= value;
             }
 				//setParam(0, (value + getParam(0)) * 0.5);
@@ -97,7 +95,6 @@ void CGranularizer::setParam(int type, float value)
 		case PARAM_3:
 			if (0.0f <=value && value <= 1.0f)
             {
-                std::cout << "Pool Size" << value << std::endl;
 				m_fPoolSize		= value;
             }
 		break;
