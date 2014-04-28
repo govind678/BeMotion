@@ -1,5 +1,5 @@
 //
-//  GlobalSettingsViewController.h
+//  SampleSettingsViewController.h
 //  GestureController
 //
 //  Created by Govinda Ram Pingali on 4/28/14.
@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GlobalSettingsViewController : UIViewController
+@interface SampleSettingsViewController : UIViewController
+{
+    
+}
+
+
+@property (nonatomic) int m_iSampleID;
 
 @end
