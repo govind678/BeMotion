@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QGM-f6-xv5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QGM-f6-xv5">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Shared Library View Controller - Main View-->
@@ -288,10 +288,10 @@
             </objects>
             <point key="canvasLocation" x="660" y="247"/>
         </scene>
-        <!--View Controller-->
+        <!--Global Settings View Controller-->
         <scene sceneID="BH8-RB-AFc">
             <objects>
-                <viewController id="JFx-jb-ULP" sceneMemberID="viewController">
+                <viewController id="JFx-jb-ULP" customClass="GlobalSettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Uwr-IF-D96"/>
                         <viewControllerLayoutGuide type="bottom" id="TlC-mf-P9T"/>
@@ -332,21 +332,21 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="im2-Cl-IPO">
-                                <rect key="frame" x="101" y="412" width="138" height="31"/>
+                                <rect key="frame" x="101" y="412" width="138" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="Slider1Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="F0Q-Cw-VgT"/>
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6eB-gO-yst">
-                                <rect key="frame" x="101" y="453" width="138" height="31"/>
+                                <rect key="frame" x="101" y="453" width="138" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="Slider2Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="gun-7U-EEy"/>
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BWU-7m-wfb">
-                                <rect key="frame" x="101" y="494" width="138" height="31"/>
+                                <rect key="frame" x="101" y="494" width="138" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="Slider3Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="MHP-UM-aZp"/>
@@ -431,7 +431,7 @@
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="f7Y-Rx-itx">
-                                <rect key="frame" x="18" y="77" width="284" height="31"/>
+                                <rect key="frame" x="18" y="77" width="284" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="gainSliderChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="wrS-ex-CEk"/>
@@ -456,7 +456,7 @@
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="0.0" maxValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-kc-ieX">
-                                <rect key="frame" x="18" y="157" width="291" height="31"/>
+                                <rect key="frame" x="18" y="157" width="291" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="quantizationSliderChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="Pta-tT-VgX"/>
@@ -468,6 +468,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7J-AV-8qG">
+                                <rect key="frame" x="20" y="20" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="push" id="Dxj-XE-Hki"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -494,8 +504,10 @@
         <!--Navigation Controller-->
         <scene sceneID="eeg-fh-hVM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QGM-f6-xv5" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="QGM-f6-xv5" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4eG-RB-RfK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -516,7 +528,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Dxj-XE-Hki"/>
         <segue reference="mtc-kW-ce5"/>
-        <segue reference="2i8-6h-5NL"/>
     </inferredMetricsTieBreakers>
 </document>

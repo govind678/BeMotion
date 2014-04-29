@@ -266,7 +266,9 @@
     if (([identifier isEqualToString:@"conditionSegue4"]) && m_bModeToggleStatus) {
         return YES;
     }
-    
+    if ([identifier isEqualToString:@"settingsSegue"]) {
+        return YES;
+    }
     return NO;
 }
 

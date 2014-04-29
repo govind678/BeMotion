@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22447BD5190F5BB700193035 /* Granularizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD0190F5BB700193035 /* Granularizer.mm */; };
+		22447BD6190F5BB700193035 /* Limiter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD2190F5BB700193035 /* Limiter.mm */; };
+		22447BD7190F5BB700193035 /* PeakFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD4190F5BB700193035 /* PeakFilter.mm */; };
+		22447BDA190F61C200193035 /* GlobalSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD9190F61C200193035 /* GlobalSettingsViewController.m */; };
 		FC2E8B7718F4C58E00F09FEC /* Parameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7618F4C58E00F09FEC /* Parameter.mm */; };
 		FC2E8B7D18F5234300F09FEC /* Metronome.m in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7C18F5234300F09FEC /* Metronome.m */; };
 		FC2E8B9B18F54AF700F09FEC /* Playback0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC2E8B9618F54AF700F09FEC /* Playback0.wav */; };
@@ -67,6 +71,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22447BCF190F5BB700193035 /* Granularizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer.h; sourceTree = "<group>"; };
+		22447BD0190F5BB700193035 /* Granularizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Granularizer.mm; sourceTree = "<group>"; };
+		22447BD1190F5BB700193035 /* Limiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Limiter.h; sourceTree = "<group>"; };
+		22447BD2190F5BB700193035 /* Limiter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Limiter.mm; sourceTree = "<group>"; };
+		22447BD3190F5BB700193035 /* PeakFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFilter.h; sourceTree = "<group>"; };
+		22447BD4190F5BB700193035 /* PeakFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PeakFilter.mm; sourceTree = "<group>"; };
+		22447BD8190F61C100193035 /* GlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettingsViewController.h; sourceTree = "<group>"; };
+		22447BD9190F61C200193035 /* GlobalSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalSettingsViewController.m; sourceTree = "<group>"; };
 		FC2E8B7518F4C58E00F09FEC /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
 		FC2E8B7618F4C58E00F09FEC /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
 		FC2E8B7B18F5234300F09FEC /* Metronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome.h; sourceTree = "<group>"; };
@@ -76,7 +88,6 @@
 		FC2E8B9818F54AF700F09FEC /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback2.wav; sourceTree = "<group>"; };
 		FC2E8B9918F54AF700F09FEC /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback3.wav; sourceTree = "<group>"; };
 		FC2E8B9A18F54AF700F09FEC /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback4.wav; sourceTree = "<group>"; };
-		FC2E8BA018F6901D00F09FEC /* AutoLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLimiter.h; sourceTree = "<group>"; };
 		FC5C65E018CDB1C300CA9B79 /* GestureController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GestureController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5C65E318CDB1C300CA9B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1232,6 +1243,12 @@
 		FC5C662B18CDB32700CA9B79 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				22447BCF190F5BB700193035 /* Granularizer.h */,
+				22447BD0190F5BB700193035 /* Granularizer.mm */,
+				22447BD1190F5BB700193035 /* Limiter.h */,
+				22447BD2190F5BB700193035 /* Limiter.mm */,
+				22447BD3190F5BB700193035 /* PeakFilter.h */,
+				22447BD4190F5BB700193035 /* PeakFilter.mm */,
 				FC5C662E18CDB32700CA9B79 /* Delay.h */,
 				FC5C662F18CDB32700CA9B79 /* Delay.mm */,
 				FC5C663018CDB32700CA9B79 /* Tremolo.h */,
@@ -1253,7 +1270,6 @@
 				FC5C663418CDB32700CA9B79 /* LFO.h */,
 				FC5C663518CDB32700CA9B79 /* LFO.mm */,
 				FC5C663618CDB32700CA9B79 /* RingBuffer.h */,
-				FC2E8BA018F6901D00F09FEC /* AutoLimiter.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1261,6 +1277,8 @@
 		FC5C663718CDB32700CA9B79 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				22447BD8190F61C100193035 /* GlobalSettingsViewController.h */,
+				22447BD9190F61C200193035 /* GlobalSettingsViewController.m */,
 				FC6EEAF918CE0DB0002370AC /* EffectSettingsViewController.h */,
 				FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */,
 				FC6EEAFB18CE0DB0002370AC /* SharedLibraryViewController.h */,
@@ -3121,12 +3139,15 @@
 				FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */,
 				FC5C6C6C18CDB4D500CA9B79 /* AudioFileRecord.mm in Sources */,
 				FC6EEAF518CE05D3002370AC /* Vibrato.mm in Sources */,
+				22447BD5190F5BB700193035 /* Granularizer.mm in Sources */,
 				FC5C6C6D18CDB4D500CA9B79 /* AudioMixerPlayer.mm in Sources */,
 				FC5C6C6E18CDB4D500CA9B79 /* LiveAudioStream.mm in Sources */,
 				FC5C6C7018CDB4D500CA9B79 /* Delay.mm in Sources */,
 				FC5C6C7118CDB4D500CA9B79 /* Tremolo.mm in Sources */,
+				22447BD6190F5BB700193035 /* Limiter.mm in Sources */,
 				FC5C6C7218CDB4D500CA9B79 /* LFO.mm in Sources */,
 				FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */,
+				22447BD7190F5BB700193035 /* PeakFilter.mm in Sources */,
 				FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */,
 				FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */,
 				FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */,
@@ -3135,6 +3156,7 @@
 				FC5C6C6018CDB4B000CA9B79 /* juce_audio_devices.mm in Sources */,
 				FC5C6C6118CDB4B000CA9B79 /* juce_audio_formats.mm in Sources */,
 				FC5C6C6218CDB4B000CA9B79 /* juce_core.mm in Sources */,
+				22447BDA190F61C200193035 /* GlobalSettingsViewController.m in Sources */,
 				FC5C6C6318CDB4B000CA9B79 /* juce_cryptography.mm in Sources */,
 				FC5C6C6418CDB4B000CA9B79 /* juce_data_structures.mm in Sources */,
 				FC5C6C6518CDB4B000CA9B79 /* juce_events.mm in Sources */,
