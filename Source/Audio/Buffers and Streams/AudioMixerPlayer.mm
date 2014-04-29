@@ -96,9 +96,14 @@ void AudioMixerPlayer::setSampleParameter(int sampleID, int parameterID, float v
 }
 
 
-float AudioMixerPlayer::getParameter(int sampleID, int effectPosition, int parameterID)
+float AudioMixerPlayer::getEffectParameter(int sampleID, int effectPosition, int parameterID)
 {
     return audioFileStream.getUnchecked(sampleID)->getEffectParameter(effectPosition, parameterID);
+}
+
+float AudioMixerPlayer::getSampleParameter(int sampleID, int parameterID)
+{
+    return audioFileStream.getUnchecked(sampleID)->getSampleParameter(parameterID);
 }
 
 int AudioMixerPlayer::getEffectType(int sampleID, int effectPosition)
@@ -113,17 +118,30 @@ void AudioMixerPlayer::setSmoothing(int sampleID, int effectPosition, int parame
 }
 
 
-void AudioMixerPlayer::setButtonMode(int sampleID, int mode)
+
+void AudioMixerPlayer::setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle)
 {
-    audioFileStream.getUnchecked(sampleID)->setMode(mode);
+    audioFileStream.getUnchecked(sampleID)->setSampleGestureControlToggle(parameterID, toggle);
 }
 
-int AudioMixerPlayer::getButtonMode(int sampleID)
+void AudioMixerPlayer::setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle)
 {
-    return audioFileStream.getUnchecked(sampleID)->getMode();
+    audioFileStream.getUnchecked(sampleID)->setEffectGestureControlToggle(effectPosition, parameterID, toggle);
 }
 
 
+bool AudioMixerPlayer::getSampleGestureControlToggle(int sampleID, int parameterID)
+{
+    return audioFileStream.getUnchecked(sampleID)->getSampleGestureControlToggle(parameterID);
+}
+
+bool AudioMixerPlayer::getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID)
+{
+    return audioFileStream.getUnchecked(sampleID)->getEffectGestureControlToggle(effectPosition, parameterID);
+}
+
+
+//--- Metronome ---//
 
 void AudioMixerPlayer::beat(int beatNo)
 {

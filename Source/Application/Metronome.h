@@ -15,6 +15,7 @@
     BOOL    status;
     
     int         beat;
+    int         guiBeat;
     int         bar;
     double      timeInterval_s;
     
@@ -29,6 +30,7 @@
 
 
 - (void) setTempo           :   (float) newTempo;
+- (float)getTempo;
 - (void) setMeter           :   (int)   newMeter;
 
 - (void) updateTimer;
@@ -37,6 +39,9 @@
 
 - (void) setDelegate        :   (id) newDelegate;
 - (void) beat               :   (int) beatNo;
+- (void) guiBeat            :   (int) beatNo;
+
+- (BOOL) isRunning;
 
 
 @end

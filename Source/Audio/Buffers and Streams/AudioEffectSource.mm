@@ -20,10 +20,15 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     m_pcGranularizer    =   nullptr;
     
     
+    m_pcParameter.clear();
+    m_pbGestureControl.clear();
+    
     for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
     {
         m_pcParameter.add(new Parameter());
         m_pcParameter.getUnchecked(i)->setSmoothingParameter(0.5);
+        
+        m_pbGestureControl.add(false);
     }
     
     
@@ -80,6 +85,7 @@ AudioEffectSource::~AudioEffectSource()
     m_pcGranularizer    =   nullptr;
 
     m_pcParameter.clear();
+    m_pbGestureControl.clear();
 }
 
 
@@ -118,6 +124,17 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             break;
     }
     
+}
+
+
+void AudioEffectSource::setGestureControlToggle(int parameterID, bool toggle)
+{
+    m_pbGestureControl.set(parameterID, toggle);
+}
+
+bool AudioEffectSource::getGestureControlToggle(int parameterID)
+{
+    return m_pbGestureControl.getUnchecked(parameterID);
 }
 
 

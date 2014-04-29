@@ -27,13 +27,21 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
     audioEffectInitialized.clear();
+    m_pbGestureControl.clear();
     
     for (int effectNo = 0; effectNo < MIN_NUM_EFFECTS; effectNo++)
     {
         audioEffectSource.add(nullptr);
         audioEffectInitialized.add(false);
+        m_pbBypassStateArray.add(false);
     }
     
+    
+    for (int param = 0; param < 2; param++)
+    {
+        m_pbGestureControl.add(false);
+    }
+        
 
     m_pcLimiter = new CLimiter(2);
     
@@ -48,6 +56,7 @@ AudioFileStream::~AudioFileStream()
     currentAudioFileSource  =   nullptr;
     
     audioEffectInitialized.clear();
+    m_pbGestureControl.clear();
     
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
@@ -263,7 +272,21 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
     else if (parameterID == PARAM_QUANTIZATION)
     {
         m_iQuantization = int(powf(2, int(MAX_QUANTIZATION - value + 0.5f)));
-//        std::cout << "Sample " << m_iSampleID << ": "<< m_iQuantization << std::endl;
+    }
+    
+    else if (parameterID == PARAM_PLAYBACK_MODE)
+    {
+        m_iButtonMode   =   int(value + 0.5f);
+        
+        if (m_iButtonMode != MODE_LOOP)
+        {
+            setLooping(false);
+        }
+        
+        else
+        {
+            setLooping(true);
+        }
     }
 }
 
@@ -278,7 +301,16 @@ float AudioFileStream::getEffectParameter(int effectPosition, int parameterID)
     
     else
     {
-        return audioEffectSource.getUnchecked(effectPosition)->getParameter(parameterID);
+        if (audioEffectInitialized.getUnchecked(effectPosition))
+        {
+            return audioEffectSource.getUnchecked(effectPosition)->getParameter(parameterID);
+        }
+        
+        else
+        {
+            return 0.0f;
+        }
+        
     }
 }
 
@@ -295,33 +327,16 @@ float AudioFileStream::getSampleParameter(int parameterID)
         return int(log2f(m_iQuantization + MAX_QUANTIZATION) + 0.5f);
     }
     
+    else if (parameterID == PARAM_PLAYBACK_MODE)
+    {
+        return m_iButtonMode;
+    }
+    
     else
     {
         return 0.0f;
     }
 }
-
-
-void AudioFileStream::setMode(int mode)
-{
-    m_iButtonMode = mode;
-    
-    if (m_iButtonMode != MODE_LOOP)
-    {
-        setLooping(false);
-    }
-    
-    else
-    {
-        setLooping(true);
-    }
-}
-
-int AudioFileStream::getMode()
-{
-    return m_iButtonMode;
-}
-
 
 
 void AudioFileStream::setSmoothing(int effectPosition, int parameterID, float smoothing)
@@ -331,8 +346,42 @@ void AudioFileStream::setSmoothing(int effectPosition, int parameterID, float sm
 
 int AudioFileStream::getEffectType(int effectPosition)
 {
-    return audioEffectSource.getUnchecked(effectPosition)->getEffectType();
+    if (audioEffectInitialized.getUnchecked(effectPosition))
+    {
+        return audioEffectSource.getUnchecked(effectPosition)->getEffectType();
+    }
+    
+    else
+    {
+        return EFFECT_NONE;
+    }
+    
 }
+
+
+
+void AudioFileStream::setSampleGestureControlToggle(int parameterID, bool toggle)
+{
+    m_pbGestureControl.set(parameterID, toggle);
+}
+
+void AudioFileStream::setEffectGestureControlToggle(int effectPosition, int parameterID, bool toggle)
+{
+    audioEffectSource.getUnchecked(effectPosition)->setGestureControlToggle(parameterID, toggle);
+}
+
+
+bool AudioFileStream::getSampleGestureControlToggle(int parameterID)
+{
+    return m_pbGestureControl.getUnchecked(parameterID);
+}
+
+
+bool AudioFileStream::getEffectGestureControlToggle(int effectPosition, int parameterID)
+{
+    return audioEffectSource.getUnchecked(effectPosition)->getGestureControlToggle(parameterID);
+}
+
 
 
 void AudioFileStream::beat(int beatNum)

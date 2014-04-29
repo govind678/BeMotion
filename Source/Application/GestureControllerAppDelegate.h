@@ -10,9 +10,18 @@
 
 
 #import <UIKit/UIKit.h>
+#include "GestureControllerInterface.h"
+#import "Metronome.h"
 
 @interface GestureControllerAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    GestureControllerInterface*     backendInterface;
+    Metronome*                      metronome;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (GestureControllerInterface*)getBackendReference;
+- (Metronome*)getMetronomeReference;
 
 @end

@@ -11,6 +11,8 @@
 
 
 #include "GestureControllerInterface.h"
+#include <stdio.h>
+#include <iostream>
 
 
 GestureControllerInterface::GestureControllerInterface()
@@ -41,11 +43,6 @@ void GestureControllerInterface::setSampleParameter(int sampleID, int parameterI
 }
 
 
-void GestureControllerInterface::setMode(int sampleID, int mode)
-{
-    audioEngine->setButtonMode(sampleID, mode);
-}
-
 void GestureControllerInterface::addAudioEffect(int sampleID, int effectPosition, int effectID)
 {
     audioEngine->addAudioEffect(sampleID, effectPosition, effectID);
@@ -57,10 +54,22 @@ void GestureControllerInterface::removeAudioEffect(int sampleID, int effectPosit
     audioEngine->removeAudioEffect(sampleID, effectPosition);
 }
 
-void GestureControllerInterface::togglePlaybackRecordingFile(int sampleID, bool toggle)
+//void GestureControllerInterface::togglePlaybackRecordingFile(int sampleID, bool toggle)
+//{
+//    audioEngine->toggleRecordingPlaybackSample(sampleID, toggle);
+//}
+
+
+void GestureControllerInterface::setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle)
 {
-    audioEngine->toggleRecordingPlaybackSample(sampleID, toggle);
+    audioEngine->setSampleGestureControlToggle(sampleID, parameterID, toggle);
 }
+
+void GestureControllerInterface::setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle)
+{
+    audioEngine->setEffectGestureControlToggle(sampleID, effectPosition, parameterID, toggle);
+}
+
 
 
 //==============================================================================
@@ -124,7 +133,24 @@ int GestureControllerInterface::getEffectType(int sampleID, int effectPosition)
 // Get Parameter Value
 //==============================================================================
 
-float GestureControllerInterface::getParameter(int sampleID, int effectPosition, int parameterID)
+float GestureControllerInterface::getEffectParameter(int sampleID, int effectPosition, int parameterID)
 {
-    return audioEngine->getParameter(sampleID, effectPosition, parameterID);
+    return audioEngine->getEffectParameter(sampleID, effectPosition, parameterID);
 }
+
+float GestureControllerInterface::getSampleParameter(int sampleID, int parameterID)
+{
+    return audioEngine->getSampleParameter(sampleID, parameterID);
+}
+
+
+bool GestureControllerInterface::getSampleGestureControlToggle(int sampleID, int parameterID)
+{
+    return audioEngine->getSampleGestureControlToggle(sampleID, parameterID);
+}
+
+bool GestureControllerInterface::getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID)
+{
+    return audioEngine->getEffectGestureControlToggle(sampleID, effectPosition, parameterID);
+}
+

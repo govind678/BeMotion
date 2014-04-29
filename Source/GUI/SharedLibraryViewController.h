@@ -7,43 +7,96 @@
 //
 
 #import  <UIKit/UIKit.h>
+
 #include "GestureControllerInterface.h"
-#import  "UserInterfaceData.h"
 #import  "EffectSettingsViewController.h"
+#import  "GlobalSettingsViewController.h"
 
 #import "Metronome.h"
 #import <CoreMotion/CoreMotion.h>
 
+
+#define METRO_GUI_COUNT     8
+
 @interface SharedLibraryViewController : UIViewController
 {
-    GestureControllerInterface*     backEndInterface;
+    int                             m_iButtonMode;       // playback = 0 , settings = 1, record = 2
     
-    bool m_bRedButtonToggleStatus;  // is red button pressed
-    bool m_bBlueButtonToggleStatus; // is blue button pressed
-    bool m_bModeToggleStatus;       // if settings mode, segue to effectSettings scene, else start playback
-    
-    Metronome*                      metronome;
-    
-    bool* m_pbRecordToggle;
-    bool* m_pbPlaybackToggle;
+    bool*                           m_pbMasterRecordToggle;
+    bool*                           m_pbMasterBeginRecording;
 }
 
 
+//--- Reference To Backend and Metronome ---//
+@property (nonatomic, assign) GestureControllerInterface*  backendInterface;
+@property (nonatomic, assign) Metronome*  metronome;
+
+
+
+
+
+//--- Motion Processing ---//
+
 @property (strong, nonatomic) CMMotionManager *motionManager;
-
 - (void)motionDeviceUpdate: (CMDeviceMotion*) deviceMotion;
-
 - (void)processUserAcceleration: (CMAcceleration) userAcceleration;
 
-//@property (retain, nonatomic) IBOutlet UIButton *toggleAudioButton;
-//- (IBAction)toggleAudioButtonClicked:(UIButton *)sender;
-//
-//
-//- (IBAction)addEffectButtonClicked:(UIButton *)sender;
 
 
-- (IBAction)toggleMetronome:(UISwitch *)sender;
+
+//--- User Interaction Methods ---//
+
+- (IBAction)RedTouchUp:(UIButton *)sender;
+- (IBAction)RedTouchDown:(UIButton *)sender;
+
+- (IBAction)BlueTouchUp:(UIButton *)sender;
+- (IBAction)BlueTouchDown:(UIButton *)sender;
+
+- (IBAction)GreenTouchUp:(UIButton *)sender;
+- (IBAction)GreenTouchDown:(UIButton *)sender;
+
+- (IBAction)YellowTouchUp:(UIButton *)sender;
+- (IBAction)YellowTouchDown:(UIButton *)sender;
+
+
+- (IBAction)redMasterRecord:(UIButton *)sender;
+- (IBAction)blueMasterRecord:(UIButton *)sender;
+- (IBAction)greenMasterRecord:(UIButton *)sender;
+- (IBAction)yellowMasterRecord:(UIButton *)sender;
+
+
+
+//--- Modifier Keys ---//
+- (IBAction)settingsToggleClicked:(UIButton *)sender;
+- (IBAction)recordToggleClicked:(UIButton *)sender;
+- (IBAction)metronomeToggleClicked:(UIButton *)sender;
+
+
+
+
+//--- Master Record Button Instances ---//
+@property (retain, nonatomic) IBOutlet UIButton *masterRecord0;
+@property (retain, nonatomic) IBOutlet UIButton *masterRecord1;
+@property (retain, nonatomic) IBOutlet UIButton *masterRecord2;
+@property (retain, nonatomic) IBOutlet UIButton *masterRecord3;
+
+
+
+
+//--- Metronome Bars ---//
+@property (retain, nonatomic) IBOutlet UIButton *metroBar0;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar1;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar2;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar3;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar4;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar5;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar6;
+@property (retain, nonatomic) IBOutlet UIButton *metroBar7;
+
+
 
 - (void) beat:  (int) beatNo;
+- (void) guiBeat: (int) beatNo;
+
 
 @end

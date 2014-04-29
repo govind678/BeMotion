@@ -36,10 +36,11 @@ public:
     void stopPlayback(int sampleID);
     
     void setEffectParameter(int sampleID, int effectPosition, int parameterID, float value);
-    float getParameter(int sampleID, int effectPosition, int parameterID);
+    float getEffectParameter(int sampleID, int effectPosition, int parameterID);
     int getEffectType(int sampleID, int effectPosition);
     
     void setSampleParameter(int sampleID, int parameterID, float value);
+    float getSampleParameter(int sampleID, int parameterID);
     
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
@@ -52,8 +53,12 @@ public:
     
     void toggleRecordingPlaybackSample(int sampleID, bool toggle);
     
-    void setButtonMode(int sampleID, int mode);
-    int getButtonMode(int sampleID);
+    void setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle);
+    void setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle);
+    
+    bool getSampleGestureControlToggle(int sampleID, int parameterID);
+    bool getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID);
+    
     
     void beat(int beatNo);
     

@@ -34,14 +34,20 @@
 //========== Sample Parameter IDs ==========//
 # define PARAM_GAIN              0
 # define PARAM_QUANTIZATION      1
+# define PARAM_PLAYBACK_MODE     2
 
+
+
+//========== Playback Modes ==========//
+# define MODE_LOOP               0
+# define MODE_TRIGGER            1
+# define MODE_BEATREPEAT         2
 
 
 //========== Button Modes ==========//
-# define MODE_TRIGGER            0
-# define MODE_LOOP               1
-# define MODE_BEATREPEAT         2
-
+# define MODE_PLAYBACK           0
+# define MODE_SETTINGS           1
+# define MODE_RECORD             2
 
 
 //========== Effects Macros ===========//
@@ -57,6 +63,15 @@
 # define DEFAULT_TEMPO          120.0f
 # define DEFAULT_NUMERATOR      64
 # define MAX_QUANTIZATION       6           //  2^n
+# define GUI_METRO_COUNT        8
+
+
+
+
+//========== Motion Control Macros ===========//
+
+
+
 
 //=========================================================================================
 

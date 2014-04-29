@@ -41,9 +41,6 @@ public:
     
     bool isPlaying();
     
-    void setMode(int mode);
-    int getMode();
-    
     void addAudioEffect(int effectPosition, int effectID);
     void removeAudioEffect(int effectPosition);
     void setAudioEffectBypassState(int effectPosition, bool bypassState);
@@ -53,6 +50,12 @@ public:
     
     float getEffectParameter(int effectPosition, int parameterID);
     float getSampleParameter(int parameterID);
+    
+    void setSampleGestureControlToggle(int parameterID, bool toggle);
+    void setEffectGestureControlToggle(int effectPosition, int parameterID, bool toggle);
+    
+    bool getSampleGestureControlToggle(int parameterID);
+    bool getEffectGestureControlToggle(int effectPosition, int parameterID);
     
     int  getEffectType(int effectPosition);
 
@@ -75,6 +78,8 @@ private:
     OwnedArray<AudioEffectSource>   audioEffectSource;
     Array<bool>                     m_pbBypassStateArray;
     Array<bool>                     audioEffectInitialized;
+    
+    Array<bool>                     m_pbGestureControl;
 
     ScopedPointer<CLimiter>         m_pcLimiter;
     

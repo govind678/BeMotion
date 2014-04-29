@@ -132,11 +132,15 @@ void AudioEngine::setSampleParameter(int sampleID, int parameterID, float value)
     audioMixer->setSampleParameter(sampleID, parameterID, value);
 }
 
-
-
-float AudioEngine::getParameter(int sampleID, int effectPosition, int parameterID)
+float AudioEngine::getSampleParameter(int sampleID, int parameterID)
 {
-    return audioMixer->getParameter(sampleID, effectPosition, parameterID);
+    return audioMixer->getSampleParameter(sampleID, parameterID);
+}
+
+
+float AudioEngine::getEffectParameter(int sampleID, int effectPosition, int parameterID)
+{
+    return audioMixer->getEffectParameter(sampleID, effectPosition, parameterID);
 }
 
 
@@ -183,15 +187,30 @@ void AudioEngine::stopPlayback(int sampleID)
     audioMixer->stopPlayback(sampleID);
 }
 
-void AudioEngine::setButtonMode(int sampleID, int mode)
+
+
+void AudioEngine::setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle)
 {
-    audioMixer->setButtonMode(sampleID, mode);
+    audioMixer->setSampleGestureControlToggle(sampleID, parameterID, toggle);
 }
 
-int AudioEngine::getButtonMode(int sampleID)
+void AudioEngine::setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle)
 {
-    return audioMixer->getButtonMode(sampleID);
+    audioMixer->setEffectGestureControlToggle(sampleID, effectPosition, parameterID, toggle);
 }
+
+
+bool AudioEngine::getSampleGestureControlToggle(int sampleID, int parameterID)
+{
+    return audioMixer->getSampleGestureControlToggle(sampleID, parameterID);
+}
+
+bool AudioEngine::getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID)
+{
+    return audioMixer->getEffectGestureControlToggle(sampleID, effectPosition, parameterID);
+}
+
+
 
 
 void AudioEngine::beat(int beatNo)

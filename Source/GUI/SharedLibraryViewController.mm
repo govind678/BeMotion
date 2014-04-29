@@ -6,101 +6,89 @@
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
 
-# define SAMPLING_RATE 0.05f
+# define SAMPLING_RATE      0.05f
 # define LIN_ACC_THRESHOLD  8.0f
 #define  NUM_BUTTONS        4
 
 
 #import "SharedLibraryViewController.h"
+#import "GestureControllerAppDelegate.h"
 
 
-@interface SharedLibraryViewController () {
-    SampleInfo *redSample;
-    SampleInfo *blueSample;
-    SampleInfo *greenSample;
-    SampleInfo *yellowSample;
-
+@interface SharedLibraryViewController ()
+{
+    GestureControllerAppDelegate*   appDelegate;
 }
 
 @end
 
+
+
 @implementation SharedLibraryViewController
+
+@synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
+@synthesize masterRecord0, masterRecord1, masterRecord2, masterRecord3;
+
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    redSample                = [[SampleInfo alloc] init];
-    redSample.delayEffect    = [[cDelay alloc] init];
-    redSample.tremoloEffect  = [[cTremolo alloc] init];
-    redSample.vibratoEffect  = [[cVibrato alloc] init];
-    redSample.wahEffect      = [[cWah alloc] init];
-
-
-    blueSample               = [[SampleInfo alloc] init];
-    blueSample.delayEffect   = [[cDelay alloc] init];
-    blueSample.tremoloEffect = [[cTremolo alloc] init];
-    blueSample.vibratoEffect = [[cVibrato alloc] init];
-    blueSample.wahEffect     = [[cWah alloc] init];
-    
-
-    greenSample                = [[SampleInfo alloc] init];
-    greenSample.delayEffect    = [[cDelay alloc] init];
-    greenSample.tremoloEffect  = [[cTremolo alloc] init];
-    greenSample.vibratoEffect  = [[cVibrato alloc] init];
-    greenSample.wahEffect      = [[cWah alloc] init];
     
     
-    yellowSample               = [[SampleInfo alloc] init];
-    yellowSample.delayEffect   = [[cDelay alloc] init];
-    yellowSample.tremoloEffect = [[cTremolo alloc] init];
-    yellowSample.vibratoEffect = [[cVibrato alloc] init];
-    yellowSample.wahEffect     = [[cWah alloc] init];
-
-//    redSample.sampleID = [NSNumber numberWithFloat:10];
-//    redSample.delayEffect.time = [NSNumber numberWithFloat:0.5];
-//    redSample.delayEffect.feedback = [NSNumber numberWithFloat:0.75];
-//    
-
+    //--- Get Reference to Backend ---//
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    _backendInterface   =  [appDelegate getBackendReference];
     
-    backEndInterface          =   new GestureControllerInterface;
     
-    m_pbPlaybackToggle        =   new bool [NUM_BUTTONS];
-    m_pbRecordToggle          =   new bool [NUM_BUTTONS];
+    //--- Get Reference to Metronome ---//
+    _metronome          =   [appDelegate getMetronomeReference];
+    [_metronome setDelegate:self];
     
-    for (int i=0; i < NUM_BUTTONS; i++)
+    
+    
+    //--- Initialize Master Record Toggles ---//
+    m_pbMasterRecordToggle      =   new bool [NUM_BUTTONS];
+    m_pbMasterBeginRecording    =   new bool [NUM_BUTTONS];
+    
+    
+    
+    //--- Reset Toggles ---//
+    for (int i=0; i< NUM_BUTTONS; i++)
     {
-        m_pbRecordToggle[i]     = false;
-        m_pbPlaybackToggle[i]   = false;
+        m_pbMasterRecordToggle[i]       =   false;
+        m_pbMasterBeginRecording[i]     =   false;
     }
-
-    
-    NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"Playback0" ofType:@"wav"];
-    NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"Playback1" ofType:@"wav"];
-    NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"Playback2" ofType:@"wav"];
-    NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"Playback3" ofType:@"wav"];
-    NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"Playback4" ofType:@"wav"];
-    
-    
-    backEndInterface->loadAudioFile(0, sample1Path);
-    backEndInterface->loadAudioFile(1, sample2Path);
-    backEndInterface->loadAudioFile(2, sample3Path);
-    backEndInterface->loadAudioFile(3, sample4Path);
-    backEndInterface->loadAudioFile(4, sample5Path);
-    
-    
-    m_bRedButtonToggleStatus  = false;
-    m_bBlueButtonToggleStatus = false;
-    m_bModeToggleStatus       = true; // settings mode by default
     
     
     
-    
-    metronome   =   [[Metronome alloc] init];
-    [metronome setDelegate:self];
+    m_iButtonMode                   = MODE_PLAYBACK; // playback mode by default
     
     
     
+    //--- Turn off Metronome Bars ---//
+    metroBar0.alpha                 =   0.2;
+    metroBar1.alpha                 =   0.2;
+    metroBar2.alpha                 =   0.2;
+    metroBar3.alpha                 =   0.2;
+    metroBar4.alpha                 =   0.2;
+    metroBar5.alpha                 =   0.2;
+    metroBar6.alpha                 =   0.2;
+    metroBar7.alpha                 =   0.2;
+    
+    
+    
+    //--- Turn off Master Record Buttons ---//
+    masterRecord0.alpha             =   0.2;
+    masterRecord1.alpha             =   0.2;
+    masterRecord2.alpha             =   0.2;
+    masterRecord3.alpha             =   0.2;
+    
+    
+    
+    
+    //--- Initialize Motion Manager ---//
     
     self.motionManager = [[CMMotionManager alloc] init];
     self.motionManager.deviceMotionUpdateInterval = SAMPLING_RATE;
@@ -114,7 +102,11 @@
                                                 }
                                             }];
 
+    
 }
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -124,182 +116,112 @@
 
 
 
-//- (IBAction)redButtonPressed:(id)sender
-//{
-//    NSLog(@"Chain contents %@ %@ %@ %@",  [redSample.effectChain objectAtIndex:0], [redSample.effectChain objectAtIndex:1], [redSample.effectChain objectAtIndex:2], [redSample.effectChain objectAtIndex:3]);
-//    NSLog(@"Bypass contents %@ %@ %@ %@",  redSample.delayEffect.bypass.stringValue,redSample.tremoloEffect.bypass.stringValue,redSample.vibratoEffect.bypass.stringValue,redSample.wahEffect.bypass.stringValue);
-//    
-//    if (!m_bModeToggleStatus)
-//    {
-//        if (!m_bRedButtonToggleStatus)
-//        {
-//            backEndInterface->startPlayback(0);
-//            m_bRedButtonToggleStatus = true;
-//        }
-//        
-//        else
-//        {
-//            backEndInterface->stopPlayback(0);
-//            m_bRedButtonToggleStatus = false;
-//        }
-//        
-//    }
-//}
 
-
-- (IBAction)redButtonTouchDown:(id)sender
+- (void)dealloc
 {
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->startPlayback(0);
-        self.view.backgroundColor = [UIColor redColor];
-    }
-}
-
-
-- (IBAction)redButtonTouchUp:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->stopPlayback(0);
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
-}
-
-
-
-- (IBAction)blueButtonTouchUp:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->stopPlayback(1);
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
-}
-
-
-- (IBAction)blueButtonTouchDown:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->startPlayback(1);
-        self.view.backgroundColor = [UIColor blueColor];
-    }
-}
-
-
-
-
-- (IBAction)greenButtonTouchDown:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->startPlayback(2);
-        self.view.backgroundColor = [UIColor greenColor];
-    }
-}
-
-
-- (IBAction)greenButtonTouchUp:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->stopPlayback(2);
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
-}
-
-
-
-- (IBAction)yellowButtonTouchDown:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->startPlayback(3);
-        self.view.backgroundColor = [UIColor yellowColor];
-    }
-}
-
-- (IBAction)yellowButtonTouchUp:(id)sender
-{
-    if (!m_bModeToggleStatus)
-    {
-        backEndInterface->stopPlayback(3);
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
-}
-
-
-
-
-
-- (IBAction)modeSwitchToggled:(UISwitch *)sender
-{
-    if (sender.on)
-    {
-        m_bModeToggleStatus = true;
-//        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
-    }
+    delete [] m_pbMasterRecordToggle;
+    delete [] m_pbMasterBeginRecording;
     
-    else
-    {
-        m_bModeToggleStatus = false;
-//        NSLog(m_bModeToggleStatus?@"Settings mode":@"Playback mode");
-    }
+    [metroBar0 release];
+    [metroBar1 release];
+    [metroBar2 release];
+    [metroBar3 release];
+    [metroBar4 release];
+    [metroBar5 release];
+    [metroBar6 release];
+    [metroBar7 release];
     
+    
+    [masterRecord0 release];
+    [masterRecord1 release];
+    [masterRecord2 release];
+    [masterRecord3 release];
+
+    
+    
+    [super dealloc];
 }
 
 
 
-// conditional segue - Switch scenes only if we are in settings mode
+
+
+//--- Conditional Segue ---//
+
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if (([identifier isEqualToString:@"conditionSegue1"]) && m_bModeToggleStatus) {
+    if (([identifier isEqualToString:@"conditionSegue1"]) && (m_iButtonMode == MODE_SETTINGS))
+    {
         return YES;
     }
-    if (([identifier isEqualToString:@"conditionSegue2"]) && m_bModeToggleStatus) {
+    
+    if (([identifier isEqualToString:@"conditionSegue2"]) && (m_iButtonMode == MODE_SETTINGS))
+    {
         return YES;
     }
-    if (([identifier isEqualToString:@"conditionSegue3"]) && m_bModeToggleStatus) {
+    
+    if (([identifier isEqualToString:@"conditionSegue3"]) && (m_iButtonMode == MODE_SETTINGS))
+    {
         return YES;
     }
-    if (([identifier isEqualToString:@"conditionSegue4"]) && m_bModeToggleStatus) {
+    
+    if (([identifier isEqualToString:@"conditionSegue4"]) && (m_iButtonMode == MODE_SETTINGS))
+    {
         return YES;
     }
-    if ([identifier isEqualToString:@"settingsSegue"]) {
+    
+    if ([identifier isEqualToString:@"settingsSegue"])
+    {
         return YES;
     }
     return NO;
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    EffectSettingsViewController *EffectSettingsVC = segue.destinationViewController;
-    if ([segue.identifier isEqualToString:@"conditionSegue1" ]) {
-        EffectSettingsVC.view.backgroundColor = [UIColor redColor];
-        EffectSettingsVC.currentData = redSample;
-        EffectSettingsVC.m_iCurrentSampleID =   0;
-        EffectSettingsVC.backEndInterface   =   backEndInterface;
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"settingsSegue" ])
+    {
+        GlobalSettingsViewController *globalSettingsVC  = segue.destinationViewController;
+        globalSettingsVC.backendInterface               =   _backendInterface;
+        globalSettingsVC.metronome                      =   _metronome;
     }
-    else if ([segue.identifier isEqualToString:@"conditionSegue2" ]) {
-        EffectSettingsVC.view.backgroundColor = [UIColor blueColor];
-        EffectSettingsVC.currentData = blueSample;
-        EffectSettingsVC.m_iCurrentSampleID =   1;
-        EffectSettingsVC.backEndInterface   =   backEndInterface;
+    
+    else
+    {
+        EffectSettingsViewController *EffectSettingsVC = segue.destinationViewController;
+        
+        if ([segue.identifier isEqualToString:@"conditionSegue1" ])
+        {
+            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f];
+            EffectSettingsVC.m_iCurrentSampleID     =   0;
+            EffectSettingsVC.backEndInterface       =   _backendInterface;
+        }
+        
+        else if ([segue.identifier isEqualToString:@"conditionSegue2" ])
+        {
+            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f];
+            EffectSettingsVC.m_iCurrentSampleID     =   1;
+            EffectSettingsVC.backEndInterface       =   _backendInterface;
+        }
+        
+        else if ([segue.identifier isEqualToString:@"conditionSegue3" ])
+        {
+            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f];
+            EffectSettingsVC.m_iCurrentSampleID     =   2;
+            EffectSettingsVC.backEndInterface       =   _backendInterface;
+        }
+        
+        else if ([segue.identifier isEqualToString:@"conditionSegue4" ])
+        {
+            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f];
+            EffectSettingsVC.m_iCurrentSampleID     =   3;
+            EffectSettingsVC.backEndInterface       =   _backendInterface;
+        }
     }
-    else if ([segue.identifier isEqualToString:@"conditionSegue3" ]) {
-        EffectSettingsVC.view.backgroundColor = [UIColor greenColor];
-        EffectSettingsVC.currentData = greenSample;
-        EffectSettingsVC.m_iCurrentSampleID =   2;
-        EffectSettingsVC.backEndInterface   =   backEndInterface;
-    }
-    else if ([segue.identifier isEqualToString:@"conditionSegue4" ]) {
-        EffectSettingsVC.view.backgroundColor = [UIColor yellowColor];
-        EffectSettingsVC.currentData = yellowSample;
-        EffectSettingsVC.m_iCurrentSampleID =   3;
-        EffectSettingsVC.backEndInterface   =   backEndInterface;
-    }
+    
 }
 
 
@@ -370,228 +292,439 @@
     
     if (amplitude > LIN_ACC_THRESHOLD || amplitude < -(LIN_ACC_THRESHOLD))
     {
-//        [osc sendBang:@"/trigger"];
-        backEndInterface->startPlayback(4);
+        _backendInterface->startPlayback(4);
     }
 }
 
 
-- (IBAction)redButtonRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecording(0);
-    
-}
-
-
-- (IBAction)redButtonRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecording(0);
-}
-
-
-
-- (IBAction)redButtonPlaybackFileToggle:(UIButton *)sender {
-    
-    if (m_pbPlaybackToggle[0])
-    {
-        sender.alpha = 0.2f;
-        m_pbPlaybackToggle[0] = false;
-        backEndInterface->togglePlaybackRecordingFile(0, true);
-    }
-    
-    else
-    {
-        sender.alpha = 1.0f;
-        m_pbPlaybackToggle[0] = true;
-        backEndInterface->togglePlaybackRecordingFile(0, false);
-    }
-}
-
-- (IBAction)redButtonMasterRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecordingOutput(0);
-}
-
-- (IBAction)redButtonMasterRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecordingOutput(0);
-}
-
-
-- (IBAction)blueButtonRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecording(1);
-    
-}
-
-- (IBAction)blueButtonRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecording(1);
-}
-
-
-
-- (IBAction)blueButtonPlaybackFileToggle:(UIButton *)sender {
-    
-    if (m_pbPlaybackToggle[1])
-    {
-        sender.alpha = 0.4f;
-        m_pbPlaybackToggle[1] = false;
-        backEndInterface->togglePlaybackRecordingFile(1, true);
-    }
-    
-    else
-    {
-        sender.alpha = 1.0f;
-        m_pbPlaybackToggle[1] = true;
-        backEndInterface->togglePlaybackRecordingFile(1, false);
-    }
-
-}
-
-- (IBAction)blueButtonMasterRecordDown:(UIButton *)sender {
-
-    sender.alpha = 1.0f;
-    backEndInterface->startRecordingOutput(1);
-}
-
-- (IBAction)blueButtonMasterRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecordingOutput(1);
-}
-
-
-
-- (IBAction)greenButtonRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecording(2);
-}
-
-- (IBAction)greenButtonRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.4f;
-    backEndInterface->stopRecording(2);
-}
-
-
-- (IBAction)greenButtonPlaybackFileToggle:(UIButton *)sender {
-    
-    if (m_pbPlaybackToggle[2])
-    {
-        sender.alpha = 0.4f;
-        m_pbPlaybackToggle[2] = false;
-        backEndInterface->togglePlaybackRecordingFile(2, true);
-    }
-    
-    else
-    {
-        sender.alpha = 1.0f;
-        m_pbPlaybackToggle[2] = true;
-        backEndInterface->togglePlaybackRecordingFile(2, false);
-    }
-
-}
-
-- (IBAction)greenButtonMasterRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecordingOutput(2);
-}
-
-- (IBAction)greenButtonMasterRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecordingOutput(2);
-}
-
-
-
-- (IBAction)yellowButtonRecordDown:(UIButton *)sender {
-    sender.alpha = 2.0f;
-    backEndInterface->startRecording(3);
-}
-
-
-- (IBAction)yellowButtonRecordUp:(UIButton *)sender {
-    sender.alpha = 0.4f;
-    backEndInterface->stopRecording(3);
-}
-
-
-- (IBAction)yellowButtonPlaybackFileToggle:(UIButton *)sender {
-    
-    if (m_pbPlaybackToggle[3])
-    {
-        sender.alpha = 0.4f;
-        m_pbPlaybackToggle[3] = false;
-        backEndInterface->togglePlaybackRecordingFile(3, true);
-    }
-    
-    else
-    {
-        sender.alpha = 1.0f;
-        m_pbPlaybackToggle[3] = true;
-        backEndInterface->togglePlaybackRecordingFile(3, false);
-    }
-    
-}
-
-- (IBAction)yellowButtonMasterRecordDown:(UIButton *)sender {
-    
-    sender.alpha = 1.0f;
-    backEndInterface->startRecordingOutput(3);
-}
-
-- (IBAction)yellowButtonMasterRecordUp:(UIButton *)sender {
-    
-    sender.alpha = 0.2f;
-    backEndInterface->stopRecordingOutput(3);
-}
 
 
 
 
-- (void)dealloc
+
+//--- Metronome Methods ---//
+
+- (void) guiBeat:(int)beatNo
 {
+    //--- Ugly Ass Code Below! Maybe use NS Dictionary, But later, not tonight!! ---//
     
-//    [_toggleAudioButton release];
-    
-    [metronome dealloc];
-    
-    delete backEndInterface;
-    delete [] m_pbPlaybackToggle;
-    delete [] m_pbRecordToggle;
-    
-    [super dealloc];
-}
-
-
-
-- (IBAction)toggleMetronome:(UISwitch *)sender
-{
-    if (sender.on)
+    switch (beatNo)
     {
-        [metronome startClock];
+        case 1:
+            
+            //--- Switch off current recording if any ---//
+            for (int i=0; i < NUM_BUTTONS; i++)
+            {
+                if (m_pbMasterBeginRecording[i])
+                {
+                    _backendInterface->stopRecordingOutput(i);
+                    m_pbMasterBeginRecording[i] = false;
+                    m_pbMasterRecordToggle[i]   = false;
+                    
+                    switch (i)
+                    {
+                        case 0:
+                            masterRecord0.alpha =   0.2f;
+                            break;
+                            
+                        case 1:
+                            masterRecord1.alpha =   0.2f;
+                            break;
+                            
+                        case 2:
+                            masterRecord2.alpha =   0.2f;
+                            break;
+                            
+                        case 3:
+                            masterRecord3.alpha =   0.2f;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+                
+                
+                //--- Quantize Recording ---//
+                if (m_pbMasterRecordToggle[i])
+                {
+                    _backendInterface->startRecordingOutput(i);
+                    m_pbMasterBeginRecording[i] = true;
+                    
+                    switch (i)
+                    {
+                        case 0:
+                            masterRecord0.alpha =   1.0f;
+                            break;
+                            
+                        case 1:
+                            masterRecord1.alpha =   1.0f;
+                            break;
+                            
+                        case 2:
+                            masterRecord2.alpha =   1.0f;
+                            break;
+                            
+                        case 3:
+                            masterRecord3.alpha =   1.0f;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    
+                    
+                }
+            }
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 0.2f;
+            metroBar2.alpha = 0.2f;
+            metroBar3.alpha = 0.2f;
+            metroBar4.alpha = 0.2f;
+            metroBar5.alpha = 0.2f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+        case 2:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 0.2f;
+            metroBar3.alpha = 0.2f;
+            metroBar4.alpha = 0.2f;
+            metroBar5.alpha = 0.2f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+        case 3:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 0.2f;
+            metroBar4.alpha = 0.2f;
+            metroBar5.alpha = 0.2f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+            
+        case 4:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 1.0f;
+            metroBar4.alpha = 0.2f;
+            metroBar5.alpha = 0.2f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+            
+        case 5:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 1.0f;
+            metroBar4.alpha = 1.0f;
+            metroBar5.alpha = 0.2f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+            
+        case 6:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 1.0f;
+            metroBar4.alpha = 1.0f;
+            metroBar5.alpha = 1.0f;
+            metroBar6.alpha = 0.2f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+            
+        case 7:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 1.0f;
+            metroBar4.alpha = 1.0f;
+            metroBar5.alpha = 1.0f;
+            metroBar6.alpha = 1.0f;
+            metroBar7.alpha = 0.2f;
+            
+            break;
+            
+            
+        case 8:
+            
+            metroBar0.alpha = 1.0f;
+            metroBar1.alpha = 1.0f;
+            metroBar2.alpha = 1.0f;
+            metroBar3.alpha = 1.0f;
+            metroBar4.alpha = 1.0f;
+            metroBar5.alpha = 1.0f;
+            metroBar6.alpha = 1.0f;
+            metroBar7.alpha = 1.0f;
+            
+            break;
+            
+        default:
+            break;
     }
     
-    else
-    {
-        [metronome stopClock];
-    }
 }
+
 
 
 - (void) beat:(int)beatNo
 {
-    backEndInterface->beat(beatNo);
+    _backendInterface->beat(beatNo);
+}
+
+
+
+
+
+
+
+
+//--- User Interface Methods ---//
+
+- (IBAction)RedTouchUp:(UIButton *)sender
+{
+    sender.alpha = 1.0f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+       _backendInterface->startPlayback(0);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->startRecording(0);
+    }
+}
+
+- (IBAction)RedTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->stopPlayback(0);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->stopRecording(0);
+    }
+}
+
+- (IBAction)redMasterRecord:(UIButton *)sender
+{
+    if ([_metronome isRunning])
+    {
+        sender.alpha = 0.5f;
+        m_pbMasterRecordToggle[0] = true;
+    }
+    
+}
+
+
+
+
+- (IBAction)BlueTouchUp:(UIButton *)sender
+{
+    sender.alpha = 1.0f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(1);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->startRecording(1);
+    }
+}
+
+- (IBAction)BlueTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->stopPlayback(1);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->stopRecording(1);
+    }
+}
+
+- (IBAction)blueMasterRecord:(UIButton *)sender
+{
+    if ([_metronome isRunning])
+    {
+        sender.alpha = 0.5f;
+        m_pbMasterRecordToggle[1] = true;
+    }
+    
+}
+
+
+
+
+- (IBAction)GreenTouchUp:(UIButton *)sender
+{
+    sender.alpha = 1.0f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(2);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->startRecording(2);
+    }
+}
+
+- (IBAction)GreenTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->stopPlayback(2);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->stopRecording(2);
+    }
+}
+
+- (IBAction)greenMasterRecord:(UIButton *)sender
+{
+    if ([_metronome isRunning])
+    {
+        sender.alpha = 0.5f;
+        m_pbMasterRecordToggle[2] = true;
+    }
+    
+}
+
+
+
+
+- (IBAction)YellowTouchUp:(UIButton *)sender
+{
+    sender.alpha = 1.0f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(3);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->startRecording(3);
+    }
+}
+
+- (IBAction)YellowTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->stopPlayback(3);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        _backendInterface->stopRecording(3);
+    }
+}
+
+- (IBAction)yellowMasterRecord:(UIButton *)sender
+{
+    if ([_metronome isRunning])
+    {
+        sender.alpha = 0.5f;
+        m_pbMasterRecordToggle[3] = true;
+    }
+}
+
+
+
+
+
+//--- Modifier Keys ---//
+
+
+- (IBAction)settingsToggleClicked:(UIButton *)sender
+{
+    if (m_iButtonMode != MODE_SETTINGS)
+    {
+        m_iButtonMode   =   MODE_SETTINGS;
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.1f green:0.2f blue:0.1f alpha:1.0f]];
+    }
+    
+    else
+    {
+        m_iButtonMode   =   MODE_PLAYBACK;
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.152f green:0.246f blue:0.292f alpha:1.0f]];
+    }
+}
+
+
+
+- (IBAction)recordToggleClicked:(UIButton *)sender
+{
+    if (m_iButtonMode != MODE_RECORD)
+    {
+        m_iButtonMode   =   MODE_RECORD;
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.1f blue:0.1f alpha:1.0f]];
+    }
+    
+    else
+    {
+        m_iButtonMode   =   MODE_PLAYBACK;
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.152f green:0.246f blue:0.292f alpha:1.0f]];
+    }
+    
+}
+
+
+- (IBAction)metronomeToggleClicked:(UIButton *)sender
+{
+    if ([_metronome isRunning] == NO)
+    {
+        [_metronome startClock];
+    }
+    
+    else
+    {
+        [_metronome stopClock];
+        
+        metroBar0.alpha = 0.2f;
+        metroBar1.alpha = 0.2f;
+        metroBar2.alpha = 0.2f;
+        metroBar3.alpha = 0.2f;
+        metroBar4.alpha = 0.2f;
+        metroBar5.alpha = 0.2f;
+        metroBar6.alpha = 0.2f;
+        metroBar7.alpha = 0.2f;
+    }
 }
 
 

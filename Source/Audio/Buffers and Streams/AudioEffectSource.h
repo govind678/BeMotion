@@ -40,6 +40,10 @@ public:
     float getParameter(int parameterID);
     int   getEffectType();
     
+    void setGestureControlToggle(int parameterID, bool toggle);
+    bool getGestureControlToggle(int parameterID);
+    
+    
     void audioDeviceAboutToStart(float sampleRate);
     void process(float** audioBuffer, int blockSize, bool bypassState);
     void audioDeviceStopped();
@@ -53,6 +57,7 @@ private:
     ScopedPointer<CGranularizer>    m_pcGranularizer;
     
     OwnedArray<Parameter>           m_pcParameter;
+    Array<bool>                     m_pbGestureControl;
     
     int m_iEffectID;
 };

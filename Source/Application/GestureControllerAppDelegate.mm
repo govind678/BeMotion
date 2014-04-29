@@ -17,6 +17,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    backendInterface    =   new GestureControllerInterface();
+    
+    
+    
+    //--- Preload Audio Samples ---//
+    NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"Playback0" ofType:@"wav"];
+    NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"Playback1" ofType:@"wav"];
+    NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"Playback2" ofType:@"wav"];
+    NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"Playback3" ofType:@"wav"];
+    NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"Playback4" ofType:@"wav"];
+    
+    
+    backendInterface->loadAudioFile(0, sample1Path);
+    backendInterface->loadAudioFile(1, sample2Path);
+    backendInterface->loadAudioFile(2, sample3Path);
+    backendInterface->loadAudioFile(3, sample4Path);
+    backendInterface->loadAudioFile(4, sample5Path);
+    
+    
+    metronome   =   [[Metronome alloc] init];
+    
+    
     return YES;
 }
 							
@@ -45,6 +67,18 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [metronome dealloc];
+    delete backendInterface;
+}
+
+- (GestureControllerInterface*)getBackendReference
+{
+    return backendInterface;
+}
+
+- (Metronome*)getMetronomeReference
+{
+    return metronome;
 }
 
 @end

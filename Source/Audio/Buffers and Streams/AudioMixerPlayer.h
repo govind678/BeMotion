@@ -38,9 +38,6 @@ public:
     
     void loadAudioFile(int sampleID, String filePath);
     
-    void setButtonMode(int sampleID, int mode);
-    int  getButtonMode(int sampleID);
-    
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);
     
@@ -51,14 +48,23 @@ public:
     void removeAudioEffect(int sampleID, int effectPosition);
     
     void setEffectParameter(int sampleID, int effectPosition, int parameterID, float value);
-    float getParameter(int sampleID, int effectPosition, int parameterID);
+    float getEffectParameter(int sampleID, int effectPosition, int parameterID);
     int getEffectType(int sampleID, int effectPosition);
     
     void setSampleParameter(int sampleID, int parameterID, float value);
+    float getSampleParameter(int sampleID, int parameterID);
     
     void setSmoothing(int sampleID, int effectPosition, int parameterID, float smoothing);
     
     void setAudioEffectBypassState(int sampleID, int effectPosition, bool bypassState);
+    
+    
+    void setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle);
+    void setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle);
+    
+    bool getSampleGestureControlToggle(int sampleID, int parameterID);
+    bool getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID);
+
     
     void beat(int beatNo);
     

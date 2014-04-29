@@ -14,6 +14,8 @@
 
 @implementation GlobalSettingsViewController
 
+@synthesize tempoLabel, tempoSlider;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,7 +28,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    m_iTempo    = [_metronome getTempo];
+    
+    [tempoLabel setText:[@(m_iTempo) stringValue]];
+    [tempoSlider setValue:m_iTempo];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,5 +51,23 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)dealloc
+{
+    [tempoSlider release];
+    [tempoLabel release];
+    
+    [super dealloc];
+}
+
+
+- (IBAction)tempoSliderChanged:(UISlider *)sender
+{
+    m_iTempo = sender.value;
+    
+    [_metronome setTempo:m_iTempo];
+    [tempoLabel setText:[@(m_iTempo) stringValue]];
+}
+
 
 @end

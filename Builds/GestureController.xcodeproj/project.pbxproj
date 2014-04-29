@@ -10,7 +10,17 @@
 		22447BD5190F5BB700193035 /* Granularizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD0190F5BB700193035 /* Granularizer.mm */; };
 		22447BD6190F5BB700193035 /* Limiter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD2190F5BB700193035 /* Limiter.mm */; };
 		22447BD7190F5BB700193035 /* PeakFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD4190F5BB700193035 /* PeakFilter.mm */; };
-		22447BDA190F61C200193035 /* GlobalSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD9190F61C200193035 /* GlobalSettingsViewController.m */; };
+		22447BDA190F61C200193035 /* GlobalSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22447BD9190F61C200193035 /* GlobalSettingsViewController.mm */; };
+		22ADBCFD190F736300333E54 /* MetronomeUp512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ADBCFC190F736300333E54 /* MetronomeUp512.png */; };
+		22BC1488190F63D700E7BBD2 /* Gesture.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC147E190F63D700E7BBD2 /* Gesture.png */; };
+		22BC1489190F63D700E7BBD2 /* Global512Up.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC147F190F63D700E7BBD2 /* Global512Up.png */; };
+		22BC148A190F63D700E7BBD2 /* GlobalDown512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1480190F63D700E7BBD2 /* GlobalDown512.png */; };
+		22BC148B190F63D700E7BBD2 /* MicrophoneDown512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1481190F63D700E7BBD2 /* MicrophoneDown512.png */; };
+		22BC148C190F63D700E7BBD2 /* MicrophoneUp512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1482190F63D700E7BBD2 /* MicrophoneUp512.png */; };
+		22BC148D190F63D700E7BBD2 /* RecordDown512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1483190F63D700E7BBD2 /* RecordDown512.png */; };
+		22BC148E190F63D700E7BBD2 /* RecordUp512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1484190F63D700E7BBD2 /* RecordUp512.png */; };
+		22BC148F190F63D700E7BBD2 /* SettingsDown512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1485190F63D700E7BBD2 /* SettingsDown512.png */; };
+		22BC1490190F63D700E7BBD2 /* SettingsUp512.png in Resources */ = {isa = PBXBuildFile; fileRef = 22BC1486190F63D700E7BBD2 /* SettingsUp512.png */; };
 		FC2E8B7718F4C58E00F09FEC /* Parameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7618F4C58E00F09FEC /* Parameter.mm */; };
 		FC2E8B7D18F5234300F09FEC /* Metronome.m in Sources */ = {isa = PBXBuildFile; fileRef = FC2E8B7C18F5234300F09FEC /* Metronome.m */; };
 		FC2E8B9B18F54AF700F09FEC /* Playback0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC2E8B9618F54AF700F09FEC /* Playback0.wav */; };
@@ -49,13 +59,12 @@
 		FC5C6C7118CDB4D500CA9B79 /* Tremolo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663118CDB32700CA9B79 /* Tremolo.mm */; };
 		FC5C6C7218CDB4D500CA9B79 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663518CDB32700CA9B79 /* LFO.mm */; };
 		FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663F18CDB32700CA9B79 /* GestureControllerInterface.mm */; };
-		FC5C6C7518CDB4D500CA9B79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5C665218CDB34000CA9B79 /* main.m */; };
+		FC5C6C7518CDB4D500CA9B79 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C665218CDB34000CA9B79 /* main.mm */; };
 		FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF018CE00F6002370AC /* Wah.mm */; };
 		FC6EEAF518CE05D3002370AC /* Vibrato.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF318CE05D3002370AC /* Vibrato.mm */; };
 		FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */; };
 		FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */; };
 		FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */; };
-		FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */; };
 		FCC507C918CDC036006B2898 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC507C818CDC036006B2898 /* CoreMIDI.framework */; };
 		FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCD695F118CDF33A009DD591 /* AudioEffectSource.mm */; };
 /* End PBXBuildFile section */
@@ -78,7 +87,17 @@
 		22447BD3190F5BB700193035 /* PeakFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFilter.h; sourceTree = "<group>"; };
 		22447BD4190F5BB700193035 /* PeakFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PeakFilter.mm; sourceTree = "<group>"; };
 		22447BD8190F61C100193035 /* GlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettingsViewController.h; sourceTree = "<group>"; };
-		22447BD9190F61C200193035 /* GlobalSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalSettingsViewController.m; sourceTree = "<group>"; };
+		22447BD9190F61C200193035 /* GlobalSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GlobalSettingsViewController.mm; sourceTree = "<group>"; };
+		22ADBCFC190F736300333E54 /* MetronomeUp512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MetronomeUp512.png; sourceTree = "<group>"; };
+		22BC147E190F63D700E7BBD2 /* Gesture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gesture.png; sourceTree = "<group>"; };
+		22BC147F190F63D700E7BBD2 /* Global512Up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Global512Up.png; sourceTree = "<group>"; };
+		22BC1480190F63D700E7BBD2 /* GlobalDown512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GlobalDown512.png; sourceTree = "<group>"; };
+		22BC1481190F63D700E7BBD2 /* MicrophoneDown512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MicrophoneDown512.png; sourceTree = "<group>"; };
+		22BC1482190F63D700E7BBD2 /* MicrophoneUp512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MicrophoneUp512.png; sourceTree = "<group>"; };
+		22BC1483190F63D700E7BBD2 /* RecordDown512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecordDown512.png; sourceTree = "<group>"; };
+		22BC1484190F63D700E7BBD2 /* RecordUp512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecordUp512.png; sourceTree = "<group>"; };
+		22BC1485190F63D700E7BBD2 /* SettingsDown512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsDown512.png; sourceTree = "<group>"; };
+		22BC1486190F63D700E7BBD2 /* SettingsUp512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsUp512.png; sourceTree = "<group>"; };
 		FC2E8B7518F4C58E00F09FEC /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
 		FC2E8B7618F4C58E00F09FEC /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
 		FC2E8B7B18F5234300F09FEC /* Metronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome.h; sourceTree = "<group>"; };
@@ -119,7 +138,7 @@
 		FC5C663E18CDB32700CA9B79 /* GestureControllerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GestureControllerInterface.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FC5C663F18CDB32700CA9B79 /* GestureControllerInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = GestureControllerInterface.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FC5C665118CDB34000CA9B79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FC5C665218CDB34000CA9B79 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FC5C665218CDB34000CA9B79 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = main.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FC5C665918CDB35700CA9B79 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
 		FC5C665A18CDB35700CA9B79 /* JuceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = JuceHeader.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FC5C665E18CDB35700CA9B79 /* juce_AudioDataConverters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = juce_AudioDataConverters.cpp; sourceTree = "<group>"; };
@@ -1092,8 +1111,6 @@
 		FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectSettingsViewController.mm; sourceTree = "<group>"; };
 		FC6EEAFB18CE0DB0002370AC /* SharedLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedLibraryViewController.h; sourceTree = "<group>"; };
 		FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SharedLibraryViewController.mm; sourceTree = "<group>"; };
-		FC6EEAFD18CE0DB0002370AC /* UserInterfaceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterfaceData.h; sourceTree = "<group>"; };
-		FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UserInterfaceData.mm; sourceTree = "<group>"; };
 		FCC507C718CDBD54006B2898 /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		FCC507C818CDC036006B2898 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		FCD695F018CDF33A009DD591 /* AudioEffectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectSource.h; sourceTree = "<group>"; };
@@ -1129,6 +1146,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22BC147C190F63D700E7BBD2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				22ADBCFC190F736300333E54 /* MetronomeUp512.png */,
+				22BC147E190F63D700E7BBD2 /* Gesture.png */,
+				22BC147F190F63D700E7BBD2 /* Global512Up.png */,
+				22BC1480190F63D700E7BBD2 /* GlobalDown512.png */,
+				22BC1481190F63D700E7BBD2 /* MicrophoneDown512.png */,
+				22BC1482190F63D700E7BBD2 /* MicrophoneUp512.png */,
+				22BC1483190F63D700E7BBD2 /* RecordDown512.png */,
+				22BC1484190F63D700E7BBD2 /* RecordUp512.png */,
+				22BC1485190F63D700E7BBD2 /* SettingsDown512.png */,
+				22BC1486190F63D700E7BBD2 /* SettingsUp512.png */,
+			);
+			name = Images;
+			path = ../Media/Images;
+			sourceTree = "<group>";
+		};
 		FC2E8B7E18F53DE700F09FEC /* Audio Samples */ = {
 			isa = PBXGroup;
 			children = (
@@ -1278,13 +1313,11 @@
 			isa = PBXGroup;
 			children = (
 				22447BD8190F61C100193035 /* GlobalSettingsViewController.h */,
-				22447BD9190F61C200193035 /* GlobalSettingsViewController.m */,
+				22447BD9190F61C200193035 /* GlobalSettingsViewController.mm */,
 				FC6EEAF918CE0DB0002370AC /* EffectSettingsViewController.h */,
 				FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */,
 				FC6EEAFB18CE0DB0002370AC /* SharedLibraryViewController.h */,
 				FC6EEAFC18CE0DB0002370AC /* SharedLibraryViewController.mm */,
-				FC6EEAFD18CE0DB0002370AC /* UserInterfaceData.h */,
-				FC6EEAFE18CE0DB0002370AC /* UserInterfaceData.mm */,
 				FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */,
 			);
 			path = GUI;
@@ -1307,7 +1340,7 @@
 				FC5C6C7618CDB60900CA9B79 /* GestureController-Info.plist */,
 				FC5C6C7718CDB60900CA9B79 /* GestureController-Prefix.pch */,
 				FC5C665018CDB34000CA9B79 /* InfoPlist.strings */,
-				FC5C665218CDB34000CA9B79 /* main.m */,
+				FC5C665218CDB34000CA9B79 /* main.mm */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -3023,6 +3056,7 @@
 		FC6EEB0218CE222E002370AC /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				22BC147C190F63D700E7BBD2 /* Images */,
 				FC2E8B7E18F53DE700F09FEC /* Audio Samples */,
 			);
 			name = Media;
@@ -3106,13 +3140,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC2E8B9B18F54AF700F09FEC /* Playback0.wav in Resources */,
+				22BC148A190F63D700E7BBD2 /* GlobalDown512.png in Resources */,
+				22ADBCFD190F736300333E54 /* MetronomeUp512.png in Resources */,
 				FC2E8B9C18F54AF700F09FEC /* Playback1.wav in Resources */,
 				FC2E8B9D18F54AF700F09FEC /* Playback2.wav in Resources */,
 				FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */,
 				FC2E8B9F18F54AF700F09FEC /* Playback4.wav in Resources */,
 				FC2E8B9E18F54AF700F09FEC /* Playback3.wav in Resources */,
+				22BC148B190F63D700E7BBD2 /* MicrophoneDown512.png in Resources */,
+				22BC148F190F63D700E7BBD2 /* SettingsDown512.png in Resources */,
+				22BC1490190F63D700E7BBD2 /* SettingsUp512.png in Resources */,
+				22BC1488190F63D700E7BBD2 /* Gesture.png in Resources */,
 				FC5C6C5518CDB3C200CA9B79 /* InfoPlist.strings in Resources */,
+				22BC1489190F63D700E7BBD2 /* Global512Up.png in Resources */,
 				FC5C6C5618CDB3CB00CA9B79 /* Images.xcassets in Resources */,
+				22BC148D190F63D700E7BBD2 /* RecordDown512.png in Resources */,
+				22BC148E190F63D700E7BBD2 /* RecordUp512.png in Resources */,
+				22BC148C190F63D700E7BBD2 /* MicrophoneUp512.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3149,14 +3193,13 @@
 				FCD695F218CDF33A009DD591 /* AudioEffectSource.mm in Sources */,
 				22447BD7190F5BB700193035 /* PeakFilter.mm in Sources */,
 				FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */,
-				FC6EEB0118CE0DB0002370AC /* UserInterfaceData.mm in Sources */,
 				FC6EEB0018CE0DB0002370AC /* SharedLibraryViewController.mm in Sources */,
-				FC5C6C7518CDB4D500CA9B79 /* main.m in Sources */,
+				FC5C6C7518CDB4D500CA9B79 /* main.mm in Sources */,
 				FC5C6C5F18CDB4B000CA9B79 /* juce_audio_basics.mm in Sources */,
 				FC5C6C6018CDB4B000CA9B79 /* juce_audio_devices.mm in Sources */,
 				FC5C6C6118CDB4B000CA9B79 /* juce_audio_formats.mm in Sources */,
 				FC5C6C6218CDB4B000CA9B79 /* juce_core.mm in Sources */,
-				22447BDA190F61C200193035 /* GlobalSettingsViewController.m in Sources */,
+				22447BDA190F61C200193035 /* GlobalSettingsViewController.mm in Sources */,
 				FC5C6C6318CDB4B000CA9B79 /* juce_cryptography.mm in Sources */,
 				FC5C6C6418CDB4B000CA9B79 /* juce_data_structures.mm in Sources */,
 				FC5C6C6518CDB4B000CA9B79 /* juce_events.mm in Sources */,
