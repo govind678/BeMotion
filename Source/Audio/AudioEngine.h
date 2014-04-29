@@ -82,6 +82,8 @@ private:
     String              currentRecordingPath2;
     String              currentPlaybackPath;
     
+    Array<bool>         m_pbRecordingToggle;
+    
     
     AudioDeviceManager sharedAudioDeviceManager;
     

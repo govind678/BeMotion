@@ -216,23 +216,23 @@ void AudioEffectSource::motionUpdate(float* motion)
         switch (m_iEffectID)
         {
             case EFFECT_TREMOLO:
-                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcTremolo->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             case EFFECT_DELAY:
-                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcDelay->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             case EFFECT_VIBRATO:
-                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcVibrato->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcWah->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcGranularizer->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             default:
@@ -248,23 +248,23 @@ void AudioEffectSource::motionUpdate(float* motion)
         switch (m_iEffectID)
         {
             case EFFECT_TREMOLO:
-                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcTremolo->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             case EFFECT_DELAY:
-                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcDelay->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             case EFFECT_VIBRATO:
-                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcVibrato->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcWah->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcGranularizer->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             default:

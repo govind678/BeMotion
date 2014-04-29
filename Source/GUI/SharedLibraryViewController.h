@@ -28,6 +28,8 @@
     bool*                           m_pbAudioRecordToggle;
     bool*                           m_pbAudioCurrentlyRecording;
     
+    bool*                           m_pbPlaybackStatus;
+    
     float*                          motion;
 }
 

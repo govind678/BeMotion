@@ -12,9 +12,6 @@
 
 #include "AudioEngine.h"
 
-#include <stdio.h>
-#include <iostream>
-
 
 AudioEngine::AudioEngine()
 {
@@ -34,7 +31,8 @@ AudioEngine::AudioEngine()
     recordingFilePathArray1.clear();
     recordingFilePathArray2.clear();
     playbackFilePathArray.clear();
-
+    
+    m_pbRecordingToggle.clear();
     
     
     
@@ -43,6 +41,7 @@ AudioEngine::AudioEngine()
         recordingFilePathArray1.add(currentRecordingPath1 + String(i) + ".wav");
         recordingFilePathArray2.add(currentRecordingPath2 + String(i) + ".wav");
         playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
+        m_pbRecordingToggle.add(false);
     }
 }
 
@@ -53,6 +52,7 @@ AudioEngine::~AudioEngine()
     recordingFilePathArray1.clear();
     recordingFilePathArray2.clear();
     playbackFilePathArray.clear();
+    m_pbRecordingToggle.clear();
     
     audioFileRecorder           =   nullptr;
     audioMixer                  =   nullptr;
@@ -166,13 +166,34 @@ void AudioEngine::stopRecordingAudioSample(int sampleID)
 
 void AudioEngine::startRecordingMaster(int sampleID)
 {
-    audioMixer->startRecordingOutput(recordingFilePathArray2.getReference(sampleID));
+    if (m_pbRecordingToggle.getUnchecked(sampleID))
+    {
+        audioMixer->startRecordingOutput(recordingFilePathArray2.getReference(sampleID));
+        m_pbRecordingToggle.set(sampleID, false);
+    }
+    
+    else
+    {
+        audioMixer->startRecordingOutput(recordingFilePathArray1.getReference(sampleID));
+        m_pbRecordingToggle.set(sampleID, true);
+    }
 }
+
 
 void AudioEngine::stopRecordingMaster(int sampleID)
 {
     audioMixer->stopRecordingOutput();
-    audioMixer->loadAudioFile(sampleID, recordingFilePathArray2.getReference(sampleID));
+    
+    if (m_pbRecordingToggle.getUnchecked(sampleID))
+    {
+        audioMixer->loadAudioFile(sampleID, recordingFilePathArray1.getReference(sampleID));
+    }
+    
+    else
+    {
+        audioMixer->loadAudioFile(sampleID, recordingFilePathArray2.getReference(sampleID));
+    }
+    
 }
 
 

@@ -214,18 +214,18 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
     
     if (m_bRecording)
     {
-//        for (int channel = 0; channel < totalNumOutputChannels; channel++)
-//        {
-//            FloatVectorOperations::multiply(outputChannelData[channel], 4.0f, numSamples);
-//        }
+        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+        {
+            FloatVectorOperations::multiply(outputChannelData[channel], 2.0f, numSamples);
+        }
         
         m_pcAudioFileRecorder->writeBuffer(outputChannelData, numSamples);
         
         
-//        for (int channel = 0; channel < totalNumOutputChannels; channel++)
-//        {
-//            FloatVectorOperations::multiply(outputChannelData[channel], 0.25f, numSamples);
-//        }
+        for (int channel = 0; channel < totalNumOutputChannels; channel++)
+        {
+            FloatVectorOperations::multiply(outputChannelData[channel], 0.5f, numSamples);
+        }
     }
     
     m_pcLimiter->process(outputChannelData, numSamples, false);

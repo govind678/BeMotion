@@ -55,6 +55,8 @@
     m_pbAudioRecordToggle       =   new bool [NUM_BUTTONS];
     m_pbAudioCurrentlyRecording =   new bool [NUM_BUTTONS];
     
+    m_pbPlaybackStatus          =   new bool [NUM_BUTTONS];
+    
     
     
     //--- Reset Toggles ---//
@@ -64,6 +66,7 @@
         m_pbMasterBeginRecording[i]     =   false;
         m_pbAudioRecordToggle[i]        =   false;
         m_pbAudioCurrentlyRecording[i]  =   false;
+        m_pbPlaybackStatus[i]           =   false;
     }
     
     
@@ -516,12 +519,22 @@
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(0);
-    }
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        m_pbAudioRecordToggle[0] = false;
+        m_pbPlaybackStatus[0] = false;
     }
     
+    
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        if ([_metronome isRunning] == YES)
+        {
+           m_pbAudioRecordToggle[0] = false;
+        }
+        
+        else
+        {
+            _backendInterface->stopRecording(0);
+        }
+    }
 }
 
 - (IBAction)RedTouchDown:(UIButton *)sender
@@ -530,11 +543,25 @@
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
-        _backendInterface->startPlayback(0);
+        if (!m_pbPlaybackStatus[0])
+        {
+            _backendInterface->startPlayback(0);
+            m_pbPlaybackStatus[0] = true;
+        }
     }
+    
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[0] = true;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[0] = true;
+        }
+        
+        else
+        {
+            _backendInterface->startRecording(0);
+        }
     }
 }
 
@@ -558,10 +585,20 @@
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(1);
+        m_pbPlaybackStatus[1] = false;
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[1] = false;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[1] = false;
+        }
+        
+        else
+        {
+            _backendInterface->stopRecording(1);
+        }
     }
 
 }
@@ -572,11 +609,25 @@
 
     if (m_iButtonMode == MODE_PLAYBACK)
     {
-        _backendInterface->startPlayback(1);
+        if (! m_pbPlaybackStatus[1])
+        {
+            _backendInterface->startPlayback(1);
+            m_pbPlaybackStatus[1] = true;
+        }
+        
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[1] = true;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[1] = true;
+        }
+        
+        else
+        {
+            _backendInterface->startRecording(1);
+        }
     }
 }
 
@@ -600,10 +651,20 @@
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(2);
+        m_pbPlaybackStatus[2] = false;
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-       m_pbAudioRecordToggle[2] = false;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[2] = false;
+        }
+        
+        else
+        {
+            _backendInterface->stopRecording(2);
+        }
     }
 }
 
@@ -613,11 +674,25 @@
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
-        _backendInterface->startPlayback(2);
+        if (! m_pbPlaybackStatus[2])
+        {
+            _backendInterface->startPlayback(2);
+            m_pbPlaybackStatus[2] = true;
+        }
+        
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[2] = true;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[2] = true;
+        }
+        
+        else
+        {
+            _backendInterface->startRecording(2);
+        }
     }
 }
 
@@ -641,10 +716,20 @@
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(3);
+        m_pbPlaybackStatus[3] = false;
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[3] = false;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[3] = false;
+        }
+        
+        else
+        {
+            _backendInterface->stopRecording(3);
+        }
     }
 }
 
@@ -654,11 +739,25 @@
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
-        _backendInterface->startPlayback(3);
+        if (! m_pbPlaybackStatus[3])
+        {
+            _backendInterface->startPlayback(3);
+            m_pbPlaybackStatus[3] = true;
+        }
+        
     }
+    
     else if (m_iButtonMode == MODE_RECORD)
     {
-        m_pbAudioRecordToggle[3] = true;
+        if ([_metronome isRunning] == YES)
+        {
+            m_pbAudioRecordToggle[3] = true;
+        }
+        
+        else
+        {
+            _backendInterface->startRecording(3);
+        }
     }
 }
 
