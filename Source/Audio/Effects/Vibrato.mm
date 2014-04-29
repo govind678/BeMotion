@@ -53,6 +53,7 @@ void CVibrato::prepareToPlay(float sampleRate)
         m_CLFO[channel] = new CLFO(sampleRate);
     }
     m_bLFOInitialized   =   true;
+    
     initializeDefaults();
 }
 
@@ -104,14 +105,17 @@ void CVibrato::setParam(int parameterID, float value)
     switch (parameterID)
     {
         case PARAM_1:
-            setModulationFrequency_Hz(20.0f * value);
+            m_iModulation_Freq_Hz   =   20.0f * value;
+            setModulationFrequency_Hz(m_iModulation_Freq_Hz);
             break;
             
         case PARAM_2:
-            setModulationWidth_ms(value * 200.0);
+            m_iModulation_Width_Samples =   value * MAX_MOD_WIDTH;
+            setModulationWidth_ms(m_iModulation_Width_Samples);
             break;
             
         case PARAM_3:
+            
             if ((value >= 0) && (value < 0.33))
             {
                 setModulationType(CLFO::kSin);
@@ -140,11 +144,31 @@ float CVibrato::getParam(int parameterID)
     switch (parameterID)
     {
         case PARAM_1:
-            return getModulationFrequency_Hz();
+            return (m_iModulation_Freq_Hz / 20.f);
             break;
             
         case PARAM_2:
-            return getModulationWidth_ms();
+            return (m_iModulation_Width_Samples / MAX_MOD_WIDTH);
+            break;
+            
+        case PARAM_3:
+            
+            if (m_kLFOType == CLFO::kSin)
+            {
+                return 0.165f;
+            }
+            
+            else if (m_kLFOType == CLFO::kTriangle)
+            {
+                return 0.495f;
+            }
+            
+            else
+            {
+                return 0.825f;
+            }
+            
+            break;
             
         default:
             return 0.0f;
@@ -155,9 +179,11 @@ float CVibrato::getParam(int parameterID)
 
 void CVibrato::initializeDefaults()
 {
+    m_iModulation_Freq_Hz   =   4.0;
+    m_kLFOType              =   CLFO::kSin;
     setModulationFrequency_Hz(4.0);
     setModulationWidth_ms(100);
-    setModulationType(CLFO::kSin);
+    setModulationType(m_kLFOType);
 }
 
 

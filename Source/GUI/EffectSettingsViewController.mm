@@ -26,6 +26,8 @@
 @synthesize slider1Object, slider2Object, slider3Object;
 @synthesize slider1CurrentValue, slider2CurrentValue, slider3CurrentValue;
 @synthesize slider1EffectParam, slider2EffectParam, slider3EffectParam;
+@synthesize gainGestureObject, quantGestureObject, param1GestureObject, param2GestureObject, param3GestureObject;
+@synthesize gainLabel, quantizationLabel;
 
 
 
@@ -49,15 +51,49 @@
     m_iCurrentEffectPosition        =   0;
     
     
-    //--- Get Sample Parameters ---// 
-    [gainSliderObject setValue:_backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_GAIN)];
+    //--- Get Sample Parameters ---//
+    float gain = _backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_GAIN);
+    [gainSliderObject setValue:gain];
+    [gainLabel setText:[@(gain) stringValue]];
+    
     [playbackModeObject setSelectedSegmentIndex:_backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_PLAYBACK_MODE)];
-    [quantizationSliderObject setValue:_backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION)];
+    
+    float quantization = _backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION);
+    [quantizationSliderObject setValue:quantization];
+    [quantizationLabel setText:[@(quantization) stringValue]];
+    
+    
+    //--- Get Sample Gesture Control Toggles ---//
+    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN))
+    {
+        [gainGestureObject setAlpha: 1.0f];
+        [gainSliderObject setEnabled:NO];
+    }
+    
+    else
+    {
+        [gainGestureObject setAlpha: 0.4f];
+        [gainSliderObject setEnabled:YES];
+    }
+    
+    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT))
+    {
+        [quantGestureObject setAlpha: 1.0f];
+        [quantizationSliderObject setEnabled:NO];
+    }
+    
+    else
+    {
+        [quantGestureObject setAlpha: 0.4f];
+        [quantizationSliderObject setEnabled:YES];
+    }
+    
     
     
     //--- Get Effect Parameters ---//
     [pickerObject selectRow:_backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition) inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
+    
 }
 
 
@@ -70,6 +106,7 @@
 - (IBAction)gainSliderChanged:(UISlider *)sender
 {
     _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_GAIN, sender.value);
+    [gainLabel setText:[@(sender.value) stringValue]];
 }
 
 
@@ -84,6 +121,7 @@
 - (IBAction)quantizationSliderChanged:(UISlider *)sender
 {
     _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION, (int)sender.value);
+    [quantizationLabel setText:[@((int)sender.value) stringValue]];
 }
 
 
@@ -97,8 +135,9 @@
 // Effect Position Segmented View - Display parameters based on effect position
 - (IBAction)SegementControl:(UISegmentedControl *)sender
 {
-    m_iCurrentEffectPosition    =   sender.selectedSegmentIndex;
-    [pickerObject selectRow:_backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition) inComponent:0 animated:YES];
+    m_iCurrentEffectPosition    =   (int)sender.selectedSegmentIndex;
+    int effectType = _backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition);
+    [pickerObject selectRow:effectType inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
 }
 
@@ -139,16 +178,19 @@
 - (IBAction)Slider1Changed:(UISlider *)sender
 {
     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
+    [slider1CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider2Changed:(UISlider *)sender
 {
     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
+    [slider2CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider3Changed:(UISlider *)sender
 {
     _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
+    [slider3CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 
@@ -171,6 +213,42 @@
     [slider3CurrentValue setText:[@(param3) stringValue]];
     
     [bypassButtonObject setSelected:_backEndInterface->getEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS)];
+    
+    
+    //-- Update Gesture Control Buttons --//
+    
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    {
+        [param1GestureObject setAlpha:1.0f];
+    }
+    
+    else
+    {
+        [param1GestureObject setAlpha:0.4f];
+    }
+    
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    {
+        [param2GestureObject setAlpha:1.0f];
+    }
+    
+    else
+    {
+        [param2GestureObject setAlpha:0.4f];
+    }
+    
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    {
+        [param3GestureObject setAlpha:1.0f];
+    }
+    
+    else
+    {
+        [param3GestureObject setAlpha:0.4f];
+    }
+    
+    
+    
     
     
     switch (_backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition))
@@ -222,31 +300,85 @@
 
 
 
-//--- Gesture Control ---//
+//--- Gesture Control Toggles ---//
 
 - (IBAction)gainGestureToggle:(UIButton *)sender
 {
-//    _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_GAIN, )
+    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN))
+    {
+        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN, false);
+        sender.alpha = 0.4;
+        [gainSliderObject setEnabled:YES];
+    }
     
+    else
+    {
+        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN, true);
+        sender.alpha = 1.0f;
+        [gainSliderObject setEnabled:NO];
+    }
 }
 
 - (IBAction)quantGestureToggle:(UIButton *)sender
 {
+    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT))
+    {
+        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT, false);
+        sender.alpha = 0.4;
+        [quantizationSliderObject setEnabled:YES];
+    }
     
+    else
+    {
+        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT, true);
+        sender.alpha = 1.0f;
+        [quantizationSliderObject setEnabled:NO];
+    }
 }
 
 - (IBAction)param1GestureToggle:(UIButton *)sender
 {
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, false);
+        sender.alpha = 0.4;
+    }
     
+    else
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, true);
+        sender.alpha = 1.0f;
+    }
 }
 
 - (IBAction)param2GestureToggle:(UIButton *)sender
 {
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, false);
+        sender.alpha = 0.4;
+    }
     
+    else
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, true);
+        sender.alpha = 1.0f;
+    }
 }
 
 - (IBAction)param3GestureToggle:(UIButton *)sender
 {
+    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, false);
+        sender.alpha = 0.4;
+    }
+    
+    else
+    {
+        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, true);
+        sender.alpha = 1.0f;
+    }
     
 }
 
@@ -284,7 +416,15 @@
     [playbackModeObject release];
     
     
-    [_gainGestureObject release];
+    [gainGestureObject release];
+    [quantGestureObject release];
+    [param1GestureObject release];
+    [param2GestureObject release];
+    [param3GestureObject release];
+    
+    [gainLabel release];
+    [quantizationLabel release];
+    
     [super dealloc];
 }
 

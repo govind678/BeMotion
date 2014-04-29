@@ -115,6 +115,10 @@ void GestureControllerInterface::beat(int beatNo)
     audioEngine->beat(beatNo);
 }
 
+void GestureControllerInterface::motionUpdate(float *motion)
+{
+    audioEngine->motionUpdate(motion);
+}
 
 //==============================================================================
 // Get Methods to update GUI
@@ -135,7 +139,8 @@ int GestureControllerInterface::getEffectType(int sampleID, int effectPosition)
 
 float GestureControllerInterface::getEffectParameter(int sampleID, int effectPosition, int parameterID)
 {
-    return audioEngine->getEffectParameter(sampleID, effectPosition, parameterID);
+    float value = audioEngine->getEffectParameter(sampleID, effectPosition, parameterID);
+    return value;
 }
 
 float GestureControllerInterface::getSampleParameter(int sampleID, int parameterID)

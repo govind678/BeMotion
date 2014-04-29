@@ -47,6 +47,7 @@ private:
     void setLFOType(CLFO::LFO_Type type);
     
 	CLFO *LFO;
+    CLFO::LFO_Type  m_kLFOType;
 
 	float m_fSampleRate;
 	int   m_iNumChannels;

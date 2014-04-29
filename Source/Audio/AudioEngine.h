@@ -62,6 +62,8 @@ public:
     
     void beat(int beatNo);
     
+    void motionUpdate(float* motion);
+    
     
 private:
 

@@ -52,6 +52,9 @@
     m_pbMasterRecordToggle      =   new bool [NUM_BUTTONS];
     m_pbMasterBeginRecording    =   new bool [NUM_BUTTONS];
     
+    m_pbAudioRecordToggle       =   new bool [NUM_BUTTONS];
+    m_pbAudioCurrentlyRecording =   new bool [NUM_BUTTONS];
+    
     
     
     //--- Reset Toggles ---//
@@ -59,11 +62,13 @@
     {
         m_pbMasterRecordToggle[i]       =   false;
         m_pbMasterBeginRecording[i]     =   false;
+        m_pbAudioRecordToggle[i]        =   false;
+        m_pbAudioCurrentlyRecording[i]  =   false;
     }
     
     
     
-    m_iButtonMode                   = MODE_PLAYBACK; // playback mode by default
+    m_iButtonMode                       = MODE_PLAYBACK; // playback mode by default
     
     
     
@@ -101,6 +106,8 @@
                                                     NSLog(@"%@", error);
                                                 }
                                             }];
+    
+    motion  =   new float [NUM_MOTION_PARAMS];
 
     
 }
@@ -121,6 +128,7 @@
 {
     delete [] m_pbMasterRecordToggle;
     delete [] m_pbMasterBeginRecording;
+    delete [] motion;
     
     [metroBar0 release];
     [metroBar1 release];
@@ -234,53 +242,16 @@
 - (void) motionDeviceUpdate: (CMDeviceMotion*) deviceMotion
 {
     
-//    double attitude[3];
+    motion[ATTITUDE_PITCH]  = (deviceMotion.attitude.pitch + M_PI) / (2 * M_PI);
+    motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll + M_PI) / (2 * M_PI);
+    motion[ATTITUDE_YAW]    = (deviceMotion.attitude.yaw + M_PI) / (2 * M_PI);
+    motion[ACCEL_X]         = deviceMotion.userAcceleration.x;
+    motion[ACCEL_Y]         = deviceMotion.userAcceleration.y;
+    motion[ACCEL_Z]         = deviceMotion.userAcceleration.z;
     
-//    attitude[0] = deviceMotion.attitude.roll;
-//    attitude[1] = deviceMotion.attitude.pitch;
-//    attitude[2] = deviceMotion.attitude.yaw;
-//    [osc sendFloat:@"/attitude" : attitude : 3];
-//    backEndInterface->setEffectParameter(0, 0, PARAM_1, ((deviceMotion.attitude.pitch + M_PI/2) * 2.0f));
-//    backEndInterface->setEffectParameter(3, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-//    backEndInterface->setEffectParameter(2, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-//    backEndInterface->setEffectParameter(1, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-//    backEndInterface->setEffectParameter(0, 0, PARAM_2, (deviceMotion.attitude.pitch + M_PI_2) / M_PI);
-    
-//    backEndInterface->setSampleParameter(2, PARAM_QUANTIZATION, (((deviceMotion.attitude.roll + M_PI_2) / M_PI) * 2.0f) + 4.0f);
-//    backEndInterface->setParameter(1, 1, 0, ((attitude[1] + M_PI/2) * 2.0f));
-//    backEndInterface->setParameter(int sampleID, int effectPosition, int parameterID, float value
-    
-//    double acceleration[3];
-    
-//    acceleration[0] = deviceMotion.userAcceleration.x;
-//    acceleration[1] = deviceMotion.userAcceleration.y;
-//    acceleration[2] = deviceMotion.userAcceleration.z;
     [self processUserAcceleration:deviceMotion.userAcceleration];
-//    [osc sendFloat:@"/acceleration" : acceleration : 3];
     
-    
-//    double quaternion[4];
-    
-//    quaternion[0] = deviceMotion.attitude.quaternion.w;
-//    quaternion[1] = deviceMotion.attitude.quaternion.x;
-//    quaternion[2] = deviceMotion.attitude.quaternion.y;
-//    quaternion[3] = deviceMotion.attitude.quaternion.z;
-//    [osc sendFloat:@"/quaternion" : quaternion : 4];
-    
-    
-//    double rotationRate[3];
-//    rotationRate[0] = deviceMotion.rotationRate.x;
-//    rotationRate[1] = deviceMotion.rotationRate.y;
-//    rotationRate[2] = deviceMotion.rotationRate.z;
-//    [osc sendFloat:@"/rotationRate" : rotationRate : 3];
-    
-    
-//    double gravity[3];
-//    gravity[0] = deviceMotion.gravity.x;
-//    gravity[1] = deviceMotion.gravity.y;
-//    gravity[2] = deviceMotion.gravity.z;
-//    [osc sendFloat:@"/gravity" : gravity : 3];
-    
+    _backendInterface->motionUpdate(motion);
 }
 
 
@@ -306,13 +277,39 @@
 
 - (void) guiBeat:(int)beatNo
 {
+    
+    //--- Quantized Microphone Recording ---//
+    for (int i=0; i < NUM_BUTTONS; i++)
+    {
+        if (m_pbAudioRecordToggle[i])
+        {
+            if (! m_pbAudioCurrentlyRecording[i])
+            {
+                _backendInterface->startRecording(i);
+                m_pbAudioCurrentlyRecording[i] = true;
+            }
+        }
+        
+        else
+        {
+            if (m_pbAudioCurrentlyRecording[i])
+            {
+                _backendInterface->stopRecording(i);
+                m_pbAudioCurrentlyRecording[i] = false;
+            }
+        }
+    }
+    
+    
+    
+    //--- Display Metronome Ticks ---//
     //--- Ugly Ass Code Below! Maybe use NS Dictionary, But later, not tonight!! ---//
     
     switch (beatNo)
     {
         case 1:
             
-            //--- Switch off current recording if any ---//
+            //--- Quantized Resampling ---//
             for (int i=0; i < NUM_BUTTONS; i++)
             {
                 if (m_pbMasterBeginRecording[i])
@@ -515,26 +512,29 @@
 - (IBAction)RedTouchUp:(UIButton *)sender
 {
     sender.alpha = 1.0f;
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-       _backendInterface->startPlayback(0);
-    }
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        _backendInterface->startRecording(0);
-    }
-}
-
-- (IBAction)RedTouchDown:(UIButton *)sender
-{
-    sender.alpha = 0.4f;
+    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(0);
     }
     else if (m_iButtonMode == MODE_RECORD)
     {
-        _backendInterface->stopRecording(0);
+        m_pbAudioRecordToggle[0] = false;
+    }
+    
+}
+
+- (IBAction)RedTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(0);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        m_pbAudioRecordToggle[0] = true;
     }
 }
 
@@ -554,26 +554,29 @@
 - (IBAction)BlueTouchUp:(UIButton *)sender
 {
     sender.alpha = 1.0f;
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->startPlayback(1);
-    }
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        _backendInterface->startRecording(1);
-    }
-}
-
-- (IBAction)BlueTouchDown:(UIButton *)sender
-{
-    sender.alpha = 0.4f;
+    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(1);
     }
     else if (m_iButtonMode == MODE_RECORD)
     {
-        _backendInterface->stopRecording(1);
+        m_pbAudioRecordToggle[1] = false;
+    }
+
+}
+
+- (IBAction)BlueTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(1);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        m_pbAudioRecordToggle[1] = true;
     }
 }
 
@@ -593,26 +596,28 @@
 - (IBAction)GreenTouchUp:(UIButton *)sender
 {
     sender.alpha = 1.0f;
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->startPlayback(2);
-    }
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        _backendInterface->startRecording(2);
-    }
-}
-
-- (IBAction)GreenTouchDown:(UIButton *)sender
-{
-    sender.alpha = 0.4f;
+    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(2);
     }
     else if (m_iButtonMode == MODE_RECORD)
     {
-        _backendInterface->stopRecording(2);
+       m_pbAudioRecordToggle[2] = false;
+    }
+}
+
+- (IBAction)GreenTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(2);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        m_pbAudioRecordToggle[2] = true;
     }
 }
 
@@ -632,26 +637,28 @@
 - (IBAction)YellowTouchUp:(UIButton *)sender
 {
     sender.alpha = 1.0f;
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->startPlayback(3);
-    }
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        _backendInterface->startRecording(3);
-    }
-}
-
-- (IBAction)YellowTouchDown:(UIButton *)sender
-{
-    sender.alpha = 0.4f;
+    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(3);
     }
     else if (m_iButtonMode == MODE_RECORD)
     {
-        _backendInterface->stopRecording(3);
+        m_pbAudioRecordToggle[3] = false;
+    }
+}
+
+- (IBAction)YellowTouchDown:(UIButton *)sender
+{
+    sender.alpha = 0.4f;
+    
+    if (m_iButtonMode == MODE_PLAYBACK)
+    {
+        _backendInterface->startPlayback(3);
+    }
+    else if (m_iButtonMode == MODE_RECORD)
+    {
+        m_pbAudioRecordToggle[3] = true;
     }
 }
 

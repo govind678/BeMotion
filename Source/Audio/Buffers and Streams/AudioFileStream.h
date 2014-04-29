@@ -16,6 +16,9 @@
 
 #include "AudioEffectSource.h"
 #include "Limiter.h"
+#include "Parameter.h"
+
+#define GAIN_SCALE      0.5f
 
 
 class AudioFileStream        :   public AudioSource
@@ -63,6 +66,8 @@ public:
 
     void beat(int beatNum);
     
+    void motionUpdate(float* motion);
+    
     
 private:
     
@@ -84,6 +89,8 @@ private:
     ScopedPointer<CLimiter>         m_pcLimiter;
     
     TimeSliceThread thread;
+    
+    OwnedArray<Parameter>           m_pcParameter;
     
     int                             m_iSampleID;
     String                          m_sCurrentFilePath;

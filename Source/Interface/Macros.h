@@ -70,6 +70,23 @@
 
 //========== Motion Control Macros ===========//
 
+# define NUM_MOTION_PARAMS      6
+
+# define NUM_SAMPLE_PARAMS      2
+
+# define PARAM_MOTION_GAIN      0
+# define PARAM_MOTION_QUANT     1
+
+# define PARAM_MOTION_PARAM1    0
+# define PARAM_MOTION_PARAM2    1
+# define PARAM_MOTION_PARAM3    2
+
+# define ATTITUDE_PITCH         0
+# define ATTITUDE_ROLL          1
+# define ATTITUDE_YAW           2
+# define ACCEL_X                3
+# define ACCEL_Y                4
+# define ACCEL_Z                5
 
 
 

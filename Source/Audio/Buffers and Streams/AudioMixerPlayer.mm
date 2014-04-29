@@ -245,3 +245,12 @@ void AudioMixerPlayer::audioDeviceStopped()
 	audioSourcePlayer.audioDeviceStopped();
     m_pcAudioFileRecorder->audioDeviceStopped();
 }
+
+
+void AudioMixerPlayer::motionUpdate(float *motion)
+{
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 1; i++)
+    {
+        audioFileStream.getUnchecked(i)->motionUpdate(motion);
+    }
+}

@@ -86,7 +86,7 @@ float CWah::getParam(/*hFile::enumType type*/ int type)
 		// gain
 		case PARAM_1:
 
-				return m_fGainScale;
+                return sqrtf(m_fGainScale);
 				break;
 
 		case PARAM_2:

@@ -24,6 +24,11 @@
     
     bool*                           m_pbMasterRecordToggle;
     bool*                           m_pbMasterBeginRecording;
+    
+    bool*                           m_pbAudioRecordToggle;
+    bool*                           m_pbAudioCurrentlyRecording;
+    
+    float*                          motion;
 }
 
 

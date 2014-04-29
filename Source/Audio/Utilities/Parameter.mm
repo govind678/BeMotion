@@ -11,8 +11,10 @@
 
 Parameter::Parameter()
 {
-    m_fAlpha = 0.99f;
-    m_fParameter = 0.0f;
+    m_fAlpha        = 0.99f;
+    m_fParameter    = 0.0f;
+    
+    m_iTempo        =  DEFAULT_TEMPO;
 }
 
 

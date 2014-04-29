@@ -17,7 +17,6 @@
 {
     if (self = [super init])
     {
-        NSLog(@"New Metro Object");
         tempo               =   DEFAULT_TEMPO;
         numerator           =   DEFAULT_NUMERATOR;
         status              =   NO;

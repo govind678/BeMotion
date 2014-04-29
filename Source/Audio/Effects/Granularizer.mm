@@ -89,7 +89,6 @@ void CGranularizer::setParam(int type, float value)
             {
 				m_fGrainTime	= value;
             }
-				//setParam(0, (value + getParam(0)) * 0.5);
 		break;   
 
 		case PARAM_3:

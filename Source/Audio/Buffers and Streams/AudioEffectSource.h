@@ -48,6 +48,8 @@ public:
     void process(float** audioBuffer, int blockSize, bool bypassState);
     void audioDeviceStopped();
     
+    void motionUpdate(float* motion);
+    
 private:
     
     ScopedPointer<CDelay>           m_pcDelay;
@@ -58,6 +60,8 @@ private:
     
     OwnedArray<Parameter>           m_pcParameter;
     Array<bool>                     m_pbGestureControl;
+    
+    Array<float>                    m_pfRawParameter;
     
     int m_iEffectID;
 };

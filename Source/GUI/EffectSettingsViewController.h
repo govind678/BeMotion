@@ -30,6 +30,9 @@
 @property (retain, nonatomic) IBOutlet UISegmentedControl *playbackModeObject;
 @property (retain, nonatomic) IBOutlet UISlider *quantizationSliderObject;
 
+@property (retain, nonatomic) IBOutlet UILabel *gainLabel;
+@property (retain, nonatomic) IBOutlet UILabel *quantizationLabel;
+
 @property (retain, nonatomic) IBOutlet UIPickerView *pickerObject;
 
 @property (retain, nonatomic) IBOutlet UISlider *slider1Object;

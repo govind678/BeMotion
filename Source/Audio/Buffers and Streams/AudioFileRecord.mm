@@ -10,7 +10,8 @@
 
 
 #include "AudioFileRecord.h"
-
+#include <stdio.h>
+#include <iostream>
 
 AudioFileRecord::AudioFileRecord(AudioDeviceManager& sharedDeviceManager)  :    deviceManager(sharedDeviceManager),
                                                                                 backgroundThread ("Audio Recorder Thread"),
@@ -32,7 +33,6 @@ AudioFileRecord::~AudioFileRecord()
 void AudioFileRecord::startRecording(String filePath, bool internalCallback)
 {
     m_sCurrentFilePath  =   filePath;
-    
     
     stopRecording();
     File file(m_sCurrentFilePath);

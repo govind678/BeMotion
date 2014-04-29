@@ -9,6 +9,7 @@
 #ifndef __GestureController__Parameter__
 #define __GestureController__Parameter__
 
+#include "Macros.h"
 
 class Parameter
 {
@@ -23,12 +24,16 @@ public:
     
     float process(float value);
     
+    void setTempo(int newTempo);
+    
     
     
 private:
     
     float m_fAlpha;
     float m_fParameter;
+    
+    float m_iTempo;
 };
 
 

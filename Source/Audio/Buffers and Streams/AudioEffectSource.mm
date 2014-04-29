@@ -22,11 +22,14 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     
     m_pcParameter.clear();
     m_pbGestureControl.clear();
+    m_pfRawParameter.clear();
     
     for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
     {
         m_pcParameter.add(new Parameter());
-        m_pcParameter.getUnchecked(i)->setSmoothingParameter(0.5);
+        m_pcParameter.getUnchecked(i)->setSmoothingParameter(0.8);
+        
+        m_pfRawParameter.add(0.0f);
         
         m_pbGestureControl.add(false);
     }
@@ -37,24 +40,48 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         case EFFECT_TREMOLO:
         {
             m_pcTremolo         =   new CTremolo(numChannels);
+            
+            for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+            {
+                m_pfRawParameter.set(i, m_pcTremolo->getParam(i + 1));
+            }
+            
             break;
         }
           
         case EFFECT_DELAY:
         {
             m_pcDelay           =   new CDelay(numChannels);
+            
+            for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+            {
+                m_pfRawParameter.set(i, m_pcDelay->getParam(i + 1));
+            }
+            
             break;
         }
             
         case EFFECT_VIBRATO:
         {
             m_pcVibrato         =   new CVibrato(numChannels);
+            
+            for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+            {
+                m_pfRawParameter.set(i, m_pcVibrato->getParam(i + 1));
+            }
+            
             break;
         }
             
         case EFFECT_WAH:
         {
             m_pcWah             =   new CWah(numChannels);
+            
+            for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+            {
+                m_pfRawParameter.set(i, m_pcWah->getParam(i + 1));
+            }
+            
             break;
         }
             
@@ -62,6 +89,12 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         case EFFECT_GRANULAR:
         {
             m_pcGranularizer    =   new CGranularizer(numChannels);
+            
+            for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
+            {
+                m_pfRawParameter.set(i, m_pcGranularizer->getParam(i + 1));
+            }
+            
             break;
         }
             
@@ -86,6 +119,7 @@ AudioEffectSource::~AudioEffectSource()
 
     m_pcParameter.clear();
     m_pbGestureControl.clear();
+    m_pfRawParameter.clear();
 }
 
 
@@ -98,26 +132,29 @@ void AudioEffectSource::setSmoothing(int parameterID, float smoothing)
 
 void AudioEffectSource::setParameter(int parameterID, float value)
 {
+    m_pfRawParameter.set(parameterID - 1, value);
+    
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            m_pcTremolo->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            m_pfRawParameter.set(parameterID - 1, value);
+            m_pcTremolo->setParam(parameterID, value);
             break;
         
         case EFFECT_DELAY:
-            m_pcDelay->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            m_pcDelay->setParam(parameterID, value);
             break;
            
         case EFFECT_VIBRATO:
-            m_pcVibrato->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            m_pcVibrato->setParam(parameterID, value);
             break;
             
         case EFFECT_WAH:
-            m_pcWah->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            m_pcWah->setParam(parameterID, value);
             break;
             
         case EFFECT_GRANULAR:
-            m_pcGranularizer->setParam(parameterID, m_pcParameter.getUnchecked(parameterID - 1)->process(value));
+            m_pcGranularizer->setParam(parameterID, value);
             break;
             
         default:
@@ -139,34 +176,109 @@ bool AudioEffectSource::getGestureControlToggle(int parameterID)
 
 
 
+void AudioEffectSource::motionUpdate(float* motion)
+{
+    
+    if (m_pbGestureControl.getUnchecked(PARAM_MOTION_PARAM1))
+    {
+        switch (m_iEffectID)
+        {
+            case EFFECT_TREMOLO:
+                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                break;
+                
+            case EFFECT_DELAY:
+                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                break;
+                
+            case EFFECT_VIBRATO:
+                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                break;
+                
+            case EFFECT_WAH:
+                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                break;
+                
+            case EFFECT_GRANULAR:
+                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                break;
+                
+            default:
+                break;
+        
+        }
+    }
+    
+    
+    
+    if (m_pbGestureControl.getUnchecked(PARAM_MOTION_PARAM2))
+    {
+        switch (m_iEffectID)
+        {
+            case EFFECT_TREMOLO:
+                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                break;
+                
+            case EFFECT_DELAY:
+                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                break;
+                
+            case EFFECT_VIBRATO:
+                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                break;
+                
+            case EFFECT_WAH:
+                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                break;
+                
+            case EFFECT_GRANULAR:
+                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                break;
+                
+            default:
+                break;
+                
+        }
+    }
+    
+    
+    
+    if (m_pbGestureControl.getUnchecked(PARAM_MOTION_PARAM3))
+    {
+        switch (m_iEffectID)
+        {
+            case EFFECT_TREMOLO:
+                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                break;
+                
+            case EFFECT_DELAY:
+                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                break;
+                
+            case EFFECT_VIBRATO:
+                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                break;
+                
+            case EFFECT_WAH:
+                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                break;
+                
+            case EFFECT_GRANULAR:
+                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                break;
+                
+            default:
+                break;
+                
+        }
+    }
+}
+
+
 
 float AudioEffectSource::getParameter(int parameterID)
 {
-    switch (m_iEffectID)
-    {
-        case EFFECT_TREMOLO:
-            return m_pcTremolo->getParam(parameterID - 1);
-            break;
-            
-        case EFFECT_DELAY:
-            return m_pcDelay->getParam(parameterID - 1);
-            break;
-            
-        case EFFECT_VIBRATO:
-            return m_pcVibrato->getParam(parameterID - 1);
-            
-        case EFFECT_WAH:
-            return m_pcWah->getParam(parameterID - 1);
-            break;
-            
-        case EFFECT_GRANULAR:
-            return m_pcGranularizer->getParam(parameterID - 1);
-            break;
-            
-        default:
-            return 0.0f;
-            break;
-    }
+    return m_pfRawParameter.getUnchecked(parameterID - 1);
 }
 
 

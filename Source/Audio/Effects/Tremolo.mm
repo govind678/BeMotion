@@ -28,11 +28,13 @@ void CTremolo::initDefaults()
 {
 	m_fDepth	= 1.0;
 	m_fRate		= 5.0;
+    m_kLFOType  = CLFO::kSin;
 }
 
 void CTremolo::setLFOType(CLFO::LFO_Type type)
 {
-	LFO->setLFOType(type);
+    m_kLFOType  =   type;
+	LFO->setLFOType(m_kLFOType);
 }
 
 
@@ -50,19 +52,23 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
 		break;
             
         case PARAM_3:
+            
             if ((value >= 0) && (value < 0.33))
             {
-                setLFOType(CLFO::kSin);
+                m_kLFOType  = CLFO::kSin;
+                setLFOType(m_kLFOType);
             }
             
             else if ((value >= 0.33) && (value < 0.66))
             {
-                setLFOType(CLFO::kTriangle);
+                m_kLFOType  = CLFO::kTriangle;
+                setLFOType(m_kLFOType);
             }
             
             else
             {
-                setLFOType(CLFO::kSquare);
+                m_kLFOType  =   CLFO::kSquare;
+                setLFOType(m_kLFOType);
             }
             break;
             
@@ -97,11 +103,30 @@ float CTremolo::getParam(int type)
     switch(type)
 	{
 		case PARAM_1:
-			return m_fRate;
+			return (m_fRate / 20.0f);
             break;
             
 		case PARAM_2:
             return m_fDepth;
+            break;
+            
+        case PARAM_3:
+            
+            if (m_kLFOType == CLFO::kSin)
+            {
+                return 0.165f;
+            }
+            
+            else if (m_kLFOType == CLFO::kTriangle)
+            {
+                return 0.495f;
+            }
+            
+            else
+            {
+                return 0.825f;
+            }
+            
             break;
             
 		default:

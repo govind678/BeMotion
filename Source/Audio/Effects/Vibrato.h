@@ -14,7 +14,7 @@
 #include "Macros.h"
 
 #define DEFAULT_SAMPLING_RATE   44100
-#define MAX_MOD_WIDTH           500
+#define MAX_MOD_WIDTH           250
 
 class CVibrato
 {
@@ -73,6 +73,8 @@ private:
     
     CRingBuffer<float>** m_CRingBuffer;
     CLFO** m_CLFO;
+    
+    CLFO::LFO_Type  m_kLFOType;
     
     float* m_pfLFOBuffer;
     

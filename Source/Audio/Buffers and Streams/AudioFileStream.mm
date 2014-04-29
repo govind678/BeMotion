@@ -28,6 +28,7 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     m_pbBypassStateArray.clear();
     audioEffectInitialized.clear();
     m_pbGestureControl.clear();
+    m_pcParameter.clear();
     
     for (int effectNo = 0; effectNo < MIN_NUM_EFFECTS; effectNo++)
     {
@@ -37,9 +38,12 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     }
     
     
-    for (int param = 0; param < 2; param++)
+    for (int param = 0; param < NUM_SAMPLE_PARAMS; param++)
     {
         m_pbGestureControl.add(false);
+        
+        m_pcParameter.add(new Parameter());
+        m_pcParameter.getUnchecked(param)->setSmoothingParameter(0.6f);
     }
         
 
@@ -60,6 +64,7 @@ AudioFileStream::~AudioFileStream()
     
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
+    m_pcParameter.clear();
     
     m_pcLimiter     =   nullptr;
 
@@ -86,7 +91,7 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
         transportSource.setSource(currentAudioFileSource, 32768, &thread, reader->sampleRate);
-        transportSource.setGain(0.5);
+        transportSource.setGain(GAIN_SCALE);
         
         if (m_iSampleID != 4)
         {
@@ -113,7 +118,7 @@ void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
     
     else
     {
-        if (effectPosition < (MIN_NUM_EFFECTS - 1))
+        if (effectPosition < (MIN_NUM_EFFECTS))
         {
             audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
             audioEffectInitialized.set(effectPosition, true);
@@ -266,7 +271,7 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
 {
     if (parameterID == PARAM_GAIN)
     {
-        transportSource.setGain(value * 0.5f);
+        transportSource.setGain((value * value) * GAIN_SCALE);
     }
     
     else if (parameterID == PARAM_QUANTIZATION)
@@ -319,12 +324,12 @@ float AudioFileStream::getSampleParameter(int parameterID)
 {
     if (parameterID == PARAM_GAIN)
     {
-        return transportSource.getGain();
+        return (sqrtf(transportSource.getGain()) / GAIN_SCALE);
     }
     
     else if (parameterID == PARAM_QUANTIZATION)
     {
-        return int(log2f(m_iQuantization + MAX_QUANTIZATION) + 0.5f);
+        return m_iQuantization;
     }
     
     else if (parameterID == PARAM_PLAYBACK_MODE)
@@ -367,7 +372,10 @@ void AudioFileStream::setSampleGestureControlToggle(int parameterID, bool toggle
 
 void AudioFileStream::setEffectGestureControlToggle(int effectPosition, int parameterID, bool toggle)
 {
-    audioEffectSource.getUnchecked(effectPosition)->setGestureControlToggle(parameterID, toggle);
+    if (audioEffectInitialized.getUnchecked(effectPosition))
+    {
+        audioEffectSource.getUnchecked(effectPosition)->setGestureControlToggle(parameterID, toggle);
+    }
 }
 
 
@@ -379,7 +387,15 @@ bool AudioFileStream::getSampleGestureControlToggle(int parameterID)
 
 bool AudioFileStream::getEffectGestureControlToggle(int effectPosition, int parameterID)
 {
-    return audioEffectSource.getUnchecked(effectPosition)->getGestureControlToggle(parameterID);
+    if (audioEffectInitialized.getUnchecked(effectPosition))
+    {
+        return audioEffectSource.getUnchecked(effectPosition)->getGestureControlToggle(parameterID);
+    }
+    
+    else
+    {
+       return false;
+    }
 }
 
 
@@ -397,6 +413,53 @@ void AudioFileStream::beat(int beatNum)
                 transportSource.setPosition(0);
                 transportSource.start();
             }
+        }
+    }
+}
+
+
+void AudioFileStream::motionUpdate(float *motion)
+{
+    if (m_pbGestureControl.getUnchecked(PARAM_MOTION_GAIN))
+    {
+        transportSource.setGain(m_pcParameter.getUnchecked(PARAM_MOTION_GAIN)->process(motion[ATTITUDE_PITCH] * motion[ATTITUDE_PITCH]) * GAIN_SCALE);
+    }
+    
+    
+    if (m_pbGestureControl.getUnchecked(PARAM_MOTION_QUANT))
+    {
+        float smooth = m_pcParameter.getUnchecked(PARAM_MOTION_QUANT)->process(motion[ATTITUDE_ROLL]);
+        
+        if ((smooth >= 0.0f) && (smooth < 0.25f))
+        {
+            m_iQuantization = 8;
+        }
+        
+        else if ((smooth >= 0.25f) && (smooth < 0.5f))
+        {
+            m_iQuantization = 4;
+        }
+        
+        else if ((smooth >= 0.5f) && (smooth < 0.75f))
+        {
+            m_iQuantization = 2;
+        }
+        
+        else if ((smooth >= 0.75f) && (smooth < 1.0f))
+        {
+            m_iQuantization = 1;
+        }
+        
+        
+        std::cout << m_iQuantization << std::endl;
+    }
+    
+    
+    for (int effect = 0; effect < MIN_NUM_EFFECTS ; effect++)
+    {
+        if (audioEffectInitialized.getUnchecked(effect))
+        {
+            audioEffectSource.getUnchecked(effect)->motionUpdate(motion);
         }
     }
 }

@@ -218,3 +218,9 @@ void AudioEngine::beat(int beatNo)
     audioMixer->beat(beatNo);
 }
 
+
+void AudioEngine::motionUpdate(float *motion)
+{
+    audioMixer->motionUpdate(motion);
+}
+
