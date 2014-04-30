@@ -60,7 +60,6 @@
 		FC5C6C7218CDB4D500CA9B79 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663518CDB32700CA9B79 /* LFO.mm */; };
 		FC5C6C7418CDB4D500CA9B79 /* GestureControllerInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C663F18CDB32700CA9B79 /* GestureControllerInterface.mm */; };
 		FC5C6C7518CDB4D500CA9B79 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC5C665218CDB34000CA9B79 /* main.mm */; };
-		FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF018CE00F6002370AC /* Wah.mm */; };
 		FC6EEAF518CE05D3002370AC /* Vibrato.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAF318CE05D3002370AC /* Vibrato.mm */; };
 		FC6EEAF818CE0D9C002370AC /* MainStoryboard 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6EEAF618CE0D9C002370AC /* MainStoryboard 2.storyboard */; };
 		FC6EEAFF18CE0DB0002370AC /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC6EEAFA18CE0DB0002370AC /* EffectSettingsViewController.mm */; };
@@ -1102,8 +1101,6 @@
 		FC5C6C5D18CDB40000CA9B79 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FC5C6C7618CDB60900CA9B79 /* GestureController-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GestureController-Info.plist"; sourceTree = "<group>"; };
 		FC5C6C7718CDB60900CA9B79 /* GestureController-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GestureController-Prefix.pch"; sourceTree = "<group>"; };
-		FC6EEAF018CE00F6002370AC /* Wah.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wah.mm; sourceTree = "<group>"; };
-		FC6EEAF118CE00F6002370AC /* Wah.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah.h; sourceTree = "<group>"; };
 		FC6EEAF318CE05D3002370AC /* Vibrato.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Vibrato.mm; sourceTree = "<group>"; };
 		FC6EEAF418CE05D3002370AC /* Vibrato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vibrato.h; sourceTree = "<group>"; };
 		FC6EEAF718CE0D9C002370AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/MainStoryboard 2.storyboard"; sourceTree = "<group>"; };
@@ -1288,8 +1285,6 @@
 				FC5C662F18CDB32700CA9B79 /* Delay.mm */,
 				FC5C663018CDB32700CA9B79 /* Tremolo.h */,
 				FC5C663118CDB32700CA9B79 /* Tremolo.mm */,
-				FC6EEAF118CE00F6002370AC /* Wah.h */,
-				FC6EEAF018CE00F6002370AC /* Wah.mm */,
 				FC6EEAF418CE05D3002370AC /* Vibrato.h */,
 				FC6EEAF318CE05D3002370AC /* Vibrato.mm */,
 			);
@@ -3174,7 +3169,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC6EEAF218CE00F6002370AC /* Wah.mm in Sources */,
 				FC2E8B7718F4C58E00F09FEC /* Parameter.mm in Sources */,
 				FC5C6C6818CDB4D500CA9B79 /* GestureControllerAppDelegate.mm in Sources */,
 				FC5C6C6918CDB4D500CA9B79 /* AudioEngine.mm in Sources */,

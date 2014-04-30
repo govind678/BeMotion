@@ -7,7 +7,6 @@
 #include "Macros.h"
 #include <algorithm>
 
-#define MAX_DELAY_SAMPLES 5
 
 /*	Limiter
 	----------------

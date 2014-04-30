@@ -15,7 +15,6 @@
 #include "RingBuffer.h"
 #include "Macros.h"
 
-#define MAX_DELAY_SAMPLES 100000
 
 /*	Fractional Delay
 	----------------

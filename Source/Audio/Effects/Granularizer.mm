@@ -9,7 +9,6 @@
 //==============================================================================
 
 #include "Granularizer.h"
-#include <iostream>
 
 CGranularizer::CGranularizer(int numChannels)
 {
@@ -60,7 +59,7 @@ void CGranularizer::prepareToPlay(float sampleRate)
 
 	for (int c=0; c < m_iNumChannels; c++)
 	{
-		m_ppfDelayLine[c]	= new CRingBuffer<float>((int)floor(std::min(MAX_DELAY_SAMPLES, 5.0 * m_fSampleRate)));
+		m_ppfDelayLine[c]	= new CRingBuffer<float>((int)floor(std::min(GRANULAR_MAX_SAMPLES, 5.0 * m_fSampleRate)));
 		m_ppfGrainBuffer[c]	= new CRingBuffer<float>((int)floor(m_fSampleRate));
 
 		m_ppfDelayLine[c]->resetInstance();

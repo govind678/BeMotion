@@ -28,7 +28,7 @@ CDelay::CDelay(int numChannels)
 
 	for (int n = 0; n < numChannels; n++)
 	{
-		ringBuffer[n]	= new CRingBuffer<float>((int)(MAX_DELAY_SAMPLES));
+		ringBuffer[n]	= new CRingBuffer<float>((int)(DELAY_MAX_SAMPLES));
 		// set indices and buffer contents to zero:
 		ringBuffer[n]->resetInstance();
 	}

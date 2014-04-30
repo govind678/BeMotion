@@ -23,7 +23,7 @@ CLimiter::CLimiter(int numChannels)
 	m_ppRingBuffer = new CRingBuffer<float> *[numChannels];
 	for (int n = 0; n < numChannels; n++)
 	{
-		m_ppRingBuffer[n]	= new CRingBuffer<float>((int)(MAX_DELAY_SAMPLES));
+		m_ppRingBuffer[n]	= new CRingBuffer<float>((int)(LIMITER_MAX_SAMPLES));
 		// set indices and buffer contents to zero:
 		m_ppRingBuffer[n]->resetInstance();
 	}

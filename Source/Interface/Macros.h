@@ -89,6 +89,11 @@
 # define ACCEL_Z                5
 
 
+//===== Buffer Size =====//
+
+#define DELAY_MAX_SAMPLES       100000
+#define GRANULAR_MAX_SAMPLES    250000.0
+#define LIMITER_MAX_SAMPLES     5
 
 //=========================================================================================
 
