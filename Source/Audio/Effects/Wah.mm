@@ -48,37 +48,21 @@ void CWah::setParam(int type, float value)
 	{
 		
 		case 0:
-
-<<<<<<< HEAD
-			if (0.0 <= value && value <= 1.0)
-            {
-                m_fTheta	= value;	// "pedal" value
-				calculateCoeffs();
-            }
-=======
+            
 			if (0.0 <= value && value <= 1.0){
 
 				m_fTheta	= value;	// "pedal" value
 				calculateCoeffs();
 			}
-
->>>>>>> 2ac9254c805ecc9f1ef1cb75b7d2f80d46057b0a
 				
 		break;
 
 		case 1:
 
-<<<<<<< HEAD
-			if (0.0 <= value && value <= 1.0)
-            {
-                m_fGainScale = value * value;
-				calculateCoeffs();
-=======
 			if (0.0 <= value && value <= 1.0){
 
 			//	m_fGainScale = value;
 				//calculateCoeffs();
->>>>>>> 2ac9254c805ecc9f1ef1cb75b7d2f80d46057b0a
 			}
 
 		break;
@@ -95,12 +79,13 @@ void CWah::setParam(int type, float value)
 			break;
 	}
 }
-float CWah::getParam(int type, float value)
+
+
+float CWah::getParam(int type)
 {
 	switch(type)
 	{
 		case 0:
-
 				return m_fTheta;
 				break;
 
@@ -113,14 +98,14 @@ float CWah::getParam(int type, float value)
 
 				return m_fQscale;
 				break;
-		default: 
+		default:
+            return 0.0f;
 			break;
 	}
 }
 
 void CWah::process(float **inputBuffer, int numFrames, bool bypass)
 {
-	float temp;
 
 	for (int i = 0; i < numFrames; i++)
 	{

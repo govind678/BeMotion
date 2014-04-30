@@ -28,6 +28,7 @@
 		FC38C4321910A1D50092B141 /* Playback2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC38C42D1910A1D50092B141 /* Playback2.wav */; };
 		FC38C4331910A1D50092B141 /* Playback3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC38C42E1910A1D50092B141 /* Playback3.wav */; };
 		FC38C4341910A1D50092B141 /* Playback4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC38C42F1910A1D50092B141 /* Playback4.wav */; };
+		FC38C4371910BA820092B141 /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC38C4361910BA820092B141 /* Wah.mm */; };
 		FC5C65E418CDB1C300CA9B79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E318CDB1C300CA9B79 /* Foundation.framework */; };
 		FC5C65E618CDB1C300CA9B79 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */; };
 		FC5C65E818CDB1C300CA9B79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C65E718CDB1C300CA9B79 /* UIKit.framework */; };
@@ -106,6 +107,8 @@
 		FC38C42D1910A1D50092B141 /* Playback2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback2.wav; sourceTree = "<group>"; };
 		FC38C42E1910A1D50092B141 /* Playback3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback3.wav; sourceTree = "<group>"; };
 		FC38C42F1910A1D50092B141 /* Playback4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Playback4.wav; sourceTree = "<group>"; };
+		FC38C4351910BA820092B141 /* Wah.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah.h; sourceTree = "<group>"; };
+		FC38C4361910BA820092B141 /* Wah.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wah.mm; sourceTree = "<group>"; };
 		FC5C65E018CDB1C300CA9B79 /* GestureController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GestureController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5C65E318CDB1C300CA9B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC5C65E518CDB1C300CA9B79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1275,6 +1278,8 @@
 		FC5C662B18CDB32700CA9B79 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				FC38C4351910BA820092B141 /* Wah.h */,
+				FC38C4361910BA820092B141 /* Wah.mm */,
 				22447BCF190F5BB700193035 /* Granularizer.h */,
 				22447BD0190F5BB700193035 /* Granularizer.mm */,
 				22447BD1190F5BB700193035 /* Limiter.h */,
@@ -3195,6 +3200,7 @@
 				FC5C6C6218CDB4B000CA9B79 /* juce_core.mm in Sources */,
 				22447BDA190F61C200193035 /* GlobalSettingsViewController.mm in Sources */,
 				FC5C6C6318CDB4B000CA9B79 /* juce_cryptography.mm in Sources */,
+				FC38C4371910BA820092B141 /* Wah.mm in Sources */,
 				FC5C6C6418CDB4B000CA9B79 /* juce_data_structures.mm in Sources */,
 				FC5C6C6518CDB4B000CA9B79 /* juce_events.mm in Sources */,
 				FC5C6C6618CDB4B000CA9B79 /* juce_graphics.mm in Sources */,
