@@ -23,16 +23,6 @@ CGranularizer::CGranularizer(int numChannels)
 	m_ppfDelayLine		= new CRingBuffer<float> *[numChannels];
 	m_ppfGrainBuffer	= new CRingBuffer<float> *[numChannels];
 
-	for (int n = 0; n < numChannels; n++)
-	{
-		m_ppfDelayLine[n]	= new CRingBuffer<float>(MAX_DELAY_SAMPLES);
-		m_ppfGrainBuffer[n]	= new CRingBuffer<float>(MAX_DELAY_SAMPLES);
-
-		// set indices and buffer contents to zero:
-		m_ppfDelayLine[n]->resetInstance();
-		m_ppfGrainBuffer[n]->resetInstance();
-	}
-
 	initDefaults();
 }
 
@@ -42,13 +32,13 @@ CGranularizer::~CGranularizer()
 	delete [] m_ppfGrainBuffer;
 	delete [] m_iNextGrain;
 	delete [] m_iNextGrainCount;
+
 }
 
 void CGranularizer::initDefaults()
 {  
-	m_fSampleRate	= 0.0f;
-	m_fGrainSize	= 0.8f;
-	m_fGrainTime	= 1.0f;
+	m_fGrainSize	= 0.5f;
+	m_fGrainTime	= 0.5f;
 	m_fPoolSize		= 0.0f;
 	m_fOffset		= 0.0f;
 
@@ -66,9 +56,15 @@ void CGranularizer::prepareToPlay(float sampleRate)
 {
     m_fSampleRate = sampleRate;
 
+	m_ppfWindowBuffer = new CRingBuffer<float>(sampleRate);
+
 	for (int c=0; c < m_iNumChannels; c++)
 	{
-		m_ppfDelayLine[c]->setWriteIdx(std::min((int)(10 * m_fSampleRate), MAX_DELAY_SAMPLES));
+		m_ppfDelayLine[c]	= new CRingBuffer<float>((int)floor(std::min(MAX_DELAY_SAMPLES, 5.0 * m_fSampleRate)));
+		m_ppfGrainBuffer[c]	= new CRingBuffer<float>((int)floor(m_fSampleRate));
+
+		m_ppfDelayLine[c]->resetInstance();
+		m_ppfGrainBuffer[c]->resetInstance();
 	}
 }
 
@@ -78,24 +74,17 @@ void CGranularizer::setParam(int type, float value)
 	{
 		
 		case PARAM_1:
-			if (0.0f <=value && value <= 1.0f)
+			if (0.03f < value && value < 0.95f)
             {
-				m_fGrainSize	= value;
+				m_fGrainTime	= value;
+				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.3 + m_fGrainTime;
             }
 		break;  
 
 		case PARAM_2:
-			if (value >= 0.05f)
-            {
-				m_fGrainTime	= value;
-            }
 		break;   
 
-		case PARAM_3:
-			if (0.0f <=value && value <= 1.0f)
-            {
-				m_fPoolSize		= value;
-            }
+		case PARAM_3:	
 		break;
             
 		default: break;
@@ -105,33 +94,52 @@ void CGranularizer::setParam(int type, float value)
 void CGranularizer::generateGrain(int chan)
 {
 
-	int currentIdx;
-
-	currentIdx = m_ppfDelayLine[chan]->getReadIdx();
-
-	m_fOffset = m_ppfDelayLine[chan]->getReadIdx() + (1.0f - m_fPoolSize) * (m_ppfDelayLine[chan]->getWriteIdx() - m_ppfDelayLine[chan]->getReadIdx() - m_fGrainTime * m_fSampleRate);
-	// set the read index to a random starting point between the offset and the max value (which depends on the grain length):
-	m_ppfDelayLine[chan]->setReadIdx( (int)floor(m_fOffset) + rand() % (m_ppfDelayLine[chan]->getWriteIdx() - (int)(2 * m_fGrainTime * m_fSampleRate) + 1));
-
-
-	// fill the grain buffer from the delay line:
 	m_ppfGrainBuffer[chan]->resetInstance();
 
-	for (int i = 0; i < (int)(m_fGrainSize * m_fGrainTime * m_fSampleRate); i++)
-	{
-		if (i < (int)(0.4 * m_fGrainSize * m_fGrainTime * m_fSampleRate))
-			m_ppfGrainBuffer[chan]->putPostInc((i/(int)(0.4 * m_fGrainSize * m_fGrainTime * m_fSampleRate)) * m_ppfDelayLine[chan]->getPostInc());
-		else if (i >= (int)(0.4 * m_fGrainSize * m_fGrainTime * m_fSampleRate) && i < (int)(0.7 * m_fGrainSize * m_fGrainTime * m_fSampleRate))
-			m_ppfGrainBuffer[chan]->putPostInc(m_ppfDelayLine[chan]->getPostInc());
-		else if (i >= (int)(0.7 * m_fGrainSize * m_fGrainTime * m_fSampleRate))
-			m_ppfGrainBuffer[chan]->putPostInc((((int)(m_fGrainSize * m_fGrainTime * m_fSampleRate)-i)/(int)(0.7 * m_fGrainSize * m_fGrainTime * m_fSampleRate))*m_ppfDelayLine[chan]->getPostInc());
+	int currReadIdx;
+	int maxReadIdx;
 
-	}
+	currReadIdx = m_ppfDelayLine[chan]->getReadIdx();
+	maxReadIdx  = m_ppfDelayLine[chan]->getWriteIdx() - (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate));
 	
-	// reset the read index:
-	//m_ppfDelayLine[c]->setWriteIdx(m_ppfDelayLine[c]->getReadIdx() - MAX_DELAY_SAMPLES / 2);
-	m_ppfDelayLine[chan]->setWriteIdx(currentIdx);
+	srand(currReadIdx + 1);
 
+	m_ppfDelayLine[chan]->setReadIdx(
+		currReadIdx + (int)((1.0 - m_fPoolSize)*(10.0 * rand()))
+		);
+
+	// envelope: buffer, length, attack time, release time,
+	generateWindow(m_ppfWindowBuffer, (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate)),0.45 - m_fGrainTime*(0.42), 0.55 + m_fGrainTime*(0.42));
+
+	for (int i=0; i < (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate)); i++){
+		m_ppfGrainBuffer[chan]->putPostInc(
+			m_ppfWindowBuffer->getPostInc() * m_ppfDelayLine[chan]->getPostInc()
+			);
+	}
+
+	m_ppfDelayLine[chan]->setReadIdx(currReadIdx);
+}
+
+void CGranularizer::generateWindow(CRingBuffer<float>* buffer, int length, float attack, float release)
+{
+
+	buffer->resetInstance();
+
+	m_iRampUp	= (int)floor(length * attack);
+	m_iRampDown = std::max((int)floor(length * release), m_iRampUp + 1);
+
+	for (int i=0; i < m_iRampUp; i++)
+	{
+		buffer->putPostInc( (float)(i/m_iRampUp) );
+	}
+	for (int i=m_iRampUp; i < m_iRampDown; i++)
+	{
+		buffer->putPostInc( 1.0 );
+	}
+	for (int i=m_iRampDown; i < length; i++)
+	{
+		buffer->putPostInc( (float)((m_iRampDown - i) / (m_iRampDown - length)) );
+	}
 }
 
 void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
@@ -144,6 +152,8 @@ void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
 
 			while (m_iCount < numFrames)
 			{
+				if (m_iNextGrainCount[c] == 0)
+					m_ppfGrainBuffer[c]->resetInstance();
 
 				// check if we still have samples from the grain buffer to read:
 				if (m_ppfGrainBuffer[c]->getReadIdx() != m_ppfGrainBuffer[c]->getWriteIdx())
@@ -167,6 +177,7 @@ void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
 				// output zeros until we get to the index where the next grain should start:
 				while((m_iNextGrainCount[c] > 0) && (m_iCount < numFrames))
 				{
+
 					m_ppfDelayLine[c]->getPostInc();
 					m_ppfDelayLine[c]->putPostInc(audioBuffer[c][m_iCount]);
 
@@ -176,27 +187,32 @@ void CGranularizer::process(float** audioBuffer, int numFrames, bool bypass)
 					m_iNextGrainCount[c]	= m_iNextGrainCount[c] - 1;
 				}
 
-				// output the contents of the grain buffer:
-				m_iGrainCount = 0;
-				m_iFramesLeft = numFrames - m_iCount;
-
-				while (m_iGrainCount < std::min((int)(m_fGrainSize * m_fGrainTime * m_fSampleRate), m_iFramesLeft))
+				if (m_iNextGrainCount[c] == 0)
 				{
-					if (m_iNextGrainCount[c] == 0)
+					// samples until next grain:
+					m_iNextGrainCount[c] = (int)(floorf(m_fGrainTime * m_fSampleRate));
+					generateGrain(c);
+
+					// output the contents of the grain buffer:
+					m_iGrainCount = 0;
+					m_iFramesLeft = numFrames - m_iCount;
+
+					while (m_iGrainCount < std::min(m_ppfGrainBuffer[c]->getWriteIdx() - m_ppfGrainBuffer[c]->getReadIdx(), m_iFramesLeft)
+						&& m_iNextGrainCount[c] > 0)
 					{
-						// samples until next grain:
-						m_iNextGrainCount[c] = (int)(m_fGrainTime * m_fSampleRate);
-						generateGrain(c);
+					
+						m_ppfDelayLine[c]->getPostInc();
+						m_ppfDelayLine[c]->putPostInc(audioBuffer[c][m_iCount]);
+
+						audioBuffer[c][m_iCount] = m_ppfGrainBuffer[c]->getPostInc();						
+
+						m_iGrainCount			= std::min(m_iGrainCount + 1,(int)floorf((m_fGrainTime * m_fSampleRate)));
+						m_iCount				= m_iCount + 1;
+						m_iNextGrainCount[c]	= m_iNextGrainCount[c] - 1;
 					}
+					// samples until next grain:
+					m_iNextGrainCount[c] = std::max((int)floorf((m_fGrainTime * m_fSampleRate)) - m_iGrainCount, 0);
 
-					m_ppfDelayLine[c]->getPostInc();
-					m_ppfDelayLine[c]->putPostInc(audioBuffer[c][m_iCount]);
-
-					audioBuffer[c][m_iCount] = m_ppfGrainBuffer[c]->getPostInc();						
-
-					m_iGrainCount			= m_iGrainCount + 1;
-					m_iCount				= m_iCount + 1;
-					m_iNextGrainCount[c]	= m_iNextGrainCount[c] - 1;
 				}
 			}
 		}   
@@ -223,7 +239,6 @@ float CGranularizer::getParam(int type)
             break;
             
 		default:
-            return 0.0f;
             break;
 		
 	}

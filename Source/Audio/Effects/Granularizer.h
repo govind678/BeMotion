@@ -4,10 +4,10 @@
 #include "RingBuffer.h"
 #include <Math.h>
 #include <stdio.h>
-#include "Macros.h"
+//#include "Macros.h"
 #include <algorithm>
 
-#define MAX_DELAY_SAMPLES 250000
+#define MAX_DELAY_SAMPLES 250000.0
 
 /*	Granularizer
 	----------------
@@ -39,9 +39,11 @@ public:
 private:
 
 	void generateGrain(int chan);
+	void generateWindow(CRingBuffer<float>* buffer, int length, float attack, float release);
 
 	CRingBuffer<float> **m_ppfDelayLine;
 	CRingBuffer<float> **m_ppfGrainBuffer;
+	CRingBuffer<float> *m_ppfWindowBuffer;
 
 	float m_fGrainSize;
 	float m_fGrainTime;
@@ -55,6 +57,9 @@ private:
 	int   m_iCount;
 	int   m_iGrainCount;
 	int	  m_iFramesLeft;
+
+	int m_iRampUp;
+	int m_iRampDown;
 
 };
 
