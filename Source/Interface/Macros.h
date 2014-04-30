@@ -71,8 +71,11 @@
 # define MAX_QUANTIZATION       6           //  2^n
 # define GUI_METRO_COUNT        8
 
-
-
+//-- Sample Bank default Tempos --//
+# define BANK1_TEMPO            120.0f
+# define BANK2_TEMPO            200.0f
+# define BANK3_TEMPO            100.0f
+# define BANK4_TEMPO            120.0f
 
 //========== Motion Control Macros ===========//
 

@@ -270,6 +270,7 @@
                                 <rect key="frame" x="20" y="36" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -279,6 +280,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="30" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="dzS-jz-ivc">
                                 <rect key="frame" x="18" y="93" width="284" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="tempoSliderChanged:" destination="JFx-jb-ULP" eventType="valueChanged" id="kNO-nQ-r76"/>
                                 </connections>
@@ -297,7 +299,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pck-7d-lCL">
-                                <rect key="frame" x="37" y="263" width="247" height="29"/>
+                                <rect key="frame" x="20" y="196" width="280" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="First"/>
@@ -305,14 +307,15 @@
                                     <segment title="Third"/>
                                     <segment title="Fourth"/>
                                 </segments>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="presetSampleBankLoader:" destination="JFx-jb-ULP" eventType="valueChanged" id="bfk-Wg-UPX"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Preset Audio Sample Bank" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haB-rG-5y4">
-                                <rect key="frame" x="57" y="188" width="206" height="21"/>
+                                <rect key="frame" x="85" y="155" width="150" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -345,6 +348,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="im2-Cl-IPO">
                                 <rect key="frame" x="18" y="427" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="Slider1Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="F0Q-Cw-VgT"/>
                                 </connections>
@@ -352,6 +356,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6eB-gO-yst">
                                 <rect key="frame" x="18" y="474" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="Slider2Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="gun-7U-EEy"/>
                                 </connections>
@@ -359,6 +364,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BWU-7m-wfb">
                                 <rect key="frame" x="18" y="524" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="Slider3Changed:" destination="bMe-Sf-aDh" eventType="valueChanged" id="MHP-UM-aZp"/>
                                 </connections>
@@ -374,6 +380,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eEm-66-9dw">
                                 <rect key="frame" x="114" y="395" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="bypassToggleButtonChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="Vm9-xK-FcM"/>
                                 </connections>
@@ -430,6 +437,7 @@
                                     <segment title="Third"/>
                                     <segment title="Fourth"/>
                                 </segments>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="SegementControl:" destination="bMe-Sf-aDh" eventType="valueChanged" id="6pG-Eh-qAm"/>
                                 </connections>
@@ -437,6 +445,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="f7Y-Rx-itx">
                                 <rect key="frame" x="19" y="56" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="gainSliderChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="wrS-ex-CEk"/>
                                 </connections>
@@ -455,6 +464,7 @@
                                     <segment title="Trigger"/>
                                     <segment title="Beat Repeat"/>
                                 </segments>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="buttonModeChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="vSE-cS-7pP"/>
                                 </connections>
@@ -462,6 +472,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="0.0" maxValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-kc-ieX">
                                 <rect key="frame" x="18" y="141" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="quantizationSliderChanged:" destination="bMe-Sf-aDh" eventType="valueChanged" id="Pta-tT-VgX"/>
                                 </connections>
@@ -476,6 +487,7 @@
                                 <rect key="frame" x="12" y="18" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -611,7 +623,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxj-XE-Hki"/>
+        <segue reference="LLu-g9-EV4"/>
         <segue reference="69J-6b-zSr"/>
     </inferredMetricsTieBreakers>
 </document>

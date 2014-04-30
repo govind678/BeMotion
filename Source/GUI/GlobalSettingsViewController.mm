@@ -93,6 +93,9 @@
         _backendInterface->loadAudioFile(2, sample3Path);
         _backendInterface->loadAudioFile(3, sample4Path);
         _backendInterface->loadAudioFile(4, sample5Path);
+        
+        m_iTempo = BANK1_TEMPO;
+
     }
 
     else if (presetBank == (PRESET_BANK_2 - 1))
@@ -110,6 +113,9 @@
         _backendInterface->loadAudioFile(2, sample3Path);
         _backendInterface->loadAudioFile(3, sample4Path);
         _backendInterface->loadAudioFile(4, sample5Path);
+        
+        m_iTempo = BANK2_TEMPO;
+        
     }
 
     else if (presetBank == (PRESET_BANK_3 - 1))
@@ -127,6 +133,9 @@
         _backendInterface->loadAudioFile(2, sample3Path);
         _backendInterface->loadAudioFile(3, sample4Path);
         _backendInterface->loadAudioFile(4, sample5Path);
+        
+        m_iTempo = BANK3_TEMPO;
+        
     }
     
     else if (presetBank == (PRESET_BANK_4 - 1))
@@ -144,6 +153,14 @@
         _backendInterface->loadAudioFile(2, sample3Path);
         _backendInterface->loadAudioFile(3, sample4Path);
         _backendInterface->loadAudioFile(4, sample5Path);
+        
+        m_iTempo = BANK4_TEMPO;
+        
     }
+    
+    [_metronome setTempo:m_iTempo];
+    [tempoLabel setText:[@(m_iTempo) stringValue]];
+    [tempoSlider setValue:m_iTempo];
+    
 }
 @end
