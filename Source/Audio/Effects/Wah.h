@@ -2,7 +2,7 @@
 #define __Wah_hdr__
 
 #include <Math.h>
-#include "Macros.h"
+//#include "Macros.h"
 
 /*	Wah
 	----------------
@@ -21,7 +21,7 @@ public:
 	// set:
 	void setParam(/*hFile::enumType type*/ int type, float value);
 	//get
-	float getParam(/*hFile::enumType type*/ int type);
+	float getParam(/*hFile::enumType type*/ int type, float value);
 
 	void prepareToPlay(float sampleRate);
 
