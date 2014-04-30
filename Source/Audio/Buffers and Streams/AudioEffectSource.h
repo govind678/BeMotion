@@ -26,6 +26,9 @@
 //------------------------------//
 
 
+#define MAX_CLOCK_DIVISOR   8
+#define NUM_QUANTIZATION_POINTS 8
+
 
 class AudioEffectSource
 {
@@ -48,6 +51,8 @@ public:
     void process(float** audioBuffer, int blockSize, bool bypassState);
     void audioDeviceStopped();
     
+    void setTempo(float newTempo);
+    
     void motionUpdate(float* motion);
     
 private:
@@ -62,6 +67,10 @@ private:
     Array<bool>                     m_pbGestureControl;
     
     Array<float>                    m_pfRawParameter;
+    int                             m_iTimeQuantizationPoints [NUM_QUANTIZATION_POINTS];
+    
+    float m_fTempo;
+    float m_fSmallestTimeInterval;
     
     int m_iEffectID;
 };

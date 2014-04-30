@@ -68,6 +68,8 @@ public:
     
     void motionUpdate(float* motion);
     
+    void setTempo(float newTempo);
+    
     
 private:
     

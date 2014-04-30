@@ -106,7 +106,8 @@ void CVibrato::setParam(int parameterID, float value)
     {
         case PARAM_1:
             m_iModulation_Freq_Hz   =   20.0f * value;
-            setModulationFrequency_Hz(m_iModulation_Freq_Hz);
+//            setModulationFrequency_Hz(m_iModulation_Freq_Hz);
+            setModulationFrequency_Hz(value);
             break;
             
         case PARAM_2:

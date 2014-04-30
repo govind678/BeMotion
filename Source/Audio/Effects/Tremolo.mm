@@ -44,7 +44,8 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
 	{
 		case PARAM_1:
 			m_fRate = (20.0 * value);
-            LFO->setFrequencyinHz(m_fRate);
+//            LFO->setFrequencyinHz(m_fRate);
+            LFO->setFrequencyinHz(value);
 		break;
             
 		case PARAM_2:

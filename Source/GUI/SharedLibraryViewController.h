@@ -104,6 +104,6 @@
 
 - (void) beat:  (int) beatNo;
 - (void) guiBeat: (int) beatNo;
-
+- (void) setTempo: (float) tempo;
 
 @end

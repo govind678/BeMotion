@@ -254,3 +254,12 @@ void AudioMixerPlayer::motionUpdate(float *motion)
         audioFileStream.getUnchecked(i)->motionUpdate(motion);
     }
 }
+
+
+void AudioMixerPlayer::setTempo(float newTempo)
+{
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 1; i++)
+    {
+        audioFileStream.getUnchecked(i)->setTempo(newTempo);
+    }
+}

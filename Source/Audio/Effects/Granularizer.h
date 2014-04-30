@@ -11,9 +11,9 @@
 
 /*	Granularizer
 	----------------
-	Paramaters:	
-		- Grain Size as a proportion of Grain onset time
+	Paramaters:
 		- Grain Inter-onset Time in sec
+        - Grain Size as a proportion of Grain onset time
 		- Grain Pool Size
 */
 

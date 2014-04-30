@@ -463,3 +463,15 @@ void AudioFileStream::motionUpdate(float *motion)
         }
     }
 }
+
+
+void AudioFileStream::setTempo(float newTempo)
+{
+    for (int effect = 0; effect < MIN_NUM_EFFECTS ; effect++)
+    {
+        if (audioEffectInitialized.getUnchecked(effect))
+        {
+            audioEffectSource.getUnchecked(effect)->setTempo(newTempo);
+        }
+    }
+}

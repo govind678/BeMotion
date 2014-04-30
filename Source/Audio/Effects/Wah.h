@@ -7,8 +7,8 @@
 /*	Wah
 	----------------
 	Paramaters:	
+        - Theta "Pedal Value"
 		- Gain
-		- Theta "Pedal Value"
 */
 
 class CWah

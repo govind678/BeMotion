@@ -76,6 +76,12 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 			if (value > 0.0f)
             {
 				m_fDelayTime_s = value;
+                
+                for (int n = 0; n < m_iNumChannels; n++)
+                {
+                    ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+                }
+                
             }
 		break;
             

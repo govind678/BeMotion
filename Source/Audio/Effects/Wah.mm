@@ -47,19 +47,19 @@ void CWah::setParam(/*hFile::enumType type*/ int type, float value)
 		// gain
 		case PARAM_1:
 
-			if (0.0 <= value && value <= 1.0){
-
-				m_fGainScale = value * value;
+			if (0.0 <= value && value <= 1.0)
+            {
+                m_fTheta	= value;	// "pedal" value
 				calculateCoeffs();
-			}
+            }
 				
 		break;
 
 		case PARAM_2:
 
-			if (0.0 <= value && value <= 1.0){
-
-				m_fTheta	= value;	// "pedal" value
+			if (0.0 <= value && value <= 1.0)
+            {
+                m_fGainScale = value * value;
 				calculateCoeffs();
 			}
 

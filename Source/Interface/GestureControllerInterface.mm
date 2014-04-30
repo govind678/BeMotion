@@ -115,6 +115,11 @@ void GestureControllerInterface::beat(int beatNo)
     audioEngine->beat(beatNo);
 }
 
+void GestureControllerInterface::setTempo(float newTempo)
+{
+    audioEngine->setTempo(newTempo);
+}
+
 void GestureControllerInterface::motionUpdate(float *motion)
 {
     audioEngine->motionUpdate(motion);

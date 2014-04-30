@@ -35,6 +35,22 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     }
     
     
+    //--- Better Way To Generate This? ---//
+    m_iTimeQuantizationPoints[0] = 1;
+    m_iTimeQuantizationPoints[1] = 2;
+    m_iTimeQuantizationPoints[2] = 3;
+    m_iTimeQuantizationPoints[3] = 4;
+    m_iTimeQuantizationPoints[4] = 6;
+    m_iTimeQuantizationPoints[5] = 8;
+    m_iTimeQuantizationPoints[6] = 12;
+    m_iTimeQuantizationPoints[7] = 16;
+    
+    
+    m_fTempo    =   0.0f;
+    setTempo(DEFAULT_TEMPO);
+
+    
+    
     switch (effectID)
     {
         case EFFECT_TREMOLO:
@@ -134,28 +150,67 @@ void AudioEffectSource::setParameter(int parameterID, float value)
 {
     m_pfRawParameter.set(parameterID - 1, value);
     
+    int quantizedIndex = int(((1.0f - value) * (MAX_CLOCK_DIVISOR - 1)) + 0.5f);
+    
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            m_pfRawParameter.set(parameterID - 1, value);
-            m_pcTremolo->setParam(parameterID, value);
+            
+            if (parameterID == PARAM_1)
+            {
+                m_pcTremolo->setParam(parameterID, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
+            }
+            
+            else
+            {
+                m_pcTremolo->setParam(parameterID, value);
+            }
             break;
         
+            
         case EFFECT_DELAY:
-            m_pcDelay->setParam(parameterID, value);
+            
+            if (parameterID == PARAM_1)
+            {
+                m_pcDelay->setParam(parameterID, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
+            }
+            
+            else
+            {
+                m_pcDelay->setParam(parameterID, value);
+            }
+            
             break;
            
+            
+            
         case EFFECT_VIBRATO:
-            m_pcVibrato->setParam(parameterID, value);
+            
+            if (parameterID == PARAM_1)
+            {
+                m_pcVibrato->setParam(parameterID, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
+            }
+            
+            else
+            {
+                m_pcVibrato->setParam(parameterID, value);
+            }
+            
             break;
+            
+            
             
         case EFFECT_WAH:
             m_pcWah->setParam(parameterID, value);
             break;
             
+            
+            
         case EFFECT_GRANULAR:
             m_pcGranularizer->setParam(parameterID, value);
             break;
+            
+            
             
         default:
             break;
@@ -181,26 +236,30 @@ void AudioEffectSource::motionUpdate(float* motion)
     
     if (m_pbGestureControl.getUnchecked(PARAM_MOTION_PARAM1))
     {
+        float param = m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]);
+        
+        int quantizedIndex = int((param * (MAX_CLOCK_DIVISOR - 1)) + 0.5f);
+        
         switch (m_iEffectID)
         {
             case EFFECT_TREMOLO:
-                m_pcTremolo->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                m_pcTremolo->setParam(PARAM_1, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
                 break;
                 
             case EFFECT_DELAY:
-                m_pcDelay->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                m_pcDelay->setParam(PARAM_1, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
                 break;
                 
             case EFFECT_VIBRATO:
-                m_pcVibrato->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                m_pcVibrato->setParam(PARAM_1, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                m_pcWah->setParam(PARAM_1, param);
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_1, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM1)->process(motion[ATTITUDE_PITCH]));
+                m_pcGranularizer->setParam(PARAM_1, param);
                 break;
                 
             default:
@@ -364,4 +423,12 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassS
         default:
             break;
     }
+}
+
+
+
+void AudioEffectSource::setTempo(float newTempo)
+{
+    m_fTempo = newTempo;
+    m_fSmallestTimeInterval   =  60.0f / (m_fTempo * MAX_CLOCK_DIVISOR);
 }

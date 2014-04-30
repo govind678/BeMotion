@@ -46,6 +46,8 @@ public:
     void setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle);
     
     void beat(int beatNo);
+    void setTempo(float newTempo);
+    
     void motionUpdate(float* motion);
     //========================================================
     

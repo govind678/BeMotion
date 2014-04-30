@@ -67,6 +67,7 @@
 - (void) setTempo:(float)newTempo
 {
     tempo = newTempo;
+    [delegate setTempo: tempo];
     [self updateTimer];
 }
 

@@ -834,4 +834,10 @@
 }
 
 
+- (void) setTempo:(float)tempo
+{
+    _backendInterface->setTempo(tempo);
+}
+
+
 @end
