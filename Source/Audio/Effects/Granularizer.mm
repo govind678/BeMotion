@@ -73,10 +73,20 @@ void CGranularizer::setParam(int type, float value)
 	{
 		
 		case PARAM_1:
-			if (0.03f < value && value < 0.95f)
+			if (0.03f < value && value < 0.97f)
             {
 				m_fGrainTime	= value;
-				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.3 + m_fGrainTime;
+				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.2 + m_fGrainTime;
+            }
+			if (value <= 0.03)
+			{
+				m_fGrainTime	= 0.0;
+				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.2 + m_fGrainTime;
+            }
+			if (value >= 0.97)
+			{
+				m_fGrainTime	= 0.97;
+				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.2 + m_fGrainTime;
             }
 		break;  
 
@@ -104,11 +114,11 @@ void CGranularizer::generateGrain(int chan)
 	srand(currReadIdx + 1);
 
 	m_ppfDelayLine[chan]->setReadIdx(
-		currReadIdx + (int)((1.0 - m_fPoolSize)*(10.0 * rand()))
+		currReadIdx + (int)((1.0 - m_fPoolSize)*( std::min(MAX_DELAY_SAMPLES, 5.0 * m_fSampleRate) * rand() / RAND_MAX))
 		);
 
 	// envelope: buffer, length, attack time, release time,
-	generateWindow(m_ppfWindowBuffer, (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate)),0.45 - m_fGrainTime*(0.42), 0.55 + m_fGrainTime*(0.42));
+	generateWindow(m_ppfWindowBuffer, (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate)),0.45 - m_fGrainTime*(0.44), 0.55 + m_fGrainTime*(0.44));
 
 	for (int i=0; i < (int)floorf((m_fGrainTime * m_fGrainSize * m_fSampleRate)); i++){
 		m_ppfGrainBuffer[chan]->putPostInc(
