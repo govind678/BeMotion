@@ -48,12 +48,16 @@ public:
     void beat(int beatNo);
     void setTempo(float newTempo);
     
+    void setCurrentPresetBank(int presetBank);
+    
     void motionUpdate(float* motion);
     //========================================================
     
 
     //============== Backend to GUI Methods ==================
     int getEffectType(int sampleID, int effectPosition);
+    
+    int getCurrentPresetBank();
     
     float getEffectParameter(int sampleID, int effectPosition, int parameterID);
     float getSampleParameter(int sampleID, int parameterID);

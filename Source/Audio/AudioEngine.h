@@ -14,7 +14,7 @@
 #define __GestureController__AudioEngine__
 
 #include "GestureControllerHeader.h"
-
+#include "Macros.h"
 #include "LiveAudioStream.h"
 #include "AudioFileRecord.h"
 #include "AudioMixerPlayer.h"
@@ -41,6 +41,9 @@ public:
     
     void setSampleParameter(int sampleID, int parameterID, float value);
     float getSampleParameter(int sampleID, int parameterID);
+
+    void setCurrentPresetBank(int presetBank);
+    int  getCurrentPresetBank();
     
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
@@ -89,6 +92,7 @@ private:
     AudioDeviceManager sharedAudioDeviceManager;
     
     bool m_bLiveAudioThreadRunning;
+    int  m_iCurrentPresetBankLoaded;
     
 };
 

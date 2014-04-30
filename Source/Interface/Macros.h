@@ -49,6 +49,12 @@
 # define MODE_SETTINGS           1
 # define MODE_RECORD             2
 
+//========== Sample Preset Banks ==========//
+# define PRESET_BANK_1           1
+# define PRESET_BANK_2           2
+# define PRESET_BANK_3           3
+# define PRESET_BANK_4           4
+
 
 //========== Effects Macros ===========//
 # define NUM_EFFECTS_PARAMS     3

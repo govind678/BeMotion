@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #include "GestureControllerInterface.h"
 #include "Metronome.h"
+#include "Macros.h"
 
 @interface GlobalSettingsViewController : UIViewController
 {
     float       m_iTempo;
+    int         m_iCurrentPresetBank;
 }
 
 
@@ -24,7 +26,9 @@
 - (IBAction)tempoSliderChanged:(UISlider *)sender;
 @property (retain, nonatomic) IBOutlet UILabel *tempoLabel;
 
-
+//--- Preset Bank Settings ---//
+@property (retain, nonatomic) IBOutlet UISegmentedControl *presetBankSelector;
+- (IBAction)presetSampleBankLoader:(UISegmentedControl *)sender;
 
 
 @end

@@ -125,6 +125,10 @@ void GestureControllerInterface::motionUpdate(float *motion)
     audioEngine->motionUpdate(motion);
 }
 
+void GestureControllerInterface::setCurrentPresetBank(int presetBank)
+{
+    audioEngine->setCurrentPresetBank(presetBank);
+}
 //==============================================================================
 // Get Methods to update GUI
 // Get Effect Type
@@ -135,7 +139,10 @@ int GestureControllerInterface::getEffectType(int sampleID, int effectPosition)
     return audioEngine->getEffectType(sampleID, effectPosition);
 }
 
-
+int GestureControllerInterface::getCurrentPresetBank()
+{
+    return audioEngine->getCurrentPresetBank();
+}
 
 //==============================================================================
 // Get Methods to update GUI

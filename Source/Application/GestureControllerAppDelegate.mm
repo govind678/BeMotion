@@ -22,11 +22,11 @@
     
     
     //--- Preload Audio Samples ---//
-    NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"Playback0" ofType:@"wav"];
-    NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"Playback1" ofType:@"wav"];
-    NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"Playback2" ofType:@"wav"];
-    NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"Playback3" ofType:@"wav"];
-    NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"Playback4" ofType:@"wav"];
+    NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"E_Kit0" ofType:@"wav"];
+    NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"E_Kit1" ofType:@"wav"];
+    NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"E_Kit2" ofType:@"wav"];
+    NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"E_Kit3" ofType:@"wav"];
+    NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"E_Kit4" ofType:@"wav"];
     
     
     backendInterface->loadAudioFile(0, sample1Path);

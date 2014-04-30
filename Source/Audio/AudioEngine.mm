@@ -18,6 +18,7 @@ AudioEngine::AudioEngine()
     sharedAudioDeviceManager.initialise(NUM_INPUT_CHANNELS, NUM_OUTPUT_CHANNELS, 0, true, String::empty, 0);
     
     m_bLiveAudioThreadRunning   =   false;
+    m_iCurrentPresetBankLoaded  =   PRESET_BANK_1;
     
     audioFileRecorder   =   new AudioFileRecord(sharedAudioDeviceManager);
     audioMixer          =   new AudioMixerPlayer(sharedAudioDeviceManager);
@@ -60,6 +61,15 @@ AudioEngine::~AudioEngine()
 }
 
 
+void AudioEngine::setCurrentPresetBank(int presetBank)
+{
+    m_iCurrentPresetBankLoaded = presetBank;
+}
+
+int  AudioEngine::getCurrentPresetBank()
+{
+    return m_iCurrentPresetBankLoaded;
+}
 
 void AudioEngine::startLiveAudioStreaming()
 {
