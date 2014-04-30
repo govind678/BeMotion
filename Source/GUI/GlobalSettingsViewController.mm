@@ -141,11 +141,11 @@
     else if (presetBank == (PRESET_BANK_4 - 1))
     {
         //--- Preload Audio Samples of Bank4 ---//
-        NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"E_Kit0" ofType:@"wav"];
-        NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"E_Kit1" ofType:@"wav"];
-        NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"E_Kit2" ofType:@"wav"];
-        NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"E_Kit3" ofType:@"wav"];
-        NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"E_Kit4" ofType:@"wav"];
+        NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"Breakbeat0" ofType:@"wav"];
+        NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"Breakbeat1" ofType:@"wav"];
+        NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"Breakbeat2" ofType:@"wav"];
+        NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"Breakbeat3" ofType:@"wav"];
+        NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"Breakbeat4" ofType:@"wav"];
         
         
         _backendInterface->loadAudioFile(0, sample1Path);

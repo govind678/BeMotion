@@ -19,8 +19,9 @@ AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceM
     m_bAudioCurrentlyPlaying    =   false;
     
     m_iButtonMode               =   MODE_LOOP;
-    m_iQuantization             =   1;
-    m_iBeat                     =   1;
+    m_iQuantization             =   QUANTIZATION_LEVELS - 1;
+    m_iBeat                     =   0;
+    m_fGain                     =   1.0f;
     
     transportSource.setSource(nullptr);
     formatManager.registerBasicFormats();
@@ -271,12 +272,14 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
 {
     if (parameterID == PARAM_GAIN)
     {
+        m_fGain     =   value;
         transportSource.setGain((value * value) * GAIN_SCALE);
     }
     
     else if (parameterID == PARAM_QUANTIZATION)
     {
-        m_iQuantization = int(powf(2, int(MAX_QUANTIZATION - value + 0.5f)));
+        m_iQuantization =  int(powf(2, int(QUANTIZATION_LEVELS - value - 1)));
+        std::cout << "Val: " << value << "\tQuant: " << m_iQuantization << std::endl;
     }
     
     else if (parameterID == PARAM_PLAYBACK_MODE)
@@ -324,12 +327,12 @@ float AudioFileStream::getSampleParameter(int parameterID)
 {
     if (parameterID == PARAM_GAIN)
     {
-        return (sqrtf(transportSource.getGain()) / GAIN_SCALE);
+        return m_fGain;
     }
     
     else if (parameterID == PARAM_QUANTIZATION)
     {
-        return m_iQuantization;
+        return  (QUANTIZATION_LEVELS - log2f(m_iQuantization) - 1);
     }
     
     else if (parameterID == PARAM_PLAYBACK_MODE)
@@ -402,6 +405,7 @@ bool AudioFileStream::getEffectGestureControlToggle(int effectPosition, int para
 
 void AudioFileStream::beat(int beatNum)
 {
+    
     m_iBeat = beatNum % m_iQuantization;
     
     if (m_iButtonMode == MODE_BEATREPEAT)
@@ -449,9 +453,7 @@ void AudioFileStream::motionUpdate(float *motion)
         {
             m_iQuantization = 1;
         }
-        
-        
-        std::cout << m_iQuantization << std::endl;
+
     }
     
     

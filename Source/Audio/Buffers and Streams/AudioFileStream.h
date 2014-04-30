@@ -101,6 +101,7 @@ private:
     int                             m_iButtonMode;
     
     int                             m_iBeat;
+    float                           m_fGain;
     
 };
 

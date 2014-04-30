@@ -60,7 +60,7 @@
     
     float quantization = _backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION);
     [quantizationSliderObject setValue:quantization];
-    [quantizationLabel setText:[@(quantization) stringValue]];
+    [quantizationLabel setText:[@( powf(2, (int)quantization) ) stringValue]];
     
     
     //--- Get Sample Gesture Control Toggles ---//
@@ -121,7 +121,7 @@
 - (IBAction)quantizationSliderChanged:(UISlider *)sender
 {
     _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION, (int)sender.value);
-    [quantizationLabel setText:[@((int)sender.value) stringValue]];
+    [quantizationLabel setText:[@( pow(2, (int)sender.value) ) stringValue]];
 }
 
 

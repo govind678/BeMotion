@@ -63,19 +63,33 @@
 
 
 
+
+
 //========== Metronome Macros ===========//
 
 //-- Defaults --//
 # define DEFAULT_TEMPO          120.0f
 # define DEFAULT_NUMERATOR      64
-# define MAX_QUANTIZATION       6           //  2^n
+# define MAX_QUANTIZATION       3           //  2^n
+# define QUANTIZATION_LEVELS    6
 # define GUI_METRO_COUNT        8
 
-//-- Sample Bank default Tempos --//
+
+
+
+
+
+
+
+//========== Sample Bank default Tempos ===========//
 # define BANK1_TEMPO            120.0f
 # define BANK2_TEMPO            200.0f
 # define BANK3_TEMPO            100.0f
-# define BANK4_TEMPO            120.0f
+# define BANK4_TEMPO            140.0f
+
+
+
+
 
 //========== Motion Control Macros ===========//
 
@@ -96,6 +110,9 @@
 # define ACCEL_X                3
 # define ACCEL_Y                4
 # define ACCEL_Z                5
+
+
+
 
 
 //===== Buffer Size =====//
