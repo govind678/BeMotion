@@ -207,7 +207,18 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             
             
         case EFFECT_GRANULAR:
-            m_pcGranularizer->setParam(parameterID, value);
+            
+            if (PARAM_1)
+            {
+//                m_pcGranularizer->setParam(parameterID, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
+                m_pcGranularizer->setParam(parameterID, value);
+            }
+            
+            else
+            {
+                m_pcGranularizer->setParam(parameterID, value);
+            }
+            
             break;
             
             
@@ -259,7 +270,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_1, param);
+                m_pcGranularizer->setParam(PARAM_1, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
                 break;
                 
             default:

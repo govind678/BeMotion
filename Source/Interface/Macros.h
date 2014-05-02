@@ -49,11 +49,6 @@
 # define MODE_SETTINGS           1
 # define MODE_RECORD             2
 
-//========== Sample Preset Banks ==========//
-# define PRESET_BANK_1           1
-# define PRESET_BANK_2           2
-# define PRESET_BANK_3           3
-# define PRESET_BANK_4           4
 
 
 //========== Effects Macros ===========//
@@ -78,14 +73,22 @@
 
 
 
-
+//========== Sample Preset Banks ==========//
+# define PRESET_BANK_1           0
+# define PRESET_BANK_2           1
+# define PRESET_BANK_3           2
+# define PRESET_BANK_4           3
+# define PRESET_BANK_5           4
+# define PRESET_BANK_6           5
 
 
 //========== Sample Bank default Tempos ===========//
 # define BANK1_TEMPO            120.0f
-# define BANK2_TEMPO            200.0f
-# define BANK3_TEMPO            100.0f
-# define BANK4_TEMPO            140.0f
+# define BANK2_TEMPO            140.0f
+# define BANK3_TEMPO            140.0f
+# define BANK4_TEMPO            100.0f
+# define BANK5_TEMPO            200.0f
+# define BANK6_TEMPO            180.0f
 
 
 

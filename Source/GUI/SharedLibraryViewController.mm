@@ -28,7 +28,7 @@
 
 @synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
 @synthesize masterRecord0, masterRecord1, masterRecord2, masterRecord3;
-
+@synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
 
 
 
@@ -84,6 +84,14 @@
     metroBar5.alpha                 =   0.2;
     metroBar6.alpha                 =   0.2;
     metroBar7.alpha                 =   0.2;
+    
+    
+    
+    //--- Turn off Sample Buttons ---//
+    sampleButton0.alpha             =   0.2;
+    sampleButton1.alpha             =   0.2;
+    sampleButton2.alpha             =   0.2;
+    sampleButton3.alpha             =   0.2;
     
     
     
@@ -149,6 +157,11 @@
     [masterRecord3 release];
 
     
+    
+    [sampleButton0 release];
+    [sampleButton1 release];
+    [sampleButton2 release];
+    [sampleButton3 release];
     
     [super dealloc];
 }
@@ -514,8 +527,6 @@
 
 - (IBAction)RedTouchUp:(UIButton *)sender
 {
-    sender.alpha = 1.0f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(0);
@@ -535,12 +546,12 @@
             _backendInterface->stopRecording(0);
         }
     }
+    
+    sender.alpha = 0.2f;
 }
 
 - (IBAction)RedTouchDown:(UIButton *)sender
 {
-    sender.alpha = 0.4f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         if (!m_pbPlaybackStatus[0])
@@ -563,6 +574,8 @@
             _backendInterface->startRecording(0);
         }
     }
+    
+    sender.alpha = 1.0f;
 }
 
 - (IBAction)redMasterRecord:(UIButton *)sender
@@ -580,8 +593,6 @@
 
 - (IBAction)BlueTouchUp:(UIButton *)sender
 {
-    sender.alpha = 1.0f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(1);
@@ -600,13 +611,13 @@
             _backendInterface->stopRecording(1);
         }
     }
+    
+    sender.alpha = 0.2f;
 
 }
 
 - (IBAction)BlueTouchDown:(UIButton *)sender
 {
-    sender.alpha = 0.4f;
-
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         if (! m_pbPlaybackStatus[1])
@@ -629,6 +640,8 @@
             _backendInterface->startRecording(1);
         }
     }
+    
+    sender.alpha = 1.0f;
 }
 
 - (IBAction)blueMasterRecord:(UIButton *)sender
@@ -646,7 +659,7 @@
 
 - (IBAction)GreenTouchUp:(UIButton *)sender
 {
-    sender.alpha = 1.0f;
+    sender.alpha = 0.2f;
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
@@ -670,8 +683,6 @@
 
 - (IBAction)GreenTouchDown:(UIButton *)sender
 {
-    sender.alpha = 0.4f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         if (! m_pbPlaybackStatus[2])
@@ -694,6 +705,8 @@
             _backendInterface->startRecording(2);
         }
     }
+    
+    sender.alpha = 1.0f;
 }
 
 - (IBAction)greenMasterRecord:(UIButton *)sender
@@ -711,7 +724,7 @@
 
 - (IBAction)YellowTouchUp:(UIButton *)sender
 {
-    sender.alpha = 1.0f;
+    sender.alpha = 0.2f;
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
@@ -735,7 +748,6 @@
 
 - (IBAction)YellowTouchDown:(UIButton *)sender
 {
-    sender.alpha = 0.4f;
     
     if (m_iButtonMode == MODE_PLAYBACK)
     {
@@ -759,6 +771,8 @@
             _backendInterface->startRecording(3);
         }
     }
+    
+    sender.alpha = 1.0f;
 }
 
 - (IBAction)yellowMasterRecord:(UIButton *)sender
@@ -788,7 +802,7 @@
     else
     {
         m_iButtonMode   =   MODE_PLAYBACK;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.152f green:0.246f blue:0.292f alpha:1.0f]];
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.125 green:0.125f blue:0.125f alpha:1.0f]];
     }
 }
 
@@ -805,7 +819,7 @@
     else
     {
         m_iButtonMode   =   MODE_PLAYBACK;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.152f green:0.246f blue:0.292f alpha:1.0f]];
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.125 green:0.125f blue:0.125f alpha:1.0f]];
     }
     
 }

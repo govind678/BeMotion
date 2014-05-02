@@ -80,6 +80,12 @@
 
 
 
+//--- Sample Buttons ---//
+@property (retain, nonatomic) IBOutlet UIButton *sampleButton0;
+@property (retain, nonatomic) IBOutlet UIButton *sampleButton1;
+@property (retain, nonatomic) IBOutlet UIButton *sampleButton2;
+@property (retain, nonatomic) IBOutlet UIButton *sampleButton3;
+
 
 //--- Master Record Button Instances ---//
 @property (retain, nonatomic) IBOutlet UIButton *masterRecord0;

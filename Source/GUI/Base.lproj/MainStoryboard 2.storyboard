@@ -230,7 +230,7 @@
                                 </state>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.15294117647058825" green="0.24705882352941178" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Main View" id="lHa-Xg-Vcw">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Nvd-Ab-qx9"/>
@@ -248,6 +248,10 @@
                         <outlet property="metroBar5" destination="sU8-f4-AId" id="8N5-l1-fqf"/>
                         <outlet property="metroBar6" destination="3t7-ZJ-N26" id="VKo-QC-UC7"/>
                         <outlet property="metroBar7" destination="LWf-mF-afX" id="KFA-bd-bfc"/>
+                        <outlet property="sampleButton0" destination="Dlj-Xx-VcS" id="eXe-Vx-u9o"/>
+                        <outlet property="sampleButton1" destination="WiV-v4-v1c" id="7HG-Hp-1pK"/>
+                        <outlet property="sampleButton2" destination="hne-Id-CW9" id="qL4-dG-Jkl"/>
+                        <outlet property="sampleButton3" destination="bHy-Xj-cbJ" id="iSu-tK-0WU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -270,7 +274,7 @@
                                 <rect key="frame" x="20" y="36" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -278,9 +282,11 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="30" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="dzS-jz-ivc">
-                                <rect key="frame" x="18" y="93" width="284" height="34"/>
+                                <rect key="frame" x="18" y="93" width="284" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="minimumTrackTintColor" red="1" green="0.49803921568627452" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="tempoSliderChanged:" destination="JFx-jb-ULP" eventType="valueChanged" id="kNO-nQ-r76"/>
                                 </connections>
@@ -289,42 +295,101 @@
                                 <rect key="frame" x="20" y="88" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="120.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="do9-NP-IPY">
                                 <rect key="frame" x="241" y="88" width="59" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pck-7d-lCL">
-                                <rect key="frame" x="20" y="196" width="280" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title="Third"/>
-                                    <segment title="Fourth"/>
-                                </segments>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="presetSampleBankLoader:" destination="JFx-jb-ULP" eventType="valueChanged" id="bfk-Wg-UPX"/>
-                                </connections>
-                            </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Preset Audio Sample Bank" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haB-rG-5y4">
-                                <rect key="frame" x="85" y="155" width="150" height="21"/>
+                                <rect key="frame" x="85" y="184" width="150" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JED-hG-zdP">
+                                <rect key="frame" x="-79" y="261" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-MZ-ns3">
+                                <rect key="frame" x="20" y="220" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Electronic Kit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked1:" destination="JFx-jb-ULP" eventType="touchUpInside" id="DTt-GL-xyC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iH-TI-BWv">
+                                <rect key="frame" x="96" y="220" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Dubstep.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked2:" destination="JFx-jb-ULP" eventType="touchUpInside" id="guc-L7-B6R"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SX1-8y-bQk">
+                                <rect key="frame" x="173" y="220" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Breakbeat.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked3:" destination="JFx-jb-ULP" eventType="touchUpInside" id="QnG-OM-9qE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3p-Ac-VvI">
+                                <rect key="frame" x="250" y="220" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Indian Percussion.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked4:" destination="JFx-jb-ULP" eventType="touchUpInside" id="JEw-OQ-bht"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDp-Mz-gE2">
+                                <rect key="frame" x="96" y="299" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Embryo.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked5:" destination="JFx-jb-ULP" eventType="touchUpInside" id="Zxv-Iw-tPR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LfH-4L-K4c">
+                                <rect key="frame" x="173" y="299" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Skies.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked6:" destination="JFx-jb-ULP" eventType="touchUpInside" id="HD0-Aq-vty"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.20834283759124086" blue="0.29601961678832106" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="H6W-hm-1WN"/>
                     <connections>
-                        <outlet property="presetBankSelector" destination="pck-7d-lCL" id="hqA-Se-f4k"/>
+                        <outlet property="presetButton1" destination="yaZ-MZ-ns3" id="yOV-so-lFX"/>
+                        <outlet property="presetButton2" destination="0iH-TI-BWv" id="GxZ-l0-uDw"/>
+                        <outlet property="presetButton3" destination="SX1-8y-bQk" id="Cz6-5M-stM"/>
+                        <outlet property="presetButton4" destination="n3p-Ac-VvI" id="XPI-IQ-loF"/>
+                        <outlet property="presetButton5" destination="jDp-Mz-gE2" id="YlG-2m-NJn"/>
+                        <outlet property="presetButton6" destination="LfH-4L-K4c" id="3T8-Ew-c8D"/>
                         <outlet property="tempoLabel" destination="do9-NP-IPY" id="qcb-tt-SOv"/>
                         <outlet property="tempoSlider" destination="dzS-jz-ivc" id="yoN-DL-cGj"/>
                     </connections>
@@ -370,7 +435,7 @@
                                 </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ku-8v-YdX">
-                                <rect key="frame" x="0.0" y="227" width="320" height="162"/>
+                                <rect key="frame" x="0.0" y="220" width="320" height="162"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <outlet property="dataSource" destination="bMe-Sf-aDh" id="GgR-5l-lIw"/>
@@ -443,7 +508,7 @@
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="f7Y-Rx-itx">
-                                <rect key="frame" x="19" y="56" width="220" height="31"/>
+                                <rect key="frame" x="19" y="61" width="220" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -451,7 +516,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gain" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oy7-zW-fNs">
-                                <rect key="frame" x="20" y="50" width="42" height="21"/>
+                                <rect key="frame" x="20" y="55" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
@@ -484,8 +549,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7J-AV-8qG">
-                                <rect key="frame" x="12" y="18" width="50" height="30"/>
+                                <rect key="frame" x="12" y="17" width="83" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -495,7 +561,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OeP-ae-oKD">
-                                <rect key="frame" x="260" y="51" width="40" height="40"/>
+                                <rect key="frame" x="260" y="52" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="Gesture.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -552,7 +618,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bhl-jq-jfp">
-                                <rect key="frame" x="162" y="50" width="45" height="21"/>
+                                <rect key="frame" x="162" y="55" width="45" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
@@ -611,11 +677,17 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Breakbeat.png" width="512" height="512"/>
+        <image name="Dubstep.png" width="512" height="512"/>
+        <image name="Electronic Kit.png" width="512" height="512"/>
+        <image name="Embryo.png" width="512" height="512"/>
         <image name="Gesture.png" width="420" height="599"/>
         <image name="Global512Up.png" width="512" height="512"/>
+        <image name="Indian Percussion.png" width="512" height="512"/>
         <image name="MetronomeUp512.png" width="512" height="512"/>
         <image name="RecordUp512.png" width="512" height="512"/>
         <image name="SettingsUp512.png" width="512" height="512"/>
+        <image name="Skies.png" width="512" height="512"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -623,7 +695,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxj-XE-Hki"/>
         <segue reference="69J-6b-zSr"/>
+        <segue reference="Dxj-XE-Hki"/>
     </inferredMetricsTieBreakers>
 </document>

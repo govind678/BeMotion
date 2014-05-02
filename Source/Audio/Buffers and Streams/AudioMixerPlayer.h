@@ -87,6 +87,8 @@ private:
     ScopedPointer<AudioFileRecord>      m_pcAudioFileRecorder;
     
     bool                                m_bRecording;
+    
+    float                               m_fTempo;
 };
 
 
