@@ -73,7 +73,11 @@ void CGranularizer::setParam(int type, float value)
 	{
 		
 		case PARAM_1:
+<<<<<<< HEAD
+			if (0.2f < value && value < 0.95f)
+=======
 			if (0.03f < value && value < 0.97f)
+>>>>>>> 47ce4bf31fcd40c4a8cba26aea4f61ee4d07b1c3
             {
 				m_fGrainTime	= value;
 				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.2 + m_fGrainTime;
@@ -114,7 +118,7 @@ void CGranularizer::generateGrain(int chan)
 	srand(currReadIdx + 1);
 
 	m_ppfDelayLine[chan]->setReadIdx(
-		currReadIdx + (int)((1.0 - m_fPoolSize)*( std::min(GRANULAR_MAX_SAMPLESg, 5.0 * m_fSampleRate) * rand() / RAND_MAX))
+		currReadIdx + (int)((1.0 - m_fPoolSize)*( std::min(MAX_DELAY_SAMPLES, 5.0 * m_fSampleRate) * rand() / RAND_MAX))
 		);
 
 	// envelope: buffer, length, attack time, release time,
