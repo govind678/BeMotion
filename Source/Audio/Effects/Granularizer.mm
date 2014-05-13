@@ -114,7 +114,7 @@ void CGranularizer::generateGrain(int chan)
 	srand(currReadIdx + 1);
 
 	m_ppfDelayLine[chan]->setReadIdx(
-		currReadIdx + (int)((1.0 - m_fPoolSize)*( std::min(GRANULAR_MAX_SAMPLESg, 5.0 * m_fSampleRate) * rand() / RAND_MAX))
+		currReadIdx + (int)((1.0 - m_fPoolSize)*( std::min(GRANULAR_MAX_SAMPLES, 5.0 * m_fSampleRate) * rand() / RAND_MAX))
 		);
 
 	// envelope: buffer, length, attack time, release time,
