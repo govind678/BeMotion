@@ -402,6 +402,23 @@ bool AudioFileStream::getEffectGestureControlToggle(int effectPosition, int para
 }
 
 
+float AudioFileStream::getCurrentPlaybackTime()
+{
+    if (m_bAudioCurrentlyPlaying)
+    {
+        return (transportSource.getCurrentPosition() / transportSource.getLengthInSeconds());
+    }
+    
+    else
+    {
+        return 0.0f;
+    }
+}
+
+
+
+
+
 
 void AudioFileStream::beat(int beatNum)
 {

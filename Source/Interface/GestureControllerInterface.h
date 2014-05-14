@@ -64,6 +64,9 @@ public:
     
     bool getSampleGestureControlToggle(int sampleID, int parameterID);
     bool getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID);
+    
+    float getSampleCurrentPlaybackTime(int sampleID);
+    bool  getSamplePlaybackStatus(int sampleID);
     //========================================================
     
     

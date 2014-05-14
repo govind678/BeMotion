@@ -242,6 +242,15 @@ bool AudioEngine::getEffectGestureControlToggle(int sampleID, int effectPosition
 }
 
 
+float AudioEngine::getSampleCurrentPlaybackTime(int sampleID)
+{
+    return audioMixer->getSampleCurrentPlaybackTime(sampleID);
+}
+
+bool AudioEngine::getSamplePlaybackStatus(int sampleID)
+{
+    return audioMixer->getSamplePlaybackStatus(sampleID);
+}
 
 
 void AudioEngine::beat(int beatNo)

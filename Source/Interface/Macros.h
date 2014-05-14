@@ -15,6 +15,9 @@
 
 //=================================== ID Macros ===========================================
 
+# define NUM_BUTTONS             4
+
+
 //=========== Effect IDs ============//
 # define EFFECT_NONE             0
 # define EFFECT_TREMOLO          1
@@ -34,7 +37,8 @@
 //========== Sample Parameter IDs ==========//
 # define PARAM_GAIN              0
 # define PARAM_QUANTIZATION      1
-# define PARAM_PLAYBACK_MODE     2
+# define PARAM_RESAMPLE_RATIO    2
+# define PARAM_PLAYBACK_MODE     3
 
 
 
@@ -68,6 +72,9 @@
 # define MAX_QUANTIZATION       3           //  2^n
 # define QUANTIZATION_LEVELS    6
 # define GUI_METRO_COUNT        8
+
+# define PROGRESS_UPDATE_RATE   0.1f
+# define MOTION_UPDATE_RATE     0.05f
 
 
 
@@ -113,6 +120,8 @@
 # define ACCEL_X                3
 # define ACCEL_Y                4
 # define ACCEL_Z                5
+
+# define LIN_ACC_THRESHOLD      8.0f
 
 
 

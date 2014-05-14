@@ -171,3 +171,13 @@ bool GestureControllerInterface::getEffectGestureControlToggle(int sampleID, int
     return audioEngine->getEffectGestureControlToggle(sampleID, effectPosition, parameterID);
 }
 
+float GestureControllerInterface::getSampleCurrentPlaybackTime(int sampleID)
+{
+    return audioEngine->getSampleCurrentPlaybackTime(sampleID);
+}
+
+bool GestureControllerInterface::getSamplePlaybackStatus(int sampleID)
+{
+    return audioEngine->getSamplePlaybackStatus(sampleID);
+}
+

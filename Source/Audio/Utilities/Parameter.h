@@ -19,6 +19,12 @@ public:
     Parameter();
     ~Parameter();
     
+    struct Effect
+    {
+        float param1;
+        float param2;
+        float param3;
+    };
     
     void setSmoothingParameter(float newAlpha);
     
@@ -28,12 +34,17 @@ public:
     
     
     
+    
+    
 private:
     
-    float m_fAlpha;
-    float m_fParameter;
+    float       m_fAlpha;
+    float       m_fParameter;
     
-    float m_iTempo;
+    float       m_iTempo;
+    
+    Effect      m_sEffect;
+    
 };
 
 

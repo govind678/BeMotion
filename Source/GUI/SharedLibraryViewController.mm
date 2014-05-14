@@ -6,11 +6,6 @@
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
 
-# define SAMPLING_RATE      0.05f
-# define LIN_ACC_THRESHOLD  8.0f
-#define  NUM_BUTTONS        4
-
-
 #import "SharedLibraryViewController.h"
 #import "GestureControllerAppDelegate.h"
 
@@ -29,6 +24,7 @@
 @synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
 @synthesize masterRecord0, masterRecord1, masterRecord2, masterRecord3;
 @synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
+@synthesize progressBar0, progressBar1, progressBar2, progressBar3;
 
 
 
@@ -87,11 +83,18 @@
     
     
     
-    //--- Turn off Sample Buttons ---//
-    sampleButton0.alpha             =   0.2;
-    sampleButton1.alpha             =   0.2;
-    sampleButton2.alpha             =   0.2;
-    sampleButton3.alpha             =   0.2;
+    //--- Turn off Sample and Progress Buttons ---//
+    sampleButton0.alpha             =   0.2f;
+    sampleButton1.alpha             =   0.2f;
+    sampleButton2.alpha             =   0.2f;
+    sampleButton3.alpha             =   0.2f;
+    
+    progressBar0.alpha              =   0.2f;
+    progressBar1.alpha              =   0.2f;
+    progressBar2.alpha              =   0.2f;
+    progressBar3.alpha              =   0.2f;
+    
+    
     
     
     
@@ -104,10 +107,22 @@
     
     
     
+    
+    //--- Initialize Timer for Progress Bar Updates ---//
+    [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
+                                   target:self
+                                   selector:@selector(updatePlaybackProgress)
+                                   userInfo:nil
+                                   repeats:YES];
+    
+    
+    
+    
+    
     //--- Initialize Motion Manager ---//
     
     self.motionManager = [[CMMotionManager alloc] init];
-    self.motionManager.deviceMotionUpdateInterval = SAMPLING_RATE;
+    self.motionManager.deviceMotionUpdateInterval = MOTION_UPDATE_RATE;
     
     
     [self.motionManager startDeviceMotionUpdatesToQueue: [NSOperationQueue currentQueue]
@@ -123,6 +138,81 @@
     
 }
 
+
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    
+    //--- Update Sample Buttons and Progress Bars ---//
+    
+    for (int i = 0; i< NUM_BUTTONS; i++)
+    {
+        if (_backendInterface->getSamplePlaybackStatus(i))
+        {
+            m_pbPlaybackStatus[i] = true;
+            
+            switch (i)
+            {
+                case 0:
+                    sampleButton0.alpha             =   1.0f;
+                    progressBar0.alpha              =   1.0f;
+                    break;
+                    
+                case 1:
+                    sampleButton1.alpha             =   1.0f;
+                    progressBar1.alpha              =   1.0f;
+                    break;
+                    
+                case 2:
+                    sampleButton2.alpha             =   1.0f;
+                    progressBar2.alpha              =   1.0f;
+                    break;
+                    
+                case 3:
+                    sampleButton3.alpha             =   1.0f;
+                    progressBar3.alpha              =   1.0f;
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+        }
+        
+        else
+        {
+            m_pbPlaybackStatus[i] = false;
+            
+            switch (i)
+            {
+                case 0:
+                    sampleButton0.alpha             =   0.2f;
+                    progressBar0.alpha              =   0.2f;
+                    break;
+                    
+                case 1:
+                    sampleButton1.alpha             =   0.2f;
+                    progressBar1.alpha              =   0.2f;
+                    break;
+                    
+                case 2:
+                    sampleButton2.alpha             =   0.2f;
+                    progressBar2.alpha              =   0.2f;
+                    break;
+                    
+                case 3:
+                    sampleButton3.alpha             =   0.2f;
+                    progressBar3.alpha              =   0.2f;
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+            
+        }
+    }
+}
 
 
 
@@ -162,6 +252,13 @@
     [sampleButton1 release];
     [sampleButton2 release];
     [sampleButton3 release];
+    
+    [progressBar0 release];
+    [progressBar1 release];
+    [progressBar2 release];
+    [progressBar3 release];
+    
+    
     
     [super dealloc];
 }
@@ -258,7 +355,7 @@
 - (void) motionDeviceUpdate: (CMDeviceMotion*) deviceMotion
 {
     
-    motion[ATTITUDE_PITCH]  = (deviceMotion.attitude.pitch + M_PI) / (2 * M_PI);
+    motion[ATTITUDE_PITCH]  = (((deviceMotion.attitude.pitch + M_PI) / (2 * M_PI)) - 0.25f) * 2.0f;
     motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll + M_PI) / (2 * M_PI);
     motion[ATTITUDE_YAW]    = (deviceMotion.attitude.yaw + M_PI) / (2 * M_PI);
     motion[ACCEL_X]         = deviceMotion.userAcceleration.x;
@@ -548,6 +645,7 @@
     }
     
     sender.alpha = 0.2f;
+    progressBar0.alpha  = 0.2f;
 }
 
 - (IBAction)RedTouchDown:(UIButton *)sender
@@ -576,6 +674,7 @@
     }
     
     sender.alpha = 1.0f;
+    progressBar0.alpha  = 1.0f;
 }
 
 - (IBAction)redMasterRecord:(UIButton *)sender
@@ -613,6 +712,7 @@
     }
     
     sender.alpha = 0.2f;
+    progressBar1.alpha  = 0.2f;
 
 }
 
@@ -642,6 +742,7 @@
     }
     
     sender.alpha = 1.0f;
+    progressBar1.alpha  = 1.0f;
 }
 
 - (IBAction)blueMasterRecord:(UIButton *)sender
@@ -659,8 +760,6 @@
 
 - (IBAction)GreenTouchUp:(UIButton *)sender
 {
-    sender.alpha = 0.2f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(2);
@@ -679,6 +778,9 @@
             _backendInterface->stopRecording(2);
         }
     }
+    
+    sender.alpha = 0.2f;
+    progressBar2.alpha  = 0.2f;
 }
 
 - (IBAction)GreenTouchDown:(UIButton *)sender
@@ -707,6 +809,7 @@
     }
     
     sender.alpha = 1.0f;
+    progressBar2.alpha  = 1.0f;
 }
 
 - (IBAction)greenMasterRecord:(UIButton *)sender
@@ -724,8 +827,6 @@
 
 - (IBAction)YellowTouchUp:(UIButton *)sender
 {
-    sender.alpha = 0.2f;
-    
     if (m_iButtonMode == MODE_PLAYBACK)
     {
         _backendInterface->stopPlayback(3);
@@ -744,6 +845,9 @@
             _backendInterface->stopRecording(3);
         }
     }
+    
+    sender.alpha = 0.2f;
+    progressBar3.alpha  = 0.2f;
 }
 
 - (IBAction)YellowTouchDown:(UIButton *)sender
@@ -773,6 +877,7 @@
     }
     
     sender.alpha = 1.0f;
+    progressBar3.alpha  = 1.0f;
 }
 
 - (IBAction)yellowMasterRecord:(UIButton *)sender
@@ -851,6 +956,37 @@
 - (void) setTempo:(float)tempo
 {
     _backendInterface->setTempo(tempo);
+}
+
+
+
+- (void) updatePlaybackProgress
+{
+    for (int i=0; i < NUM_BUTTONS; i++)
+    {
+        switch (i)
+        {
+            case 0:
+                progressBar0.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+                break;
+                
+            case 1:
+                progressBar1.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+                break;
+                
+            case 2:
+                progressBar2.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+                break;
+                
+            case 3:
+                progressBar3.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
 }
 
 

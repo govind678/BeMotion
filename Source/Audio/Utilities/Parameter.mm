@@ -11,10 +11,14 @@
 
 Parameter::Parameter()
 {
-    m_fAlpha        = 0.99f;
-    m_fParameter    = 0.0f;
+    m_fAlpha            = 0.99f;
+    m_fParameter        = 0.0f;
     
-    m_iTempo        =  DEFAULT_TEMPO;
+    m_iTempo            = DEFAULT_TEMPO;
+    
+    m_sEffect.param1    = 0.0f;
+    m_sEffect.param2    = 0.0f;
+    m_sEffect.param3    = 0.0f;
 }
 
 
@@ -36,3 +40,5 @@ float Parameter::process(float value)
     
     return m_fParameter;
 }
+
+

@@ -268,3 +268,16 @@ void AudioMixerPlayer::setTempo(float newTempo)
         audioFileStream.getUnchecked(i)->setTempo(newTempo);
     }
 }
+
+
+
+float AudioMixerPlayer::getSampleCurrentPlaybackTime(int sampleID)
+{
+    return audioFileStream.getUnchecked(sampleID)->getCurrentPlaybackTime();
+}
+
+bool AudioMixerPlayer::getSamplePlaybackStatus(int sampleID)
+{
+    return audioFileStream.getUnchecked(sampleID)->isPlaying();
+}
+

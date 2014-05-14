@@ -61,6 +61,8 @@ public:
     bool getEffectGestureControlToggle(int effectPosition, int parameterID);
     
     int  getEffectType(int effectPosition);
+    
+    float getCurrentPlaybackTime();
 
     void setSmoothing(int effecPosition, int parameterID, float value);
 

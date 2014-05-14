@@ -87,6 +87,14 @@
 @property (retain, nonatomic) IBOutlet UIButton *sampleButton3;
 
 
+
+//--- Sample Progress Bars ---//
+@property (retain, nonatomic) IBOutlet UIProgressView *progressBar0;
+@property (retain, nonatomic) IBOutlet UIProgressView *progressBar1;
+@property (retain, nonatomic) IBOutlet UIProgressView *progressBar2;
+@property (retain, nonatomic) IBOutlet UIProgressView *progressBar3;
+
+
 //--- Master Record Button Instances ---//
 @property (retain, nonatomic) IBOutlet UIButton *masterRecord0;
 @property (retain, nonatomic) IBOutlet UIButton *masterRecord1;
@@ -111,5 +119,6 @@
 - (void) beat:  (int) beatNo;
 - (void) guiBeat: (int) beatNo;
 - (void) setTempo: (float) tempo;
+- (void) updatePlaybackProgress;
 
 @end
