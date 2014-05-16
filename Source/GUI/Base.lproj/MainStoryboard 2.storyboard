@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QGM-f6-xv5">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Shared Library View Controller - Main View-->
+        <!--Be Motion View Controller - Main View-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="SharedLibraryViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="BeMotionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="86r-u4-xXQ"/>
                         <viewControllerLayoutGuide type="bottom" id="P1q-cb-icQ"/>
@@ -724,6 +723,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="69J-6b-zSr"/>
-        <segue reference="Dxj-XE-Hki"/>
+        <segue reference="LLu-g9-EV4"/>
     </inferredMetricsTieBreakers>
 </document>

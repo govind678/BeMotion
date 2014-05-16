@@ -1,25 +1,25 @@
 //
-//  SharedLibraryViewController.mm
-//  SharedLibrary
+//  BeMotionViewController.mm
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
-#import "SharedLibraryViewController.h"
-#import "GestureControllerAppDelegate.h"
+#import "BeMotionViewController.h"
+#import "BeMotionAppDelegate.h"
 
 
-@interface SharedLibraryViewController ()
+@interface BeMotionViewController ()
 {
-    GestureControllerAppDelegate*   appDelegate;
+    BeMotionAppDelegate*   appDelegate;
 }
 
 @end
 
 
 
-@implementation SharedLibraryViewController
+@implementation BeMotionViewController
 
 @synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
 @synthesize masterRecord0, masterRecord1, masterRecord2, masterRecord3;
@@ -110,10 +110,10 @@
     
     //--- Initialize Timer for Progress Bar Updates ---//
     [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
-                                   target:self
+                                     target:self
                                    selector:@selector(updatePlaybackProgress)
                                    userInfo:nil
-                                   repeats:YES];
+                                    repeats:YES];
     
     
     
@@ -134,7 +134,7 @@
                                             }];
     
     motion  =   new float [NUM_MOTION_PARAMS];
-
+    
     
 }
 
@@ -245,7 +245,7 @@
     [masterRecord1 release];
     [masterRecord2 release];
     [masterRecord3 release];
-
+    
     
     
     [sampleButton0 release];
@@ -635,7 +635,7 @@
     {
         if ([_metronome isRunning] == YES)
         {
-           m_pbAudioRecordToggle[0] = false;
+            m_pbAudioRecordToggle[0] = false;
         }
         
         else
@@ -713,7 +713,7 @@
     
     sender.alpha = 0.2f;
     progressBar1.alpha  = 0.2f;
-
+    
 }
 
 - (IBAction)BlueTouchDown:(UIButton *)sender

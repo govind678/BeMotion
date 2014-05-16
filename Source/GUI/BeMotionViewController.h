@@ -1,10 +1,11 @@
 //
-//  SharedLibraryViewController.h
-//  SharedLibrary
+//  BeMotionViewController.h
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+
 
 #import  <UIKit/UIKit.h>
 
@@ -18,7 +19,7 @@
 
 #define METRO_GUI_COUNT     8
 
-@interface SharedLibraryViewController : UIViewController
+@interface BeMotionViewController : UIViewController
 {
     int                             m_iButtonMode;       // playback = 0 , settings = 1, record = 2
     
