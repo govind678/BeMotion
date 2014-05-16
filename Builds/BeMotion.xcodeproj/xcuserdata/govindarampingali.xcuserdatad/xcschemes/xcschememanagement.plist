@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>GestureController.xcscheme</key>
+		<key>BeMotion.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>FC5C65DF18CDB1C300CA9B79</key>
+		<key>FCCF84B319266AC500B76E77</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC5C660018CDB1C300CA9B79</key>
+		<key>FCCF84D419266AC600B76E77</key>
 		<dict>
 			<key>primary</key>
 			<true/>

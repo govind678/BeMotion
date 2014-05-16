@@ -1,18 +1,18 @@
 //
-//  SharedLibraryTests.m
-//  SharedLibraryTests
+//  BeMotionTests.m
+//  BeMotionTests
 //
-//  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Created by Govinda Ram Pingali on 5/16/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface SharedLibraryTests : XCTestCase
+@interface BeMotionTests : XCTestCase
 
 @end
 
-@implementation SharedLibraryTests
+@implementation BeMotionTests
 
 - (void)setUp
 {

@@ -1,21 +1,18 @@
-//==============================================================================
 //
 //  main.m
-//  GestureController
+//  BeMotion
 //
-//  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Created by Govinda Ram Pingali on 5/16/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
-//==============================================================================
-
 
 #import <UIKit/UIKit.h>
 
-#import "GestureControllerAppDelegate.h"
+#import "BeMotionAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GestureControllerAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([BeMotionAppDelegate class]));
     }
 }
