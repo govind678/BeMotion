@@ -48,6 +48,8 @@ public:
 	//--- Get LFO sample data ---//
     float getLFOSampleData(int index);
     
+    void setSampleRate(float sampleRate);
+    
 private:
     
     static const int m_kWaveTableSize = 4096;

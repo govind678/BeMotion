@@ -24,9 +24,19 @@ CVibrato::CVibrato(int iNumChannels)
     m_bLFOInitialized               =   false;
     
 	m_CRingBuffer = new CRingBuffer<float>*[m_iNumChannels];
-    for (int channel=0; channel<m_iNumChannels; channel++) {
+    for (int channel=0; channel<m_iNumChannels; channel++)
+    {
         m_CRingBuffer[channel] = new CRingBuffer<float>( 2 * (MAX_MOD_WIDTH  * m_fSampleRate) / 1000);
     }
+    
+    
+    m_CLFO = new CLFO*[m_iNumChannels];
+    for (int channel = 0; channel < m_iNumChannels; channel++) {
+        m_CLFO[channel] = new CLFO(DEFAULT_SAMPLE_RATE);
+    }
+    m_bLFOInitialized   =   true;
+    
+    initializeDefaults();
 }
 
 
@@ -48,13 +58,10 @@ void CVibrato::prepareToPlay(float sampleRate)
 {
     m_fSampleRate   =  sampleRate;
     
-    m_CLFO = new CLFO*[m_iNumChannels];
-    for (int channel = 0; channel < m_iNumChannels; channel++) {
-        m_CLFO[channel] = new CLFO(sampleRate);
+    for (int channel = 0; channel < m_iNumChannels; channel++)
+    {
+        m_CLFO[channel]->setSampleRate(m_fSampleRate);
     }
-    m_bLFOInitialized   =   true;
-    
-    initializeDefaults();
 }
 
 

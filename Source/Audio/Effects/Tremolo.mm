@@ -15,13 +15,16 @@
 CTremolo::CTremolo(int numChannels)
 {
 	m_iNumChannels = numChannels;
+    
+    LFO = new CLFO(DEFAULT_SAMPLE_RATE);
+    
 	initDefaults();
 }
 
 void CTremolo::prepareToPlay(float sampleRate)
 {
 	m_fSampleRate	= sampleRate;
-	LFO = new CLFO(sampleRate);	
+    LFO->setSampleRate(m_fSampleRate);
 }
 
 void CTremolo::initDefaults()

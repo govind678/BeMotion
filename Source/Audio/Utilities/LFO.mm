@@ -1,6 +1,6 @@
 //==============================================================================
 //
-//  LFO.cpp
+//  LFO.mm
 //  GestureController
 //
 //  Created by Govinda Ram Pingali on 2/14/14.
@@ -32,28 +32,39 @@ CLFO::CLFO(float fSampleRate)
     //--- Generate Wave Tables ---//
     
     //- Sine and Square from Sine -//
-    for (int sample = 0; sample < m_kWaveTableSize; sample++) {
+    for (int sample = 0; sample < m_kWaveTableSize; sample++)
+    {
         m_pfSineWaveTable[sample] = sinf(2*M_PI*sample / m_kWaveTableSize);
         
-        if (m_pfSineWaveTable[sample] >= 0) {
+        if (m_pfSineWaveTable[sample] >= 0)
+        {
             m_pfSquareWaveTable[sample] = 1;
         }
-        else {
+        else
+        {
             m_pfSquareWaveTable[sample] = -1;
         }
     }
+    
     
     //- Triangle from Sine -//
     float m_iAmplitude = 0.0;
     float m_fDelta = 4.0 / m_kWaveTableSize;
     
     m_pfTriangleWaveTable[0] = 0;
-    for (int sample = 1; sample < m_kWaveTableSize; sample++) {
-        if ((m_pfSineWaveTable[sample] - m_pfSineWaveTable[sample-1]) >= 0) {
+    
+    for (int sample = 1; sample < m_kWaveTableSize; sample++)
+    {
+        if ((m_pfSineWaveTable[sample] - m_pfSineWaveTable[sample-1]) >= 0)
+        {
             m_iAmplitude += m_fDelta;
-        } else {
+        }
+        
+        else
+        {
             m_iAmplitude -= m_fDelta;
         }
+        
         m_pfTriangleWaveTable[sample] = m_iAmplitude;
         
     }
@@ -143,5 +154,12 @@ void CLFO::generate(int bufferLengthToFill)
 float CLFO::getLFOSampleData(int index)
 {
 	return (m_pfBufferData[index]);
+}
+
+void CLFO::setSampleRate(float sampleRate)
+{
+    m_fSampleRate   = sampleRate;
+    m_fFrequency    = m_fSampleRate / m_kWaveTableSize;
+    m_fIncrement    = m_kWaveTableSize * m_fFrequency / m_fSampleRate;
 }
 

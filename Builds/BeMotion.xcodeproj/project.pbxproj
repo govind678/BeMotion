@@ -30,7 +30,6 @@
 		FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851519266E5F00B76E77 /* Tremolo.mm */; };
 		FCCF854B19266E5F00B76E77 /* Vibrato.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851719266E5F00B76E77 /* Vibrato.mm */; };
 		FCCF854C19266E5F00B76E77 /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851919266E5F00B76E77 /* Wah.mm */; };
-		FCCF854D19266E5F00B76E77 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851D19266E5F00B76E77 /* LFO.mm */; };
 		FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851F19266E5F00B76E77 /* Parameter.mm */; };
 		FCCF855219266E5F00B76E77 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF852919266E5F00B76E77 /* BeMotionViewController.mm */; };
 		FCCF855319266E5F00B76E77 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF852B19266E5F00B76E77 /* EffectSettingsViewController.mm */; };
@@ -100,6 +99,7 @@
 		FCCF8FF71926710300B76E77 /* juce_data_structures.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF8DE919266F7F00B76E77 /* juce_data_structures.mm */; };
 		FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF8E0819266F7F00B76E77 /* juce_events.mm */; };
 		FCCF8FF919267F8B00B76E77 /* MainStoryboard 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCF852419266E5F00B76E77 /* MainStoryboard 2.storyboard */; };
+		FCCF8FFF1926DA6C00B76E77 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF8FFE1926DA6C00B76E77 /* LFO.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,8 +153,6 @@
 		FCCF851819266E5F00B76E77 /* Wah.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah.h; sourceTree = "<group>"; };
 		FCCF851919266E5F00B76E77 /* Wah.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wah.mm; sourceTree = "<group>"; };
 		FCCF851B19266E5F00B76E77 /* CUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUtil.h; sourceTree = "<group>"; };
-		FCCF851C19266E5F00B76E77 /* LFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFO.h; sourceTree = "<group>"; };
-		FCCF851D19266E5F00B76E77 /* LFO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LFO.mm; sourceTree = "<group>"; };
 		FCCF851E19266E5F00B76E77 /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
 		FCCF851F19266E5F00B76E77 /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
 		FCCF852019266E5F00B76E77 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
@@ -1184,6 +1182,8 @@
 		FCCF8FE919266FAA00B76E77 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FCCF8FEB19266FB200B76E77 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FCCF8FED19266FC900B76E77 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		FCCF8FFD1926DA6C00B76E77 /* LFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFO.h; sourceTree = "<group>"; };
+		FCCF8FFE1926DA6C00B76E77 /* LFO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LFO.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1331,9 +1331,9 @@
 		FCCF851A19266E5F00B76E77 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FCCF8FFD1926DA6C00B76E77 /* LFO.h */,
+				FCCF8FFE1926DA6C00B76E77 /* LFO.mm */,
 				FCCF851B19266E5F00B76E77 /* CUtil.h */,
-				FCCF851C19266E5F00B76E77 /* LFO.h */,
-				FCCF851D19266E5F00B76E77 /* LFO.mm */,
 				FCCF851E19266E5F00B76E77 /* Parameter.h */,
 				FCCF851F19266E5F00B76E77 /* Parameter.mm */,
 				FCCF852019266E5F00B76E77 /* RingBuffer.h */,
@@ -3373,12 +3373,12 @@
 				FCCF855319266E5F00B76E77 /* EffectSettingsViewController.mm in Sources */,
 				FCCF854519266E5F00B76E77 /* Delay.mm in Sources */,
 				FCCF854B19266E5F00B76E77 /* Vibrato.mm in Sources */,
+				FCCF8FFF1926DA6C00B76E77 /* LFO.mm in Sources */,
 				FCCF855219266E5F00B76E77 /* BeMotionViewController.mm in Sources */,
 				FCCF855519266E5F00B76E77 /* GlobalSettingsViewController.mm in Sources */,
 				FCCF854119266E5F00B76E77 /* AudioFileRecord.mm in Sources */,
 				FCCF853E19266E5F00B76E77 /* Metronome.m in Sources */,
 				FCCF854419266E5F00B76E77 /* LiveAudioStream.mm in Sources */,
-				FCCF854D19266E5F00B76E77 /* LFO.mm in Sources */,
 				FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */,
 				FCCF854C19266E5F00B76E77 /* Wah.mm in Sources */,
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
