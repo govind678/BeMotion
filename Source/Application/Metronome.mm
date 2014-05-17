@@ -1,10 +1,13 @@
+//==============================================================================
 //
-//  Metronome.m
-//  GestureController
+//  Metronome.h
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 4/9/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
+
 
 #import "Metronome.h"
 #import "Macros.h"
@@ -97,7 +100,9 @@
 - (void) timerCallback
 {
     beat = (beat % numerator) + 1;
-    [delegate beat: beat];
+//    [delegate beat: beat];
+    
+    backendInterface->beat(beat);
     
     if (((beat - 1) % GUI_METRO_COUNT) == 0)
     {
@@ -127,6 +132,12 @@
 //    [timer dealloc];
     
     [super dealloc];
+}
+
+
+- (void)setBackendReference:(BeMotionInterface*)interface
+{
+    backendInterface = interface;
 }
 
 @end

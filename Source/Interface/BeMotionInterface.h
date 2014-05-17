@@ -1,7 +1,7 @@
 //==============================================================================
 //
-//  GestureControllerInterface.h
-//  GestureController
+//  BeMotionInterface.h
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -10,18 +10,18 @@
 
 
 
-#ifndef __GestureController__GestureControllerInterface__
-#define __GestureController__GestureControllerInterface__
+#ifndef __BeMotion__BeMotionInterface__
+#define __BeMotion__BeMotionInterface__
 
 
 #include "AudioEngine.h"
 
-class GestureControllerInterface
+class BeMotionInterface
 {
 public:
     
-    GestureControllerInterface();
-    ~GestureControllerInterface();
+    BeMotionInterface();
+    ~BeMotionInterface();
     
     
     //============== GUI to Backend Methods ==================
@@ -80,4 +80,4 @@ private:
     
 };
 
-#endif /* defined(__GestureController__GestureControllerInterface__) */
+#endif /* defined(__BeMotion__BeMotionInterface__) */

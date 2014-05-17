@@ -1,17 +1,15 @@
 //==============================================================================
 //
-//  AudioFileRecord.cpp
-//  GestureController
+//  AudioFileRecord.mm
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
 
 #include "AudioFileRecord.h"
-#include <stdio.h>
-#include <iostream>
 
 AudioFileRecord::AudioFileRecord(AudioDeviceManager& sharedDeviceManager)  :    deviceManager(sharedDeviceManager),
                                                                                 backgroundThread ("Audio Recorder Thread"),

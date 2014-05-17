@@ -1,13 +1,16 @@
+//==============================================================================
 //
 //  GlobalSettingsViewController.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 4/10/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
+
 
 #import <UIKit/UIKit.h>
-#include "GestureControllerInterface.h"
+#include "BeMotionInterface.h"
 #include "Metronome.h"
 #include "Macros.h"
 
@@ -25,7 +28,7 @@
 }
 
 
-@property (nonatomic, assign) GestureControllerInterface* backendInterface;
+@property (nonatomic, assign) BeMotionInterface* backendInterface;
 @property (nonatomic, assign) Metronome* metronome;
 
 //--- Tempo Settings ---//

@@ -1,7 +1,7 @@
 //==============================================================================
 //
 //  LFO.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 2/14/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -11,10 +11,6 @@
 
 #if !defined(__CLFO_hdr__)
 #define __CLFO_hdr__
-
-
-# define MIN_MOD_FREQ           0.001
-# define MAX_MOD_WIDTH          500
 
 
 class CLFO

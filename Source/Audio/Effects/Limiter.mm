@@ -1,10 +1,10 @@
 //==============================================================================
 //
-//  Limiter.cpp
-//  GestureController
+//  Limiter.mm
+//  BeMotion
 //
 //  Created by Cian O'Brien on 4/22/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 

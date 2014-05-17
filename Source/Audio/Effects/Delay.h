@@ -1,10 +1,10 @@
 //==============================================================================
 //
 //  Delay.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Cian O'Brien on 2/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 

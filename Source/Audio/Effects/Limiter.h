@@ -1,3 +1,15 @@
+//==============================================================================
+//
+//  Limiter.h
+//  BeMotion
+//
+//  Created by Cian O'Brien on 4/22/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
+//
+//==============================================================================
+
+
+
 #if !defined(__Limiter_hdr__)
 #define __Limiter_hdr__
 

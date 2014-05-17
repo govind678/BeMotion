@@ -1,10 +1,13 @@
+//==============================================================================
 //
-//  GlobalSettingsViewController.m
-//  GestureController
+//  GlobalSettingsViewController.mm
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 4/10/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
+
 
 #import "GlobalSettingsViewController.h"
 

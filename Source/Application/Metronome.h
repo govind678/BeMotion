@@ -1,12 +1,16 @@
+//==============================================================================
 //
 //  Metronome.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 4/9/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
+
 
 #import <Foundation/Foundation.h>
+#include "BeMotionInterface.h"
 
 @interface Metronome : NSObject
 {
@@ -22,6 +26,9 @@
     NSTimer*    timer;
     
     id          delegate;
+    
+    BeMotionInterface*              backendInterface;
+    
 }
 
 
@@ -42,6 +49,9 @@
 - (void) guiBeat            :   (int) beatNo;
 
 - (BOOL) isRunning;
+
+- (void)setBackendReference :   (BeMotionInterface*)interface;
+
 
 
 @end

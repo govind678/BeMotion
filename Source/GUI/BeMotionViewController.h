@@ -1,3 +1,4 @@
+//==============================================================================
 //
 //  BeMotionViewController.h
 //  BeMotion
@@ -5,11 +6,12 @@
 //  Created by Govinda Ram Pingali on 3/8/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
 
 
 #import  <UIKit/UIKit.h>
 
-#include "GestureControllerInterface.h"
+#include "BeMotionInterface.h"
 #import  "EffectSettingsViewController.h"
 #import  "GlobalSettingsViewController.h"
 
@@ -36,7 +38,7 @@
 
 
 //--- Reference To Backend and Metronome ---//
-@property (nonatomic, assign) GestureControllerInterface*  backendInterface;
+@property (nonatomic, assign) BeMotionInterface*  backendInterface;
 @property (nonatomic, assign) Metronome*  metronome;
 
 
@@ -117,7 +119,6 @@
 
 
 
-- (void) beat:  (int) beatNo;
 - (void) guiBeat: (int) beatNo;
 - (void) setTempo: (float) tempo;
 - (void) updatePlaybackProgress;

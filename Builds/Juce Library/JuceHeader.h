@@ -32,8 +32,8 @@
 
 namespace ProjectInfo
 {
-    const char* const  projectName    = "GestureController";
-    const char* const  versionString  = "1.0.1";
+    const char* const  projectName    = "BeMotion";
+    const char* const  versionString  = "1.3.1";
     const int          versionNumber  = 0x10001;
 }
 

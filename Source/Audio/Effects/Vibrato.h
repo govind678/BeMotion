@@ -1,20 +1,20 @@
+//==============================================================================
 //
 //  Vibrato.h
-//  GestureController
+//  BeMotion
 //
-//  Created by Govinda Ram Pingali on 3/10/14.
+//  Created by Anand Mahadevan and Govinda Ram Pingali on 3/10/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
+//==============================================================================
 
-#ifndef __GestureController__Vibrato__
-#define __GestureController__Vibrato__
+
+#ifndef __BeMotion__Vibrato__
+#define __BeMotion__Vibrato__
 
 #include "RingBuffer.h"
 #include "LFO.h"
 #include "Macros.h"
-
-#define DEFAULT_SAMPLING_RATE   44100
-#define MAX_MOD_WIDTH           250
 
 class CVibrato
 {
@@ -85,4 +85,4 @@ private:
 
 
 
-#endif /* defined(__GestureController__Vibrato__) */
+#endif /* defined(__BeMotion__Vibrato__) */

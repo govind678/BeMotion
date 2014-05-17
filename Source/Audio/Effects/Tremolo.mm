@@ -1,10 +1,10 @@
 //==============================================================================
 //
-//  Tremolo.cpp
-//  GestureController
+//  Tremolo.mm
+//  BeMotion
 //
 //  Created by Cian O'Brien on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 

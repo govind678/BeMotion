@@ -1,7 +1,7 @@
 //==============================================================================
 //
-//  GestureControllerHeader.h
-//  GestureController
+//  BeMotionHeader.h
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -9,8 +9,8 @@
 //==============================================================================
 
 
-#ifndef GestureController_GestureControllerHeader_h
-#define GestureController_GestureControllerHeader_h
+#ifndef BeMotion_BeMotionHeader_h
+#define BeMotion_BeMotionHeader_h
 
 #include "JuceHeader.h"
 

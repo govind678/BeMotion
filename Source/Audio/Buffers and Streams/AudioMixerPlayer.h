@@ -1,18 +1,18 @@
 //==============================================================================
 //
 //  AudioMixerPlayer.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/9/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
 
-#ifndef __GestureController__AudioMixerPlayer__
-#define __GestureController__AudioMixerPlayer__
+#ifndef __BeMotion__AudioMixerPlayer__
+#define __BeMotion__AudioMixerPlayer__
 
-#include "GestureControllerHeader.h"
+#include "BeMotionHeader.h"
 #include "AudioFileStream.h"
 #include "Limiter.h"
 #include "AudioFileRecord.h"
@@ -94,4 +94,4 @@ private:
 };
 
 
-#endif /* defined(__GestureController__AudioMixerPlayer__) */
+#endif /* defined(__BeMotion__AudioMixerPlayer__) */

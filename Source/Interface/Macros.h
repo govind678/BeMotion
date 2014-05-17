@@ -1,7 +1,7 @@
 //==============================================================================
 //
 //  Macros.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/10/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -9,8 +9,8 @@
 //==============================================================================
 
 
-#ifndef GestureController_Macros_h
-#define GestureController_Macros_h
+#ifndef BeMotion_Macros_h
+#define BeMotion_Macros_h
 
 
 //=================================== ID Macros ===========================================
@@ -127,13 +127,15 @@
 
 
 
-//===== Buffer Size =====//
+//===== Buffer Size and Other Effect Macros =====//
 
 # define DELAY_MAX_SAMPLES       100000
 # define GRANULAR_MAX_SAMPLES    250000.0
 # define LIMITER_MAX_SAMPLES     5
 
-# define DEFAULT_SAMPLE_RATE    44100.0f
+# define VIBRATO_MAX_MOD_WIDTH   250
+
+# define DEFAULT_SAMPLE_RATE     44100.0f
 
 //=========================================================================================
 

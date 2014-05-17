@@ -1,10 +1,10 @@
 //==============================================================================
 //
-//  AudioFileStream.cpp
-//  GestureController
+//  AudioFileStream.mm
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
@@ -279,7 +279,6 @@ void AudioFileStream::setSampleParameter(int parameterID, float value)
     else if (parameterID == PARAM_QUANTIZATION)
     {
         m_iQuantization =  int(powf(2, int(QUANTIZATION_LEVELS - value - 1)));
-        std::cout << "Val: " << value << "\tQuant: " << m_iQuantization << std::endl;
     }
     
     else if (parameterID == PARAM_PLAYBACK_MODE)

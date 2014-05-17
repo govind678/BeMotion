@@ -14,9 +14,8 @@
 		FCCF84D819266AC600B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84D919266AC600B76E77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84BB19266AC500B76E77 /* UIKit.framework */; };
 		FCCF853B19266E5F00B76E77 /* BeMotionAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF84F519266E5F00B76E77 /* BeMotionAppDelegate.mm */; };
-		FCCF853C19266E5F00B76E77 /* GestureControllerAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF84F719266E5F00B76E77 /* GestureControllerAppDelegate.mm */; };
 		FCCF853D19266E5F00B76E77 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCCF84F819266E5F00B76E77 /* Images.xcassets */; };
-		FCCF853E19266E5F00B76E77 /* Metronome.m in Sources */ = {isa = PBXBuildFile; fileRef = FCCF84FA19266E5F00B76E77 /* Metronome.m */; };
+		FCCF853E19266E5F00B76E77 /* Metronome.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF84FA19266E5F00B76E77 /* Metronome.mm */; };
 		FCCF853F19266E5F00B76E77 /* AudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF84FD19266E5F00B76E77 /* AudioEngine.mm */; };
 		FCCF854019266E5F00B76E77 /* AudioEffectSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF850019266E5F00B76E77 /* AudioEffectSource.mm */; };
 		FCCF854119266E5F00B76E77 /* AudioFileRecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF850219266E5F00B76E77 /* AudioFileRecord.mm */; };
@@ -34,7 +33,7 @@
 		FCCF855219266E5F00B76E77 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF852919266E5F00B76E77 /* BeMotionViewController.mm */; };
 		FCCF855319266E5F00B76E77 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF852B19266E5F00B76E77 /* EffectSettingsViewController.mm */; };
 		FCCF855519266E5F00B76E77 /* GlobalSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF852F19266E5F00B76E77 /* GlobalSettingsViewController.mm */; };
-		FCCF855919266E5F00B76E77 /* GestureControllerInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF853919266E5F00B76E77 /* GestureControllerInterface.mm */; };
+		FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF853919266E5F00B76E77 /* BeMotionInterface.mm */; };
 		FCCF856319266E8E00B76E77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FCCF855E19266E8E00B76E77 /* InfoPlist.strings */; };
 		FCCF856419266E8E00B76E77 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF856019266E8E00B76E77 /* main.mm */; };
 		FCCF859E19266ED200B76E77 /* Breakbeat0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCCF856819266ED200B76E77 /* Breakbeat0.wav */; };
@@ -119,24 +118,22 @@
 		FCCF84BB19266AC500B76E77 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FCCF84D519266AC600B76E77 /* BeMotionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeMotionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCF84D619266AC600B76E77 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		FCCF84F419266E5F00B76E77 /* BeMotionAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeMotionAppDelegate.h; sourceTree = "<group>"; };
-		FCCF84F519266E5F00B76E77 /* BeMotionAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BeMotionAppDelegate.mm; sourceTree = "<group>"; };
-		FCCF84F619266E5F00B76E77 /* GestureControllerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureControllerAppDelegate.h; sourceTree = "<group>"; };
-		FCCF84F719266E5F00B76E77 /* GestureControllerAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GestureControllerAppDelegate.mm; sourceTree = "<group>"; };
+		FCCF84F419266E5F00B76E77 /* BeMotionAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BeMotionAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF84F519266E5F00B76E77 /* BeMotionAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = BeMotionAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FCCF84F819266E5F00B76E77 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FCCF84F919266E5F00B76E77 /* Metronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome.h; sourceTree = "<group>"; };
-		FCCF84FA19266E5F00B76E77 /* Metronome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Metronome.m; sourceTree = "<group>"; };
-		FCCF84FC19266E5F00B76E77 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
-		FCCF84FD19266E5F00B76E77 /* AudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioEngine.mm; sourceTree = "<group>"; };
-		FCCF84FF19266E5F00B76E77 /* AudioEffectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectSource.h; sourceTree = "<group>"; };
-		FCCF850019266E5F00B76E77 /* AudioEffectSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioEffectSource.mm; sourceTree = "<group>"; };
-		FCCF850119266E5F00B76E77 /* AudioFileRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileRecord.h; sourceTree = "<group>"; };
-		FCCF850219266E5F00B76E77 /* AudioFileRecord.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioFileRecord.mm; sourceTree = "<group>"; };
-		FCCF850319266E5F00B76E77 /* AudioFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileStream.h; sourceTree = "<group>"; };
-		FCCF850419266E5F00B76E77 /* AudioFileStream.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioFileStream.mm; sourceTree = "<group>"; };
-		FCCF850519266E5F00B76E77 /* AudioMixerPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioMixerPlayer.h; sourceTree = "<group>"; };
-		FCCF850619266E5F00B76E77 /* AudioMixerPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioMixerPlayer.mm; sourceTree = "<group>"; };
-		FCCF850719266E5F00B76E77 /* LiveAudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveAudioStream.h; sourceTree = "<group>"; };
+		FCCF84FA19266E5F00B76E77 /* Metronome.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Metronome.mm; sourceTree = "<group>"; };
+		FCCF84FC19266E5F00B76E77 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AudioEngine.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF84FD19266E5F00B76E77 /* AudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = AudioEngine.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF84FF19266E5F00B76E77 /* AudioEffectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AudioEffectSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850019266E5F00B76E77 /* AudioEffectSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = AudioEffectSource.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850119266E5F00B76E77 /* AudioFileRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = AudioFileRecord.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850219266E5F00B76E77 /* AudioFileRecord.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 2; path = AudioFileRecord.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850319266E5F00B76E77 /* AudioFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AudioFileStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850419266E5F00B76E77 /* AudioFileStream.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = AudioFileStream.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850519266E5F00B76E77 /* AudioMixerPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AudioMixerPlayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850619266E5F00B76E77 /* AudioMixerPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = AudioMixerPlayer.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF850719266E5F00B76E77 /* LiveAudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LiveAudioStream.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FCCF850819266E5F00B76E77 /* LiveAudioStream.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LiveAudioStream.mm; sourceTree = "<group>"; };
 		FCCF850A19266E5F00B76E77 /* Delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delay.h; sourceTree = "<group>"; };
 		FCCF850B19266E5F00B76E77 /* Delay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Delay.mm; sourceTree = "<group>"; };
@@ -157,15 +154,15 @@
 		FCCF851F19266E5F00B76E77 /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
 		FCCF852019266E5F00B76E77 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		FCCF852519266E5F00B76E77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/MainStoryboard 2.storyboard"; sourceTree = "<group>"; };
-		FCCF852819266E5F00B76E77 /* BeMotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeMotionViewController.h; sourceTree = "<group>"; };
+		FCCF852819266E5F00B76E77 /* BeMotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BeMotionViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FCCF852919266E5F00B76E77 /* BeMotionViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BeMotionViewController.mm; sourceTree = "<group>"; };
 		FCCF852A19266E5F00B76E77 /* EffectSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectSettingsViewController.h; sourceTree = "<group>"; };
 		FCCF852B19266E5F00B76E77 /* EffectSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectSettingsViewController.mm; sourceTree = "<group>"; };
 		FCCF852E19266E5F00B76E77 /* GlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettingsViewController.h; sourceTree = "<group>"; };
 		FCCF852F19266E5F00B76E77 /* GlobalSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GlobalSettingsViewController.mm; sourceTree = "<group>"; };
-		FCCF853719266E5F00B76E77 /* GestureControllerHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureControllerHeader.h; sourceTree = "<group>"; };
-		FCCF853819266E5F00B76E77 /* GestureControllerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureControllerInterface.h; sourceTree = "<group>"; };
-		FCCF853919266E5F00B76E77 /* GestureControllerInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GestureControllerInterface.mm; sourceTree = "<group>"; };
+		FCCF853719266E5F00B76E77 /* BeMotionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BeMotionHeader.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FCCF853819266E5F00B76E77 /* BeMotionInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeMotionInterface.h; sourceTree = "<group>"; };
+		FCCF853919266E5F00B76E77 /* BeMotionInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BeMotionInterface.mm; sourceTree = "<group>"; };
 		FCCF853A19266E5F00B76E77 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		FCCF855B19266E8E00B76E77 /* BeMotion-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BeMotion-Info.plist"; sourceTree = "<group>"; };
 		FCCF855C19266E8E00B76E77 /* BeMotion-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BeMotion-Prefix.pch"; sourceTree = "<group>"; };
@@ -1269,11 +1266,9 @@
 			children = (
 				FCCF84F419266E5F00B76E77 /* BeMotionAppDelegate.h */,
 				FCCF84F519266E5F00B76E77 /* BeMotionAppDelegate.mm */,
-				FCCF84F619266E5F00B76E77 /* GestureControllerAppDelegate.h */,
-				FCCF84F719266E5F00B76E77 /* GestureControllerAppDelegate.mm */,
 				FCCF84F819266E5F00B76E77 /* Images.xcassets */,
 				FCCF84F919266E5F00B76E77 /* Metronome.h */,
-				FCCF84FA19266E5F00B76E77 /* Metronome.m */,
+				FCCF84FA19266E5F00B76E77 /* Metronome.mm */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1358,9 +1353,9 @@
 		FCCF853619266E5F00B76E77 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				FCCF853719266E5F00B76E77 /* GestureControllerHeader.h */,
-				FCCF853819266E5F00B76E77 /* GestureControllerInterface.h */,
-				FCCF853919266E5F00B76E77 /* GestureControllerInterface.mm */,
+				FCCF853719266E5F00B76E77 /* BeMotionHeader.h */,
+				FCCF853819266E5F00B76E77 /* BeMotionInterface.h */,
+				FCCF853919266E5F00B76E77 /* BeMotionInterface.mm */,
 				FCCF853A19266E5F00B76E77 /* Macros.h */,
 			);
 			path = Interface;
@@ -3368,7 +3363,6 @@
 				FCCF8FF4192670B100B76E77 /* juce_graphics.mm in Sources */,
 				FCCF8FF5192670B100B76E77 /* juce_gui_basics.mm in Sources */,
 				FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */,
-				FCCF853C19266E5F00B76E77 /* GestureControllerAppDelegate.mm in Sources */,
 				FCCF856419266E8E00B76E77 /* main.mm in Sources */,
 				FCCF855319266E5F00B76E77 /* EffectSettingsViewController.mm in Sources */,
 				FCCF854519266E5F00B76E77 /* Delay.mm in Sources */,
@@ -3377,12 +3371,12 @@
 				FCCF855219266E5F00B76E77 /* BeMotionViewController.mm in Sources */,
 				FCCF855519266E5F00B76E77 /* GlobalSettingsViewController.mm in Sources */,
 				FCCF854119266E5F00B76E77 /* AudioFileRecord.mm in Sources */,
-				FCCF853E19266E5F00B76E77 /* Metronome.m in Sources */,
+				FCCF853E19266E5F00B76E77 /* Metronome.mm in Sources */,
 				FCCF854419266E5F00B76E77 /* LiveAudioStream.mm in Sources */,
 				FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */,
 				FCCF854C19266E5F00B76E77 /* Wah.mm in Sources */,
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
-				FCCF855919266E5F00B76E77 /* GestureControllerInterface.mm in Sources */,
+				FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */,
 				FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */,
 				FCCF854319266E5F00B76E77 /* AudioMixerPlayer.mm in Sources */,
 				FCCF854019266E5F00B76E77 /* AudioEffectSource.mm in Sources */,
@@ -3524,6 +3518,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/BeMotion-Info.plist";

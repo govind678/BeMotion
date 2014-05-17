@@ -1,19 +1,20 @@
+//==============================================================================
 //
-//  Vibrato.cpp
-//  GestureController
+//  Vibrato.mm
+//  BeMotion
 //
-//  Created by Govinda Ram Pingali on 3/10/14.
+//  Created by Anand Mahadevan and Govinda Ram Pingali on 3/10/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
+//==============================================================================
+
 
 #include "Vibrato.h"
-#include <stdio.h>
-#include <iostream>
 
 CVibrato::CVibrato(int iNumChannels)
 
 {
-	m_fSampleRate = DEFAULT_SAMPLING_RATE;
+	m_fSampleRate = DEFAULT_SAMPLE_RATE;
 	m_iNumChannels = iNumChannels;
     
 	m_fModulatingSample             =   0;
@@ -26,7 +27,7 @@ CVibrato::CVibrato(int iNumChannels)
 	m_CRingBuffer = new CRingBuffer<float>*[m_iNumChannels];
     for (int channel=0; channel<m_iNumChannels; channel++)
     {
-        m_CRingBuffer[channel] = new CRingBuffer<float>( 2 * (MAX_MOD_WIDTH  * m_fSampleRate) / 1000);
+        m_CRingBuffer[channel] = new CRingBuffer<float>( 2 * (VIBRATO_MAX_MOD_WIDTH  * m_fSampleRate) / 1000);
     }
     
     
@@ -118,7 +119,7 @@ void CVibrato::setParam(int parameterID, float value)
             break;
             
         case PARAM_2:
-            m_iModulation_Width_Samples =   value * MAX_MOD_WIDTH;
+            m_iModulation_Width_Samples =   value * VIBRATO_MAX_MOD_WIDTH;
             setModulationWidth_ms(m_iModulation_Width_Samples);
             break;
             
@@ -156,7 +157,7 @@ float CVibrato::getParam(int parameterID)
             break;
             
         case PARAM_2:
-            return (m_iModulation_Width_Samples / MAX_MOD_WIDTH);
+            return (m_iModulation_Width_Samples / VIBRATO_MAX_MOD_WIDTH);
             break;
             
         case PARAM_3:

@@ -1,10 +1,13 @@
+//==============================================================================
 //
 //  Parameter.mm
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 4/8/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
 //
+//==============================================================================
+
 
 #include "Parameter.h"
 

@@ -1,3 +1,4 @@
+//==============================================================================
 //
 //  BeMotionViewController.mm
 //  BeMotion
@@ -5,6 +6,9 @@
 //  Created by Govinda Ram Pingali on 3/8/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//==============================================================================
+
+
 
 #import "BeMotionViewController.h"
 #import "BeMotionAppDelegate.h"
@@ -605,15 +609,6 @@
     }
     
 }
-
-
-
-- (void) beat:(int)beatNo
-{
-    _backendInterface->beat(beatNo);
-}
-
-
 
 
 

@@ -1,17 +1,16 @@
 //==============================================================================
 //
-//  Delay.cpp
-//  GestureController
+//  Delay.mm
+//  BeMotion
 //
 //  Created by Cian O'Brien on 2/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
 
 #include "Delay.h"
-#include <stdio.h>
-#include <iostream>
+
 
 CDelay::CDelay(int numChannels)
 {

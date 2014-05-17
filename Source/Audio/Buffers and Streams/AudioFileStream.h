@@ -1,17 +1,17 @@
 //==============================================================================
 //
 //  AudioFileStream.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
-#ifndef __GestureController__AudioFileStream__
-#define __GestureController__AudioFileStream__
+#ifndef __BeMotion__AudioFileStream__
+#define __BeMotion__AudioFileStream__
 
-#include "GestureControllerHeader.h"
+#include "BeMotionHeader.h"
 #include "Macros.h"
 
 #include "AudioEffectSource.h"
@@ -107,4 +107,4 @@ private:
     
 };
 
-#endif /* defined(__GestureController__AudioFileStream__) */
+#endif /* defined(__BeMotion__AudioFileStream__) */

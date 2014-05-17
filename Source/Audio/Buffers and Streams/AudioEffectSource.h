@@ -1,19 +1,19 @@
 //==============================================================================
 //
 //  AudioEffectSource.h
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 //==============================================================================
 
 
-#ifndef __GestureController__AudioEffectSource__
-#define __GestureController__AudioEffectSource__
+#ifndef __BeMotion__AudioEffectSource__
+#define __BeMotion__AudioEffectSource__
 
 
-#include "GestureControllerHeader.h"
+#include "BeMotionHeader.h"
 #include "Macros.h"
 #include "Parameter.h"
 
@@ -75,4 +75,4 @@ private:
     int m_iEffectID;
 };
 
-#endif /* defined(__GestureController__AudioEffectSource__) */
+#endif /* defined(__BeMotion__AudioEffectSource__) */

@@ -1,7 +1,7 @@
 //==============================================================================
 //
 //  LFO.mm
-//  GestureController
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 2/14/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -159,7 +159,6 @@ float CLFO::getLFOSampleData(int index)
 void CLFO::setSampleRate(float sampleRate)
 {
     m_fSampleRate   = sampleRate;
-    m_fFrequency    = m_fSampleRate / m_kWaveTableSize;
     m_fIncrement    = m_kWaveTableSize * m_fFrequency / m_fSampleRate;
 }
 

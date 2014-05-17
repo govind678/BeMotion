@@ -1,3 +1,13 @@
+//==============================================================================
+//
+//  PeakFilter.mm
+//  BeMotion
+//
+//  Created by Cian O'Brien on 4/22/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
+//
+//==============================================================================
+
 #include "PeakFilter.h"
 
 CPeakFilter::CPeakFilter(int numChannels)

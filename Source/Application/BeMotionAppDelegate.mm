@@ -16,7 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    backendInterface    =   new GestureControllerInterface();
+    backendInterface    =   new BeMotionInterface();
     
     
     
@@ -36,6 +36,7 @@
     
     
     metronome   =   [[Metronome alloc] init];
+    [metronome setBackendReference:backendInterface];
     
     
     return YES;
@@ -70,7 +71,7 @@
     delete backendInterface;
 }
 
-- (GestureControllerInterface*)getBackendReference
+- (BeMotionInterface*)getBackendReference
 {
     return backendInterface;
 }

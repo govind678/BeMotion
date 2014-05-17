@@ -1,10 +1,13 @@
+//==============================================================================
 //
 //  EffectSettingsViewController.mm
-//  SharedLibrary
+//  BeMotion
 //
-//  Created by Anand on 3/9/14.
-//  Copyright (c) 2014 GTCMT. All rights reserved.
+//  Created by Anand Mahadevan on 3/9/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
+//============================================================================
+
 
 #import  "EffectSettingsViewController.h"
 

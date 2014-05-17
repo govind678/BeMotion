@@ -1,7 +1,7 @@
 //==============================================================================
 //
-//  GestureControllerInterface.mm
-//  GestureController
+//  BeMotionInterface.mm
+//  BeMotion
 //
 //  Created by Govinda Ram Pingali on 3/8/14.
 //  Copyright (c) 2014 GTCMT. All rights reserved.
@@ -10,62 +10,60 @@
 
 
 
-#include "GestureControllerInterface.h"
-#include <stdio.h>
-#include <iostream>
+#include "BeMotionInterface.h"
 
 
-GestureControllerInterface::GestureControllerInterface()
+BeMotionInterface::BeMotionInterface()
 {
     audioEngine     =   new AudioEngine();
 }
 
 
-GestureControllerInterface::~GestureControllerInterface()
+BeMotionInterface::~BeMotionInterface()
 {
     delete audioEngine;
 }
 
 
-void GestureControllerInterface::loadAudioFile(int sampleID, NSString *filepath)
+void BeMotionInterface::loadAudioFile(int sampleID, NSString *filepath)
 {
     audioEngine->loadAudioFile(sampleID, String([filepath UTF8String]));
 }
 
-void GestureControllerInterface::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)
+void BeMotionInterface::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)
 {
     audioEngine->setEffectParameter(sampleID, effectPosition, parameterID, value);
 }
 
-void GestureControllerInterface::setSampleParameter(int sampleID, int parameterID, float value)
+void BeMotionInterface::setSampleParameter(int sampleID, int parameterID, float value)
 {
     audioEngine->setSampleParameter(sampleID, parameterID, value);
 }
 
 
-void GestureControllerInterface::addAudioEffect(int sampleID, int effectPosition, int effectID)
+void BeMotionInterface::addAudioEffect(int sampleID, int effectPosition, int effectID)
 {
     audioEngine->addAudioEffect(sampleID, effectPosition, effectID);
 }
 
 
-void GestureControllerInterface::removeAudioEffect(int sampleID, int effectPosition)
+void BeMotionInterface::removeAudioEffect(int sampleID, int effectPosition)
 {
     audioEngine->removeAudioEffect(sampleID, effectPosition);
 }
 
-//void GestureControllerInterface::togglePlaybackRecordingFile(int sampleID, bool toggle)
+//void BeMotionInterface::togglePlaybackRecordingFile(int sampleID, bool toggle)
 //{
 //    audioEngine->toggleRecordingPlaybackSample(sampleID, toggle);
 //}
 
 
-void GestureControllerInterface::setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle)
+void BeMotionInterface::setSampleGestureControlToggle(int sampleID, int parameterID, bool toggle)
 {
     audioEngine->setSampleGestureControlToggle(sampleID, parameterID, toggle);
 }
 
-void GestureControllerInterface::setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle)
+void BeMotionInterface::setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle)
 {
     audioEngine->setEffectGestureControlToggle(sampleID, effectPosition, parameterID, toggle);
 }
@@ -77,55 +75,55 @@ void GestureControllerInterface::setEffectGestureControlToggle(int sampleID, int
 // Start/Stop Playback or Recording
 //==============================================================================
 
-void GestureControllerInterface::startPlayback(int sampleID)
+void BeMotionInterface::startPlayback(int sampleID)
 {
     audioEngine->startPlayback(sampleID);
 }
 
 
-void GestureControllerInterface::stopPlayback(int sampleID)
+void BeMotionInterface::stopPlayback(int sampleID)
 {
     audioEngine->stopPlayback(sampleID);
 }
 
 
-void GestureControllerInterface::startRecording(int sampleID)
+void BeMotionInterface::startRecording(int sampleID)
 {
     audioEngine->startRecordingAudioSample(sampleID);
 }
 
 
-void GestureControllerInterface::stopRecording(int sampleID)
+void BeMotionInterface::stopRecording(int sampleID)
 {
     audioEngine->stopRecordingAudioSample(sampleID);
 }
 
-void GestureControllerInterface::startRecordingOutput(int sampleID)
+void BeMotionInterface::startRecordingOutput(int sampleID)
 {
     audioEngine->startRecordingMaster(sampleID);
 }
 
-void GestureControllerInterface::stopRecordingOutput(int sampleID)
+void BeMotionInterface::stopRecordingOutput(int sampleID)
 {
     audioEngine->stopRecordingMaster(sampleID);
 }
 
-void GestureControllerInterface::beat(int beatNo)
+void BeMotionInterface::beat(int beatNo)
 {
     audioEngine->beat(beatNo);
 }
 
-void GestureControllerInterface::setTempo(float newTempo)
+void BeMotionInterface::setTempo(float newTempo)
 {
     audioEngine->setTempo(newTempo);
 }
 
-void GestureControllerInterface::motionUpdate(float *motion)
+void BeMotionInterface::motionUpdate(float *motion)
 {
     audioEngine->motionUpdate(motion);
 }
 
-void GestureControllerInterface::setCurrentPresetBank(int presetBank)
+void BeMotionInterface::setCurrentPresetBank(int presetBank)
 {
     audioEngine->setCurrentPresetBank(presetBank);
 }
@@ -134,12 +132,12 @@ void GestureControllerInterface::setCurrentPresetBank(int presetBank)
 // Get Effect Type
 //==============================================================================
 
-int GestureControllerInterface::getEffectType(int sampleID, int effectPosition)
+int BeMotionInterface::getEffectType(int sampleID, int effectPosition)
 {
     return audioEngine->getEffectType(sampleID, effectPosition);
 }
 
-int GestureControllerInterface::getCurrentPresetBank()
+int BeMotionInterface::getCurrentPresetBank()
 {
     return audioEngine->getCurrentPresetBank();
 }
@@ -149,34 +147,34 @@ int GestureControllerInterface::getCurrentPresetBank()
 // Get Parameter Value
 //==============================================================================
 
-float GestureControllerInterface::getEffectParameter(int sampleID, int effectPosition, int parameterID)
+float BeMotionInterface::getEffectParameter(int sampleID, int effectPosition, int parameterID)
 {
     float value = audioEngine->getEffectParameter(sampleID, effectPosition, parameterID);
     return value;
 }
 
-float GestureControllerInterface::getSampleParameter(int sampleID, int parameterID)
+float BeMotionInterface::getSampleParameter(int sampleID, int parameterID)
 {
     return audioEngine->getSampleParameter(sampleID, parameterID);
 }
 
 
-bool GestureControllerInterface::getSampleGestureControlToggle(int sampleID, int parameterID)
+bool BeMotionInterface::getSampleGestureControlToggle(int sampleID, int parameterID)
 {
     return audioEngine->getSampleGestureControlToggle(sampleID, parameterID);
 }
 
-bool GestureControllerInterface::getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID)
+bool BeMotionInterface::getEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID)
 {
     return audioEngine->getEffectGestureControlToggle(sampleID, effectPosition, parameterID);
 }
 
-float GestureControllerInterface::getSampleCurrentPlaybackTime(int sampleID)
+float BeMotionInterface::getSampleCurrentPlaybackTime(int sampleID)
 {
     return audioEngine->getSampleCurrentPlaybackTime(sampleID);
 }
 
-bool GestureControllerInterface::getSamplePlaybackStatus(int sampleID)
+bool BeMotionInterface::getSamplePlaybackStatus(int sampleID)
 {
     return audioEngine->getSamplePlaybackStatus(sampleID);
 }
