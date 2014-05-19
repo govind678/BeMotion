@@ -88,7 +88,6 @@
 - (void) updateTimer
 {
     timeInterval_s = 60.0f / (powf(2, MAX_QUANTIZATION) * tempo);
-    
     if (status)
     {
         [self stopClock];

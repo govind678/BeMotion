@@ -11,6 +11,9 @@
 
 #include "AudioMixerPlayer.h"
 
+#include <iostream>
+#include <stdio.h>
+
 
 AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   :   deviceManager(sharedDeviceManager)
 {
@@ -18,7 +21,7 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     
     for (int sampleNo = 0; sampleNo < NUM_SAMPLE_SOURCES; sampleNo++)
     {
-        audioFileStream.add(new AudioFileStream(sampleNo, deviceManager));
+        audioFileStream.add(new AudioFileStream(sampleNo));
         audioMixer.addInputSource(audioFileStream.getUnchecked(sampleNo), false);
     }
     
@@ -232,6 +235,9 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
     }
     
     m_pcLimiter->process(outputChannelData, numSamples, false);
+    
+//    std::cout << m_cTime.getCurrentTime().toMilliseconds() << std::endl;
+//    std::cout << numSamples << std::endl;
 }
 
 

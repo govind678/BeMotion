@@ -26,7 +26,7 @@ class AudioFileStream        :   public AudioSource
     
 public:
     
-    AudioFileStream(int sampleID, AudioDeviceManager& deviceManager);
+    AudioFileStream(int sampleID);
     ~AudioFileStream();
     
     
@@ -77,12 +77,11 @@ private:
     
     void setLooping(bool looping);
     
-    
-    AudioDeviceManager&     deviceManager;
-    
-    AudioFormatManager      formatManager;
-    AudioTransportSource    transportSource;
+    AudioFormatManager              formatManager;
+    AudioTransportSource            transportSource;
     ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
+    
+    AudioSampleBuffer               firstAudioBlock;
     
     OwnedArray<AudioEffectSource>   audioEffectSource;
     Array<bool>                     m_pbBypassStateArray;

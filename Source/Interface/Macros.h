@@ -133,9 +133,12 @@
 # define GRANULAR_MAX_SAMPLES    250000.0
 # define LIMITER_MAX_SAMPLES     5
 
+# define STREAMING_BUFFER_SIZE   32768
+
 # define VIBRATO_MAX_MOD_WIDTH   250
 
 # define DEFAULT_SAMPLE_RATE     44100.0f
+# define NUM_CHANNELS            2
 
 //=========================================================================================
 

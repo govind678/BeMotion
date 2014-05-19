@@ -9,13 +9,20 @@
 //============================================================================
 
 #import  <UIKit/UIKit.h>
+#import  <MediaPlayer/MediaPlayer.h>
+#import  <AVFoundation/AVFoundation.h>
+#import  <CoreMedia/CoreMedia.h>
+
 #include "BeMotionInterface.h"
 #include "Macros.h"
 
 
-@interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, MPMediaPickerControllerDelegate>
 {
     int             m_iCurrentEffectPosition;
+    
+    MPMediaPickerController* mediaPicker;
+    NSURL* currentSongURL;
 
 }
 
@@ -59,11 +66,12 @@
 @property (retain, nonatomic) IBOutlet UIButton *param2GestureObject;
 @property (retain, nonatomic) IBOutlet UIButton *param3GestureObject;
 
+@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 
 - (void) updateSlidersAndLabels;
 
-
+- (IBAction)launchMediaLibrary:(UIButton *)sender;
 
 
 

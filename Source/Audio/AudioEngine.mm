@@ -16,6 +16,7 @@
 AudioEngine::AudioEngine()
 {
     sharedAudioDeviceManager.initialise(NUM_INPUT_CHANNELS, NUM_OUTPUT_CHANNELS, 0, true, String::empty, 0);
+    sharedAudioDeviceManager.getAudioDeviceSetup(deviceSetup);
     
     m_bLiveAudioThreadRunning   =   false;
     m_iCurrentPresetBankLoaded  =   PRESET_BANK_1;

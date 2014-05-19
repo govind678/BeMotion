@@ -91,6 +91,8 @@ private:
     bool                                m_bRecording;
     
     float                               m_fTempo;
+    
+    Time                                m_cTime;
 };
 
 

@@ -91,7 +91,8 @@ private:
     Array<bool>         m_pbRecordingToggle;
     
     
-    AudioDeviceManager sharedAudioDeviceManager;
+    AudioDeviceManager                      sharedAudioDeviceManager;
+    AudioDeviceManager::AudioDeviceSetup    deviceSetup;
     
     bool m_bLiveAudioThreadRunning;
     int  m_iCurrentPresetBankLoaded;

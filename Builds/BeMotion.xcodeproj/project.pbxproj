@@ -99,6 +99,9 @@
 		FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF8E0819266F7F00B76E77 /* juce_events.mm */; };
 		FCCF8FF919267F8B00B76E77 /* MainStoryboard 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCCF852419266E5F00B76E77 /* MainStoryboard 2.storyboard */; };
 		FCCF8FFF1926DA6C00B76E77 /* LFO.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF8FFE1926DA6C00B76E77 /* LFO.mm */; };
+		FCF660BF192976CE006B7CB5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */; };
+		FCF660C11929DE23006B7CB5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660C01929DE23006B7CB5 /* AVFoundation.framework */; };
+		FCF660C31929E7AF006B7CB5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1181,6 +1184,9 @@
 		FCCF8FED19266FC900B76E77 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		FCCF8FFD1926DA6C00B76E77 /* LFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFO.h; sourceTree = "<group>"; };
 		FCCF8FFE1926DA6C00B76E77 /* LFO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LFO.mm; sourceTree = "<group>"; };
+		FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		FCF660C01929DE23006B7CB5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1188,6 +1194,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCF660C31929E7AF006B7CB5 /* CoreMedia.framework in Frameworks */,
+				FCF660C11929DE23006B7CB5 /* AVFoundation.framework in Frameworks */,
+				FCF660BF192976CE006B7CB5 /* MediaPlayer.framework in Frameworks */,
 				FCCF8FEE19266FC900B76E77 /* CoreText.framework in Frameworks */,
 				FCCF8FEC19266FB200B76E77 /* AudioToolbox.framework in Frameworks */,
 				FCCF8FEA19266FAA00B76E77 /* CoreMotion.framework in Frameworks */,
@@ -1236,6 +1245,9 @@
 		FCCF84B619266AC500B76E77 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */,
+				FCF660C01929DE23006B7CB5 /* AVFoundation.framework */,
+				FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */,
 				FCCF8FED19266FC900B76E77 /* CoreText.framework */,
 				FCCF8FEB19266FB200B76E77 /* AudioToolbox.framework */,
 				FCCF8FE919266FAA00B76E77 /* CoreMotion.framework */,

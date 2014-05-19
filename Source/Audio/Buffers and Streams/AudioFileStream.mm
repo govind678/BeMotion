@@ -11,8 +11,7 @@
 #include "AudioFileStream.h"
 
 
-AudioFileStream::AudioFileStream(int sampleID, AudioDeviceManager& sharedDeviceManager)    :    deviceManager(sharedDeviceManager),
-                                                                                                thread("Sample Playback No. " + String(sampleID))
+AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. " + String(sampleID))
 {
     
     m_iSampleID =   sampleID;
@@ -78,6 +77,8 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
 {
     m_sCurrentFilePath  =   audioFilePath;
     
+    std::cout << "URL: " << audioFilePath << std::endl;
+    
     transportSource.stop();
     transportSource.setSource(nullptr);
     
@@ -91,13 +92,21 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
         currentAudioFileSource = new AudioFormatReaderSource (reader, true);
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
-        transportSource.setSource(currentAudioFileSource, 32768, &thread, reader->sampleRate);
+        transportSource.setSource(currentAudioFileSource, STREAMING_BUFFER_SIZE, &thread, reader->sampleRate);
         transportSource.setGain(GAIN_SCALE);
         
         if (m_iSampleID != 4)
         {
             currentAudioFileSource->setLooping(true);
+            
+            firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
+            reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
         }
+    }
+    
+    else
+    {
+        std::cout << "Error loading audio file!" << std::endl;
     }
 }
 
@@ -187,6 +196,20 @@ void AudioFileStream::releaseResources()
 
 void AudioFileStream::getNextAudioBlock(const AudioSourceChannelInfo &audioSourceChannelInfo)
 {
+//    if (m_iButtonMode != MODE_BEATREPEAT)
+//    {
+//        transportSource.getNextAudioBlock(audioSourceChannelInfo);
+//        processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
+//    }
+//    
+//    else
+//    {
+//        for (int channel = 0; channel < 2; channel++)
+//        {
+//            audioSourceChannelInfo.buffer->addFrom(channel, 0, firstAudioBlock, channel, 0, audioSourceChannelInfo.numSamples);
+//        }
+//    }
+    
     transportSource.getNextAudioBlock(audioSourceChannelInfo);
     processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
 }
@@ -421,7 +444,6 @@ float AudioFileStream::getCurrentPlaybackTime()
 
 void AudioFileStream::beat(int beatNum)
 {
-    
     m_iBeat = beatNum % m_iQuantization;
     
     if (m_iButtonMode == MODE_BEATREPEAT)

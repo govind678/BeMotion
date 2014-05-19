@@ -67,6 +67,21 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    
+    // Delete Media Selected Copies, if any
+    for (int i=0; i < 4; i++)
+    {
+        NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentPath = [searchPaths lastObject];
+        NSString *filePath = [NSString stringWithFormat:@"%@/Media%i.wav", documentPath, i];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        {
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+        }
+    }
+    
     [metronome dealloc];
     delete backendInterface;
 }
