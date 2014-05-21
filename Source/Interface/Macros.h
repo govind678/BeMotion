@@ -87,6 +87,7 @@
 # define PRESET_BANK_4           3
 # define PRESET_BANK_5           4
 # define PRESET_BANK_6           5
+# define PRESET_BANK_7           6
 
 
 //========== Sample Bank default Tempos ===========//
@@ -96,6 +97,7 @@
 # define BANK4_TEMPO            100.0f
 # define BANK5_TEMPO            200.0f
 # define BANK6_TEMPO            180.0f
+# define BANK7_TEMPO            120.0f
 
 
 

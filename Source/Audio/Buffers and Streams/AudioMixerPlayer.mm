@@ -57,9 +57,9 @@ AudioMixerPlayer::~AudioMixerPlayer()
 
 
 
-void AudioMixerPlayer::loadAudioFile(int sampleID, String filePath)
+int AudioMixerPlayer::loadAudioFile(int sampleID, String filePath)
 {    
-    audioFileStream.getUnchecked(sampleID)->loadAudioFile(filePath);
+    return (audioFileStream.getUnchecked(sampleID)->loadAudioFile(filePath));
 }
 
 

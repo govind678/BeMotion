@@ -102,6 +102,11 @@
 		FCF660BF192976CE006B7CB5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */; };
 		FCF660C11929DE23006B7CB5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660C01929DE23006B7CB5 /* AVFoundation.framework */; };
 		FCF660C31929E7AF006B7CB5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */; };
+		FCF660D4192CFCA8006B7CB5 /* MachineTransformations0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCF660CF192CFCA8006B7CB5 /* MachineTransformations0.wav */; };
+		FCF660D5192CFCA8006B7CB5 /* MachineTransformations1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCF660D0192CFCA8006B7CB5 /* MachineTransformations1.wav */; };
+		FCF660D6192CFCA8006B7CB5 /* MachineTransformations2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCF660D1192CFCA8006B7CB5 /* MachineTransformations2.wav */; };
+		FCF660D7192CFCA8006B7CB5 /* MachineTransformations3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCF660D2192CFCA8006B7CB5 /* MachineTransformations3.wav */; };
+		FCF660D8192CFCA8006B7CB5 /* MachineTransformations4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCF660D3192CFCA8006B7CB5 /* MachineTransformations4.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1187,6 +1192,11 @@
 		FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		FCF660C01929DE23006B7CB5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FCF660CF192CFCA8006B7CB5 /* MachineTransformations0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations0.wav; sourceTree = "<group>"; };
+		FCF660D0192CFCA8006B7CB5 /* MachineTransformations1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations1.wav; sourceTree = "<group>"; };
+		FCF660D1192CFCA8006B7CB5 /* MachineTransformations2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations2.wav; sourceTree = "<group>"; };
+		FCF660D2192CFCA8006B7CB5 /* MachineTransformations3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations3.wav; sourceTree = "<group>"; };
+		FCF660D3192CFCA8006B7CB5 /* MachineTransformations4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations4.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1398,6 +1408,7 @@
 		FCCF856619266ED200B76E77 /* Audio Samples */ = {
 			isa = PBXGroup;
 			children = (
+				FCF660C4192CFAB8006B7CB5 /* Machine Transformations 120 */,
 				FCCF856719266ED200B76E77 /* Breakbeat 140 */,
 				FCCF856D19266ED200B76E77 /* DubBeat 140 */,
 				FCCF857319266ED200B76E77 /* Electronic Kit 120 */,
@@ -3213,6 +3224,18 @@
 			path = windows;
 			sourceTree = "<group>";
 		};
+		FCF660C4192CFAB8006B7CB5 /* Machine Transformations 120 */ = {
+			isa = PBXGroup;
+			children = (
+				FCF660CF192CFCA8006B7CB5 /* MachineTransformations0.wav */,
+				FCF660D0192CFCA8006B7CB5 /* MachineTransformations1.wav */,
+				FCF660D1192CFCA8006B7CB5 /* MachineTransformations2.wav */,
+				FCF660D2192CFCA8006B7CB5 /* MachineTransformations3.wav */,
+				FCF660D3192CFCA8006B7CB5 /* MachineTransformations4.wav */,
+			);
+			path = "Machine Transformations 120";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3311,6 +3334,7 @@
 				FCCF85C619266ED200B76E77 /* MetronomeUp512.png in Resources */,
 				FCCF85CC19266ED200B76E77 /* SettingsUp512.png in Resources */,
 				FCCF85A619266ED200B76E77 /* DubBeat3.wav in Resources */,
+				FCF660D7192CFCA8006B7CB5 /* MachineTransformations3.wav in Resources */,
 				FCCF85B419266ED200B76E77 /* Indian_Percussion2.wav in Resources */,
 				FCCF85CA19266ED200B76E77 /* RecordUp512.png in Resources */,
 				FCCF85B319266ED200B76E77 /* Indian_Percussion1.wav in Resources */,
@@ -3329,12 +3353,14 @@
 				FCCF85BA19266ED200B76E77 /* Skies3.wav in Resources */,
 				FCCF859F19266ED200B76E77 /* Breakbeat1.wav in Resources */,
 				FCCF85BF19266ED200B76E77 /* Electronic Kit.png in Resources */,
+				FCF660D5192CFCA8006B7CB5 /* MachineTransformations1.wav in Resources */,
 				FCCF859E19266ED200B76E77 /* Breakbeat0.wav in Resources */,
 				FCCF85A519266ED200B76E77 /* DubBeat2.wav in Resources */,
 				FCCF85CB19266ED200B76E77 /* SettingsDown512.png in Resources */,
 				FCCF85B919266ED200B76E77 /* Skies2.wav in Resources */,
 				FCCF85C119266ED200B76E77 /* Gesture.png in Resources */,
 				FCCF85AF19266ED200B76E77 /* Embryo2.wav in Resources */,
+				FCF660D6192CFCA8006B7CB5 /* MachineTransformations2.wav in Resources */,
 				FCCF85CD19266ED200B76E77 /* Skies.png in Resources */,
 				FCCF85BC19266ED200B76E77 /* Breakbeat.png in Resources */,
 				FCCF85AA19266ED200B76E77 /* E_Kit2.wav in Resources */,
@@ -3344,6 +3370,8 @@
 				FCCF853D19266E5F00B76E77 /* Images.xcassets in Resources */,
 				FCCF85AE19266ED200B76E77 /* Embryo1.wav in Resources */,
 				FCCF85B019266ED200B76E77 /* Embryo3.wav in Resources */,
+				FCF660D8192CFCA8006B7CB5 /* MachineTransformations4.wav in Resources */,
+				FCF660D4192CFCA8006B7CB5 /* MachineTransformations0.wav in Resources */,
 				FCCF85BE19266ED200B76E77 /* Dubstep.png in Resources */,
 				FCCF85BB19266ED200B76E77 /* Skies4.wav in Resources */,
 				FCCF856319266E8E00B76E77 /* InfoPlist.strings in Resources */,

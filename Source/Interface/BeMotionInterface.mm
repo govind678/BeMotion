@@ -25,9 +25,9 @@ BeMotionInterface::~BeMotionInterface()
 }
 
 
-void BeMotionInterface::loadAudioFile(int sampleID, NSString *filepath)
+int BeMotionInterface::loadAudioFile(int sampleID, NSString *filepath)
 {
-    audioEngine->loadAudioFile(sampleID, String([filepath UTF8String]));
+    return (audioEngine->loadAudioFile(sampleID, String([filepath UTF8String])));
 }
 
 void BeMotionInterface::setEffectParameter(int sampleID, int effectPosition, int parameterID, float value)

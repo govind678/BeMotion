@@ -410,17 +410,15 @@
     [self loadMediaFile];
     
     
-    
     // Dismiss media picker view
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
     
     
-//    [[self view] setAlpha:0.4f];
-//    [activityIndicator startAnimating];
-    
-    
     // Tell whoever's listening that we're done with the media picker
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mediaPickerFinished" object:nil];
+    
+    
+    [self startCopyingMediaFile];
 
 }
 
@@ -539,27 +537,36 @@
             }
         }
         
-        [fileWriter finishWriting];
+        [fileWriter finishWritingWithCompletionHandler:^{
+            NSLog(@"Finish Copying Audio");
+            [self stopCopyingMediaFile];
+            
+            
+            //--- Load Backend ---//
+            if( (_backEndInterface->loadAudioFile(m_iCurrentSampleID, outputAudioPath)) != 0)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                                message:@"Retry Loading or wait after selecting media"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+            }
+
+            
+        }];
+        
+        
         [fileReader release ];
         [fileWriter release ];
-        
-        NSLog(@"Finish Copying Audio");
-        
-        
-        //--- Load Backend ---//
-        _backEndInterface->loadAudioFile(m_iCurrentSampleID, outputAudioPath);
-        
-        
-//        [[self view] setAlpha:1.0f];
-//        [activityIndicator stopAnimating];
-
-        
         
     }];
     
     
     
     dispatch_release(queue);
+    
 }
 
 
@@ -576,6 +583,20 @@
     }
     
     return filePath;
+}
+
+
+- (void) startCopyingMediaFile
+{
+//    [[self view] setAlpha:0.4f];
+//    [activityIndicator startAnimating];
+}
+
+
+- (void) stopCopyingMediaFile
+{
+//    [[self view] setAlpha:1.0f];
+//    [activityIndicator stopAnimating];
 }
 
 

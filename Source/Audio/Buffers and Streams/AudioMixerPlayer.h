@@ -36,7 +36,7 @@ public:
     void audioDeviceStopped() override;
     
     
-    void loadAudioFile(int sampleID, String filePath);
+    int loadAudioFile(int sampleID, String filePath);
     
     void startPlayback(int sampleID);
     void stopPlayback(int sampleID);

@@ -18,7 +18,7 @@
 @implementation GlobalSettingsViewController
 
 @synthesize tempoLabel, tempoSlider;
-@synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6;
+@synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6, presetButton7;
 
 
 
@@ -123,6 +123,13 @@
 }
 
 
+- (IBAction)presetClicked7:(UIButton *)sender
+{
+    m_iCurrentPresetBank    =   6;
+    [self updatePresetButton];
+}
+
+
 
 
 - (void) updatePresetButton
@@ -145,6 +152,7 @@
             [presetButton4 setAlpha:0.2f];
             [presetButton5 setAlpha:0.2f];
             [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK1_TEMPO;
             
@@ -165,6 +173,7 @@
             [presetButton4 setAlpha:0.2f];
             [presetButton5 setAlpha:0.2f];
             [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK2_TEMPO;
             
@@ -185,6 +194,7 @@
             [presetButton4 setAlpha:0.2f];
             [presetButton5 setAlpha:0.2f];
             [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK3_TEMPO;
             
@@ -204,6 +214,7 @@
             [presetButton4 setAlpha:1.0f];
             [presetButton5 setAlpha:0.2f];
             [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK4_TEMPO;
             
@@ -224,6 +235,7 @@
             [presetButton4 setAlpha:0.2f];
             [presetButton5 setAlpha:1.0f];
             [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK5_TEMPO;
             
@@ -244,8 +256,30 @@
             [presetButton4 setAlpha:0.2f];
             [presetButton5 setAlpha:0.2f];
             [presetButton6 setAlpha:1.0f];
+            [presetButton7 setAlpha:0.2f];
             
             m_iTempo = BANK6_TEMPO;
+            
+            break;
+            
+            
+        case PRESET_BANK_7:
+            
+            sample1Path = [[NSBundle mainBundle] pathForResource:@"MachineTransformations0" ofType:@"wav"];
+            sample2Path = [[NSBundle mainBundle] pathForResource:@"MachineTransformations1" ofType:@"wav"];
+            sample3Path = [[NSBundle mainBundle] pathForResource:@"MachineTransformations2" ofType:@"wav"];
+            sample4Path = [[NSBundle mainBundle] pathForResource:@"MachineTransformations3" ofType:@"wav"];
+            sample5Path = [[NSBundle mainBundle] pathForResource:@"MachineTransformations4" ofType:@"wav"];
+            
+            [presetButton1 setAlpha:0.2f];
+            [presetButton2 setAlpha:0.2f];
+            [presetButton3 setAlpha:0.2f];
+            [presetButton4 setAlpha:0.2f];
+            [presetButton5 setAlpha:0.2f];
+            [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:1.0f];
+            
+            m_iTempo = BANK7_TEMPO;
             
             break;
             
@@ -254,11 +288,64 @@
     }
     
     
-    _backendInterface->loadAudioFile(0, sample1Path);
-    _backendInterface->loadAudioFile(1, sample2Path);
-    _backendInterface->loadAudioFile(2, sample3Path);
-    _backendInterface->loadAudioFile(3, sample4Path);
-    _backendInterface->loadAudioFile(4, sample5Path);
+    if( (_backendInterface->loadAudioFile(0, sample1Path)) != 0 )
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                        message:@"Retry loading"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+    }
+    
+    if( (_backendInterface->loadAudioFile(1, sample2Path)) != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                        message:@"Retry loading"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    
+    if( (_backendInterface->loadAudioFile(2, sample3Path)) != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                        message:@"Retry loading"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    
+    
+    if( (_backendInterface->loadAudioFile(3, sample4Path)) != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                        message:@"Retry loading"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    
+    
+    if( (_backendInterface->loadAudioFile(4, sample5Path)) != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
+                                                        message:@"Retry loading"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+
     
     
     [_metronome setTempo:m_iTempo];

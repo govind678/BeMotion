@@ -48,6 +48,7 @@
 - (IBAction)presetClicked4:(UIButton *)sender;
 - (IBAction)presetClicked5:(UIButton *)sender;
 - (IBAction)presetClicked6:(UIButton *)sender;
+- (IBAction)presetClicked7:(UIButton *)sender;
 
 
 @property (retain, nonatomic) IBOutlet UIButton *presetButton1;
@@ -56,6 +57,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *presetButton4;
 @property (retain, nonatomic) IBOutlet UIButton *presetButton5;
 @property (retain, nonatomic) IBOutlet UIButton *presetButton6;
+@property (retain, nonatomic) IBOutlet UIButton *presetButton7;
 
 
 

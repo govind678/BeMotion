@@ -15,12 +15,16 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
 {
     
     m_iSampleID =   sampleID;
+    
     m_bAudioCurrentlyPlaying    =   false;
+    m_bPlayingFromMemory        =   false;
+    m_iSamplesRead              =   0;
     
     m_iButtonMode               =   MODE_LOOP;
     m_iQuantization             =   QUANTIZATION_LEVELS - 1;
     m_iBeat                     =   0;
     m_fGain                     =   1.0f;
+    m_fSampleRate               =   DEFAULT_SAMPLE_RATE;
     
     transportSource.setSource(nullptr);
     formatManager.registerBasicFormats();
@@ -73,11 +77,9 @@ AudioFileStream::~AudioFileStream()
 
 
 
-void AudioFileStream::loadAudioFile(String audioFilePath)
+int AudioFileStream::loadAudioFile(String audioFilePath)
 {
     m_sCurrentFilePath  =   audioFilePath;
-    
-    std::cout << "URL: " << audioFilePath << std::endl;
     
     transportSource.stop();
     transportSource.setSource(nullptr);
@@ -90,9 +92,10 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
     if (reader != nullptr)
     {
         currentAudioFileSource = new AudioFormatReaderSource (reader, true);
+        m_fSampleRate = reader->sampleRate;
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
-        transportSource.setSource(currentAudioFileSource, STREAMING_BUFFER_SIZE, &thread, reader->sampleRate);
+        transportSource.setSource(currentAudioFileSource, STREAMING_BUFFER_SIZE, &thread, m_fSampleRate);
         transportSource.setGain(GAIN_SCALE);
         
         if (m_iSampleID != 4)
@@ -102,11 +105,13 @@ void AudioFileStream::loadAudioFile(String audioFilePath)
             firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
             reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
         }
+        
+        return 0;
     }
     
     else
     {
-        std::cout << "Error loading audio file!" << std::endl;
+        return 1;
     }
 }
 
@@ -210,8 +215,42 @@ void AudioFileStream::getNextAudioBlock(const AudioSourceChannelInfo &audioSourc
 //        }
 //    }
     
+//    if (m_bAudioCurrentlyPlaying)
+//    {
+//        if (m_bPlayingFromMemory)
+//        {
+//            for (int channel = 0; channel < NUM_CHANNELS; channel++)
+//            {
+//                audioSourceChannelInfo.buffer->addFrom(channel, 0, firstAudioBlock, channel, m_iSamplesRead, audioSourceChannelInfo.numSamples);
+//            }
+//            
+//            m_iSamplesRead += audioSourceChannelInfo.numSamples;
+//            
+//            if (m_iSamplesRead >= STREAMING_BUFFER_SIZE)
+//            {
+//                m_bPlayingFromMemory = false;
+//                m_iSamplesRead = 0;
+//                internal_startPlayback();
+//            }
+//        }
+//        
+//        else
+//        {
+//            transportSource.getNextAudioBlock(audioSourceChannelInfo);
+//        }
+//
+//        processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
+//    }
+    
+    
+//    else
+//    {
+//        audioSourceChannelInfo.buffer->clear();
+//    }
+    
     transportSource.getNextAudioBlock(audioSourceChannelInfo);
     processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
+
 }
 
 
@@ -247,8 +286,9 @@ void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
 void AudioFileStream::startPlayback()
 {
     m_bAudioCurrentlyPlaying    =   true;
+//    m_bPlayingFromMemory        =   true;
     
-    if (m_iButtonMode != MODE_BEATREPEAT)
+    if ((m_iButtonMode != MODE_BEATREPEAT))
     {
         transportSource.setPosition(0);
         transportSource.start();
@@ -258,6 +298,8 @@ void AudioFileStream::startPlayback()
 void AudioFileStream::stopPlayback()
 {
     m_bAudioCurrentlyPlaying    =   false;
+//    m_bPlayingFromMemory        =   false;
+//    m_iSamplesRead = 0;
     transportSource.stop();
 }
 
@@ -266,6 +308,14 @@ void AudioFileStream::setLooping(bool looping)
 {
     currentAudioFileSource->setLooping(looping);
 }
+
+
+void AudioFileStream::internal_startPlayback()
+{
+//    transportSource.setNextReadPosition(STREAMING_BUFFER_SIZE);
+//    transportSource.start();
+}
+
 
 
 

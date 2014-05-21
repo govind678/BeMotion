@@ -108,10 +108,10 @@ bool AudioEngine::isLiveAudioRunning()
 
 
 
-void AudioEngine::loadAudioFile(int sampleID, String filePath)
+int AudioEngine::loadAudioFile(int sampleID, String filePath)
 {
-    audioMixer->loadAudioFile(sampleID, filePath);
     playbackFilePathArray.set(sampleID, filePath);
+    return (audioMixer->loadAudioFile(sampleID, filePath));
 }
 
 

@@ -30,7 +30,7 @@ public:
     ~AudioFileStream();
     
     
-    void loadAudioFile(String audioFilePath);
+    int loadAudioFile(String audioFilePath);
     
     void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override;
     void getNextAudioBlock (const AudioSourceChannelInfo& audioSourceChannelInfo) override;
@@ -77,6 +77,8 @@ private:
     
     void setLooping(bool looping);
     
+    void internal_startPlayback();
+    
     AudioFormatManager              formatManager;
     AudioTransportSource            transportSource;
     ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
@@ -96,8 +98,13 @@ private:
     OwnedArray<Parameter>           m_pcParameter;
     
     int                             m_iSampleID;
+    float                           m_fSampleRate;
     String                          m_sCurrentFilePath;
+    
     bool                            m_bAudioCurrentlyPlaying;
+    bool                            m_bPlayingFromMemory;
+    int                             m_iSamplesRead;
+    
     int                             m_iQuantization;
     int                             m_iButtonMode;
     
