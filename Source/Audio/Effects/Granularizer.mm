@@ -73,8 +73,9 @@ void CGranularizer::setParam(int type, float value)
 	{
 		
 		case PARAM_1:
-			if (0.03f < value && value < 0.97f)
+			if (0.1f <= value && value < 0.97f)
             {
+
 				m_fGrainTime	= value;
 				m_fGrainSize    = (1.0 - m_fGrainTime) * 0.2 + m_fGrainTime;
             }
