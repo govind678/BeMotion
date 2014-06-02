@@ -111,7 +111,6 @@
     
     
     
-    
     //--- Initialize Timer for Progress Bar Updates ---//
     [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
                                      target:self
@@ -158,23 +157,23 @@
             switch (i)
             {
                 case 0:
-                    sampleButton0.alpha             =   1.0f;
-                    progressBar0.alpha              =   1.0f;
+                    [sampleButton0 setAlpha:1.0f];
+                    [progressBar0 setAlpha:1.0f];
                     break;
                     
                 case 1:
-                    sampleButton1.alpha             =   1.0f;
-                    progressBar1.alpha              =   1.0f;
+                    [sampleButton1 setAlpha:1.0f];
+                    [progressBar1 setAlpha:1.0f];
                     break;
                     
                 case 2:
-                    sampleButton2.alpha             =   1.0f;
-                    progressBar2.alpha              =   1.0f;
+                    [sampleButton2 setAlpha:1.0f];
+                    [progressBar2 setAlpha:1.0f];
                     break;
                     
                 case 3:
-                    sampleButton3.alpha             =   1.0f;
-                    progressBar3.alpha              =   1.0f;
+                    [sampleButton3 setAlpha:1.0f];
+                    [progressBar3 setAlpha:1.0f];
                     break;
                     
                     
@@ -190,23 +189,23 @@
             switch (i)
             {
                 case 0:
-                    sampleButton0.alpha             =   0.2f;
-                    progressBar0.alpha              =   0.2f;
+                    [sampleButton0 setAlpha:0.2f];
+                    [progressBar0 setAlpha:0.2f];
                     break;
                     
                 case 1:
-                    sampleButton1.alpha             =   0.2f;
-                    progressBar1.alpha              =   0.2f;
+                    [sampleButton1 setAlpha:0.2f];
+                    [progressBar1 setAlpha:0.2f];
                     break;
                     
                 case 2:
-                    sampleButton2.alpha             =   0.2f;
-                    progressBar2.alpha              =   0.2f;
+                    [sampleButton2 setAlpha:0.2f];
+                    [progressBar2 setAlpha:0.2f];
                     break;
                     
                 case 3:
-                    sampleButton3.alpha             =   0.2f;
-                    progressBar3.alpha              =   0.2f;
+                    [sampleButton3 setAlpha:0.2f];
+                    [progressBar3 setAlpha:0.2f];
                     break;
                     
                     
@@ -668,8 +667,10 @@
         }
     }
     
-    sender.alpha = 1.0f;
-    progressBar0.alpha  = 1.0f;
+    [sampleButton0 setAlpha:1.0f];
+    [progressBar0 setAlpha:1.0f];
+//    sender.alpha = 1.0f;
+//    progressBar0.alpha  = 1.0f;
 }
 
 - (IBAction)redMasterRecord:(UIButton *)sender
@@ -739,6 +740,8 @@
     sender.alpha = 1.0f;
     progressBar1.alpha  = 1.0f;
 }
+
+
 
 - (IBAction)blueMasterRecord:(UIButton *)sender
 {

@@ -39,6 +39,7 @@
 
 
 - (void) updatePresetButton;
+- (void) loadPresetBank;
 
 //--- Preset Load Buttons ---//
 
