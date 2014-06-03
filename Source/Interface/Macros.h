@@ -15,7 +15,11 @@
 
 //=================================== ID Macros ===========================================
 
+//=========== GUI ====================//
+
 # define NUM_BUTTONS             4
+# define BUTTON_OFF_ALPHA        0.25f
+# define SETTINGS_ICON_RADIUS    55.0f
 
 
 //=========== Effect IDs ============//

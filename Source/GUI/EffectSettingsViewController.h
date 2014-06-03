@@ -26,10 +26,8 @@
 
 }
 
-@property (nonatomic, assign) BeMotionInterface* backEndInterface;
-@property (nonatomic, assign) int  m_iCurrentSampleID;
-
-
+@property (nonatomic, assign) BeMotionInterface* backendInterface;
+@property (nonatomic, assign) int  currentSampleID;
 @property (nonatomic, retain) NSArray *effectNames;
 
 

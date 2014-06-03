@@ -26,9 +26,10 @@
 @implementation BeMotionViewController
 
 @synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
-@synthesize masterRecord0, masterRecord1, masterRecord2, masterRecord3;
-@synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
 @synthesize progressBar0, progressBar1, progressBar2, progressBar3;
+@synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
+@synthesize settingsButton0, settingsButton1, settingsButton2, settingsButton3;
+@synthesize metronomeButton, settingsButton;
 
 
 
@@ -56,6 +57,8 @@
     m_pbAudioCurrentlyRecording =   new bool [NUM_BUTTONS];
     
     m_pbPlaybackStatus          =   new bool [NUM_BUTTONS];
+    m_piFingerDownStatus        =   new int [NUM_BUTTONS];
+    m_pbFingerMoveStatus        =   new bool [NUM_BUTTONS];
     
     
     
@@ -67,48 +70,37 @@
         m_pbAudioRecordToggle[i]        =   false;
         m_pbAudioCurrentlyRecording[i]  =   false;
         m_pbPlaybackStatus[i]           =   false;
+        m_piFingerDownStatus[i]         =   0;
+        m_pbFingerMoveStatus[i]         =   false;
     }
     
     
+    m_bSettingsToggle                   =   true;
     
-    m_iButtonMode                       = MODE_PLAYBACK; // playback mode by default
     
     
     
     //--- Turn off Metronome Bars ---//
-    metroBar0.alpha                 =   0.2;
-    metroBar1.alpha                 =   0.2;
-    metroBar2.alpha                 =   0.2;
-    metroBar3.alpha                 =   0.2;
-    metroBar4.alpha                 =   0.2;
-    metroBar5.alpha                 =   0.2;
-    metroBar6.alpha                 =   0.2;
-    metroBar7.alpha                 =   0.2;
+    [metroBar0 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+    [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
     
     
     
     //--- Turn off Sample and Progress Buttons ---//
-    sampleButton0.alpha             =   0.2f;
-    sampleButton1.alpha             =   0.2f;
-    sampleButton2.alpha             =   0.2f;
-    sampleButton3.alpha             =   0.2f;
-    
-    progressBar0.alpha              =   0.2f;
-    progressBar1.alpha              =   0.2f;
-    progressBar2.alpha              =   0.2f;
-    progressBar3.alpha              =   0.2f;
+    [progressBar0 setAlpha:BUTTON_OFF_ALPHA];
+    [progressBar1 setAlpha:BUTTON_OFF_ALPHA];
+    [progressBar2 setAlpha:BUTTON_OFF_ALPHA];
+    [progressBar3 setAlpha:BUTTON_OFF_ALPHA];
     
     
-    
-    
-    
-    //--- Turn off Master Record Buttons ---//
-    masterRecord0.alpha             =   0.2;
-    masterRecord1.alpha             =   0.2;
-    masterRecord2.alpha             =   0.2;
-    masterRecord3.alpha             =   0.2;
-    
-    
+    [metronomeButton setAlpha:BUTTON_OFF_ALPHA];
+    [settingsButton setAlpha:BUTTON_OFF_ALPHA];
     
     
     //--- Initialize Timer for Progress Bar Updates ---//
@@ -139,13 +131,53 @@
     motion  =   new float [NUM_MOTION_PARAMS];
     
     
+    
+    
+    //--- Set Background Images ---//
+    
+    [[self view] setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
+    
+    [sampleButton0 setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton0.png"]]];
+    [sampleButton1 setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton1.png"]]];
+    [sampleButton2 setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton2.png"]]];
+    [sampleButton3 setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton3.png"]]];
+
+    [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+    [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+    [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+    [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+
+    
+    
+    [settingsButton0 setButtonID:0];
+    [settingsButton0 setUserInteractionEnabled:NO];
+    [settingsButton0 setHidden:YES];
+    [settingsButton0 setDelegate:self];
+    [settingsButton0 init];
+    
+    [settingsButton1 setButtonID:1];
+    [settingsButton1 setUserInteractionEnabled:NO];
+    [settingsButton1 setHidden:YES];
+    [settingsButton1 setDelegate:self];
+    [settingsButton1 init];
+    
+    [settingsButton2 setButtonID:2];
+    [settingsButton2 setUserInteractionEnabled:NO];
+    [settingsButton2 setHidden:YES];
+    [settingsButton2 setDelegate:self];
+    [settingsButton2 init];
+    
+    [settingsButton3 setButtonID:3];
+    [settingsButton3 setUserInteractionEnabled:NO];
+    [settingsButton3 setHidden:YES];
+    [settingsButton3 setDelegate:self];
+    [settingsButton3 init];
 }
 
 
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    
     //--- Update Sample Buttons and Progress Bars ---//
     
     for (int i = 0; i< NUM_BUTTONS; i++)
@@ -157,23 +189,23 @@
             switch (i)
             {
                 case 0:
-                    [sampleButton0 setAlpha:1.0f];
-                    [progressBar0 setAlpha:1.0f];
+                    [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar0 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 1:
-                    [sampleButton1 setAlpha:1.0f];
-                    [progressBar1 setAlpha:1.0f];
+                    [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar1 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 2:
-                    [sampleButton2 setAlpha:1.0f];
-                    [progressBar2 setAlpha:1.0f];
+                    [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar2 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 3:
-                    [sampleButton3 setAlpha:1.0f];
-                    [progressBar3 setAlpha:1.0f];
+                    [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar3 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                     
@@ -189,23 +221,23 @@
             switch (i)
             {
                 case 0:
-                    [sampleButton0 setAlpha:0.2f];
-                    [progressBar0 setAlpha:0.2f];
+                    [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar0 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 1:
-                    [sampleButton1 setAlpha:0.2f];
-                    [progressBar1 setAlpha:0.2f];
+                    [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar1 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 2:
-                    [sampleButton2 setAlpha:0.2f];
-                    [progressBar2 setAlpha:0.2f];
+                    [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar2 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                 case 3:
-                    [sampleButton3 setAlpha:0.2f];
-                    [progressBar3 setAlpha:0.2f];
+                    [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+                    [progressBar3 setAlpha:BUTTON_OFF_ALPHA];
                     break;
                     
                     
@@ -234,6 +266,13 @@
     delete [] m_pbMasterBeginRecording;
     delete [] motion;
     
+    delete [] m_pbPlaybackStatus;
+    delete [] m_piFingerDownStatus;
+    delete [] m_pbAudioCurrentlyRecording;
+    delete [] m_pbAudioRecordToggle;
+    delete [] m_pbFingerMoveStatus;
+    
+    
     [metroBar0 release];
     [metroBar1 release];
     [metroBar2 release];
@@ -243,25 +282,26 @@
     [metroBar6 release];
     [metroBar7 release];
     
-    
-    [masterRecord0 release];
-    [masterRecord1 release];
-    [masterRecord2 release];
-    [masterRecord3 release];
-    
-    
-    
-    [sampleButton0 release];
-    [sampleButton1 release];
-    [sampleButton2 release];
-    [sampleButton3 release];
-    
     [progressBar0 release];
     [progressBar1 release];
     [progressBar2 release];
     [progressBar3 release];
     
     
+  
+    [sampleButton0 release];
+    [sampleButton1 release];
+    [sampleButton2 release];
+    [sampleButton3 release];
+    
+    [settingsButton0 release];
+    [settingsButton1 release];
+    [settingsButton2 release];
+    [settingsButton3 release];
+    
+    
+    [metronomeButton release];
+    [settingsButton release];
     
     [super dealloc];
 }
@@ -270,84 +310,163 @@
 
 
 
-//--- Conditional Segue ---//
-
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (([identifier isEqualToString:@"conditionSegue1"]) && (m_iButtonMode == MODE_SETTINGS))
+    UITouch *touch = [touches anyObject];
+    
+    //--- Red Sample ---//
+    if ([touch view] == sampleButton0)
     {
-        return YES;
+        _backendInterface->startPlayback(0);
+        
+        m_pbPlaybackStatus[0] = true;
+        m_piFingerDownStatus[0] ++;
+        
+        [sampleButton0 setAlpha:1.0f];
+        [progressBar0 setAlpha:1.0f];
     }
     
-    if (([identifier isEqualToString:@"conditionSegue2"]) && (m_iButtonMode == MODE_SETTINGS))
+    
+    //--- Blue Sample ---//
+    if ([touch view] == sampleButton1)
     {
-        return YES;
+        _backendInterface->startPlayback(1);
+        m_pbPlaybackStatus[1] = true;
+        
+        m_piFingerDownStatus[1] ++;
+        
+        [sampleButton1 setAlpha:1.0f];
+        [progressBar1 setAlpha:1.0f];
     }
     
-    if (([identifier isEqualToString:@"conditionSegue3"]) && (m_iButtonMode == MODE_SETTINGS))
+    
+    //--- Green Sample ---//
+    if ([touch view] == sampleButton2)
     {
-        return YES;
+        _backendInterface->startPlayback(2);
+        m_pbPlaybackStatus[2] = true;
+        
+        m_piFingerDownStatus[2] ++;
+        
+        [sampleButton2 setAlpha:1.0f];
+        [progressBar2 setAlpha:1.0f];
     }
     
-    if (([identifier isEqualToString:@"conditionSegue4"]) && (m_iButtonMode == MODE_SETTINGS))
-    {
-        return YES;
-    }
     
-    if ([identifier isEqualToString:@"settingsSegue"])
+    //--- Yellow Sample ---//
+    if ([touch view] == sampleButton3)
     {
-        return YES;
-    }
-    return NO;
+        _backendInterface->startPlayback(3);
+        m_pbPlaybackStatus[3] = true;
+        
+        m_piFingerDownStatus[3] ++;
+        
+        [sampleButton3 setAlpha:1.0f];
+        [progressBar3 setAlpha:1.0f];
+    }    
 }
 
 
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([segue.identifier isEqualToString:@"settingsSegue" ])
-    {
-        GlobalSettingsViewController *globalSettingsVC  = segue.destinationViewController;
-        globalSettingsVC.backendInterface               =   _backendInterface;
-        globalSettingsVC.metronome                      =   _metronome;
-    }
+    UITouch *touch = [touches anyObject];
     
-    else
+    if ([touch view] == sampleButton0)
     {
-        EffectSettingsViewController *EffectSettingsVC = segue.destinationViewController;
-        
-        if ([segue.identifier isEqualToString:@"conditionSegue1" ])
-        {
-            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f];
-            EffectSettingsVC.m_iCurrentSampleID     =   0;
-            EffectSettingsVC.backEndInterface       =   _backendInterface;
-        }
-        
-        else if ([segue.identifier isEqualToString:@"conditionSegue2" ])
-        {
-            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f];
-            EffectSettingsVC.m_iCurrentSampleID     =   1;
-            EffectSettingsVC.backEndInterface       =   _backendInterface;
-        }
-        
-        else if ([segue.identifier isEqualToString:@"conditionSegue3" ])
-        {
-            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f];
-            EffectSettingsVC.m_iCurrentSampleID     =   2;
-            EffectSettingsVC.backEndInterface       =   _backendInterface;
-        }
-        
-        else if ([segue.identifier isEqualToString:@"conditionSegue4" ])
-        {
-            EffectSettingsVC.view.backgroundColor   = [UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f];
-            EffectSettingsVC.m_iCurrentSampleID     =   3;
-            EffectSettingsVC.backEndInterface       =   _backendInterface;
-        }
+        NSLog(@"Moved inside Red");
     }
     
 }
 
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    
+    //--- Red Sample ---//
+    if ([touch view] == sampleButton0)
+    {
+        m_piFingerDownStatus[0] --;
+        
+        if (m_piFingerDownStatus[0] == 0)
+        {
+            _backendInterface->stopPlayback(0);
+            m_pbPlaybackStatus[0] = false;
+            
+            [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+            [progressBar0 setAlpha:BUTTON_OFF_ALPHA];
+        }
+        
+        else if (m_piFingerDownStatus[0] < 0)
+        {
+            m_piFingerDownStatus[0] = 0;
+        }
+    }
+    
+    
+    //--- Blue Sample ---//
+    if ([touch view] == sampleButton1)
+    {
+        m_piFingerDownStatus[1] --;
+        
+        if (m_piFingerDownStatus[1] == 0)
+        {
+            _backendInterface->stopPlayback(1);
+            m_pbPlaybackStatus[1] = false;
+            
+            [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+            [progressBar1 setAlpha:BUTTON_OFF_ALPHA];
+        }
+        
+        else if (m_piFingerDownStatus[1] < 0)
+        {
+            m_piFingerDownStatus[1] = 0;
+        }
+    }
+    
+    
+    //--- Green Sample ---//
+    if ([touch view] == sampleButton2)
+    {
+        m_piFingerDownStatus[2] --;
+        
+        if (m_piFingerDownStatus[2] == 0)
+        {
+            _backendInterface->stopPlayback(2);
+            m_pbPlaybackStatus[2] = false;
+            
+            [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+            [progressBar2 setAlpha:BUTTON_OFF_ALPHA];
+        }
+        
+        else if (m_piFingerDownStatus[2] < 0)
+        {
+            m_piFingerDownStatus[2] = 0;
+        }
+    }
+    
+    
+    //--- Yellow Sample ---//
+    if ([touch view] == sampleButton3)
+    {
+        m_piFingerDownStatus[3] --;
+        
+        if (m_piFingerDownStatus[3] == 0)
+        {
+            _backendInterface->stopPlayback(3);
+            m_pbPlaybackStatus[3] = false;
+            
+            [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+            [progressBar3 setAlpha:BUTTON_OFF_ALPHA];
+        }
+        
+        else if (m_piFingerDownStatus[3] < 0)
+        {
+            m_piFingerDownStatus[3] = 0;
+        }
+    }
+}
 
 
 
@@ -436,21 +555,21 @@
                     
                     switch (i)
                     {
-                        case 0:
-                            masterRecord0.alpha =   0.2f;
-                            break;
-                            
-                        case 1:
-                            masterRecord1.alpha =   0.2f;
-                            break;
-                            
-                        case 2:
-                            masterRecord2.alpha =   0.2f;
-                            break;
-                            
-                        case 3:
-                            masterRecord3.alpha =   0.2f;
-                            break;
+//                        case 0:
+//                            masterRecord0.alpha =   0.2f;
+//                            break;
+//                            
+//                        case 1:
+//                            masterRecord1.alpha =   0.2f;
+//                            break;
+//                            
+//                        case 2:
+//                            masterRecord2.alpha =   0.2f;
+//                            break;
+//                            
+//                        case 3:
+//                            masterRecord3.alpha =   0.2f;
+//                            break;
                             
                         default:
                             break;
@@ -466,21 +585,21 @@
                     
                     switch (i)
                     {
-                        case 0:
-                            masterRecord0.alpha =   1.0f;
-                            break;
-                            
-                        case 1:
-                            masterRecord1.alpha =   1.0f;
-                            break;
-                            
-                        case 2:
-                            masterRecord2.alpha =   1.0f;
-                            break;
-                            
-                        case 3:
-                            masterRecord3.alpha =   1.0f;
-                            break;
+//                        case 0:
+//                            masterRecord0.alpha =   1.0f;
+//                            break;
+//                            
+//                        case 1:
+//                            masterRecord1.alpha =   1.0f;
+//                            break;
+//                            
+//                        case 2:
+//                            masterRecord2.alpha =   1.0f;
+//                            break;
+//                            
+//                        case 3:
+//                            masterRecord3.alpha =   1.0f;
+//                            break;
                             
                         default:
                             break;
@@ -490,42 +609,42 @@
                 }
             }
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 0.2f;
-            metroBar2.alpha = 0.2f;
-            metroBar3.alpha = 0.2f;
-            metroBar4.alpha = 0.2f;
-            metroBar5.alpha = 0.2f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
             
         case 2:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 0.2f;
-            metroBar3.alpha = 0.2f;
-            metroBar4.alpha = 0.2f;
-            metroBar5.alpha = 0.2f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
             
         case 3:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 0.2f;
-            metroBar4.alpha = 0.2f;
-            metroBar5.alpha = 0.2f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
@@ -533,14 +652,14 @@
             
         case 4:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 1.0f;
-            metroBar4.alpha = 0.2f;
-            metroBar5.alpha = 0.2f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:1.0f];
+            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
@@ -548,14 +667,14 @@
             
         case 5:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 1.0f;
-            metroBar4.alpha = 1.0f;
-            metroBar5.alpha = 0.2f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:1.0f];
+            [metroBar4 setAlpha:1.0f];
+            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
@@ -563,14 +682,14 @@
             
         case 6:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 1.0f;
-            metroBar4.alpha = 1.0f;
-            metroBar5.alpha = 1.0f;
-            metroBar6.alpha = 0.2f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:1.0f];
+            [metroBar4 setAlpha:1.0f];
+            [metroBar5 setAlpha:1.0f];
+            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
@@ -578,28 +697,28 @@
             
         case 7:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 1.0f;
-            metroBar4.alpha = 1.0f;
-            metroBar5.alpha = 1.0f;
-            metroBar6.alpha = 1.0f;
-            metroBar7.alpha = 0.2f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:1.0f];
+            [metroBar4 setAlpha:1.0f];
+            [metroBar5 setAlpha:1.0f];
+            [metroBar6 setAlpha:1.0f];
+            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
             
             break;
             
             
         case 8:
             
-            metroBar0.alpha = 1.0f;
-            metroBar1.alpha = 1.0f;
-            metroBar2.alpha = 1.0f;
-            metroBar3.alpha = 1.0f;
-            metroBar4.alpha = 1.0f;
-            metroBar5.alpha = 1.0f;
-            metroBar6.alpha = 1.0f;
-            metroBar7.alpha = 1.0f;
+            [metroBar0 setAlpha:1.0f];
+            [metroBar1 setAlpha:1.0f];
+            [metroBar2 setAlpha:1.0f];
+            [metroBar3 setAlpha:1.0f];
+            [metroBar4 setAlpha:1.0f];
+            [metroBar5 setAlpha:1.0f];
+            [metroBar6 setAlpha:1.0f];
+            [metroBar7 setAlpha:1.0f];
             
             break;
             
@@ -616,277 +735,46 @@
 
 //--- User Interface Methods ---//
 
-- (IBAction)RedTouchUp:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->stopPlayback(0);
-        m_pbPlaybackStatus[0] = false;
-    }
-    
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[0] = false;
-        }
-        
-        else
-        {
-            _backendInterface->stopRecording(0);
-        }
-    }
-    
-    sender.alpha = 0.2f;
-    progressBar0.alpha  = 0.2f;
-}
-
-- (IBAction)RedTouchDown:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        if (!m_pbPlaybackStatus[0])
-        {
-            _backendInterface->startPlayback(0);
-            m_pbPlaybackStatus[0] = true;
-        }
-    }
-    
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[0] = true;
-        }
-        
-        else
-        {
-            _backendInterface->startRecording(0);
-        }
-    }
-    
-    [sampleButton0 setAlpha:1.0f];
-    [progressBar0 setAlpha:1.0f];
-//    sender.alpha = 1.0f;
-//    progressBar0.alpha  = 1.0f;
-}
-
-- (IBAction)redMasterRecord:(UIButton *)sender
-{
-    if ([_metronome isRunning])
-    {
-        sender.alpha = 0.5f;
-        m_pbMasterRecordToggle[0] = true;
-    }
-    
-}
-
-
-
-
-- (IBAction)BlueTouchUp:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->stopPlayback(1);
-        m_pbPlaybackStatus[1] = false;
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[1] = false;
-        }
-        
-        else
-        {
-            _backendInterface->stopRecording(1);
-        }
-    }
-    
-    sender.alpha = 0.2f;
-    progressBar1.alpha  = 0.2f;
-    
-}
-
-- (IBAction)BlueTouchDown:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        if (! m_pbPlaybackStatus[1])
-        {
-            _backendInterface->startPlayback(1);
-            m_pbPlaybackStatus[1] = true;
-        }
-        
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[1] = true;
-        }
-        
-        else
-        {
-            _backendInterface->startRecording(1);
-        }
-    }
-    
-    sender.alpha = 1.0f;
-    progressBar1.alpha  = 1.0f;
-}
-
-
-
-- (IBAction)blueMasterRecord:(UIButton *)sender
-{
-    if ([_metronome isRunning])
-    {
-        sender.alpha = 0.5f;
-        m_pbMasterRecordToggle[1] = true;
-    }
-    
-}
-
-
-
-
-- (IBAction)GreenTouchUp:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->stopPlayback(2);
-        m_pbPlaybackStatus[2] = false;
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[2] = false;
-        }
-        
-        else
-        {
-            _backendInterface->stopRecording(2);
-        }
-    }
-    
-    sender.alpha = 0.2f;
-    progressBar2.alpha  = 0.2f;
-}
-
-- (IBAction)GreenTouchDown:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        if (! m_pbPlaybackStatus[2])
-        {
-            _backendInterface->startPlayback(2);
-            m_pbPlaybackStatus[2] = true;
-        }
-        
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[2] = true;
-        }
-        
-        else
-        {
-            _backendInterface->startRecording(2);
-        }
-    }
-    
-    sender.alpha = 1.0f;
-    progressBar2.alpha  = 1.0f;
-}
-
-- (IBAction)greenMasterRecord:(UIButton *)sender
-{
-    if ([_metronome isRunning])
-    {
-        sender.alpha = 0.5f;
-        m_pbMasterRecordToggle[2] = true;
-    }
-    
-}
-
-
-
-
-- (IBAction)YellowTouchUp:(UIButton *)sender
-{
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        _backendInterface->stopPlayback(3);
-        m_pbPlaybackStatus[3] = false;
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[3] = false;
-        }
-        
-        else
-        {
-            _backendInterface->stopRecording(3);
-        }
-    }
-    
-    sender.alpha = 0.2f;
-    progressBar3.alpha  = 0.2f;
-}
-
-- (IBAction)YellowTouchDown:(UIButton *)sender
-{
-    
-    if (m_iButtonMode == MODE_PLAYBACK)
-    {
-        if (! m_pbPlaybackStatus[3])
-        {
-            _backendInterface->startPlayback(3);
-            m_pbPlaybackStatus[3] = true;
-        }
-        
-    }
-    
-    else if (m_iButtonMode == MODE_RECORD)
-    {
-        if ([_metronome isRunning] == YES)
-        {
-            m_pbAudioRecordToggle[3] = true;
-        }
-        
-        else
-        {
-            _backendInterface->startRecording(3);
-        }
-    }
-    
-    sender.alpha = 1.0f;
-    progressBar3.alpha  = 1.0f;
-}
-
-- (IBAction)yellowMasterRecord:(UIButton *)sender
-{
-    if ([_metronome isRunning])
-    {
-        sender.alpha = 0.5f;
-        m_pbMasterRecordToggle[3] = true;
-    }
-}
-
+//- (IBAction)redMasterRecord:(UIButton *)sender
+//{
+//    if ([_metronome isRunning])
+//    {
+//        sender.alpha = 0.5f;
+//        m_pbMasterRecordToggle[0] = true;
+//    }
+//    
+//}
+//
+//- (IBAction)blueMasterRecord:(UIButton *)sender
+//{
+//    if ([_metronome isRunning])
+//    {
+//        sender.alpha = 0.5f;
+//        m_pbMasterRecordToggle[1] = true;
+//    }
+//    
+//}
+//
+//- (IBAction)greenMasterRecord:(UIButton *)sender
+//{
+//    if ([_metronome isRunning])
+//    {
+//        sender.alpha = 0.5f;
+//        m_pbMasterRecordToggle[2] = true;
+//    }
+//    
+//}
+//
+//
+//- (IBAction)yellowMasterRecord:(UIButton *)sender
+//{
+//    if ([_metronome isRunning])
+//    {
+//        sender.alpha = 0.5f;
+//        m_pbMasterRecordToggle[3] = true;
+//    }
+//}
+//
 
 
 
@@ -896,36 +784,68 @@
 
 - (IBAction)settingsToggleClicked:(UIButton *)sender
 {
-    if (m_iButtonMode != MODE_SETTINGS)
+    //--- Display Settings Buttons ---//
+    if (m_bSettingsToggle)
     {
-        m_iButtonMode   =   MODE_SETTINGS;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.1f green:0.2f blue:0.1f alpha:1.0f]];
+        m_bSettingsToggle = false;
+        
+        [settingsButton setAlpha:1.0f];
+        
+        [sampleButton0 setAlpha:1.0f];
+        [sampleButton1 setAlpha:1.0f];
+        [sampleButton2 setAlpha:1.0f];
+        [sampleButton3 setAlpha:1.0f];
+        
+        [progressBar0 setHidden:YES];
+        [progressBar1 setHidden:YES];
+        [progressBar2 setHidden:YES];
+        [progressBar3 setHidden:YES];
+        
+        [settingsButton0 setHidden:NO];
+        [settingsButton0 setUserInteractionEnabled:YES];
+        
+        [settingsButton1 setHidden:NO];
+        [settingsButton1 setUserInteractionEnabled:YES];
+        
+        [settingsButton2 setHidden:NO];
+        [settingsButton2 setUserInteractionEnabled:YES];
+        
+        [settingsButton3 setHidden:NO];
+        [settingsButton3 setUserInteractionEnabled:YES];
     }
     
+    //--- Hide Settings Buttons ---//
     else
     {
-        m_iButtonMode   =   MODE_PLAYBACK;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.125 green:0.125f blue:0.125f alpha:1.0f]];
+        m_bSettingsToggle   =   true;
+
+        [settingsButton setAlpha:BUTTON_OFF_ALPHA];
+        
+        [progressBar0 setHidden:NO];
+        [progressBar1 setHidden:NO];
+        [progressBar2 setHidden:NO];
+        [progressBar3 setHidden:NO];
+        
+        [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+        [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+        [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+        [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+        
+        
+        [settingsButton0 setHidden:YES];
+        [settingsButton0 setUserInteractionEnabled:NO];
+        
+        [settingsButton1 setHidden:YES];
+        [settingsButton1 setUserInteractionEnabled:NO];
+        
+        [settingsButton2 setHidden:YES];
+        [settingsButton2 setUserInteractionEnabled:NO];
+        
+        [settingsButton3 setHidden:YES];
+        [settingsButton3 setUserInteractionEnabled:NO];
     }
 }
 
-
-
-- (IBAction)recordToggleClicked:(UIButton *)sender
-{
-    if (m_iButtonMode != MODE_RECORD)
-    {
-        m_iButtonMode   =   MODE_RECORD;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.1f blue:0.1f alpha:1.0f]];
-    }
-    
-    else
-    {
-        m_iButtonMode   =   MODE_PLAYBACK;
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.125 green:0.125f blue:0.125f alpha:1.0f]];
-    }
-    
-}
 
 
 - (IBAction)metronomeToggleClicked:(UIButton *)sender
@@ -933,20 +853,21 @@
     if ([_metronome isRunning] == NO)
     {
         [_metronome startClock];
+        [metronomeButton setAlpha:1.0f];
     }
     
     else
     {
         [_metronome stopClock];
-        
-        metroBar0.alpha = 0.2f;
-        metroBar1.alpha = 0.2f;
-        metroBar2.alpha = 0.2f;
-        metroBar3.alpha = 0.2f;
-        metroBar4.alpha = 0.2f;
-        metroBar5.alpha = 0.2f;
-        metroBar6.alpha = 0.2f;
-        metroBar7.alpha = 0.2f;
+        [metronomeButton setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar0 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
+        [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
     }
 }
 
@@ -986,6 +907,52 @@
     }
     
 }
+
+
+//--- Settings Button Methods ---//
+
+- (void) startRecording:(int)sampleID
+{
+    if ([_metronome isRunning] == YES)
+    {
+        m_pbAudioRecordToggle[sampleID] = true;
+    }
+    
+    else
+    {
+        _backendInterface->startRecording(sampleID);
+    }
+    
+}
+
+
+- (void) stopRecording:(int)sampleID
+{
+    if ([_metronome isRunning] == YES)
+    {
+        m_pbAudioRecordToggle[sampleID] = false;
+    }
+    
+    else
+    {
+        _backendInterface->stopRecording(sampleID);
+    }
+}
+
+
+- (void) launchFXView:(int)sampleID
+{
+    EffectSettingsViewController *effectSettingsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EffectSettingsViewController"];
+    [effectSettingsVC setCurrentSampleID:sampleID];
+    [[self navigationController] pushViewController:effectSettingsVC animated:YES];
+}
+
+
+- (void) startResampling:(int)sampleID
+{
+    
+}
+
 
 
 @end

@@ -1,0 +1,27 @@
+//
+//  SettingsButton.h
+//  BeMotion
+//
+//  Created by Govinda Ram Pingali on 6/2/14.
+//  Copyright (c) 2014 BeMotionLLC. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#include "Macros.h"
+
+@interface SettingsButton : UIView
+{
+    id          delegate;
+}
+
+@property int buttonID;
+
+- (void) setDelegate        :   (id) newDelegate;
+
+
+- (void)startRecording : (int)sampleID;
+- (void)stopRecording : (int)sampleID;
+- (void)startResampling : (int)sampleID;
+- (void)launchFXView : (int)sampleID;
+
+@end

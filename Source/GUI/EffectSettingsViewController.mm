@@ -10,9 +10,13 @@
 
 
 #import  "EffectSettingsViewController.h"
+#import "BeMotionAppDelegate.h"
 
 
 @interface EffectSettingsViewController ()
+{
+    BeMotionAppDelegate*   appDelegate;
+}
 
 @end
 
@@ -21,7 +25,7 @@
 
 @implementation EffectSettingsViewController
 
-@synthesize m_iCurrentSampleID;
+@synthesize currentSampleID;
 
 @synthesize effectNames;
 @synthesize gainSliderObject, playbackModeObject, quantizationSliderObject;
@@ -46,29 +50,52 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
-
-
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    m_iCurrentEffectPosition        =   0;
+    
+    //--- Get Reference to Backend ---//
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    _backendInterface   =  [appDelegate getBackendReference];
+    
+    
+    //--- Set Background ---//
+    switch (currentSampleID)
+    {
+        case 0:
+            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f]];
+            break;
+            
+        case 1:
+            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f]];
+            break;
+            
+        case 2:
+            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f]];
+            break;
+            
+        case 3:
+            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f]];
+            break;
+            
+        default:
+            break;
+    }
+    
+     m_iCurrentEffectPosition        =   0;
     
     
     //--- Get Sample Parameters ---//
-    float gain = _backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_GAIN);
+    float gain = _backendInterface->getSampleParameter(currentSampleID, PARAM_GAIN);
     [gainSliderObject setValue:gain];
     [gainLabel setText:[@(gain) stringValue]];
     
-    [playbackModeObject setSelectedSegmentIndex:_backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_PLAYBACK_MODE)];
+    [playbackModeObject setSelectedSegmentIndex:_backendInterface->getSampleParameter(currentSampleID, PARAM_PLAYBACK_MODE)];
     
-    float quantization = _backEndInterface->getSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION);
+    float quantization = _backendInterface->getSampleParameter(currentSampleID, PARAM_QUANTIZATION);
     [quantizationSliderObject setValue:quantization];
     [quantizationLabel setText:[@( powf(2, (int)quantization) ) stringValue]];
     
     
     //--- Get Sample Gesture Control Toggles ---//
-    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN))
+    if (_backendInterface->getSampleGestureControlToggle(currentSampleID, PARAM_MOTION_GAIN))
     {
         [gainGestureObject setAlpha: 1.0f];
         [gainSliderObject setEnabled:NO];
@@ -80,7 +107,7 @@
         [gainSliderObject setEnabled:YES];
     }
     
-    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT))
+    if (_backendInterface->getSampleGestureControlToggle(currentSampleID, PARAM_MOTION_QUANT))
     {
         [quantGestureObject setAlpha: 1.0f];
         [quantizationSliderObject setEnabled:NO];
@@ -95,9 +122,8 @@
     
     
     //--- Get Effect Parameters ---//
-    [pickerObject selectRow:_backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition) inComponent:0 animated:YES];
+    [pickerObject selectRow:_backendInterface->getEffectType(currentSampleID, m_iCurrentEffectPosition) inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
-    
 }
 
 
@@ -109,7 +135,7 @@
 // Set Gain
 - (IBAction)gainSliderChanged:(UISlider *)sender
 {
-    _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_GAIN, sender.value);
+    _backendInterface->setSampleParameter(currentSampleID, PARAM_GAIN, sender.value);
     [gainLabel setText:[@(sender.value) stringValue]];
 }
 
@@ -117,14 +143,14 @@
 // Segmented Control for Button Mode
 - (IBAction)buttonModeChanged:(UISegmentedControl *)sender
 {
-    _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_PLAYBACK_MODE, (int)sender.selectedSegmentIndex);
+    _backendInterface->setSampleParameter(currentSampleID, PARAM_PLAYBACK_MODE, (int)sender.selectedSegmentIndex);
 }
 
 
 // Set Quantization Time for Note Repeat
 - (IBAction)quantizationSliderChanged:(UISlider *)sender
 {
-    _backEndInterface->setSampleParameter(m_iCurrentSampleID, PARAM_QUANTIZATION, (int)sender.value);
+    _backendInterface->setSampleParameter(currentSampleID, PARAM_QUANTIZATION, (int)sender.value);
     [quantizationLabel setText:[@( pow(2, (int)sender.value) ) stringValue]];
 }
 
@@ -140,7 +166,7 @@
 - (IBAction)SegementControl:(UISegmentedControl *)sender
 {
     m_iCurrentEffectPosition    =   (int)sender.selectedSegmentIndex;
-    int effectType = _backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition);
+    int effectType = _backendInterface->getEffectType(currentSampleID, m_iCurrentEffectPosition);
     [pickerObject selectRow:effectType inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
 }
@@ -168,7 +194,7 @@
 // Callback when picker row is changed
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _backEndInterface->addAudioEffect(m_iCurrentSampleID, m_iCurrentEffectPosition, (int)row);
+    _backendInterface->addAudioEffect(currentSampleID, m_iCurrentEffectPosition, (int)row);
     [self updateSlidersAndLabels];
 }
 
@@ -176,24 +202,24 @@
 
 - (IBAction)bypassToggleButtonChanged:(UISwitch *)sender
 {
-    _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
+    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
 }
 
 - (IBAction)Slider1Changed:(UISlider *)sender
 {
-    _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
     [slider1CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider2Changed:(UISlider *)sender
 {
-    _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
     [slider2CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider3Changed:(UISlider *)sender
 {
-    _backEndInterface->setEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
     [slider3CurrentValue setText:[@(sender.value) stringValue]];
 }
 
@@ -204,9 +230,9 @@
 
 - (void) updateSlidersAndLabels
 {
-    float param1 = _backEndInterface->getEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_1);
-    float param2 = _backEndInterface->getEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_2);
-    float param3 = _backEndInterface->getEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_3);
+    float param1 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_1);
+    float param2 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_2);
+    float param3 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_3);
     
     [slider1Object setValue:param1];
     [slider2Object setValue:param2];
@@ -216,12 +242,12 @@
     [slider2CurrentValue setText:[@(param2) stringValue]];
     [slider3CurrentValue setText:[@(param3) stringValue]];
     
-    [bypassButtonObject setSelected:_backEndInterface->getEffectParameter(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS)];
+    [bypassButtonObject setSelected:_backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS)];
     
     
     //-- Update Gesture Control Buttons --//
     
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
     {
         [param1GestureObject setAlpha:1.0f];
     }
@@ -231,7 +257,7 @@
         [param1GestureObject setAlpha:0.4f];
     }
     
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
     {
         [param2GestureObject setAlpha:1.0f];
     }
@@ -241,7 +267,7 @@
         [param2GestureObject setAlpha:0.4f];
     }
     
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
     {
         [param3GestureObject setAlpha:1.0f];
     }
@@ -255,7 +281,7 @@
     
     
     
-    switch (_backEndInterface->getEffectType(m_iCurrentSampleID, m_iCurrentEffectPosition))
+    switch (_backendInterface->getEffectType(currentSampleID, m_iCurrentEffectPosition))
     {
         case 0:
             [self.slider1EffectParam setText:@"Null"];
@@ -307,16 +333,16 @@
 
 - (IBAction)gainGestureToggle:(UIButton *)sender
 {
-    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN))
+    if (_backendInterface->getSampleGestureControlToggle(currentSampleID, PARAM_MOTION_GAIN))
     {
-        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN, false);
+        _backendInterface->setSampleGestureControlToggle(currentSampleID, PARAM_MOTION_GAIN, false);
         sender.alpha = 0.4;
         [gainSliderObject setEnabled:YES];
     }
     
     else
     {
-        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_GAIN, true);
+        _backendInterface->setSampleGestureControlToggle(currentSampleID, PARAM_MOTION_GAIN, true);
         sender.alpha = 1.0f;
         [gainSliderObject setEnabled:NO];
     }
@@ -324,16 +350,16 @@
 
 - (IBAction)quantGestureToggle:(UIButton *)sender
 {
-    if (_backEndInterface->getSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT))
+    if (_backendInterface->getSampleGestureControlToggle(currentSampleID, PARAM_MOTION_QUANT))
     {
-        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT, false);
+        _backendInterface->setSampleGestureControlToggle(currentSampleID, PARAM_MOTION_QUANT, false);
         sender.alpha = 0.4;
         [quantizationSliderObject setEnabled:YES];
     }
     
     else
     {
-        _backEndInterface->setSampleGestureControlToggle(m_iCurrentSampleID, PARAM_MOTION_QUANT, true);
+        _backendInterface->setSampleGestureControlToggle(currentSampleID, PARAM_MOTION_QUANT, true);
         sender.alpha = 1.0f;
         [quantizationSliderObject setEnabled:NO];
     }
@@ -341,45 +367,45 @@
 
 - (IBAction)param1GestureToggle:(UIButton *)sender
 {
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, true);
         sender.alpha = 1.0f;
     }
 }
 
 - (IBAction)param2GestureToggle:(UIButton *)sender
 {
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, true);
         sender.alpha = 1.0f;
     }
 }
 
 - (IBAction)param3GestureToggle:(UIButton *)sender
 {
-    if (_backEndInterface->getEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backEndInterface->setEffectGestureControlToggle(m_iCurrentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, true);
         sender.alpha = 1.0f;
     }
     
@@ -543,7 +569,7 @@
             
             
             //--- Load Backend ---//
-            if( (_backEndInterface->loadAudioFile(m_iCurrentSampleID, outputAudioPath)) != 0)
+            if( (_backendInterface->loadAudioFile(currentSampleID, outputAudioPath)) != 0)
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading Audio File"
                                                                 message:@"Retry Loading or wait after selecting media"
@@ -575,7 +601,7 @@
 {
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [searchPaths lastObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/Media%i.wav", documentPath, m_iCurrentSampleID];
+    NSString *filePath = [NSString stringWithFormat:@"%@/Media%i.wav", documentPath, currentSampleID];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {

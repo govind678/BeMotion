@@ -10,8 +10,12 @@
 
 
 #import "GlobalSettingsViewController.h"
+#import "BeMotionAppDelegate.h"
 
 @interface GlobalSettingsViewController ()
+{
+    BeMotionAppDelegate*   appDelegate;
+}
 
 @end
 
@@ -34,6 +38,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //--- Get Reference to Backend and Metronome ---//
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    _backendInterface   =  [appDelegate getBackendReference];
+    _metronome          =  [appDelegate getMetronomeReference];
+    
+    
     
     m_iTempo                = [_metronome getTempo];
     m_iCurrentPresetBank    = _backendInterface->getCurrentPresetBank();

@@ -14,6 +14,7 @@
 #include "BeMotionInterface.h"
 #import  "EffectSettingsViewController.h"
 #import  "GlobalSettingsViewController.h"
+#import  "SettingsButton.h"
 
 #import "Metronome.h"
 #import <CoreMotion/CoreMotion.h>
@@ -23,7 +24,7 @@
 
 @interface BeMotionViewController : UIViewController
 {
-    int                             m_iButtonMode;       // playback = 0 , settings = 1, record = 2
+    bool                            m_bSettingsToggle;
     
     bool*                           m_pbMasterRecordToggle;
     bool*                           m_pbMasterBeginRecording;
@@ -32,6 +33,8 @@
     bool*                           m_pbAudioCurrentlyRecording;
     
     bool*                           m_pbPlaybackStatus;
+    int*                            m_piFingerDownStatus;
+    bool*                           m_pbFingerMoveStatus;
     
     float*                          motion;
 }
@@ -40,7 +43,6 @@
 //--- Reference To Backend and Metronome ---//
 @property (nonatomic, assign) BeMotionInterface*  backendInterface;
 @property (nonatomic, assign) Metronome*  metronome;
-
 
 
 
@@ -56,38 +58,35 @@
 
 //--- User Interaction Methods ---//
 
-- (IBAction)RedTouchUp:(UIButton *)sender;
-- (IBAction)RedTouchDown:(UIButton *)sender;
 
-- (IBAction)BlueTouchUp:(UIButton *)sender;
-- (IBAction)BlueTouchDown:(UIButton *)sender;
-
-- (IBAction)GreenTouchUp:(UIButton *)sender;
-- (IBAction)GreenTouchDown:(UIButton *)sender;
-
-- (IBAction)YellowTouchUp:(UIButton *)sender;
-- (IBAction)YellowTouchDown:(UIButton *)sender;
-
-
-- (IBAction)redMasterRecord:(UIButton *)sender;
-- (IBAction)blueMasterRecord:(UIButton *)sender;
-- (IBAction)greenMasterRecord:(UIButton *)sender;
-- (IBAction)yellowMasterRecord:(UIButton *)sender;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 
 
 
 //--- Modifier Keys ---//
 - (IBAction)settingsToggleClicked:(UIButton *)sender;
-- (IBAction)recordToggleClicked:(UIButton *)sender;
 - (IBAction)metronomeToggleClicked:(UIButton *)sender;
+
+
+- (void)startRecording : (int)sampleID;
+- (void)stopRecording : (int)sampleID;
+- (void)startResampling : (int)sampleID;
+- (void)launchFXView : (int)sampleID;
 
 
 
 //--- Sample Buttons ---//
-@property (retain, nonatomic) IBOutlet UIButton *sampleButton0;
-@property (retain, nonatomic) IBOutlet UIButton *sampleButton1;
-@property (retain, nonatomic) IBOutlet UIButton *sampleButton2;
-@property (retain, nonatomic) IBOutlet UIButton *sampleButton3;
+@property (retain, nonatomic) IBOutlet UIView *sampleButton0;
+@property (retain, nonatomic) IBOutlet UIView *sampleButton1;
+@property (retain, nonatomic) IBOutlet UIView *sampleButton2;
+@property (retain, nonatomic) IBOutlet UIView *sampleButton3;
+
+@property (retain, nonatomic) IBOutlet SettingsButton *settingsButton0;
+@property (retain, nonatomic) IBOutlet SettingsButton *settingsButton1;
+@property (retain, nonatomic) IBOutlet SettingsButton *settingsButton2;
+@property (retain, nonatomic) IBOutlet SettingsButton *settingsButton3;
+
 
 
 
@@ -98,13 +97,8 @@
 @property (retain, nonatomic) IBOutlet UIProgressView *progressBar3;
 
 
-//--- Master Record Button Instances ---//
-@property (retain, nonatomic) IBOutlet UIButton *masterRecord0;
-@property (retain, nonatomic) IBOutlet UIButton *masterRecord1;
-@property (retain, nonatomic) IBOutlet UIButton *masterRecord2;
-@property (retain, nonatomic) IBOutlet UIButton *masterRecord3;
-
-
+@property (retain, nonatomic) IBOutlet UIButton *metronomeButton;
+@property (retain, nonatomic) IBOutlet UIButton *settingsButton;
 
 
 //--- Metronome Bars ---//
