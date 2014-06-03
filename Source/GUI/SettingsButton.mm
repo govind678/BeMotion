@@ -10,7 +10,7 @@
 
 @implementation SettingsButton
 
-@synthesize buttonID;
+@synthesize buttonID, delegate, recordLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -70,35 +70,42 @@
         importButton.frame = CGRectMake(213.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
         [importButton setClipsToBounds:YES];
         [[importButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
-
+        
+        recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 2.0f, 100.0f, 16.0f)];
+        [recordLabel setBackgroundColor:[UIColor clearColor]];
+        [recordLabel setTextAlignment:NSTextAlignmentLeft];
+        [recordLabel setTextColor:[UIColor whiteColor]];
+        [recordLabel setNumberOfLines:1];
+        [recordLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [recordLabel setFont:[UIFont systemFontOfSize:8.0f]];
+        [recordLabel setText:@"Recording..."];
+        [recordLabel setUserInteractionEnabled:NO];
+        [recordLabel setHidden:YES];
         
         [self addSubview:recordButton];
         [self addSubview:fxButton];
         [self addSubview:resampleButton];
         [self addSubview:importButton];
+        [self addSubview:recordLabel];
         
     }
     
     return self;
 }
 
-- (void) setDelegate:(id)newDelegate
-{
-    delegate = newDelegate;
-}
-
 
 - (void)recordButtonClicked
 {
     [delegate startRecording:buttonID];
+    [recordLabel setHidden:NO];
+    
 }
 
 - (void)recordButtonReleased
 {
     [delegate stopRecording:buttonID];
+    [recordLabel setHidden:YES];
 }
-
-
 
 - (void)fxButtonClicked
 {
@@ -109,6 +116,12 @@
 {
     NSLog(@"Start Resampling %d", buttonID);
 }
+
+- (void)importButtonClicked
+{
+    [delegate launchImportView:buttonID];
+}
+
 
 
 
@@ -128,6 +141,11 @@
 }
 
 - (void)launchFXView:(int)sampleID
+{
+    
+}
+
+- (void)launchImportView:(int)sampleID
 {
     
 }

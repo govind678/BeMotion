@@ -11,17 +11,17 @@
 
 @interface SettingsButton : UIView
 {
-    id          delegate;
+    
 }
 
-@property int buttonID;
-
-- (void) setDelegate        :   (id) newDelegate;
-
+@property (nonatomic, assign) int buttonID;
+@property (nonatomic, assign) id  delegate;
+@property (nonatomic, retain) UILabel* recordLabel;
 
 - (void)startRecording : (int)sampleID;
 - (void)stopRecording : (int)sampleID;
 - (void)startResampling : (int)sampleID;
 - (void)launchFXView : (int)sampleID;
+- (void)launchImportView : (int)sampleID;
 
 @end

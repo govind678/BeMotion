@@ -66,6 +66,7 @@
 		FC11416E193D98CC0045A92B /* Skies3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC11414B193D98CC0045A92B /* Skies3.wav */; };
 		FC11416F193D98CC0045A92B /* Skies4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC11414C193D98CC0045A92B /* Skies4.wav */; };
 		FC114171193D99290045A92B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114170193D99290045A92B /* Background.png */; };
+		FC114174193E72770045A92B /* SampleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC114173193E72770045A92B /* SampleButton.mm */; };
 		FC87C41B193D181E000B7587 /* SettingsButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC87C41A193D181E000B7587 /* SettingsButton.mm */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
@@ -187,6 +188,8 @@
 		FC11414B193D98CC0045A92B /* Skies3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Skies3.wav; sourceTree = "<group>"; };
 		FC11414C193D98CC0045A92B /* Skies4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Skies4.wav; sourceTree = "<group>"; };
 		FC114170193D99290045A92B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		FC114172193E72770045A92B /* SampleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleButton.h; sourceTree = "<group>"; };
+		FC114173193E72770045A92B /* SampleButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SampleButton.mm; sourceTree = "<group>"; };
 		FC87C419193D181E000B7587 /* SettingsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsButton.h; sourceTree = "<group>"; };
 		FC87C41A193D181E000B7587 /* SettingsButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsButton.mm; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1547,6 +1550,8 @@
 				FCCF852F19266E5F00B76E77 /* GlobalSettingsViewController.mm */,
 				FC87C419193D181E000B7587 /* SettingsButton.h */,
 				FC87C41A193D181E000B7587 /* SettingsButton.mm */,
+				FC114172193E72770045A92B /* SampleButton.h */,
+				FC114173193E72770045A92B /* SampleButton.mm */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -3464,6 +3469,7 @@
 				FCCF8FF71926710300B76E77 /* juce_data_structures.mm in Sources */,
 				FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */,
 				FCCF8FF4192670B100B76E77 /* juce_graphics.mm in Sources */,
+				FC114174193E72770045A92B /* SampleButton.mm in Sources */,
 				FCCF8FF5192670B100B76E77 /* juce_gui_basics.mm in Sources */,
 				FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */,
 				FCCF856419266E8E00B76E77 /* main.mm in Sources */,
