@@ -23,7 +23,7 @@
 
 @synthesize tempoLabel, tempoSlider;
 @synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6, presetButton7;
-@synthesize fxPackButton0, fxPackButton1, fxPackButton2;
+@synthesize fxPackButton0, fxPackButton1, fxPackButton2, fxPackButton3;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -89,6 +89,7 @@
     [fxPackButton0 release];
     [fxPackButton1 release];
     [fxPackButton2 release];
+    [fxPackButton3 release];
     
     [super dealloc];
 }
@@ -438,6 +439,12 @@
     [self updateFXPackButtons];
 }
 
+- (IBAction)fxPackClicked3:(UIButton *)sender {
+    m_iCurrentFXPack = 3;
+    [self loadFXPack];
+    [self updateFXPackButtons];
+}
+
 
 
 - (void) updateFXPackButtons {
@@ -448,18 +455,28 @@
             [fxPackButton0 setAlpha:1.0f];
             [fxPackButton1 setAlpha:0.2f];
             [fxPackButton2 setAlpha:0.2f];
+            [fxPackButton3 setAlpha:0.2f];
             break;
         
         case 1:
             [fxPackButton0 setAlpha:0.2f];
             [fxPackButton1 setAlpha:1.0f];
             [fxPackButton2 setAlpha:0.2f];
+            [fxPackButton3 setAlpha:0.2f];
             break;
             
         case 2:
             [fxPackButton0 setAlpha:0.2f];
             [fxPackButton1 setAlpha:0.2f];
             [fxPackButton2 setAlpha:1.0f];
+            [fxPackButton3 setAlpha:0.2f];
+            break;
+            
+        case 3:
+            [fxPackButton0 setAlpha:0.2f];
+            [fxPackButton1 setAlpha:0.2f];
+            [fxPackButton2 setAlpha:0.2f];
+            [fxPackButton3 setAlpha:1.0f];
             break;
             
         default:
@@ -483,6 +500,10 @@
         case 2:
             fxPackPath = [[NSBundle mainBundle] pathForResource:@"BeatRepeat" ofType:@"json"];
             [_metronome startClock];
+            break;
+            
+        case 3:
+            fxPackPath = [[NSBundle mainBundle] pathForResource:@"Template" ofType:@"json"];
             break;
             
         default:

@@ -71,10 +71,11 @@
 - (IBAction)fxPackClicked0:(UIButton *)sender;
 - (IBAction)fxPackClicked1:(UIButton *)sender;
 - (IBAction)fxPackClicked2:(UIButton *)sender;
+- (IBAction)fxPackClicked3:(UIButton *)sender;
 
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton0;
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton1;
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton2;
-
+@property (retain, nonatomic) IBOutlet UIButton *fxPackButton3;
 
 @end
