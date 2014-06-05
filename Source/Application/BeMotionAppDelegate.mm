@@ -21,18 +21,18 @@
     
     
     //--- Preload Audio Samples ---//
-    NSString *sample1Path = [[NSBundle mainBundle] pathForResource:@"E_Kit0" ofType:@"wav"];
-    NSString *sample2Path = [[NSBundle mainBundle] pathForResource:@"E_Kit1" ofType:@"wav"];
-    NSString *sample3Path = [[NSBundle mainBundle] pathForResource:@"E_Kit2" ofType:@"wav"];
-    NSString *sample4Path = [[NSBundle mainBundle] pathForResource:@"E_Kit3" ofType:@"wav"];
-    NSString *sample5Path = [[NSBundle mainBundle] pathForResource:@"E_Kit4" ofType:@"wav"];
+    NSString *samplePath0 = [[NSBundle mainBundle] pathForResource:@"EKit0" ofType:@"wav"];
+    NSString *samplePath1 = [[NSBundle mainBundle] pathForResource:@"EKit1" ofType:@"wav"];
+    NSString *samplePath2 = [[NSBundle mainBundle] pathForResource:@"EKit2" ofType:@"wav"];
+    NSString *samplePath3 = [[NSBundle mainBundle] pathForResource:@"EKit3" ofType:@"wav"];
+    NSString *samplePath4 = [[NSBundle mainBundle] pathForResource:@"EKit4" ofType:@"wav"];
     
     
-    backendInterface->loadAudioFile(0, sample1Path);
-    backendInterface->loadAudioFile(1, sample2Path);
-    backendInterface->loadAudioFile(2, sample3Path);
-    backendInterface->loadAudioFile(3, sample4Path);
-    backendInterface->loadAudioFile(4, sample5Path);
+    backendInterface->loadAudioFile(0, samplePath0);
+    backendInterface->loadAudioFile(1, samplePath1);
+    backendInterface->loadAudioFile(2, samplePath2);
+    backendInterface->loadAudioFile(3, samplePath3);
+    backendInterface->loadAudioFile(4, samplePath4);
     
     
     metronome   =   [[Metronome alloc] init];

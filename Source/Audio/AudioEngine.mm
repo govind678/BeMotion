@@ -41,8 +41,11 @@ AudioEngine::AudioEngine()
     for (int i = 0; i < NUM_SAMPLE_SOURCES; i++)
     {
         recordingFilePathArray1.add(currentRecordingPath1 + String(i) + ".wav");
+//        recordingFilePathArray1.add(currentRecordingPath1 + String(i) + ".flac");
         recordingFilePathArray2.add(currentRecordingPath2 + String(i) + ".wav");
+//        recordingFilePathArray2.add(currentRecordingPath2 + String(i) + ".flac");
         playbackFilePathArray.add(currentPlaybackPath + String(i) + ".wav");
+//        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".flac");
         m_pbRecordingToggle.add(false);
     }
 }

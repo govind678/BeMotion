@@ -19,7 +19,7 @@
 
 # define NUM_BUTTONS             4
 # define BUTTON_OFF_ALPHA        0.25f
-# define SETTINGS_ICON_RADIUS    55.0f
+# define SETTINGS_ICON_RADIUS    50.0f
 
 
 //=========== Effect IDs ============//
@@ -50,6 +50,7 @@
 # define MODE_LOOP               0
 # define MODE_TRIGGER            1
 # define MODE_BEATREPEAT         2
+# define MODE_FOURTH             3
 
 
 //========== Button Modes ==========//

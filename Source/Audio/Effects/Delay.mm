@@ -80,7 +80,7 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
                 {
                     ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
                 }
-                
+        
             }
 		break;
             
@@ -88,15 +88,15 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 		case PARAM_2:
 			if (value >= 0 && value <= 1)
             {
-				m_fFeedBack = value;
+				m_fWetDry = value;
             }
 		break;
             
             
 		case PARAM_3:
-			if (abs(value) <= 1)
+            if (value >= 0 && value <= 1)
             {
-				m_fWetDry = value;
+				m_fFeedBack = value;
             }
 		break;
             
