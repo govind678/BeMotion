@@ -23,7 +23,7 @@
 
 @synthesize tempoLabel, tempoSlider;
 @synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6, presetButton7;
-
+@synthesize fxPackButton0, fxPackButton1, fxPackButton2;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,10 +45,13 @@
     _metronome          =  [appDelegate getMetronomeReference];
     
     
-    
     m_iTempo                = [_metronome getTempo];
-    m_iCurrentPresetBank    = _backendInterface->getCurrentPresetBank();
-    [self updatePresetButton];
+    m_iCurrentPresetBank    = _backendInterface->getCurrentAudioPresetBank();
+    m_iCurrentFXPack        = _backendInterface->getCurrentFXPack();
+    
+    [self updateAudioPresetButtons];
+    [self updateFXPackButtons];
+    
     [tempoLabel setText:[@(m_iTempo) stringValue]];
     [tempoSlider setValue:m_iTempo];
 }
@@ -83,6 +86,10 @@
     [presetButton5 release];
     [presetButton6 release];
     
+    [fxPackButton0 release];
+    [fxPackButton1 release];
+    [fxPackButton2 release];
+    
     [super dealloc];
 }
 
@@ -100,57 +107,57 @@
 - (IBAction)presetClicked1:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   0;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 - (IBAction)presetClicked2:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   1;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 - (IBAction)presetClicked3:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   2;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 - (IBAction)presetClicked4:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   3;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 - (IBAction)presetClicked5:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   4;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 - (IBAction)presetClicked6:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   5;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 
 - (IBAction)presetClicked7:(UIButton *)sender
 {
     m_iCurrentPresetBank    =   6;
-    [self loadPresetBank];
-    [self updatePresetButton];
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
 }
 
 
 
 
-- (void) updatePresetButton
+- (void) updateAudioPresetButtons
 {
     switch (m_iCurrentPresetBank)
     {
@@ -235,7 +242,7 @@
 
 
 
-- (void)loadPresetBank
+- (void)loadAudioPresetBank
 {
     _backendInterface->setCurrentPresetBank(m_iCurrentPresetBank);
     
@@ -409,6 +416,81 @@
     
 }
 
+
+
+
+- (IBAction)fxPackClicked0:(UIButton *)sender {
+    m_iCurrentFXPack = 0;
+    [self loadFXPack];
+    [self updateFXPackButtons];
+}
+
+
+- (IBAction)fxPackClicked1:(UIButton *)sender {
+    m_iCurrentFXPack = 1;
+    [self loadFXPack];
+    [self updateFXPackButtons];
+}
+
+- (IBAction)fxPackClicked2:(UIButton *)sender {
+    m_iCurrentFXPack = 2;
+    [self loadFXPack];
+    [self updateFXPackButtons];
+}
+
+
+
+- (void) updateFXPackButtons {
+    
+    switch (m_iCurrentFXPack) {
+        
+        case 0:
+            [fxPackButton0 setAlpha:1.0f];
+            [fxPackButton1 setAlpha:0.2f];
+            [fxPackButton2 setAlpha:0.2f];
+            break;
+        
+        case 1:
+            [fxPackButton0 setAlpha:0.2f];
+            [fxPackButton1 setAlpha:1.0f];
+            [fxPackButton2 setAlpha:0.2f];
+            break;
+            
+        case 2:
+            [fxPackButton0 setAlpha:0.2f];
+            [fxPackButton1 setAlpha:0.2f];
+            [fxPackButton2 setAlpha:1.0f];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+- (void) loadFXPack {
+    
+    switch (m_iCurrentFXPack) {
+            
+        case 0:
+            fxPackPath = [[NSBundle mainBundle] pathForResource:@"Percs_Delay" ofType:@"json"];
+            break;
+            
+        case 1:
+            fxPackPath = [[NSBundle mainBundle] pathForResource:@"Wah_Tremolo" ofType:@"json"];
+            break;
+            
+        case 2:
+            fxPackPath = [[NSBundle mainBundle] pathForResource:@"BeatRepeat" ofType:@"json"];
+            [_metronome startClock];
+            break;
+            
+        default:
+            break;
+    }
+    
+    _backendInterface->loadFXPreset(m_iCurrentFXPack, fxPackPath);
+}
 
 
 

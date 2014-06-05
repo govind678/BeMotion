@@ -1,0 +1,482 @@
+{
+    "title": "Wah_Tremolo",
+    
+    "samples":
+    {
+        
+        "sample0":
+        {
+            "mode" : 0,
+            
+            "gain" :
+            {
+                "value" : 1.0,
+                "gesture" : 0
+            },
+            
+            "quantization" :
+            {
+                "value" : 0.0,
+                "gesture" : 0
+            },
+            
+            "slot0" :
+            {
+                "effect" : 4,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.5,
+                    "gesture" : 1
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 1.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot1" :
+            {
+                "effect" : 1,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.85,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.5,
+                    "gesture" : 1
+                },
+                
+                "slider2" :
+                {
+                    "value" : 1.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot2" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot3" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            }
+        },
+        
+        
+        
+        "sample1":
+        {
+            "mode" : 0,
+            
+            "gain" :
+            {
+                "value" : 1.0,
+                "gesture" : 0
+            },
+            
+            "quantization" :
+            {
+                "value" : 0.0,
+                "gesture" : 0
+            },
+            
+            "slot0" :
+            {
+                "effect" : 4,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.5,
+                    "gesture" : 1
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 1.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot1" :
+            {
+                "effect" : 1,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.85,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.5,
+                    "gesture" : 1
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot2" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot3" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            }
+        },
+        
+        
+        "sample2":
+        {
+            "mode" : 0,
+            
+            "gain" :
+            {
+                "value" : 1.0,
+                "gesture" : 0
+            },
+            
+            "quantization" :
+            {
+                "value" : 0.0,
+                "gesture" : 0
+            },
+            
+            "slot0" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot1" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot2" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot3" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            }
+        },
+        
+        
+        
+        "sample3": 
+        {
+            "mode" : 0, 
+            
+            "gain" : 
+            {
+                "value" : 1.0,
+                "gesture" : 0
+            },
+            
+            "quantization" :
+            {
+                "value" : 0.0,
+                "gesture" : 0
+            },
+            
+            "slot0" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot1" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot2" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            },
+            
+            "slot3" :
+            {
+                "effect" : 0,
+                
+                "bypass" : 0,
+                
+                "slider0" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider1" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                },
+                
+                "slider2" :
+                {
+                    "value" : 0.0,
+                    "gesture" : 0
+                }
+            }
+        }
+        
+        
+    }
+}

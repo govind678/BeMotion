@@ -34,7 +34,7 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     m_pbGestureControl.clear();
     m_pcParameter.clear();
     
-    for (int effectNo = 0; effectNo < MIN_NUM_EFFECTS; effectNo++)
+    for (int effectNo = 0; effectNo < NUM_EFFECTS_SLOTS; effectNo++)
     {
         audioEffectSource.add(nullptr);
         audioEffectInitialized.add(false);
@@ -100,7 +100,10 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
         
         if (m_iSampleID != 4)
         {
-            currentAudioFileSource->setLooping(true);
+            if ((m_iButtonMode == MODE_LOOP) || (m_iButtonMode == MODE_BEATREPEAT))
+            {
+                currentAudioFileSource->setLooping(true);
+            }
             
             firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
             reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
@@ -133,16 +136,10 @@ void AudioFileStream::addAudioEffect(int effectPosition, int effectID)
     
     else
     {
-        if (effectPosition < (MIN_NUM_EFFECTS))
+        if (effectPosition < (NUM_EFFECTS_SLOTS))
         {
-            audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
+            audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, NUM_OUTPUT_CHANNELS));
             audioEffectInitialized.set(effectPosition, true);
-        }
-        
-        else
-        {
-            audioEffectSource.add(new AudioEffectSource(effectID, 2));
-            audioEffectInitialized.add(true);
         }
     }
 }
@@ -300,7 +297,10 @@ void AudioFileStream::stopPlayback()
     m_bAudioCurrentlyPlaying    =   false;
 //    m_bPlayingFromMemory        =   false;
 //    m_iSamplesRead = 0;
-    transportSource.stop();
+    if (m_iButtonMode != MODE_TRIGGER) {
+        transportSource.stop();
+    }
+    
 }
 
 
@@ -545,7 +545,7 @@ void AudioFileStream::motionUpdate(float *motion)
     }
     
     
-    for (int effect = 0; effect < MIN_NUM_EFFECTS ; effect++)
+    for (int effect = 0; effect < NUM_EFFECTS_SLOTS ; effect++)
     {
         if (audioEffectInitialized.getUnchecked(effect))
         {
@@ -557,7 +557,7 @@ void AudioFileStream::motionUpdate(float *motion)
 
 void AudioFileStream::setTempo(float newTempo)
 {
-    for (int effect = 0; effect < MIN_NUM_EFFECTS ; effect++)
+    for (int effect = 0; effect < NUM_EFFECTS_SLOTS ; effect++)
     {
         if (audioEffectInitialized.getUnchecked(effect))
         {

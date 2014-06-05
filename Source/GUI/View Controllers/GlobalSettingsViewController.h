@@ -18,13 +18,15 @@
 {
     float       m_iTempo;
     int         m_iCurrentPresetBank;
-    
+    int         m_iCurrentFXPack;
     
     NSString *sample1Path;
     NSString *sample2Path;
     NSString *sample3Path;
     NSString *sample4Path;
     NSString *sample5Path;
+    
+    NSString *fxPackPath;
 }
 
 
@@ -38,8 +40,12 @@
 
 
 
-- (void) updatePresetButton;
-- (void) loadPresetBank;
+- (void) updateAudioPresetButtons;
+- (void) loadAudioPresetBank;
+
+- (void) updateFXPackButtons;
+- (void) loadFXPack;
+
 
 //--- Preset Load Buttons ---//
 
@@ -60,6 +66,15 @@
 @property (retain, nonatomic) IBOutlet UIButton *presetButton6;
 @property (retain, nonatomic) IBOutlet UIButton *presetButton7;
 
+
+
+- (IBAction)fxPackClicked0:(UIButton *)sender;
+- (IBAction)fxPackClicked1:(UIButton *)sender;
+- (IBAction)fxPackClicked2:(UIButton *)sender;
+
+@property (retain, nonatomic) IBOutlet UIButton *fxPackButton0;
+@property (retain, nonatomic) IBOutlet UIButton *fxPackButton1;
+@property (retain, nonatomic) IBOutlet UIButton *fxPackButton2;
 
 
 @end

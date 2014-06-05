@@ -18,6 +18,7 @@
 #include "LiveAudioStream.h"
 #include "AudioFileRecord.h"
 #include "AudioMixerPlayer.h"
+#include "LoadPreset.h"
 
 class AudioEngine
 {
@@ -70,6 +71,9 @@ public:
     
     void motionUpdate(float* motion);
     
+    int loadFXPreset(int pack, String filepath);
+    int getCurrentFXPack();
+    
     
 private:
 
@@ -78,6 +82,8 @@ private:
     
     ScopedPointer<AudioFileRecord>      audioFileRecorder;
     ScopedPointer<AudioMixerPlayer>     audioMixer;
+    
+    ScopedPointer<LoadPreset>           presetLoader;
     
     StringArray         recordingFilePathArray1;
     StringArray         recordingFilePathArray2;
@@ -96,6 +102,7 @@ private:
     
     bool m_bLiveAudioThreadRunning;
     int  m_iCurrentPresetBankLoaded;
+    int  m_iCurrentFXPackLoaded;
     
 };
 

@@ -121,14 +121,9 @@ void LiveAudioStream::addAudioEffect(int sampleID, int effectPosition, int effec
     
     else
     {
-        if (effectPosition < (MIN_NUM_EFFECTS - 1))
+        if (effectPosition < NUM_EFFECTS_SLOTS)
         {
             audioEffectSource.set(effectPosition, new AudioEffectSource(effectID, 2));
-        }
-        
-        else
-        {
-            audioEffectSource.add(new AudioEffectSource(effectID, 2));
         }
     }
 }

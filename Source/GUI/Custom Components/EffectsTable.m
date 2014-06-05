@@ -37,7 +37,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return NUM_EFFECTS;
+    return NUM_EFFECTS_TYPES;
 }
 
 

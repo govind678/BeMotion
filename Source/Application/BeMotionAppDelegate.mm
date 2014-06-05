@@ -27,12 +27,15 @@
     NSString *samplePath3 = [[NSBundle mainBundle] pathForResource:@"EKit3" ofType:@"wav"];
     NSString *samplePath4 = [[NSBundle mainBundle] pathForResource:@"EKit4" ofType:@"wav"];
     
+    NSString *fxPath0 = [[NSBundle mainBundle] pathForResource:@"Percs_Delay" ofType:@"json"];
     
     backendInterface->loadAudioFile(0, samplePath0);
     backendInterface->loadAudioFile(1, samplePath1);
     backendInterface->loadAudioFile(2, samplePath2);
     backendInterface->loadAudioFile(3, samplePath3);
     backendInterface->loadAudioFile(4, samplePath4);
+    
+    backendInterface->loadFXPreset(0, fxPath0);
     
     
     metronome   =   [[Metronome alloc] init];

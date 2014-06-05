@@ -15,7 +15,6 @@
 #include "JuceHeader.h"
 
 #define NUM_SAMPLE_SOURCES          5
-#define MIN_NUM_EFFECTS             4
 #define NUM_INPUT_CHANNELS          2
 #define NUM_OUTPUT_CHANNELS         2
 

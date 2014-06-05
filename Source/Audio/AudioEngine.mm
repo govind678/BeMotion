@@ -20,6 +20,7 @@ AudioEngine::AudioEngine()
     
     m_bLiveAudioThreadRunning   =   false;
     m_iCurrentPresetBankLoaded  =   PRESET_BANK_1;
+    m_iCurrentFXPackLoaded      =   0;
     
     audioFileRecorder   =   new AudioFileRecord(sharedAudioDeviceManager);
     audioMixer          =   new AudioMixerPlayer(sharedAudioDeviceManager);
@@ -48,6 +49,10 @@ AudioEngine::AudioEngine()
 //        playbackFilePathArray.add(currentPlaybackPath + String(i) + ".flac");
         m_pbRecordingToggle.add(false);
     }
+    
+    
+    presetLoader        =   new LoadPreset();
+    presetLoader->setAudioMixerPlayer(audioMixer);
 }
 
 
@@ -62,6 +67,7 @@ AudioEngine::~AudioEngine()
     audioFileRecorder           =   nullptr;
     audioMixer                  =   nullptr;
 //    liveAudioStream             =   nullptr;
+    presetLoader                =   nullptr;
 }
 
 
@@ -271,5 +277,17 @@ void AudioEngine::motionUpdate(float *motion)
 void AudioEngine::setTempo(float newTempo)
 {
     audioMixer->setTempo(newTempo);
+}
+
+
+int AudioEngine::loadFXPreset(int pack, String filepath)
+{
+    m_iCurrentFXPackLoaded = pack;
+    return (presetLoader->loadFXPreset(filepath));
+}
+
+int AudioEngine::getCurrentFXPack()
+{
+    return m_iCurrentFXPackLoaded;
 }
 

@@ -612,7 +612,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return NUM_EFFECTS;
+    return NUM_EFFECTS_TYPES;
 }
 
 // Fill Picker View with effect names

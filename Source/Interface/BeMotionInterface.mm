@@ -127,6 +127,16 @@ void BeMotionInterface::setCurrentPresetBank(int presetBank)
 {
     audioEngine->setCurrentPresetBank(presetBank);
 }
+
+
+int BeMotionInterface::loadFXPreset(int pack, NSString *filepath)
+{
+    return (audioEngine->loadFXPreset(pack, String([filepath UTF8String])));
+}
+
+
+
+
 //==============================================================================
 // Get Methods to update GUI
 // Get Effect Type
@@ -137,7 +147,7 @@ int BeMotionInterface::getEffectType(int sampleID, int effectPosition)
     return audioEngine->getEffectType(sampleID, effectPosition);
 }
 
-int BeMotionInterface::getCurrentPresetBank()
+int BeMotionInterface::getCurrentAudioPresetBank()
 {
     return audioEngine->getCurrentPresetBank();
 }
@@ -179,3 +189,7 @@ bool BeMotionInterface::getSamplePlaybackStatus(int sampleID)
     return audioEngine->getSamplePlaybackStatus(sampleID);
 }
 
+int BeMotionInterface::getCurrentFXPack()
+{
+    return audioEngine->getCurrentFXPack();
+}

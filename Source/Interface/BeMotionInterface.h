@@ -51,13 +51,16 @@ public:
     void setCurrentPresetBank(int presetBank);
     
     void motionUpdate(float* motion);
+    
+    int loadFXPreset(int pack, NSString* filepath);
     //========================================================
     
 
     //============== Backend to GUI Methods ==================
     int getEffectType(int sampleID, int effectPosition);
     
-    int getCurrentPresetBank();
+    int getCurrentAudioPresetBank();
+    int getCurrentFXPack();
     
     float getEffectParameter(int sampleID, int effectPosition, int parameterID);
     float getSampleParameter(int sampleID, int parameterID);
