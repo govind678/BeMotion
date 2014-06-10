@@ -19,7 +19,7 @@ AudioEngine::AudioEngine()
     sharedAudioDeviceManager.getAudioDeviceSetup(deviceSetup);
     
     m_bLiveAudioThreadRunning   =   false;
-    m_iCurrentPresetBankLoaded  =   PRESET_BANK_1;
+    m_iCurrentPresetBankLoaded  =   PRESET_BANK_EKIT;
     m_iCurrentFXPackLoaded      =   0;
     
     audioFileRecorder   =   new AudioFileRecord(sharedAudioDeviceManager);
@@ -37,8 +37,6 @@ AudioEngine::AudioEngine()
     
     m_pbRecordingToggle.clear();
     
-    
-    
     for (int i = 0; i < NUM_SAMPLE_SOURCES; i++)
     {
         recordingFilePathArray1.add(currentRecordingPath1 + String(i) + ".wav");
@@ -53,6 +51,8 @@ AudioEngine::AudioEngine()
     
     presetLoader        =   new LoadPreset();
     presetLoader->setAudioMixerPlayer(audioMixer);
+    
+//    audioTrimmer        =   new TrimAudio();
 }
 
 
@@ -68,6 +68,7 @@ AudioEngine::~AudioEngine()
     audioMixer                  =   nullptr;
 //    liveAudioStream             =   nullptr;
     presetLoader                =   nullptr;
+//    audioTrimmer                =   nullptr;
 }
 
 
@@ -119,6 +120,7 @@ bool AudioEngine::isLiveAudioRunning()
 
 int AudioEngine::loadAudioFile(int sampleID, String filePath)
 {
+//    audioTrimmer->cropAudioFile(filePath, 0.5f, 2.0f);
     playbackFilePathArray.set(sampleID, filePath);
     return (audioMixer->loadAudioFile(sampleID, filePath));
 }

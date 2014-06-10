@@ -68,36 +68,42 @@ void CDelay::prepareToPlay(float sampleRate)
 
 void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 {
+    if (value < 0.0f)
+    {
+        value = 0.0f;
+    }
+    
+    else if (value > 1.0f)
+    {
+        value = 1.0f;
+    }
+    
     
 	switch(type)
 	{
 		case PARAM_1:
-			if (value > 0.0f)
+            
+            m_fDelayTime_s = value;
+            
+            for (int n = 0; n < m_iNumChannels; n++)
             {
-				m_fDelayTime_s = value;
-                
-                for (int n = 0; n < m_iNumChannels; n++)
-                {
-                    ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
-                }
-        
+                ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
             }
+            
 		break;
             
             
 		case PARAM_2:
-			if (value >= 0 && value <= 1)
-            {
-				m_fWetDry = value;
-            }
+            
+            m_fWetDry = value;
+            
 		break;
             
             
 		case PARAM_3:
-            if (value >= 0 && value <= 1)
-            {
-				m_fFeedBack = value;
-            }
+            
+            m_fFeedBack = value;
+            
 		break;
             
 		default: break;

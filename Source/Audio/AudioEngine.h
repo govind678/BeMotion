@@ -19,6 +19,7 @@
 #include "AudioFileRecord.h"
 #include "AudioMixerPlayer.h"
 #include "LoadPreset.h"
+//#include "TrimAudio.h"
 
 class AudioEngine
 {
@@ -84,6 +85,7 @@ private:
     ScopedPointer<AudioMixerPlayer>     audioMixer;
     
     ScopedPointer<LoadPreset>           presetLoader;
+//    ScopedPointer<TrimAudio>            audioTrimmer;
     
     StringArray         recordingFilePathArray1;
     StringArray         recordingFilePathArray2;

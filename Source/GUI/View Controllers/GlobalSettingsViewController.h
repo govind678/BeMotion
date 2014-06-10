@@ -56,6 +56,8 @@
 - (IBAction)presetClicked5:(UIButton *)sender;
 - (IBAction)presetClicked6:(UIButton *)sender;
 - (IBAction)presetClicked7:(UIButton *)sender;
+- (IBAction)presetClicked8:(UIButton *)sender;
+- (IBAction)presetClicked9:(UIButton *)sender;
 
 
 @property (retain, nonatomic) IBOutlet UIButton *presetButton1;
@@ -65,6 +67,8 @@
 @property (retain, nonatomic) IBOutlet UIButton *presetButton5;
 @property (retain, nonatomic) IBOutlet UIButton *presetButton6;
 @property (retain, nonatomic) IBOutlet UIButton *presetButton7;
+@property (retain, nonatomic) IBOutlet UIButton *presetButton8;
+@property (retain, nonatomic) IBOutlet UIButton *presetButton9;
 
 
 
@@ -72,10 +76,12 @@
 - (IBAction)fxPackClicked1:(UIButton *)sender;
 - (IBAction)fxPackClicked2:(UIButton *)sender;
 - (IBAction)fxPackClicked3:(UIButton *)sender;
+- (IBAction)fxPackClicked4:(UIButton *)sender;
 
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton0;
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton1;
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton2;
 @property (retain, nonatomic) IBOutlet UIButton *fxPackButton3;
+@property (retain, nonatomic) IBOutlet UIButton *fxPackButton4;
 
 @end

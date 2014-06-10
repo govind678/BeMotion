@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>45A02536-CBC3-4FD0-862F-160425F995CC</string>
+	<string>20A12261-A2C5-48DC-A27E-3573044D7777</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BeMotion</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>858E67EB-FE17-4091-AD61-6A0E56581E88</key>
-		<string>https://github.com/govind678/BeMotion</string>
+		<key>2497C337-4FEA-455E-9CA8-43970DD75017</key>
+		<string>https://github.com/govind678/BeMotion.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Builds/BeMotion.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>858E67EB-FE17-4091-AD61-6A0E56581E88</key>
+		<key>2497C337-4FEA-455E-9CA8-43970DD75017</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/govind678/BeMotion</string>
+	<string>https://github.com/govind678/BeMotion.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>858E67EB-FE17-4091-AD61-6A0E56581E88</string>
+	<string>2497C337-4FEA-455E-9CA8-43970DD75017</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>858E67EB-FE17-4091-AD61-6A0E56581E88</string>
+			<string>2497C337-4FEA-455E-9CA8-43970DD75017</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BeMotion</string>
 		</dict>

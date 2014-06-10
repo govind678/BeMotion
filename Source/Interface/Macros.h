@@ -87,23 +87,27 @@
 
 
 //========== Sample Preset Banks ==========//
-# define PRESET_BANK_1           0
-# define PRESET_BANK_2           1
-# define PRESET_BANK_3           2
-# define PRESET_BANK_4           3
-# define PRESET_BANK_5           4
-# define PRESET_BANK_6           5
-# define PRESET_BANK_7           6
+# define PRESET_BANK_EKIT               0
+# define PRESET_BANK_DUBBEAT            1
+# define PRESET_BANK_BREAKBEAT          2
+# define PRESET_BANK_INDIANPERC         3
+# define PRESET_BANK_EMBRYO             4
+# define PRESET_BANK_SKIES              5
+# define PRESET_BANK_MT                 6
+# define PRESET_BANK_LATINPERC          7
+# define PRESET_BANK_LATINLOOP          8
 
 
 //========== Sample Bank default Tempos ===========//
-# define BANK1_TEMPO            120.0f
+# define BANK0_TEMPO            120.0f
+# define BANK1_TEMPO            140.0f
 # define BANK2_TEMPO            140.0f
-# define BANK3_TEMPO            140.0f
-# define BANK4_TEMPO            100.0f
-# define BANK5_TEMPO            200.0f
-# define BANK6_TEMPO            180.0f
-# define BANK7_TEMPO            120.0f
+# define BANK3_TEMPO            100.0f
+# define BANK4_TEMPO            200.0f
+# define BANK5_TEMPO            180.0f
+# define BANK6_TEMPO            120.0f
+# define BANK7_TEMPO            126.0f
+# define BANK8_TEMPO            126.0f
 
 
 

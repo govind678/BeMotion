@@ -103,6 +103,7 @@ public:
         monoInputChannelNumber = activeInputChans.findNextSetBit (0);
 
         AudioSessionSetActive (true);
+//        [[AVAudioSession sharedInstance] setActive:true];
 
         if (numInputChannels > 0 && audioInputIsAvailable)
         {
@@ -144,6 +145,7 @@ public:
 
             AudioSessionRemovePropertyListenerWithUserData (kAudioSessionProperty_AudioRouteChange, routingChangedStatic, this);
             AudioSessionSetActive (false);
+//            [[AVAudioSession sharedInstance] setActive:false];
 
             if (audioUnit != 0)
             {
@@ -388,6 +390,7 @@ private:
         createAudioUnit();
 
         AudioSessionSetActive (true);
+//        [[AVAudioSession sharedInstance] setActive:true];
 
         if (audioUnit != 0)
         {
@@ -405,6 +408,7 @@ private:
         AudioSessionHolder()
         {
             AudioSessionInitialize (0, 0, interruptionListenerCallback, this);
+
         }
 
         static void interruptionListenerCallback (void* client, UInt32 interruptionType)
@@ -431,6 +435,7 @@ private:
             isRunning = false;
             AudioOutputUnitStop (audioUnit);
             AudioSessionSetActive (false);
+//            [[AVAudioSession sharedInstance] setActive:false];
 
             const ScopedLock sl (callbackLock);
 
@@ -442,6 +447,7 @@ private:
         {
             isRunning = true;
             AudioSessionSetActive (true);
+//            [[AVAudioSession sharedInstance] setActive:true];
             AudioOutputUnitStart (audioUnit);
 
             const ScopedLock sl (callbackLock);
@@ -549,12 +555,23 @@ private:
     static OSStatus getSessionProperty (AudioSessionPropertyID propID, Type& result) noexcept
     {
         UInt32 valueSize = sizeof (result);
+//        [[AVAudioSession sharedInstance] get]
         return AudioSessionGetProperty (propID, &valueSize, &result);
     }
 
-    static void setSessionUInt32Property  (AudioSessionPropertyID propID, UInt32  v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
-    static void setSessionFloat32Property (AudioSessionPropertyID propID, Float32 v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
-    static void setSessionFloat64Property (AudioSessionPropertyID propID, Float64 v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
+    static void setSessionUInt32Property  (AudioSessionPropertyID propID, UInt32  v) noexcept {
+        AudioSessionSetProperty (propID, sizeof (v), &v);
+//        NSError* error;
+//        [[AVAudioSession sharedInstance] setCategory:propID error:&error];
+    }
+    
+    static void setSessionFloat32Property (AudioSessionPropertyID propID, Float32 v) noexcept  {
+        AudioSessionSetProperty (propID, sizeof (v), &v);
+    }
+    
+    static void setSessionFloat64Property (AudioSessionPropertyID propID, Float64 v) noexcept  {
+        AudioSessionSetProperty (propID, sizeof (v), &v);
+    }
 
     JUCE_DECLARE_NON_COPYABLE (iOSAudioIODevice)
 };

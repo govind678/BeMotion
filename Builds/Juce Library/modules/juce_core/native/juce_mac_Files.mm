@@ -108,26 +108,26 @@ namespace FileHelpers
     }
    #endif
 
-    static bool launchExecutable (const String& pathAndArguments)
-    {
-        const char* const argv[4] = { "/bin/sh", "-c", pathAndArguments.toUTF8(), 0 };
-
-        const int cpid = fork();
-
-        if (cpid == 0)
-        {
-            // Child process
-            if (execve (argv[0], (char**) argv, 0) < 0)
-                exit (0);
-        }
-        else
-        {
-            if (cpid < 0)
-                return false;
-        }
-
-        return true;
-    }
+//    static bool launchExecutable (const String& pathAndArguments)
+//    {
+//        const char* const argv[4] = { "/bin/sh", "-c", pathAndArguments.toUTF8(), 0 };
+//
+//        const int cpid = fork();
+//
+//        if (cpid == 0)
+//        {
+//            // Child process
+//            if (execve (argv[0], (char**) argv, 0) < 0)
+//                exit (0);
+//        }
+//        else
+//        {
+//            if (cpid < 0)
+//                return false;
+//        }
+//
+//        return true;
+//    }
 }
 
 bool File::isOnCDRomDrive() const
