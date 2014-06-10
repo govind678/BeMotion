@@ -97,6 +97,7 @@
 # define PRESET_BANK_LATINPERC          7
 # define PRESET_BANK_LATINLOOP          8
 # define PRESET_BANK_ELECTRONIC         9
+# define PRESET_BANK_ELECTRONICA        10
 
 
 //========== Sample Bank default Tempos ===========//
@@ -110,6 +111,7 @@
 # define BANK7_TEMPO            126.0f
 # define BANK8_TEMPO            126.0f
 # define BANK9_TEMPO            85.0f
+# define BANK10_TEMPO           85.0f
 
 
 

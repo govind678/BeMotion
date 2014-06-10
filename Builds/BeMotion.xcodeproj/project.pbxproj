@@ -142,6 +142,11 @@
 		FCC382E61947BAA30042222F /* Electronic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382E11947BAA30042222F /* Electronic2.wav */; };
 		FCC382E71947BAA30042222F /* Electronic3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382E21947BAA30042222F /* Electronic3.wav */; };
 		FCC382E81947BAA30042222F /* Electronic4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382E31947BAA30042222F /* Electronic4.wav */; };
+		FCC382EF1947CC1A0042222F /* Electronica0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EA1947CC1A0042222F /* Electronica0.wav */; };
+		FCC382F01947CC1A0042222F /* Electronica1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EB1947CC1A0042222F /* Electronica1.wav */; };
+		FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EC1947CC1A0042222F /* Electronica2.wav */; };
+		FCC382F21947CC1A0042222F /* Electronica3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382ED1947CC1A0042222F /* Electronica3.wav */; };
+		FCC382F31947CC1A0042222F /* Electronica4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EE1947CC1A0042222F /* Electronica4.wav */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
 		FCCF84BC19266AC500B76E77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84BB19266AC500B76E77 /* UIKit.framework */; };
@@ -346,6 +351,11 @@
 		FCC382E11947BAA30042222F /* Electronic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronic2.wav; sourceTree = "<group>"; };
 		FCC382E21947BAA30042222F /* Electronic3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronic3.wav; sourceTree = "<group>"; };
 		FCC382E31947BAA30042222F /* Electronic4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronic4.wav; sourceTree = "<group>"; };
+		FCC382EA1947CC1A0042222F /* Electronica0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica0.wav; sourceTree = "<group>"; };
+		FCC382EB1947CC1A0042222F /* Electronica1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica1.wav; sourceTree = "<group>"; };
+		FCC382EC1947CC1A0042222F /* Electronica2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica2.wav; sourceTree = "<group>"; };
+		FCC382ED1947CC1A0042222F /* Electronica3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica3.wav; sourceTree = "<group>"; };
+		FCC382EE1947CC1A0042222F /* Electronica4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica4.wav; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCF84B719266AC500B76E77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCCF84B919266AC500B76E77 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1665,6 +1675,7 @@
 		FCC382781947A3A80042222F /* Audio Samples */ = {
 			isa = PBXGroup;
 			children = (
+				FCC382E91947CC1A0042222F /* Electronic2 85 */,
 				FCC382DE1947BAA30042222F /* Electronic 85 */,
 				FCC382791947A3A80042222F /* Breakbeat 140 */,
 				FCC3827F1947A3A80042222F /* DubBeat 140 */,
@@ -1797,6 +1808,18 @@
 				FCC382E31947BAA30042222F /* Electronic4.wav */,
 			);
 			path = "Electronic 85";
+			sourceTree = "<group>";
+		};
+		FCC382E91947CC1A0042222F /* Electronic2 85 */ = {
+			isa = PBXGroup;
+			children = (
+				FCC382EA1947CC1A0042222F /* Electronica0.wav */,
+				FCC382EB1947CC1A0042222F /* Electronica1.wav */,
+				FCC382EC1947CC1A0042222F /* Electronica2.wav */,
+				FCC382ED1947CC1A0042222F /* Electronica3.wav */,
+				FCC382EE1947CC1A0042222F /* Electronica4.wav */,
+			);
+			path = "Electronic2 85";
 			sourceTree = "<group>";
 		};
 		FCCF84AB19266AC500B76E77 = {
@@ -3791,6 +3814,7 @@
 				FCC382C31947A3A80042222F /* Indian_Percussion0.wav in Resources */,
 				FCC382BF1947A3A80042222F /* Embryo1.wav in Resources */,
 				FC114119193D98AF0045A92B /* Motion.png in Resources */,
+				FCC382EF1947CC1A0042222F /* Electronica0.wav in Resources */,
 				FCC382E51947BAA30042222F /* Electronic1.wav in Resources */,
 				FC30B666193F09F20020B7D2 /* Slot_Enabled_1_2.png in Resources */,
 				FC30B668193F09F20020B7D2 /* Slot_Enabled_2_0.png in Resources */,
@@ -3816,6 +3840,7 @@
 				FC30B667193F09F20020B7D2 /* Slot_Enabled_1_3.png in Resources */,
 				FCC382C91947A3A80042222F /* Latin_Loop1.wav in Resources */,
 				FCC382B41947A3A80042222F /* DubBeat0.wav in Resources */,
+				FCC382F31947CC1A0042222F /* Electronica4.wav in Resources */,
 				FC11411B193D98AF0045A92B /* Resample.png in Resources */,
 				FCC382D21947A3A80042222F /* MachineTransformations0.wav in Resources */,
 				FCC382D91947A3A80042222F /* Skies2.wav in Resources */,
@@ -3830,6 +3855,7 @@
 				FCC382C11947A3A80042222F /* Embryo3.wav in Resources */,
 				FC30B66B193F09F20020B7D2 /* Slot_Enabled_2_3.png in Resources */,
 				FCC382C61947A3A80042222F /* Indian_Percussion3.wav in Resources */,
+				FCC382F21947CC1A0042222F /* Electronica3.wav in Resources */,
 				FC30B60F193EE0100020B7D2 /* BeatRepeat.png in Resources */,
 				FC114118193D98AF0045A92B /* Import.png in Resources */,
 				FCC382C21947A3A80042222F /* Embryo4.wav in Resources */,
@@ -3841,6 +3867,7 @@
 				FCC382B11947A3A80042222F /* Breakbeat2.wav in Resources */,
 				FCC382E71947BAA30042222F /* Electronic3.wav in Resources */,
 				FC30B662193F09F20020B7D2 /* Slot_Enabled_0_2.png in Resources */,
+				FCC382F01947CC1A0042222F /* Electronica1.wav in Resources */,
 				FC114171193D99290045A92B /* Background.png in Resources */,
 				FCC382D71947A3A80042222F /* Skies0.wav in Resources */,
 				FC114110193D98AF0045A92B /* Indian Percussion.png in Resources */,
@@ -3885,6 +3912,7 @@
 				FC30B613193EF2B80020B7D2 /* Back.png in Resources */,
 				FC30B671193F09F20020B7D2 /* Slot_Selected_0_1.png in Resources */,
 				FC30B60E193EE0100020B7D2 /* Activate.png in Resources */,
+				FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */,
 				FCC382CE1947A3A80042222F /* Latin_Percussion1.wav in Resources */,
 				FC11411A193D98AF0045A92B /* Record.png in Resources */,
 				FC30B677193F09F20020B7D2 /* Slot_Selected_1_3.png in Resources */,

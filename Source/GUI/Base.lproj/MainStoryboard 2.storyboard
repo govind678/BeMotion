@@ -370,7 +370,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="dAe-Bg-7HG">
-                                <rect key="frame" x="54" y="278" width="50" height="50"/>
+                                <rect key="frame" x="20" y="278" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.47830177919708028" green="0.5080691149635036" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
@@ -383,7 +383,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBs-Gx-LNd">
-                                <rect key="frame" x="134" y="278" width="50" height="50"/>
+                                <rect key="frame" x="96" y="278" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.5080691149635036" blue="0.52517677919708028" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
@@ -408,7 +408,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jba-Wp-Miv">
-                                <rect key="frame" x="217" y="278" width="50" height="50"/>
+                                <rect key="frame" x="173" y="278" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
@@ -417,6 +417,18 @@
                                 </state>
                                 <connections>
                                     <action selector="presetClicked10:" destination="JFx-jb-ULP" eventType="touchUpInside" id="pRs-SZ-PCz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzS-2M-CLJ">
+                                <rect key="frame" x="245" y="278" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <state key="normal" title="Electronic 2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presetClicked11:" destination="JFx-jb-ULP" eventType="touchUpInside" id="SYa-eY-oLF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -434,6 +446,7 @@
                         <outlet property="fxPackButton4" destination="mTD-zZ-hQ8" id="WRU-uP-Wpi"/>
                         <outlet property="presetButton1" destination="yaZ-MZ-ns3" id="yOV-so-lFX"/>
                         <outlet property="presetButton10" destination="Jba-Wp-Miv" id="kQO-j8-Btf"/>
+                        <outlet property="presetButton11" destination="zzS-2M-CLJ" id="my9-gQ-oxn"/>
                         <outlet property="presetButton2" destination="0iH-TI-BWv" id="GxZ-l0-uDw"/>
                         <outlet property="presetButton3" destination="SX1-8y-bQk" id="Cz6-5M-stM"/>
                         <outlet property="presetButton4" destination="n3p-Ac-VvI" id="XPI-IQ-loF"/>
@@ -739,6 +752,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Dxj-XE-Hki"/>
+        <segue reference="LLu-g9-EV4"/>
     </inferredMetricsTieBreakers>
 </document>

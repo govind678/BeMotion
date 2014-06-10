@@ -22,7 +22,7 @@
 @implementation GlobalSettingsViewController
 
 @synthesize tempoLabel, tempoSlider;
-@synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6, presetButton7, presetButton8, presetButton9, presetButton10;
+@synthesize presetButton1, presetButton2, presetButton3, presetButton4, presetButton5, presetButton6, presetButton7, presetButton8, presetButton9, presetButton10, presetButton11;
 @synthesize fxPackButton0, fxPackButton1, fxPackButton2, fxPackButton3, fxPackButton4;
 
 
@@ -95,6 +95,7 @@
     [fxPackButton4 release];
     
     [presetButton10 release];
+    [presetButton11 release];
     [super dealloc];
 }
 
@@ -181,6 +182,13 @@
     [self updateAudioPresetButtons];
 }
 
+- (IBAction)presetClicked11:(UIButton *)sender
+{
+    m_iCurrentPresetBank    =   10;
+    [self loadAudioPresetBank];
+    [self updateAudioPresetButtons];
+}
+
 
 
 - (void) updateAudioPresetButtons
@@ -198,6 +206,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
         case PRESET_BANK_DUBBEAT:
@@ -211,6 +220,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -225,6 +235,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
         case PRESET_BANK_INDIANPERC:
@@ -238,6 +249,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -252,6 +264,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -266,6 +279,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -280,6 +294,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -294,6 +309,7 @@
             [presetButton8 setAlpha:1.0f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
             
@@ -308,6 +324,7 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:1.0f];
             [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:0.2f];
             break;
             
         case PRESET_BANK_ELECTRONIC:
@@ -321,6 +338,21 @@
             [presetButton8 setAlpha:0.2f];
             [presetButton9 setAlpha:0.2f];
             [presetButton10 setAlpha:1.0f];
+            [presetButton11 setAlpha:0.2f];
+            break;
+            
+        case PRESET_BANK_ELECTRONICA:
+            [presetButton1 setAlpha:0.2f];
+            [presetButton2 setAlpha:0.2f];
+            [presetButton3 setAlpha:0.2f];
+            [presetButton4 setAlpha:0.2f];
+            [presetButton5 setAlpha:0.2f];
+            [presetButton6 setAlpha:0.2f];
+            [presetButton7 setAlpha:0.2f];
+            [presetButton8 setAlpha:0.2f];
+            [presetButton9 setAlpha:0.2f];
+            [presetButton10 setAlpha:0.2f];
+            [presetButton11 setAlpha:1.0f];
             break;
             
         default:
@@ -455,6 +487,18 @@
             sample3Path = [[NSBundle mainBundle] pathForResource:@"Electronic2" ofType:@"wav"];
             sample4Path = [[NSBundle mainBundle] pathForResource:@"Electronic3" ofType:@"wav"];
             sample5Path = [[NSBundle mainBundle] pathForResource:@"Electronic4" ofType:@"wav"];
+            
+            m_iTempo = BANK9_TEMPO;
+            
+            break;
+            
+        case PRESET_BANK_ELECTRONICA:
+            
+            sample1Path = [[NSBundle mainBundle] pathForResource:@"Electronica0" ofType:@"wav"];
+            sample2Path = [[NSBundle mainBundle] pathForResource:@"Electronica1" ofType:@"wav"];
+            sample3Path = [[NSBundle mainBundle] pathForResource:@"Electronica2" ofType:@"wav"];
+            sample4Path = [[NSBundle mainBundle] pathForResource:@"Electronica3" ofType:@"wav"];
+            sample5Path = [[NSBundle mainBundle] pathForResource:@"Electronica4" ofType:@"wav"];
             
             m_iTempo = BANK9_TEMPO;
             
