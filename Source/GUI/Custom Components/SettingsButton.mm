@@ -23,19 +23,19 @@
         switch (buttonID)
         {
             case 0:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"settingsBackground0.png"]]];
+                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton0.png"]]];
                 break;
                 
             case 1:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"settingsBackground1.png"]]];
+                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton1.png"]]];
                 break;
                 
             case 2:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"settingsBackground2.png"]]];
+                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton2.png"]]];
                 break;
                 
             case 3:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"settingsBackground3.png"]]];
+                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton3.png"]]];
                 break;
                 
             default:
@@ -47,29 +47,29 @@
         [recordButton addTarget:self action:@selector(recordButtonClicked) forControlEvents:UIControlEventTouchDown];
         [recordButton addTarget:self action:@selector(recordButtonReleased) forControlEvents:UIControlEventTouchUpInside];
         recordButton.frame = CGRectMake(12.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-        [recordButton setClipsToBounds:YES];
-        [[recordButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+//        [recordButton setClipsToBounds:YES];
+//        [[recordButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
         UIButton *fxButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [fxButton setImage:[UIImage imageNamed:@"FX.png"] forState:UIControlStateNormal];
         [fxButton addTarget:self action:@selector(fxButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         fxButton.frame = CGRectMake(79.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-        [fxButton setClipsToBounds:YES];
-        [[fxButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+//        [fxButton setClipsToBounds:YES];
+//        [[fxButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
         UIButton *resampleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [resampleButton setImage:[UIImage imageNamed:@"Resample.png"] forState:UIControlStateNormal];
         [resampleButton addTarget:self action:@selector(resampleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         resampleButton.frame = CGRectMake(146.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-        [resampleButton setClipsToBounds:YES];
-        [[resampleButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+//        [resampleButton setClipsToBounds:YES];
+//        [[resampleButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
         UIButton *importButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [importButton setImage:[UIImage imageNamed:@"Import.png"] forState:UIControlStateNormal];
         [importButton addTarget:self action:@selector(importButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         importButton.frame = CGRectMake(213.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-        [importButton setClipsToBounds:YES];
-        [[importButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+//        [importButton setClipsToBounds:YES];
+//        [[importButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
         recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 2.0f, 100.0f, 16.0f)];
         [recordLabel setBackgroundColor:[UIColor clearColor]];
