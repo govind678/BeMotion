@@ -83,7 +83,11 @@ void LiveAudioStream::audioDeviceIOCallback( const float** inputChannelData,
     {
         for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
         {
-            audioEffectSource.getUnchecked(effectNo)->process(outputChannelData, blockSize, m_pbBypassStateArray[effectNo]);
+            if (m_pbBypassStateArray[effectNo] == false)
+            {
+                audioEffectSource.getUnchecked(effectNo)->process(outputChannelData, blockSize);
+            }
+            
         }
         
     }

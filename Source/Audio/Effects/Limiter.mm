@@ -94,40 +94,40 @@ void CLimiter::setParam(int type, float value)
 	}
 }
 
-void CLimiter::process(float** audioBuffer, int numFrames, bool bypass)
+
+void CLimiter::process(float** audioBuffer, int numFrames)
 {
-	if (!bypass)
+    for (int c = 0; c < m_iNumChannels; c++)
     {
-        for (int c = 0; c < m_iNumChannels; c++)
-		{
-			for (int i = 0; i < numFrames; i++)
-			{	
-
-				if (fabs(audioBuffer[c][i]) > m_fPeak[c])
-				{
-					m_fCoeff[c] = m_fAttackInSec;
-				} else {
-					m_fCoeff[c] = m_fReleaseInSec;
-				}
-
-				m_fPeak[c] = (1.0f-m_fCoeff[c]) * m_fPeak[c] + m_fCoeff[c] * fabs(audioBuffer[c][i]);
-
-				if (std::min(1.0f, m_fThresh/m_fPeak[c]) < m_fGain[c])
-				{
-					m_fCoeff[c] = m_fAttackInSec;
-				} else {
-					m_fCoeff[c] = m_fReleaseInSec;
-				}
-
-				m_fGain[c] = (1.0f-m_fCoeff[c]) * m_fGain[c] + m_fCoeff[c] * (std::min(1.0f, m_fThresh/m_fPeak[c]));
-
-				m_ppRingBuffer[c]->putPostInc(audioBuffer[c][i]);
-				audioBuffer[c][i] = m_fGain[c] * m_ppRingBuffer[c]->getPostInc();
+        for (int i = 0; i < numFrames; i++)
+        {
+            
+            if (fabs(audioBuffer[c][i]) > m_fPeak[c])
+            {
+                m_fCoeff[c] = m_fAttackInSec;
+            } else {
+                m_fCoeff[c] = m_fReleaseInSec;
+            }
+            
+            m_fPeak[c] = (1.0f-m_fCoeff[c]) * m_fPeak[c] + m_fCoeff[c] * fabs(audioBuffer[c][i]);
+            
+            if (std::min(1.0f, m_fThresh/m_fPeak[c]) < m_fGain[c])
+            {
+                m_fCoeff[c] = m_fAttackInSec;
+            } else {
+                m_fCoeff[c] = m_fReleaseInSec;
+            }
+            
+            m_fGain[c] = (1.0f-m_fCoeff[c]) * m_fGain[c] + m_fCoeff[c] * (std::min(1.0f, m_fThresh/m_fPeak[c]));
+            
+            m_ppRingBuffer[c]->putPostInc(audioBuffer[c][i]);
+            audioBuffer[c][i] = m_fGain[c] * m_ppRingBuffer[c]->getPostInc();
 			
-			}
-		}   
+        }
     }
 }
+
+
 
 float CLimiter::getParam(int type)
 {

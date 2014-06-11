@@ -31,14 +31,9 @@ void CTremolo::initDefaults()
 {
 	m_fDepth	= 1.0;
 	m_fRate		= 5.0;
-    m_kLFOType  = CLFO::kSin;
+    m_fShape    = 0.0f;
 }
 
-void CTremolo::setLFOType(CLFO::LFO_Type type)
-{
-    m_kLFOType  =   type;
-	LFO->setLFOType(m_kLFOType);
-}
 
 
 void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
@@ -53,27 +48,11 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
             
 		case PARAM_2:
             m_fDepth = value;
-		break;
+            break;
             
         case PARAM_3:
-            
-            if ((value >= 0) && (value < 0.33))
-            {
-                m_kLFOType  = CLFO::kSin;
-                setLFOType(m_kLFOType);
-            }
-            
-            else if ((value >= 0.33) && (value < 0.66))
-            {
-                m_kLFOType  = CLFO::kTriangle;
-                setLFOType(m_kLFOType);
-            }
-            
-            else
-            {
-                m_kLFOType  =   CLFO::kSquare;
-                setLFOType(m_kLFOType);
-            }
+            m_fShape = value;
+            LFO->setShape(m_fShape);
             break;
             
 		default:
@@ -81,24 +60,20 @@ void CTremolo::setParam(/*hFile::enumType type*/ int type, float value)
 	}
 }
 
-void CTremolo::process(float **inputBuffer, int numFrames, bool bypass)
-{
-    if (!bypass)
-    {
-	// generate the LFO:
-	LFO->generate(numFrames);
 
+void CTremolo::process(float **inputBuffer, int numFrames)
+{
+    // generate the LFO:
+	LFO->generate(numFrames);
+    
 	// for each channel, for each sample:
 	for (int i = 0; i < numFrames; i++)
 	{
 		for (int c = 0; c < m_iNumChannels; c++)
-		{	
+		{
 			inputBuffer[c][i] = (1 + m_fDepth*LFO->getLFOSampleData(i))*(inputBuffer[c][i]);
 		}
 	}
-        
-    }
-
 }
 
 
@@ -116,21 +91,7 @@ float CTremolo::getParam(int type)
             
         case PARAM_3:
             
-            if (m_kLFOType == CLFO::kSin)
-            {
-                return 0.165f;
-            }
-            
-            else if (m_kLFOType == CLFO::kTriangle)
-            {
-                return 0.495f;
-            }
-            
-            else
-            {
-                return 0.825f;
-            }
-            
+            return m_fShape;
             break;
             
 		default:

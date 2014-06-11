@@ -147,6 +147,7 @@
 		FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EC1947CC1A0042222F /* Electronica2.wav */; };
 		FCC382F21947CC1A0042222F /* Electronica3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382ED1947CC1A0042222F /* Electronica3.wav */; };
 		FCC382F31947CC1A0042222F /* Electronica4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EE1947CC1A0042222F /* Electronica4.wav */; };
+		FCC382F61948B1CE0042222F /* Delay2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F41948B1CE0042222F /* Delay2.mm */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
 		FCCF84BC19266AC500B76E77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84BB19266AC500B76E77 /* UIKit.framework */; };
@@ -356,6 +357,8 @@
 		FCC382EC1947CC1A0042222F /* Electronica2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica2.wav; sourceTree = "<group>"; };
 		FCC382ED1947CC1A0042222F /* Electronica3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica3.wav; sourceTree = "<group>"; };
 		FCC382EE1947CC1A0042222F /* Electronica4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica4.wav; sourceTree = "<group>"; };
+		FCC382F41948B1CE0042222F /* Delay2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Delay2.mm; sourceTree = "<group>"; };
+		FCC382F51948B1CE0042222F /* Delay2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delay2.h; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCF84B719266AC500B76E77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCCF84B919266AC500B76E77 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1922,6 +1925,8 @@
 		FCCF850919266E5F00B76E77 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				FCC382F51948B1CE0042222F /* Delay2.h */,
+				FCC382F41948B1CE0042222F /* Delay2.mm */,
 				FCCF850A19266E5F00B76E77 /* Delay.h */,
 				FCCF850B19266E5F00B76E77 /* Delay.mm */,
 				FCCF850C19266E5F00B76E77 /* Granularizer.h */,
@@ -3971,6 +3976,7 @@
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
 				FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */,
 				FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */,
+				FCC382F61948B1CE0042222F /* Delay2.mm in Sources */,
 				FCCF854319266E5F00B76E77 /* AudioMixerPlayer.mm in Sources */,
 				FCC38277194629E90042222F /* TrimAudio.mm in Sources */,
 				FCCF854019266E5F00B76E77 /* AudioEffectSource.mm in Sources */,

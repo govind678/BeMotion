@@ -38,7 +38,7 @@ public:
 	void initDefaults();
 
 	// process:
-	void process(float **inputBuffer, int numFrames, bool bypass);
+	void process(float **inputBuffer, int numFrames);
 
 private:
 

@@ -113,27 +113,21 @@ float CWah::getParam(int type)
 	}
 }
 
-void CWah::process(float **inputBuffer, int numFrames, bool bypass)
+void CWah::process(float **inputBuffer, int numFrames)
 {
-    
-    if (! bypass)
+    for (int i = 0; i < numFrames; i++)
     {
-        for (int i = 0; i < numFrames; i++)
+        for (int c = 0; c < m_iNumChannels; c++)
         {
-            for (int c = 0; c < m_iNumChannels; c++)
-            {
-                
-                m_fTempVal		  = inputBuffer[c][i] - m_fCoeff2 * buff[c][0] - m_fCoeff3 * buff[c][1];
-                
-                inputBuffer[c][i] = ((1.0 - m_fTheta* m_fTheta)*0.0001 + m_fTheta * m_fTheta) * m_fGain * m_fTempVal;
-                
-                buff[c][1] = buff[c][0];
-                buff[c][0] = m_fTempVal;
-            }
+            
+            m_fTempVal		  = inputBuffer[c][i] - m_fCoeff2 * buff[c][0] - m_fCoeff3 * buff[c][1];
+            
+            inputBuffer[c][i] = ((1.0 - m_fTheta* m_fTheta)*0.0001 + m_fTheta * m_fTheta) * m_fGain * m_fTempVal;
+            
+            buff[c][1] = buff[c][0];
+            buff[c][0] = m_fTempVal;
         }
     }
-
-	
 }
 
 CWah::~CWah()

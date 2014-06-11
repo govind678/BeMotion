@@ -48,7 +48,7 @@ public:
     
     
     void audioDeviceAboutToStart(float sampleRate);
-    void process(float** audioBuffer, int blockSize, bool bypassState);
+    void process(float** audioBuffer, int blockSize);
     void audioDeviceStopped();
     
     void setTempo(float newTempo);

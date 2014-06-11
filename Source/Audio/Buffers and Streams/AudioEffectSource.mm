@@ -402,32 +402,32 @@ void AudioEffectSource::audioDeviceStopped()
 
 
 
-void AudioEffectSource::process(float **audioBuffer, int blockSize, bool bypassState)
+void AudioEffectSource::process(float **audioBuffer, int blockSize)
 {
     switch (m_iEffectID)
     {
         case EFFECT_TREMOLO:
-            m_pcTremolo->process(audioBuffer, blockSize, bypassState);
+            m_pcTremolo->process(audioBuffer, blockSize);
             break;
            
             
         case EFFECT_DELAY:
-            m_pcDelay->process(audioBuffer, blockSize, bypassState);
+            m_pcDelay->process(audioBuffer, blockSize);
             break;
             
             
         case EFFECT_VIBRATO:
-            m_pcVibrato->process(audioBuffer, blockSize, bypassState);
+            m_pcVibrato->process(audioBuffer, blockSize);
             break;
         
             
         case EFFECT_WAH:
-            m_pcWah->process(audioBuffer, blockSize, bypassState);
+            m_pcWah->process(audioBuffer, blockSize);
             break;
             
             
         case EFFECT_GRANULAR:
-            m_pcGranularizer->process(audioBuffer, blockSize, bypassState);
+            m_pcGranularizer->process(audioBuffer, blockSize);
             break;
          
             

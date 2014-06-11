@@ -77,7 +77,7 @@ void CPeakFilter::setParam(/*hFile::enumType type*/ int type, float value)
 	}
 }
 
-void CPeakFilter::process(float **inputBuffer, int numFrames, bool bypass)
+void CPeakFilter::process(float **inputBuffer, int numFrames)
 {
 	/*	-------------- MATLAB code ---------------
 		xh = [0, 0];

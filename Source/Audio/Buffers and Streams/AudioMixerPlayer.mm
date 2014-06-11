@@ -234,7 +234,7 @@ void AudioMixerPlayer::audioDeviceIOCallback(const float** inputChannelData,
         }
     }
     
-    m_pcLimiter->process(outputChannelData, numSamples, false);
+    m_pcLimiter->process(outputChannelData, numSamples);
     
 //    std::cout << m_cTime.getCurrentTime().toMilliseconds() << std::endl;
 //    std::cout << numSamples << std::endl;

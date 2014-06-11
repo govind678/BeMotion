@@ -17,10 +17,11 @@ CVibrato::CVibrato(int iNumChannels)
 	m_fSampleRate = DEFAULT_SAMPLE_RATE;
 	m_iNumChannels = iNumChannels;
     
-	m_fModulatingSample             =   0;
-	m_iModulation_Freq_Hz           =   0;
-    m_iModulation_Width_Samples     =   0;
-    fPhase                          =   0;
+	m_fModulatingSample             =   0.0f;
+	m_iModulation_Freq_Hz           =   0.0f;
+    m_iModulation_Width_Samples     =   0.0f;
+    fPhase                          =   0.0f;
+    m_fShape                        =   0.0f;
     
     m_bLFOInitialized               =   false;
     
@@ -67,12 +68,8 @@ void CVibrato::prepareToPlay(float sampleRate)
 
 
 
-void CVibrato::process(float** audioBuffer, int blockSize, bool bypassState)
+void CVibrato::process(float** audioBuffer, int blockSize)
 {
-    
-    if(!bypassState)
-    {
-    
     for (int channel = 0; channel < m_iNumChannels; channel++) {
         m_CLFO[channel] -> generate(blockSize);
     }
@@ -95,9 +92,6 @@ void CVibrato::process(float** audioBuffer, int blockSize, bool bypassState)
         }
         
     }
-    
-    }
-
 }
 
 
@@ -125,20 +119,8 @@ void CVibrato::setParam(int parameterID, float value)
             
         case PARAM_3:
             
-            if ((value >= 0) && (value < 0.33))
-            {
-                setModulationType(CLFO::kSin);
-            }
-            
-            else if ((value >= 0.33) && (value < 0.66))
-            {
-                setModulationType(CLFO::kTriangle);
-            }
-            
-            else
-            {
-                setModulationType(CLFO::kSquare);
-            }
+            m_fShape = value;
+            setShape(value);
             break;
             
         default:
@@ -161,22 +143,7 @@ float CVibrato::getParam(int parameterID)
             break;
             
         case PARAM_3:
-            
-            if (m_kLFOType == CLFO::kSin)
-            {
-                return 0.165f;
-            }
-            
-            else if (m_kLFOType == CLFO::kTriangle)
-            {
-                return 0.495f;
-            }
-            
-            else
-            {
-                return 0.825f;
-            }
-            
+            return m_fShape;
             break;
             
         default:
@@ -189,10 +156,9 @@ float CVibrato::getParam(int parameterID)
 void CVibrato::initializeDefaults()
 {
     m_iModulation_Freq_Hz   =   4.0;
-    m_kLFOType              =   CLFO::kSin;
+    setShape(0.0f);
     setModulationFrequency_Hz(4.0);
     setModulationWidth_ms(100);
-    setModulationType(m_kLFOType);
 }
 
 
@@ -217,10 +183,10 @@ void CVibrato::setModulationFrequency_Hz(float current_mod_freq_Hz)
 	
 }
 
-void CVibrato::setModulationType(CLFO::LFO_Type type)
+void CVibrato::setShape(float shape)
 {
     for (int channel = 0; channel < m_iNumChannels; channel++) {
-        m_CLFO[channel] -> setLFOType(type);
+        m_CLFO[channel]->setShape(shape);
     }
 }
 

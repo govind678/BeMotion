@@ -28,7 +28,7 @@ public:
     
     //--- Main Vibrato Process Method ---//
     void prepareToPlay(float sampleRate);
-    void process(float** audioBuffer, int blockSize, bool bypassState);
+    void process(float** audioBuffer, int blockSize);
     void finidhedPlaying();
     
     void setParam(int parameterID, float value);
@@ -50,8 +50,8 @@ private:
     int getModulationWidth_ms();
     
     
-    //--- Set and Get Modulation Type --//
-    void setModulationType(CLFO::LFO_Type type);
+    //--- Set and Get LFO Shape --//
+    void setShape(float shape);
     
     //--- Get Max Allowed Modulation Width in ms ---//
     float getMaxModulationWidth_ms();
@@ -68,15 +68,15 @@ private:
 	float		m_iModulation_Freq_Hz;
 	int         m_iModulation_Width_Samples;
     int         m_iNumChannels;
+    float       m_fShape;
     
     float fPhase;
     
     CRingBuffer<float>** m_CRingBuffer;
     CLFO** m_CLFO;
     
-    CLFO::LFO_Type  m_kLFOType;
+    float*     m_pfLFOBuffer;
     
-    float* m_pfLFOBuffer;
     
     bool       m_bLFOInitialized;
 };

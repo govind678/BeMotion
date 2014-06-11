@@ -39,7 +39,7 @@ public:
 
 	void prepareToPlay(float sampleRate);
 	void finishPlaying();
-	void process(float **audioBuffer, int numFrames, bool bypass);
+	void process(float **audioBuffer, int numFrames);
 
 	void finishPlayback();
     

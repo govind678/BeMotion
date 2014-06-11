@@ -21,22 +21,13 @@ public:
     CLFO(float fSamplingFreq);
     ~CLFO();
     
-    
-    enum LFO_Type
-    {
-        kSin,
-        kSquare,
-        kTriangle
-    };
-    
-    
     //--- Set, Get Methods for Parameters ---//
     
     void setFrequencyinHz(float frequency);
     float getFrequencyinHz();
     
-    void setLFOType(LFO_Type lfoType);
-    LFO_Type getLFOType();
+    void setShape(float shape);
+    float getShape();
     
     //--- Generate LFO ---//
     void generate(int bufferLengthToFill);
@@ -53,7 +44,8 @@ private:
 
     float m_fSampleRate;
     float m_fFrequency;
-    LFO_Type m_eLFOType;
+    float m_fShape;
+    float m_fScale;
     
     int m_iPhase;
     float m_fIncrement;
@@ -62,10 +54,9 @@ private:
     float m_fWrappedIndex;
     float m_fSlope;                     // Linear Interpolation
     
-    float m_pfSineWaveTable[4096];
-    float m_pfSquareWaveTable[4096];
-    float m_pfTriangleWaveTable[4096];
+    float m_fSample;
     
+    float m_pfSineWaveTable[4096];
 	float m_pfBufferData[4096];
     
 };

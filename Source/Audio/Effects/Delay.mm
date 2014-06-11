@@ -110,17 +110,13 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 	}
 }
 
-void CDelay::process(float** audioBuffer, int numFrames, bool bypass)
+void CDelay::process(float** audioBuffer, int numFrames)
 {
-	if (!bypass)
-    {
-        
-    
-	// for each channel, for each sample:
+    // for each channel, for each sample:
 	for (int i = 0; i < numFrames; i++)
 	{
 		for (int c = 0; c < m_iNumChannels; c++)
-		{	
+		{
 			// ugly looking equation for fractional delay:
 			audioBuffer[c][i] =
             
@@ -129,19 +125,16 @@ void CDelay::process(float** audioBuffer, int numFrames, bool bypass)
             + m_fFeedBack * m_fWetDry *
             
             ((ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
-                                                             
-            + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
-
+             
+             + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
+            
 			// outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
 			//						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
-
+            
 			// add the output value to the ring buffer:
 			ringBuffer[c]->putPostInc(audioBuffer[c][i]);
 		}
 	}
-        
-        
-    }
 }
 
 void CDelay::finishPlayback()

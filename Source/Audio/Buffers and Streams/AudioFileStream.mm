@@ -258,17 +258,19 @@ void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
     {
         for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
         {
-            if (audioEffectSource.getUnchecked(effectNo) != nullptr)
+            if (audioEffectInitialized.getUnchecked(effectNo) == true)
             {
-                audioEffectSource.getUnchecked(effectNo)->process(audioBuffer,
-                                                                  numSamples,
-                                                                  m_pbBypassStateArray[effectNo]);
+                if (m_pbBypassStateArray[effectNo] == false)
+                {
+                    audioEffectSource.getUnchecked(effectNo)->process(audioBuffer,
+                                                                  numSamples);
+                }
             }
         }
         
     }
     
-    m_pcLimiter->process(audioBuffer, numSamples, false);
+    m_pcLimiter->process(audioBuffer, numSamples);
 //    m_pcAutoLimiter->Process(numSamples, audioBuffer);
 }
 
