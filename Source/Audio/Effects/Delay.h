@@ -48,7 +48,9 @@ private:
     
     void initializeWithDefaultParameters();
 
-	CRingBuffer<float> **ringBuffer;
+//	CRingBuffer<float>** ringBuffer;
+    CRingBuffer<float>** wetSignal;
+    CRingBuffer<float>** delayLine;
 
     
     
@@ -59,7 +61,7 @@ private:
 	float m_fWetDry;
 	float m_fDelayTime_s;
     
-    
+    float m_fMix;
     float m_fFractionaDelay;
     int   m_iIntDelay;
 

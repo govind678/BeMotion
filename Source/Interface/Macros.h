@@ -145,7 +145,7 @@
 
 //===== Buffer Size and Other Effect Macros =====//
 
-# define DELAY_MAX_SAMPLES       100000
+# define DELAY_MAX_SAMPLES       131072
 # define GRANULAR_MAX_SAMPLES    250000.0
 # define LIMITER_MAX_SAMPLES     5
 # define WAH_BUFFER_SIZE         1024

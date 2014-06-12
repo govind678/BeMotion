@@ -722,7 +722,7 @@
         case 1:
             [self.slider1EffectParam setText:@"Frequency"];
             [self.slider2EffectParam setText:@"Depth"];
-            [self.slider3EffectParam setText:@"LFO"];
+            [self.slider3EffectParam setText:@"Shape"];
             break;
             
         case 2:
@@ -734,13 +734,13 @@
         case 3:
             [self.slider1EffectParam setText:@"Rate"];
             [self.slider2EffectParam setText:@"Width"];
-            [self.slider3EffectParam setText:@"LFO"];
+            [self.slider3EffectParam setText:@"Shape"];
             break;
             
         case 4:
-            [self.slider1EffectParam setText:@"Gain"];
-            [self.slider2EffectParam setText:@"Frequency"];
-            [self.slider3EffectParam setText:@"Resonance"];
+            [self.slider1EffectParam setText:@"Frequency"];
+            [self.slider2EffectParam setText:@"Resonance"];
+            [self.slider3EffectParam setText:@"Range"];
             break;
             
             

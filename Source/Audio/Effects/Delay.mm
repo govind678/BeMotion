@@ -21,15 +21,21 @@ CDelay::CDelay(int numChannels)
     m_fFeedBack     =   0.0f;
 	m_fWetDry       =   0.0f;
     m_fDelayTime_s  =   0.0f;
+    m_fMix          =   0.0f;
     
-    
-	ringBuffer = new CRingBuffer<float> *[numChannels];
+//	ringBuffer = new CRingBuffer<float> *[numChannels];
+    wetSignal  = new CRingBuffer<float>* [numChannels];
+    delayLine  = new CRingBuffer<float>* [numChannels];
 
 	for (int n = 0; n < numChannels; n++)
 	{
-		ringBuffer[n]	= new CRingBuffer<float>((int)(DELAY_MAX_SAMPLES));
+//		ringBuffer[n]	= new CRingBuffer<float>(DELAY_MAX_SAMPLES);
+        wetSignal[n]    = new CRingBuffer<float> (DELAY_MAX_SAMPLES);
+        delayLine[n]    = new CRingBuffer<float> (DELAY_MAX_SAMPLES);
 		// set indices and buffer contents to zero:
-		ringBuffer[n]->resetInstance();
+//		ringBuffer[n]->resetInstance();
+        wetSignal[n]->resetInstance();
+        delayLine[n]->resetInstance();
 	}
 
     
@@ -39,7 +45,16 @@ CDelay::CDelay(int numChannels)
 
 CDelay::~CDelay()
 {
-    delete [] ringBuffer;
+    for (int n = 0; n < m_iNumChannels; n++)
+    {
+//        delete ringBuffer[n];
+        delete wetSignal[n];
+        delete delayLine[n];
+    }
+    
+//    delete [] ringBuffer;
+    delete [] wetSignal;
+    delete [] delayLine;
 }
 
 
@@ -58,7 +73,8 @@ void CDelay::prepareToPlay(float sampleRate)
     
     for (int n = 0; n < m_iNumChannels; n++)
     {
-        ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+        wetSignal[n]->setWriteIdx(wetSignal[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+//        ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
     }
     
 }
@@ -87,7 +103,9 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
             
             for (int n = 0; n < m_iNumChannels; n++)
             {
-                ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+//                ringBuffer[n]->setWriteIdx(ringBuffer[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+                wetSignal[n]->setWriteIdx(wetSignal[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
+//                delayLine[n]->setWriteIdx(delayLine[n]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
             }
             
 		break;
@@ -112,27 +130,43 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
 
 void CDelay::process(float** audioBuffer, int numFrames)
 {
+    
     // for each channel, for each sample:
 	for (int i = 0; i < numFrames; i++)
 	{
 		for (int c = 0; c < m_iNumChannels; c++)
 		{
-			// ugly looking equation for fractional delay:
-			audioBuffer[c][i] =
+            // Create Delay Line
+            wetSignal[c]->putPostInc( audioBuffer[c][i] + (m_fFeedBack * delayLine[c]->getPostInc()) );
             
-            (1 - m_fWetDry) * (audioBuffer[c][i])
+            if (m_fWetDry <= 0.5f)
+            {
+                audioBuffer[c][i] = audioBuffer[c][i] + (2 * m_fWetDry * wetSignal[c]->getPostInc());
+            }
             
-            + m_fFeedBack * m_fWetDry *
+            else
+            {
+                audioBuffer[c][i] = ((2.0f * (1.0f - m_fWetDry)) * audioBuffer[c][i]) + (m_fWetDry * wetSignal[c]->getPostInc());
+            }
             
-            ((ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
-             
-             + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
+            delayLine[c]->putPostInc(wetSignal[c]->get());
             
-			// outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
-			//						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
-            
-			// add the output value to the ring buffer:
-			ringBuffer[c]->putPostInc(audioBuffer[c][i]);
+//			// ugly looking equation for fractional delay:
+//			audioBuffer[c][i] =
+//            
+//            (1 - m_fWetDry) * (audioBuffer[c][i])
+//            
+//            + m_fFeedBack * m_fWetDry *
+//            
+//            ((ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
+//             
+//             + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
+//            
+//			// outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
+//			//						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
+//            
+//			// add the output value to the ring buffer:
+//			ringBuffer[c]->putPostInc(audioBuffer[c][i]);
 		}
 	}
 }
@@ -141,7 +175,9 @@ void CDelay::finishPlayback()
 {
 	 for (int n = 0; n < m_iNumChannels; n++)
     {
-        ringBuffer[n]->resetInstance();
+//        ringBuffer[n]->resetInstance();
+        wetSignal[n]->resetInstance();
+        delayLine[n]->resetInstance();
     }
 }
 
