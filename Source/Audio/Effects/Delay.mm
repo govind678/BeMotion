@@ -114,14 +114,13 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
             
             m_fWetDry = value;
             
-//            if (m_fWetDry == 0.0f)
-//            {
-//                for (int channel = 0; channel < m_iNumChannels; channel++)
-//                {
-//                    wetSignal[channel]->resetInstance();
-//                    wetSignal[channel]->setWriteIdx(wetSignal[channel]->getReadIdx() + (m_fDelayTime_s * m_fSampleRate));
-//                }
-//            }
+            if (m_fWetDry < 0.05f)
+            {
+                for (int channel = 0; channel < m_iNumChannels; channel++)
+                {
+                    wetSignal[channel]->flushBuffer();
+                }
+            }
             
 		break;
             

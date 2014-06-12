@@ -85,6 +85,11 @@ public:
         m_iWriteIdx = 0;
     }
     
+    void flushBuffer()
+    {
+        CUtil::setZero(m_ptBuff, m_iBuffLength);
+    }
+    
     /*! return the current index for writing/put
      \return int
      */
