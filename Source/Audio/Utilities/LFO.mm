@@ -71,7 +71,7 @@ float CLFO::getFrequencyinHz()
 void CLFO::setShape(float shape)
 {
     m_fShape = shape;
-    m_fScale = 20.0f * powf(1000.0f, (m_fShape - 1.0f));
+    m_fScale = 40.0f * powf(1000.0f, (m_fShape - 1.0f));
 }
 
 float CLFO::getShape()

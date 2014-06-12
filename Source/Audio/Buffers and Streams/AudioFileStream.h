@@ -83,7 +83,7 @@ private:
     AudioTransportSource            transportSource;
     ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
     
-    AudioSampleBuffer               firstAudioBlock;
+//    AudioSampleBuffer               firstAudioBlock;
     
     OwnedArray<AudioEffectSource>   audioEffectSource;
     Array<bool>                     m_pbBypassStateArray;

@@ -148,6 +148,7 @@
 		FCC382F21947CC1A0042222F /* Electronica3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382ED1947CC1A0042222F /* Electronica3.wav */; };
 		FCC382F31947CC1A0042222F /* Electronica4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EE1947CC1A0042222F /* Electronica4.wav */; };
 		FCC382F61948B1CE0042222F /* Delay2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F41948B1CE0042222F /* Delay2.mm */; };
+		FCC382F9194981CD0042222F /* Wah2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F7194981CD0042222F /* Wah2.cpp */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
 		FCCF84BC19266AC500B76E77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84BB19266AC500B76E77 /* UIKit.framework */; };
@@ -169,7 +170,6 @@
 		FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851319266E5F00B76E77 /* PeakFilter.mm */; };
 		FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851519266E5F00B76E77 /* Tremolo.mm */; };
 		FCCF854B19266E5F00B76E77 /* Vibrato.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851719266E5F00B76E77 /* Vibrato.mm */; };
-		FCCF854C19266E5F00B76E77 /* Wah.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851919266E5F00B76E77 /* Wah.mm */; };
 		FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF851F19266E5F00B76E77 /* Parameter.mm */; };
 		FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCCF853919266E5F00B76E77 /* BeMotionInterface.mm */; };
 		FCCF856319266E8E00B76E77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FCCF855E19266E8E00B76E77 /* InfoPlist.strings */; };
@@ -359,6 +359,8 @@
 		FCC382EE1947CC1A0042222F /* Electronica4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica4.wav; sourceTree = "<group>"; };
 		FCC382F41948B1CE0042222F /* Delay2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Delay2.mm; sourceTree = "<group>"; };
 		FCC382F51948B1CE0042222F /* Delay2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delay2.h; sourceTree = "<group>"; };
+		FCC382F7194981CD0042222F /* Wah2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wah2.cpp; sourceTree = "<group>"; };
+		FCC382F8194981CD0042222F /* Wah2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah2.h; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCF84B719266AC500B76E77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCCF84B919266AC500B76E77 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -394,8 +396,6 @@
 		FCCF851519266E5F00B76E77 /* Tremolo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Tremolo.mm; sourceTree = "<group>"; };
 		FCCF851619266E5F00B76E77 /* Vibrato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vibrato.h; sourceTree = "<group>"; };
 		FCCF851719266E5F00B76E77 /* Vibrato.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Vibrato.mm; sourceTree = "<group>"; };
-		FCCF851819266E5F00B76E77 /* Wah.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah.h; sourceTree = "<group>"; };
-		FCCF851919266E5F00B76E77 /* Wah.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wah.mm; sourceTree = "<group>"; };
 		FCCF851B19266E5F00B76E77 /* CUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUtil.h; sourceTree = "<group>"; };
 		FCCF851E19266E5F00B76E77 /* Parameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameter.h; sourceTree = "<group>"; };
 		FCCF851F19266E5F00B76E77 /* Parameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Parameter.mm; sourceTree = "<group>"; };
@@ -1939,8 +1939,8 @@
 				FCCF851519266E5F00B76E77 /* Tremolo.mm */,
 				FCCF851619266E5F00B76E77 /* Vibrato.h */,
 				FCCF851719266E5F00B76E77 /* Vibrato.mm */,
-				FCCF851819266E5F00B76E77 /* Wah.h */,
-				FCCF851919266E5F00B76E77 /* Wah.mm */,
+				FCC382F7194981CD0042222F /* Wah2.cpp */,
+				FCC382F8194981CD0042222F /* Wah2.h */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -3966,13 +3966,13 @@
 				FCCF854B19266E5F00B76E77 /* Vibrato.mm in Sources */,
 				FC30B69A193F9F730020B7D2 /* MotionControl.mm in Sources */,
 				FCCF8FFF1926DA6C00B76E77 /* LFO.mm in Sources */,
+				FCC382F9194981CD0042222F /* Wah2.cpp in Sources */,
 				FCCF854119266E5F00B76E77 /* AudioFileRecord.mm in Sources */,
 				FC30B693193F18D00020B7D2 /* GlobalSettingsViewController.mm in Sources */,
 				FCCF853E19266E5F00B76E77 /* Metronome.mm in Sources */,
 				FCCF854419266E5F00B76E77 /* LiveAudioStream.mm in Sources */,
 				FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */,
 				FC30B68E193F18D00020B7D2 /* CircularButton.m in Sources */,
-				FCCF854C19266E5F00B76E77 /* Wah.mm in Sources */,
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
 				FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */,
 				FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */,

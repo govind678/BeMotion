@@ -31,7 +31,8 @@ void CTremolo::initDefaults()
 {
 	m_fDepth	= 1.0;
 	m_fRate		= 5.0;
-    m_fShape    = 0.0f;
+    m_fShape    = 0.01f;
+    LFO->setShape(m_fShape);
 }
 
 

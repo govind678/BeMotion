@@ -91,11 +91,11 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
             
         case EFFECT_WAH:
         {
-            m_pcWah             =   new CWah(numChannels);
+            m_pcWah             =   new Wah(numChannels);
             
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
-                m_pfRawParameter.set(i, m_pcWah->getParam(i + 1));
+                m_pfRawParameter.set(i, m_pcWah->getParameter(i + 1));
             }
             
             break;
@@ -201,7 +201,7 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             
             
         case EFFECT_WAH:
-            m_pcWah->setParam(parameterID, value);
+            m_pcWah->setParameter(parameterID, value);
             break;
             
             
@@ -266,7 +266,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_1, param);
+                m_pcWah->setParameter(PARAM_1, param);
                 break;
                 
             case EFFECT_GRANULAR:
@@ -298,7 +298,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcWah->setParameter(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             case EFFECT_GRANULAR:
@@ -330,7 +330,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_WAH:
-                m_pcWah->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcWah->setParameter(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             case EFFECT_GRANULAR:

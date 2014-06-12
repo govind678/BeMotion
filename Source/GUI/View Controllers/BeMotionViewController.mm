@@ -446,10 +446,12 @@
     motion[ATTITUDE_PITCH]  = (deviceMotion.attitude.pitch + 1.0f) * 0.5f;
 //    motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll + M_PI) / (2 * M_PI);
     
-    if (deviceMotion.attitude.roll > 0.0f) {
-        motion[ATTITUDE_ROLL]   = 1.0f - (deviceMotion.attitude.roll * M_1_PI);
+    if (deviceMotion.attitude.roll > M_PI_4) {
+        motion[ATTITUDE_ROLL]   = 1.25f - (deviceMotion.attitude.roll * M_1_PI);
+    } else if (deviceMotion.attitude.roll < -M_PI_4) {
+        motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll * M_1_PI * -1.0f) - 0.25f;
     } else {
-        motion[ATTITUDE_ROLL]   = deviceMotion.attitude.roll * M_1_PI * -1.0f;
+        motion[ATTITUDE_ROLL]   = 0.0f;
     }
     
     motion[ATTITUDE_YAW]    = (deviceMotion.attitude.yaw + M_PI) / (2 * M_PI);

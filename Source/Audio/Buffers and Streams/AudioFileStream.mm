@@ -105,8 +105,8 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
                 currentAudioFileSource->setLooping(true);
             }
             
-            firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
-            reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
+//            firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
+//            reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
         }
         
         return 0;

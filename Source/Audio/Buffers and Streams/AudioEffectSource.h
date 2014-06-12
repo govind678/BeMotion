@@ -21,7 +21,8 @@
 #include "Delay.h"
 #include "Tremolo.h"
 #include "Vibrato.h"
-#include "Wah.h"
+//#include "Wah.h"
+#include "Wah2.h"
 #include "Granularizer.h"
 //------------------------------//
 
@@ -60,7 +61,7 @@ private:
     ScopedPointer<CDelay>           m_pcDelay;
     ScopedPointer<CTremolo>         m_pcTremolo;
     ScopedPointer<CVibrato>         m_pcVibrato;
-    ScopedPointer<CWah>             m_pcWah;
+    ScopedPointer<Wah>              m_pcWah;
     ScopedPointer<CGranularizer>    m_pcGranularizer;
     
     OwnedArray<Parameter>           m_pcParameter;
