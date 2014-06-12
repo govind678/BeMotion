@@ -96,6 +96,7 @@ private:
     TimeSliceThread thread;
     
     OwnedArray<Parameter>           m_pcParameter;
+
     
     int                             m_iSampleID;
     float                           m_fSampleRate;

@@ -31,6 +31,7 @@
 		FC11411F193D98AF0045A92B /* SettingsButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114105193D98AF0045A92B /* SettingsButton2.png */; };
 		FC114120193D98AF0045A92B /* SettingsButton3.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114106193D98AF0045A92B /* SettingsButton3.png */; };
 		FC114171193D99290045A92B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114170193D99290045A92B /* Background.png */; };
+		FC30B603194A537C005F4ED3 /* LowShelf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC30B601194A537C005F4ED3 /* LowShelf.cpp */; };
 		FC30B60E193EE0100020B7D2 /* Activate.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60A193EE0100020B7D2 /* Activate.png */; };
 		FC30B60F193EE0100020B7D2 /* BeatRepeat.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60B193EE0100020B7D2 /* BeatRepeat.png */; };
 		FC30B610193EE0100020B7D2 /* Loop.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60C193EE0100020B7D2 /* Loop.png */; };
@@ -147,7 +148,6 @@
 		FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EC1947CC1A0042222F /* Electronica2.wav */; };
 		FCC382F21947CC1A0042222F /* Electronica3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382ED1947CC1A0042222F /* Electronica3.wav */; };
 		FCC382F31947CC1A0042222F /* Electronica4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC382EE1947CC1A0042222F /* Electronica4.wav */; };
-		FCC382F61948B1CE0042222F /* Delay2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F41948B1CE0042222F /* Delay2.mm */; };
 		FCC382F9194981CD0042222F /* Wah2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F7194981CD0042222F /* Wah2.cpp */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
@@ -231,6 +231,8 @@
 		FC114105193D98AF0045A92B /* SettingsButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton2.png; sourceTree = "<group>"; };
 		FC114106193D98AF0045A92B /* SettingsButton3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton3.png; sourceTree = "<group>"; };
 		FC114170193D99290045A92B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		FC30B601194A537C005F4ED3 /* LowShelf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LowShelf.cpp; sourceTree = "<group>"; };
+		FC30B602194A537C005F4ED3 /* LowShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LowShelf.h; sourceTree = "<group>"; };
 		FC30B60A193EE0100020B7D2 /* Activate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Activate.png; sourceTree = "<group>"; };
 		FC30B60B193EE0100020B7D2 /* BeatRepeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BeatRepeat.png; sourceTree = "<group>"; };
 		FC30B60C193EE0100020B7D2 /* Loop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Loop.png; sourceTree = "<group>"; };
@@ -357,8 +359,6 @@
 		FCC382EC1947CC1A0042222F /* Electronica2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica2.wav; sourceTree = "<group>"; };
 		FCC382ED1947CC1A0042222F /* Electronica3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica3.wav; sourceTree = "<group>"; };
 		FCC382EE1947CC1A0042222F /* Electronica4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Electronica4.wav; sourceTree = "<group>"; };
-		FCC382F41948B1CE0042222F /* Delay2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Delay2.mm; sourceTree = "<group>"; };
-		FCC382F51948B1CE0042222F /* Delay2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delay2.h; sourceTree = "<group>"; };
 		FCC382F7194981CD0042222F /* Wah2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wah2.cpp; sourceTree = "<group>"; };
 		FCC382F8194981CD0042222F /* Wah2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah2.h; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1925,8 +1925,6 @@
 		FCCF850919266E5F00B76E77 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				FCC382F51948B1CE0042222F /* Delay2.h */,
-				FCC382F41948B1CE0042222F /* Delay2.mm */,
 				FCCF850A19266E5F00B76E77 /* Delay.h */,
 				FCCF850B19266E5F00B76E77 /* Delay.mm */,
 				FCCF850C19266E5F00B76E77 /* Granularizer.h */,
@@ -1941,6 +1939,8 @@
 				FCCF851719266E5F00B76E77 /* Vibrato.mm */,
 				FCC382F7194981CD0042222F /* Wah2.cpp */,
 				FCC382F8194981CD0042222F /* Wah2.h */,
+				FC30B602194A537C005F4ED3 /* LowShelf.h */,
+				FC30B601194A537C005F4ED3 /* LowShelf.cpp */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -3947,6 +3947,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC30B603194A537C005F4ED3 /* LowShelf.cpp in Sources */,
 				FC30B690193F18D00020B7D2 /* SettingsButton.mm in Sources */,
 				FCCF8FEF1926707C00B76E77 /* juce_audio_basics.mm in Sources */,
 				FCCF8FF6192670E700B76E77 /* juce_audio_devices.mm in Sources */,
@@ -3976,7 +3977,6 @@
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
 				FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */,
 				FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */,
-				FCC382F61948B1CE0042222F /* Delay2.mm in Sources */,
 				FCCF854319266E5F00B76E77 /* AudioMixerPlayer.mm in Sources */,
 				FCC38277194629E90042222F /* TrimAudio.mm in Sources */,
 				FCCF854019266E5F00B76E77 /* AudioEffectSource.mm in Sources */,

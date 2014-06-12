@@ -10,6 +10,7 @@
 
 #include "AudioEffectSource.h"
 
+#define LOWSHELF_CUTOFF 1000.0f
 
 AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 {
@@ -69,6 +70,11 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         {
             m_pcDelay           =   new CDelay(numChannels);
             
+            
+            m_pcLowShelf = new LowShelf(NUM_INPUT_CHANNELS);
+            m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
+            m_pcLowShelf->setParameter(PARAM_2, 0.0);
+            
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
                 m_pfRawParameter.set(i, m_pcDelay->getParam(i + 1));
@@ -120,6 +126,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         }
             
     }
+    
     
     m_iEffectID  = effectID;
 }
@@ -372,6 +379,8 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
             
         case EFFECT_DELAY:
             m_pcDelay->prepareToPlay(sampleRate);
+            m_pcLowShelf->prepareToPlay(sampleRate);
+            m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / sampleRate);
             break;
             
             
@@ -413,6 +422,7 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize)
             
         case EFFECT_DELAY:
             m_pcDelay->process(audioBuffer, blockSize);
+            m_pcLowShelf->process(audioBuffer, blockSize);
             break;
             
             

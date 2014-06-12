@@ -15,27 +15,26 @@
 CDelay::CDelay(int numChannels)
 {
     
-    m_iNumChannels  =   numChannels;
-	m_fSampleRate   =   0.0f;
+    m_iNumChannels      =   numChannels;
+	m_fSampleRate       =   DEFAULT_SAMPLE_RATE;
     
-    m_fFeedBack     =   0.0f;
-	m_fWetDry       =   0.0f;
-    m_fDelayTime_s  =   0.0f;
-    m_fMix          =   0.0f;
+    m_fFeedBack         =   0.0f;
+	m_fWetDry           =   0.0f;
+    m_fDelayTime_s      =   0.0f;
     
 //	ringBuffer = new CRingBuffer<float> *[numChannels];
     wetSignal  = new CRingBuffer<float>* [numChannels];
-    delayLine  = new CRingBuffer<float>* [numChannels];
+//    delayLine  = new CRingBuffer<float>* [numChannels];
 
 	for (int n = 0; n < numChannels; n++)
 	{
 //		ringBuffer[n]	= new CRingBuffer<float>(DELAY_MAX_SAMPLES);
         wetSignal[n]    = new CRingBuffer<float> (DELAY_MAX_SAMPLES);
-        delayLine[n]    = new CRingBuffer<float> (DELAY_MAX_SAMPLES);
+//        delayLine[n]    = new CRingBuffer<float> (DELAY_MAX_SAMPLES);
 		// set indices and buffer contents to zero:
 //		ringBuffer[n]->resetInstance();
         wetSignal[n]->resetInstance();
-        delayLine[n]->resetInstance();
+//        delayLine[n]->resetInstance();
 	}
 
     
@@ -49,12 +48,12 @@ CDelay::~CDelay()
     {
 //        delete ringBuffer[n];
         delete wetSignal[n];
-        delete delayLine[n];
+//        delete delayLine[n];
     }
     
 //    delete [] ringBuffer;
     delete [] wetSignal;
-    delete [] delayLine;
+//    delete [] delayLine;
 }
 
 
@@ -120,7 +119,20 @@ void CDelay::setParam(/*hFile::enumType type*/ int type, float value)
             
 		case PARAM_3:
             
-            m_fFeedBack = value;
+            if (value < 0.0f)
+            {
+                m_fFeedBack = 0.0f;
+            }
+            
+            else if (value >= 0.95f)
+            {
+                m_fFeedBack = 0.95f;
+            }
+            
+            else
+            {
+                m_fFeedBack = value;
+            }
             
 		break;
             
@@ -137,7 +149,14 @@ void CDelay::process(float** audioBuffer, int numFrames)
 		for (int c = 0; c < m_iNumChannels; c++)
 		{
             // Create Delay Line
-            wetSignal[c]->putPostInc( audioBuffer[c][i] + (m_fFeedBack * delayLine[c]->getPostInc()) );
+//            wetSignal[c]->putPostInc( audioBuffer[c][i] + (m_fFeedBack *
+//                            (
+//                              (wetSignal[c]->get() * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))) +
+//                              (wetSignal[c]->get() * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)))
+//                            )
+//                        ));
+            
+            wetSignal[c]->putPostInc(audioBuffer[c][i] + (m_fFeedBack * wetSignal[c]->get()));
             
             if (m_fWetDry <= 0.5f)
             {
@@ -146,27 +165,53 @@ void CDelay::process(float** audioBuffer, int numFrames)
             
             else
             {
-                audioBuffer[c][i] = ((2.0f * (1.0f - m_fWetDry)) * audioBuffer[c][i]) + (m_fWetDry * wetSignal[c]->getPostInc());
+                audioBuffer[c][i] = (((2.0f * (1.0f - m_fWetDry)) * audioBuffer[c][i])) + (m_fWetDry * wetSignal[c]->getPostInc());
             }
             
-            delayLine[c]->putPostInc(wetSignal[c]->get());
+			// ugly looking equation for fractional delay:
             
-//			// ugly looking equation for fractional delay:
-//			audioBuffer[c][i] =
+            
+//            if (m_fWetDry <= 0.5f)
+//            {
+//                audioBuffer[c][i] =
 //            
-//            (1 - m_fWetDry) * (audioBuffer[c][i])
+//                (audioBuffer[c][i])
+
+//                 + m_fFeedBack * 2.0f * m_fWetDry *
 //            
-//            + m_fFeedBack * m_fWetDry *
+//                 (
+//                  (ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
+//                  +
+//                  (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate))
+//                 );
+//
+//                // outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
+//                //						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
+//                
+//                // add the output value to the ring buffer:
+//                ringBuffer[c]->putPostInc(audioBuffer[c][i]);
+//            }
 //            
-//            ((ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
-//             
-//             + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
 //            
-//			// outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
-//			//						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
-//            
-//			// add the output value to the ring buffer:
-//			ringBuffer[c]->putPostInc(audioBuffer[c][i]);
+//            else
+//            {
+//                audioBuffer[c][i] =
+//                
+//                (2.0f * (1.0f - m_fWetDry)) * (audioBuffer[c][i])
+//                
+//                + m_fFeedBack * m_fWetDry *
+//                
+//                ((ringBuffer[c]->getPostInc()) * (m_fDelayTime_s * m_fSampleRate - (int)(m_fDelayTime_s * m_fSampleRate))
+//                 
+//                 + (ringBuffer[c]->get()) * (1 - m_fDelayTime_s * m_fSampleRate + (int)(m_fDelayTime_s * m_fSampleRate)));
+//                
+//                // outputBuffer[c][i] =	(1-getWetDry())*(inputBuffer[c][i])
+//                //						 + 0.5*getWetDry()*(ringBuffer[c]->getPostInc());
+//                
+//                // add the output value to the ring buffer:
+//                ringBuffer[c]->putPostInc(audioBuffer[c][i]);
+//            }
+			
 		}
 	}
 }
@@ -177,7 +222,7 @@ void CDelay::finishPlayback()
     {
 //        ringBuffer[n]->resetInstance();
         wetSignal[n]->resetInstance();
-        delayLine[n]->resetInstance();
+//        delayLine[n]->resetInstance();
     }
 }
 

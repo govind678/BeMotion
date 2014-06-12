@@ -36,7 +36,6 @@ public:
     // get:
 	float getParam(int parameterID);
 
-
 	void prepareToPlay(float sampleRate);
 	void finishPlaying();
 	void process(float **audioBuffer, int numFrames);
@@ -47,10 +46,12 @@ public:
 private:
     
     void initializeWithDefaultParameters();
+    
+    void setDelayTime(int time);
 
 //	CRingBuffer<float>** ringBuffer;
     CRingBuffer<float>** wetSignal;
-    CRingBuffer<float>** delayLine;
+//    CRingBuffer<float>** delayLine;
 
     
     
@@ -61,9 +62,8 @@ private:
 	float m_fWetDry;
 	float m_fDelayTime_s;
     
-    float m_fMix;
-    float m_fFractionaDelay;
-    int   m_iIntDelay;
+    float m_fFractionalDelay;
+    float m_fIntegralDelay;
 
 };
 

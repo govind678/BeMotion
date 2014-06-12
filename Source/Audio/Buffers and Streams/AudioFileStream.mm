@@ -51,7 +51,8 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     }
         
 
-    m_pcLimiter = new CLimiter(2);
+    m_pcLimiter = new CLimiter(NUM_INPUT_CHANNELS);
+
     
     thread.startThread(3);
 }
@@ -185,7 +186,6 @@ void AudioFileStream::prepareToPlay(int samplesPerBlockExpected, double sampleRa
     }
     
     m_pcLimiter->prepareToPlay(sampleRate);
-    
 //    m_pcAutoLimiter->Setup(sampleRate);
 }
 

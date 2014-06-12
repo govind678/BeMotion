@@ -24,6 +24,7 @@
 //#include "Wah.h"
 #include "Wah2.h"
 #include "Granularizer.h"
+#include "LowShelf.h"
 //------------------------------//
 
 
@@ -63,6 +64,8 @@ private:
     ScopedPointer<CVibrato>         m_pcVibrato;
     ScopedPointer<Wah>              m_pcWah;
     ScopedPointer<CGranularizer>    m_pcGranularizer;
+    
+    ScopedPointer<LowShelf>         m_pcLowShelf;
     
     OwnedArray<Parameter>           m_pcParameter;
     Array<bool>                     m_pbGestureControl;

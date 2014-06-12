@@ -727,7 +727,7 @@
             
         case 2:
             [self.slider1EffectParam setText:@"Time"];
-            [self.slider2EffectParam setText:@"Wet/Dry"];
+            [self.slider2EffectParam setText:@"Dry/Wet"];
             [self.slider3EffectParam setText:@"Feedback"];
             break;
             
