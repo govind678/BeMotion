@@ -25,6 +25,7 @@ Granularizer2::Granularizer2(int numChannels)
         m_ppcGrain[channel]     = new CRingBuffer<float> (GRANULAR_MAX_SAMPLES * 0.5f);
     }
     
+    
     m_fSize_per         =   0.0f;
     m_fRate_s           =   0.0f;
     m_iStartIndex       =   0;
@@ -32,6 +33,9 @@ Granularizer2::Granularizer2(int numChannels)
     m_iSamplesBuffered  =   0;
     m_iSizeSamples      =   0;
     m_iRateSamples      =   0;
+    m_fPitch            =   0.0f;
+    m_fPitchRandomness  =   0.0f;
+    m_fFloatIndex       =   0.0f;
     m_bBufferingToggle  =   false;
     m_bGrainToggle      =   false;
     
@@ -55,7 +59,32 @@ void Granularizer2::initializeWithDefaultParameters()
 {
     m_fRate_s   = 0.5f;
     m_fSize_per = 0.5;
+    m_fPitchRandomness  =   0.0f;
     calculateParameters();
+    
+    m_iSampleCount  =   m_iRateSamples;
+    
+    m_fPitchArray[0]    = powf(2.0f, (0.0f / 12.0));
+    m_fPitchArray[1]    = powf(2.0f, (-2.0f / 12.0));
+    m_fPitchArray[2]    = powf(2.0f, (3.0f / 12.0));
+    m_fPitchArray[3]    = powf(2.0f, (5.0f / 12.0));
+    m_fPitchArray[4]    = powf(2.0f, (7.0f / 12.0));
+    m_fPitchArray[5]    = powf(2.0f, (-4.0f / 12.0));
+    m_fPitchArray[6]    = powf(2.0f, (-5.0f / 12.0));
+    m_fPitchArray[7]    = powf(2.0f, (-7.0f / 12.0));
+    m_fPitchArray[8]    = powf(2.0f, (8.0f / 12.0));
+    m_fPitchArray[9]    = powf(2.0f, (10.0f / 12.0));
+    m_fPitchArray[10]    = powf(2.0f, (12.0f / 12.0));
+    m_fPitchArray[11]    = powf(2.0f, (-9.0f / 12.0));
+    m_fPitchArray[12]    = powf(2.0f, (-12.0f / 12.0));
+    m_fPitchArray[13]    = powf(2.0f, (2.0f / 12.0));
+    m_fPitchArray[14]    = powf(2.0f, (-10.0f / 12.0));
+    
+    
+    for (int i=0; i < ENVELOPE_SAMPLES; i++)
+    {
+        m_fEnvelope[i] = tanhf(i / 4.0f);
+    }
 }
 
 
@@ -71,6 +100,10 @@ void Granularizer2::setParameter(int parameterID, float value)
         case PARAM_2:
             m_fSize_per = value;
             calculateParameters();
+            break;
+            
+        case PARAM_3:
+            m_fPitchRandomness = value;
             break;
             
         default:
@@ -137,21 +170,44 @@ void Granularizer2::process(float **audioBuffer, int numFrames)
 void Granularizer2::generateGrain()
 {
     m_iStartIndex = ((double) rand() / (RAND_MAX)) * m_iSamplesBuffered;
-//    std::cout << "Generate at " << m_iStartIndex << std::endl;
+    
+    int index = 0;
+    if( ((double) rand() / (RAND_MAX)) > (m_fPitchRandomness + 0.1f))
+    {
+        index = int( (double(rand()) / RAND_MAX) * NUM_PITCHES );
+        m_fPitch = m_fPitchArray[index];
+    }
+    
+    else
+    {
+        m_fPitch = 1.0f;
+    }
+    
+    std::cout << "Pitch: " << m_fPitch << "\t Ind: " << index << std::endl;
+    
     for (int channel = 0; channel < m_iNumChannels; channel++)
     {
-//        m_ppcGrain[channel]->resetInstance();
         m_ppcGrain[channel]->resetIndices();
-        m_ppcBuffer[channel]->setReadIdx(m_iStartIndex);
         
-        for (int sample = 0; sample < m_iSizeSamples; sample++)
+        for (int sample = 0; sample < (m_iSizeSamples / m_fPitch); sample++)
         {
-            m_ppcGrain[channel]->putPostInc(m_ppcBuffer[channel]->getPostInc());
+            m_fFloatIndex = m_iStartIndex + (sample * m_fPitch);
+            
+            if (sample < ENVELOPE_SAMPLES)
+            {
+                m_ppcGrain[channel]->putPostInc(m_ppcBuffer[channel]->getAtFloatIdx(m_fFloatIndex) * m_fEnvelope[sample]);
+            }
+            
+            else
+            {
+                m_ppcGrain[channel]->putPostInc(m_ppcBuffer[channel]->getAtFloatIdx(m_fFloatIndex));
+            }
+            
         }
         
-        for (int sample = m_iSizeSamples; sample < m_iRateSamples; sample++)
+        for (int sample = 0; sample < m_iRateSamples - (m_iSizeSamples / m_fPitch); sample++)
         {
-            m_ppcGrain[channel]->putPostInc(0.0f);
+             m_ppcGrain[channel]->putPostInc(0.0f);
         }
     }
     
@@ -161,7 +217,7 @@ void Granularizer2::generateGrain()
 void Granularizer2::calculateParameters()
 {
     m_iRateSamples = m_fRate_s * m_fSampleRate;
-    m_iSampleCount = m_iRateSamples;
+//    m_iSampleCount = 0;
     std::cout << "Rate: " << m_iRateSamples << std::endl;
     
     m_iSizeSamples = (((1.0f - m_fSize_per) * 0.99f) + 0.01f) * m_iRateSamples;
