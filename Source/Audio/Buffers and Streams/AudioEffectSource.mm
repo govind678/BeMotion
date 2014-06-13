@@ -10,7 +10,8 @@
 
 #include "AudioEffectSource.h"
 
-#define LOWSHELF_CUTOFF 1000.0f
+#define LOWSHELF_CUTOFF 8000.0f
+#define HIGHSHELF_CUTOFF 100.0f
 
 AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
 {
@@ -19,6 +20,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     m_pcVibrato         =   nullptr;
     m_pcWah             =   nullptr;
     m_pcGranularizer    =   nullptr;
+    m_pcHighShelf       =   nullptr;
     
     
     m_pcParameter.clear();
@@ -47,6 +49,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     m_iTimeQuantizationPoints[7] = 16;
     
     
+    
     m_fTempo    =   0.0f;
     setTempo(DEFAULT_TEMPO);
 
@@ -73,7 +76,11 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
             
             m_pcLowShelf = new LowShelf(NUM_INPUT_CHANNELS);
             m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
-            m_pcLowShelf->setParameter(PARAM_2, 0.0);
+            m_pcLowShelf->setParameter(PARAM_2, 0.0f);
+            
+            m_pcHighShelf    =   new HighShelf(numChannels);
+            m_pcHighShelf->setParameter(PARAM_1, HIGHSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
+            m_pcHighShelf->setParameter(PARAM_2, 0.0f);
             
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
@@ -110,11 +117,11 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         
         case EFFECT_GRANULAR:
         {
-            m_pcGranularizer    =   new CGranularizer(numChannels);
+            m_pcGranularizer    =   new Granularizer2(numChannels);
             
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
-                m_pfRawParameter.set(i, m_pcGranularizer->getParam(i + 1));
+                m_pfRawParameter.set(i, m_pcGranularizer->getParameter(i + 1));
             }
             
             break;
@@ -139,6 +146,8 @@ AudioEffectSource::~AudioEffectSource()
     m_pcVibrato         =   nullptr;
     m_pcWah             =   nullptr;
     m_pcGranularizer    =   nullptr;
+    m_pcHighShelf       =   nullptr;
+    m_pcLowShelf        =   nullptr;
 
     m_pcParameter.clear();
     m_pbGestureControl.clear();
@@ -217,18 +226,15 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             
             if (PARAM_1)
             {
-//                m_pcGranularizer->setParam(parameterID, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
-                m_pcGranularizer->setParam(parameterID, value);
+                m_pcGranularizer->setParameter(parameterID, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
             }
             
             else
             {
-                m_pcGranularizer->setParam(parameterID, value);
+                m_pcGranularizer->setParameter(parameterID, value);
             }
             
             break;
-            
-            
             
         default:
             break;
@@ -277,7 +283,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_1, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
+                m_pcGranularizer->setParameter(PARAM_1, 1 / (m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval));
                 break;
                 
             default:
@@ -309,7 +315,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
+                m_pcGranularizer->setParameter(PARAM_2, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM2)->process(motion[ATTITUDE_ROLL]));
                 break;
                 
             default:
@@ -341,7 +347,7 @@ void AudioEffectSource::motionUpdate(float* motion)
                 break;
                 
             case EFFECT_GRANULAR:
-                m_pcGranularizer->setParam(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
+                m_pcGranularizer->setParameter(PARAM_3, m_pcParameter.getUnchecked(PARAM_MOTION_PARAM3)->process(motion[ATTITUDE_YAW]));
                 break;
                 
             default:
@@ -381,6 +387,8 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
             m_pcDelay->prepareToPlay(sampleRate);
             m_pcLowShelf->prepareToPlay(sampleRate);
             m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / sampleRate);
+            m_pcHighShelf->prepareToPlay(sampleRate);
+            m_pcHighShelf->setParameter(PARAM_1, HIGHSHELF_CUTOFF / sampleRate);
             break;
             
             
@@ -406,6 +414,15 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
 
 void AudioEffectSource::audioDeviceStopped()
 {
+    switch (m_iEffectID)
+    {
+        case EFFECT_GRANULAR:
+            m_pcGranularizer->finishPlaying();
+            break;
+            
+        default:
+            break;
+    }
     
 }
 
@@ -423,6 +440,7 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize)
         case EFFECT_DELAY:
             m_pcDelay->process(audioBuffer, blockSize);
             m_pcLowShelf->process(audioBuffer, blockSize);
+            m_pcHighShelf->process(audioBuffer, blockSize);
             break;
             
             
@@ -440,7 +458,6 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize)
             m_pcGranularizer->process(audioBuffer, blockSize);
             break;
          
-            
         default:
             break;
     }

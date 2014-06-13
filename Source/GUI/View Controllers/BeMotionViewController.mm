@@ -448,7 +448,7 @@
     
     if (deviceMotion.attitude.roll > M_PI_4) {
         motion[ATTITUDE_ROLL]   = 1.25f - (deviceMotion.attitude.roll * M_1_PI);
-    } else if (deviceMotion.attitude.roll < -M_PI_4) {
+    } else if (deviceMotion.attitude.roll < -0.15f) {
         motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll * M_1_PI * -1.0f) - 0.25f;
     } else {
         motion[ATTITUDE_ROLL]   = 0.0f;
@@ -525,6 +525,7 @@
                 if (m_pbMasterBeginRecording[i])
                 {
                     _backendInterface->stopRecordingOutput(i);
+                    NSLog(@"Stop Recording %i", i);
                     m_pbMasterBeginRecording[i] = false;
                     m_pbMasterRecordToggle[i]   = false;
                     
@@ -555,6 +556,7 @@
                 //--- Quantize Recording ---//
                 if (m_pbMasterRecordToggle[i])
                 {
+                    NSLog(@"Start Resampling %d", i);
                     _backendInterface->startRecordingOutput(i);
                     m_pbMasterBeginRecording[i] = true;
                     
@@ -717,7 +719,7 @@
 //        sender.alpha = 0.5f;
 //        m_pbMasterRecordToggle[0] = true;
 //    }
-//    
+//
 //}
 //
 //- (IBAction)blueMasterRecord:(UIButton *)sender
@@ -1011,7 +1013,11 @@
 
 - (void) startResampling:(int)sampleID
 {
-    
+    if ([_metronome isRunning])
+    {
+        m_pbMasterRecordToggle[sampleID] = true;
+    }
+
 }
 
 

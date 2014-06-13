@@ -29,6 +29,7 @@
 # define EFFECT_VIBRATO          3
 # define EFFECT_WAH              4
 # define EFFECT_GRANULAR         5
+# define EFFECT_LOWSHELF         6
 
 
 //========== Effect Parameter IDs ==========//
@@ -61,8 +62,8 @@
 
 
 //========== Effects Macros ===========//
-# define NUM_EFFECTS_PARAMS     3
-# define NUM_EFFECTS_TYPES      6      // Including 1 for None
+# define NUM_EFFECTS_PARAMS      3
+# define NUM_EFFECTS_TYPES       7      // Including 1 for None
 # define NUM_EFFECTS_SLOTS       4
 
 
@@ -146,7 +147,8 @@
 //===== Buffer Size and Other Effect Macros =====//
 
 # define DELAY_MAX_SAMPLES       131072
-# define GRANULAR_MAX_SAMPLES    250000.0
+# define GRANULAR_MAX_SAMPLES    88200
+# define GRANULAR_MIN_SAMPLES    882
 # define LIMITER_MAX_SAMPLES     5
 # define WAH_BUFFER_SIZE         1024
 

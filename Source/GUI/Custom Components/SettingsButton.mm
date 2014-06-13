@@ -114,7 +114,7 @@
 
 - (void)resampleButtonClicked
 {
-    NSLog(@"Start Resampling %d", buttonID);
+    [delegate startResampling:buttonID];
 }
 
 - (void)importButtonClicked

@@ -40,7 +40,7 @@
                 
                 "slider2" :
                 {
-                    "value" : 0.8,
+                    "value" : 0.5,
                     "gesture" : 0
                 }
             },
@@ -159,7 +159,7 @@
                 
                 "slider2" :
                 {
-                    "value" : 0.85,
+                    "value" : 0.5,
                     "gesture" : 0
                 }
             },
@@ -278,7 +278,7 @@
                 
                 "slider2" :
                 {
-                    "value" : 0.85,
+                    "value" : 0.5,
                     "gesture" : 0
                 }
             },
@@ -397,7 +397,7 @@
                 
                 "slider2" :
                 {
-                    "value" : 0.85,
+                    "value" : 0.5,
                     "gesture" : 0
                 }
             },
