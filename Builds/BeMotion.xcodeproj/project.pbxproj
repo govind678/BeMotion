@@ -31,8 +31,7 @@
 		FC11411F193D98AF0045A92B /* SettingsButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114105193D98AF0045A92B /* SettingsButton2.png */; };
 		FC114120193D98AF0045A92B /* SettingsButton3.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114106193D98AF0045A92B /* SettingsButton3.png */; };
 		FC114171193D99290045A92B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114170193D99290045A92B /* Background.png */; };
-		FC16330A194ACA1C00A462CB /* HighShelf.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC163308194ACA1C00A462CB /* HighShelf.mm */; };
-		FC16330B194ACA1C00A462CB /* LowShelf.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC163309194ACA1C00A462CB /* LowShelf.mm */; };
+		FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC163309194ACA1C00A462CB /* ShelfFilter.mm */; };
 		FC16330E194AD24800A462CB /* Granularizer2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC16330C194AD24800A462CB /* Granularizer2.mm */; };
 		FC30B60E193EE0100020B7D2 /* Activate.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60A193EE0100020B7D2 /* Activate.png */; };
 		FC30B60F193EE0100020B7D2 /* BeatRepeat.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60B193EE0100020B7D2 /* BeatRepeat.png */; };
@@ -232,12 +231,10 @@
 		FC114105193D98AF0045A92B /* SettingsButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton2.png; sourceTree = "<group>"; };
 		FC114106193D98AF0045A92B /* SettingsButton3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton3.png; sourceTree = "<group>"; };
 		FC114170193D99290045A92B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
-		FC163307194ACA1C00A462CB /* HighShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighShelf.h; sourceTree = "<group>"; };
-		FC163308194ACA1C00A462CB /* HighShelf.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HighShelf.mm; sourceTree = "<group>"; };
-		FC163309194ACA1C00A462CB /* LowShelf.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LowShelf.mm; sourceTree = "<group>"; };
+		FC163309194ACA1C00A462CB /* ShelfFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShelfFilter.mm; sourceTree = "<group>"; };
 		FC16330C194AD24800A462CB /* Granularizer2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Granularizer2.mm; sourceTree = "<group>"; };
 		FC16330D194AD24800A462CB /* Granularizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer2.h; sourceTree = "<group>"; };
-		FC30B602194A537C005F4ED3 /* LowShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LowShelf.h; sourceTree = "<group>"; };
+		FC30B602194A537C005F4ED3 /* ShelfFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfFilter.h; sourceTree = "<group>"; };
 		FC30B60A193EE0100020B7D2 /* Activate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Activate.png; sourceTree = "<group>"; };
 		FC30B60B193EE0100020B7D2 /* BeatRepeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BeatRepeat.png; sourceTree = "<group>"; };
 		FC30B60C193EE0100020B7D2 /* Loop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Loop.png; sourceTree = "<group>"; };
@@ -1928,10 +1925,8 @@
 		FCCF850919266E5F00B76E77 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				FC163307194ACA1C00A462CB /* HighShelf.h */,
-				FC163308194ACA1C00A462CB /* HighShelf.mm */,
-				FC30B602194A537C005F4ED3 /* LowShelf.h */,
-				FC163309194ACA1C00A462CB /* LowShelf.mm */,
+				FC30B602194A537C005F4ED3 /* ShelfFilter.h */,
+				FC163309194ACA1C00A462CB /* ShelfFilter.mm */,
 				FCCF850A19266E5F00B76E77 /* Delay.h */,
 				FCCF850B19266E5F00B76E77 /* Delay.mm */,
 				FC16330D194AD24800A462CB /* Granularizer2.h */,
@@ -3953,13 +3948,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC30B690193F18D00020B7D2 /* SettingsButton.mm in Sources */,
-				FC16330A194ACA1C00A462CB /* HighShelf.mm in Sources */,
 				FCCF8FEF1926707C00B76E77 /* juce_audio_basics.mm in Sources */,
 				FCCF8FF6192670E700B76E77 /* juce_audio_devices.mm in Sources */,
 				FCCF8FF1192670B100B76E77 /* juce_audio_formats.mm in Sources */,
 				FCCF8FF2192670B100B76E77 /* juce_core.mm in Sources */,
 				FCCF8FF3192670B100B76E77 /* juce_cryptography.mm in Sources */,
-				FC16330B194ACA1C00A462CB /* LowShelf.mm in Sources */,
+				FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */,
 				FCCF8FF71926710300B76E77 /* juce_data_structures.mm in Sources */,
 				FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */,
 				FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */,
@@ -4107,14 +4101,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4124,15 +4119,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

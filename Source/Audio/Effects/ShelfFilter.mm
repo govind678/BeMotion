@@ -1,16 +1,14 @@
 //
-//  HighShelf.cpp
+//  ShelfFilter.cpp
 //  BeMotion
 //
 //  Created by Govinda Ram Pingali on 6/12/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
-#include "HighShelf.h"
-#include <iostream>
-#include <stdio.h>
+#include "ShelfFilter.h"
 
-HighShelf::HighShelf(int numChannels)
+ShelfFilter::ShelfFilter(int numChannels)
 {
     m_iNumChannels = numChannels;
     m_fSampleRate  = DEFAULT_SAMPLE_RATE;
@@ -22,6 +20,7 @@ HighShelf::HighShelf(int numChannels)
    
     m_fC               = 0.0f;
     
+    m_iType            = 0;
     m_pfXh             = new float[numChannels];
     m_pfXhN            = new float[numChannels];
     m_pfAp_Y           = new float[numChannels];
@@ -35,7 +34,7 @@ HighShelf::HighShelf(int numChannels)
 }
 
 
-HighShelf::~HighShelf()
+ShelfFilter::~ShelfFilter()
 {
     delete [] m_pfAp_Y;
     delete [] m_pfXh;
@@ -43,7 +42,7 @@ HighShelf::~HighShelf()
 }
 
 
-void HighShelf::setParameter(int paramID, float value)
+void ShelfFilter::setParameter(int paramID, float value)
 {
     switch (paramID)
     {
@@ -60,13 +59,24 @@ void HighShelf::setParameter(int paramID, float value)
             calculateCoeffs();
             break;
             
+        case PARAM_3:
+            if (value < 0.5f)
+            {
+                m_iType = 0;
+            }
+            
+            else
+            {
+                m_iType = 1;
+            }
+            
         default:
             break;
     }
 }
 
 
-void HighShelf::calculateCoeffs()
+void ShelfFilter::calculateCoeffs()
 {
     // Boost
     if (m_fGain >= 0.0f)
@@ -82,7 +92,7 @@ void HighShelf::calculateCoeffs()
 }
 
 
-void HighShelf::prepareToPlay(float sampleRate)
+void ShelfFilter::prepareToPlay(float sampleRate)
 {
     m_fSampleRate = sampleRate;
     
@@ -96,7 +106,7 @@ void HighShelf::prepareToPlay(float sampleRate)
 }
 
 
-void HighShelf::process(float **audioBuffer, int numFrames)
+void ShelfFilter::process(float **audioBuffer, int numFrames)
 {
     for (int channel = 0; channel < m_iNumChannels; channel++)
     {
@@ -111,13 +121,23 @@ void HighShelf::process(float **audioBuffer, int numFrames)
             m_pfXhN[channel] = audioBuffer[channel][sample] - (m_fC * m_pfXh[channel]);
             m_pfAp_Y[channel] = m_fC * m_pfXhN[channel] + m_pfXh[channel];
             m_pfXh[channel] = m_pfXhN[channel];
-            audioBuffer[channel][sample] = 0.5f * m_fH0 * (audioBuffer[channel][sample] - m_pfAp_Y[channel]) - audioBuffer[channel][sample];
+            
+            if (m_iType == 0)
+            {
+                audioBuffer[channel][sample] = 0.5f * m_fH0 * (audioBuffer[channel][sample] + m_pfAp_Y[channel]) + audioBuffer[channel][sample];
+            }
+            
+            else
+            {
+                audioBuffer[channel][sample] = 0.5f * m_fH0 * (audioBuffer[channel][sample] - m_pfAp_Y[channel]) - audioBuffer[channel][sample];
+            }
+            
         }
     }
 }
 
 
-void HighShelf::finishPlaying()
+void ShelfFilter::finishPlaying()
 {
     
 }

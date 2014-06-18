@@ -26,18 +26,20 @@ Granularizer2::Granularizer2(int numChannels)
     }
     
     
-    m_fSize_per         =   0.0f;
-    m_fRate_s           =   0.0f;
-    m_iStartIndex       =   0;
-    m_iSampleCount      =   0;
-    m_iSamplesBuffered  =   0;
-    m_iSizeSamples      =   0;
-    m_iRateSamples      =   0;
-    m_fPitch            =   0.0f;
-    m_fPitchRandomness  =   0.0f;
-    m_fFloatIndex       =   0.0f;
-    m_bBufferingToggle  =   false;
-    m_bGrainToggle      =   false;
+    m_fSize_per             =   0.0f;
+    m_fRate_s               =   0.0f;
+    m_iStartIndex           =   0;
+    m_iSampleCount          =   0;
+    m_iSamplesBuffered      =   0;
+    m_iSizeSamples          =   0;
+    m_iRateSamples          =   0;
+    m_fPitch                =   0.0f;
+    m_fPitchRandomness      =   0.0f;
+    m_fFloatIndex           =   0.0f;
+    m_bBufferingToggle      =   false;
+    m_bGrainToggle          =   false;
+    m_fTempo                =   0.0f;
+    m_iQuantizationInterval =   0;
     
     initializeWithDefaultParameters();
 }
@@ -59,7 +61,7 @@ void Granularizer2::initializeWithDefaultParameters()
 {
     m_fRate_s   = 0.5f;
     m_fSize_per = 0.5;
-    m_fPitchRandomness  =   0.0f;
+    m_fPitchRandomness  =   1.0f;
     calculateParameters();
     
     m_iSampleCount  =   m_iRateSamples;
@@ -98,12 +100,12 @@ void Granularizer2::setParameter(int parameterID, float value)
             break;
             
         case PARAM_2:
-            m_fSize_per = value;
+            m_fSize_per = (1.0f - value);
             calculateParameters();
             break;
             
         case PARAM_3:
-            m_fPitchRandomness = value;
+            m_fPitchRandomness = (1.0f - value);
             break;
             
         default:
@@ -116,7 +118,24 @@ void Granularizer2::setParameter(int parameterID, float value)
 
 float Granularizer2::getParameter(int parameterID)
 {
-    return 0.0f;
+    switch (parameterID)
+    {
+        case PARAM_1:
+            return m_fRate_s;
+            break;
+            
+        case PARAM_2:
+            return (1.0f - m_fSize_per);
+            break;
+            
+        case PARAM_3:
+            return (1.0f - m_fPitchRandomness);
+            break;
+            
+        default:
+            return 0.0f;
+            break;
+    }
 }
 
 
@@ -169,10 +188,16 @@ void Granularizer2::process(float **audioBuffer, int numFrames)
 
 void Granularizer2::generateGrain()
 {
-    m_iStartIndex = ((double) rand() / (RAND_MAX)) * m_iSamplesBuffered;
+    int randomIndex = ((double) rand() / (RAND_MAX)) * m_iSamplesBuffered;
+    m_iStartIndex = randomIndex - (randomIndex % m_iQuantizationInterval);
+    if (m_iStartIndex < 0)
+    {
+        m_iStartIndex = 0;
+    }
     
     int index = 0;
-    if( ((double) rand() / (RAND_MAX)) > (m_fPitchRandomness + 0.1f))
+    float random = (double) rand() / (RAND_MAX);
+    if( random > (m_fPitchRandomness + 0.1f))
     {
         index = int( (double(rand()) / RAND_MAX) * NUM_PITCHES );
         m_fPitch = m_fPitchArray[index];
@@ -183,7 +208,8 @@ void Granularizer2::generateGrain()
         m_fPitch = 1.0f;
     }
     
-    std::cout << "Pitch: " << m_fPitch << "\t Ind: " << index << std::endl;
+//    std::cout << "Pitch: " << m_fPitch << "\t Randomness: " << random << "\tPR: " << m_fPitchRandomness << std::endl;
+//    std::cout << "Start: " << m_iStartIndex << "\t Random: " << randomIndex << std::endl;
     
     for (int channel = 0; channel < m_iNumChannels; channel++)
     {
@@ -218,10 +244,10 @@ void Granularizer2::calculateParameters()
 {
     m_iRateSamples = m_fRate_s * m_fSampleRate;
 //    m_iSampleCount = 0;
-    std::cout << "Rate: " << m_iRateSamples << std::endl;
+//    std::cout << "Rate: " << m_iRateSamples << std::endl;
     
     m_iSizeSamples = (((1.0f - m_fSize_per) * 0.99f) + 0.01f) * m_iRateSamples;
-    std::cout << "Size: " << m_iSizeSamples << std::endl;
+//    std::cout << "Size: " << m_iSizeSamples << std::endl;
     
 }
 
@@ -234,8 +260,20 @@ void Granularizer2::finishPlaying()
         m_ppcBuffer[channel]->resetInstance();
         m_bBufferingToggle = false;
         m_bGrainToggle     = false;
+        m_iSamplesBuffered = 0;
     }
 }
 
 
+void Granularizer2::setTempo(float tempo)
+{
+    m_fTempo = tempo;
+    m_iQuantizationInterval = (60.0f / (m_fTempo * 4)) * m_fSampleRate;
+//    std::cout << "Quant: " << m_iQuantizationInterval << std::endl;
+    
+    for (int channel = 0; channel < m_iNumChannels; channel++)
+    {
+        m_ppcBuffer[channel]->setWrapPoint(GRANULAR_MAX_SAMPLES - (GRANULAR_MAX_SAMPLES % m_iQuantizationInterval));
+    }
+}
 

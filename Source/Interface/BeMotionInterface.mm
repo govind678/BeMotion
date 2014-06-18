@@ -16,6 +16,7 @@
 BeMotionInterface::BeMotionInterface()
 {
     audioEngine     =   new AudioEngine();
+    m_bSettingsToggle   =   false;
 }
 
 
@@ -134,6 +135,11 @@ int BeMotionInterface::loadFXPreset(int pack, NSString *filepath)
     return (audioEngine->loadFXPreset(pack, String([filepath UTF8String])));
 }
 
+void BeMotionInterface::setSettingsToggle(bool toggle)
+{
+    m_bSettingsToggle = toggle;
+}
+
 
 
 
@@ -192,4 +198,9 @@ bool BeMotionInterface::getSamplePlaybackStatus(int sampleID)
 int BeMotionInterface::getCurrentFXPack()
 {
     return audioEngine->getCurrentFXPack();
+}
+
+bool BeMotionInterface::getSettingsToggle()
+{
+    return m_bSettingsToggle;
 }

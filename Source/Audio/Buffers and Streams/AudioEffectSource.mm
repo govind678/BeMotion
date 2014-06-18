@@ -49,8 +49,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     m_iTimeQuantizationPoints[7] = 16;
     
     
-    
-    m_fTempo    =   0.0f;
+    m_fTempo = 0.0f;
     setTempo(DEFAULT_TEMPO);
 
     
@@ -72,15 +71,6 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         case EFFECT_DELAY:
         {
             m_pcDelay           =   new CDelay(numChannels);
-            
-            
-            m_pcLowShelf = new LowShelf(NUM_INPUT_CHANNELS);
-            m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
-            m_pcLowShelf->setParameter(PARAM_2, 0.0f);
-            
-            m_pcHighShelf    =   new HighShelf(numChannels);
-            m_pcHighShelf->setParameter(PARAM_1, HIGHSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
-            m_pcHighShelf->setParameter(PARAM_2, 0.0f);
             
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
@@ -118,6 +108,7 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         case EFFECT_GRANULAR:
         {
             m_pcGranularizer    =   new Granularizer2(numChannels);
+            m_pcGranularizer->setTempo(m_fTempo);
             
             for (int i=0; i < NUM_EFFECTS_PARAMS; i++)
             {
@@ -133,6 +124,18 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
         }
             
     }
+    
+    
+    
+    m_pcLowShelf = new ShelfFilter(NUM_INPUT_CHANNELS);
+    m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
+    m_pcLowShelf->setParameter(PARAM_2, 0.0f);
+    m_pcLowShelf->setParameter(PARAM_3, 0.0f);
+    
+    m_pcHighShelf    =   new ShelfFilter(numChannels);
+    m_pcHighShelf->setParameter(PARAM_1, HIGHSHELF_CUTOFF / DEFAULT_SAMPLE_RATE);
+    m_pcHighShelf->setParameter(PARAM_2, 0.0f);
+    m_pcHighShelf->setParameter(PARAM_3, 1.0f);
     
     
     m_iEffectID  = effectID;
@@ -224,7 +227,7 @@ void AudioEffectSource::setParameter(int parameterID, float value)
             
         case EFFECT_GRANULAR:
             
-            if (PARAM_1)
+            if (parameterID == PARAM_1)
             {
                 m_pcGranularizer->setParameter(parameterID, m_iTimeQuantizationPoints[quantizedIndex] * m_fSmallestTimeInterval);
             }
@@ -402,6 +405,10 @@ void AudioEffectSource::audioDeviceAboutToStart(float sampleRate)
             
         case EFFECT_GRANULAR:
             m_pcGranularizer->prepareToPlay(sampleRate);
+            m_pcLowShelf->prepareToPlay(sampleRate);
+            m_pcLowShelf->setParameter(PARAM_1, LOWSHELF_CUTOFF / sampleRate);
+            m_pcHighShelf->prepareToPlay(sampleRate);
+            m_pcHighShelf->setParameter(PARAM_1, HIGHSHELF_CUTOFF / sampleRate);
             break;
             
         default:
@@ -456,6 +463,8 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize)
             
         case EFFECT_GRANULAR:
             m_pcGranularizer->process(audioBuffer, blockSize);
+            m_pcLowShelf->process(audioBuffer, blockSize);
+            m_pcHighShelf->process(audioBuffer, blockSize);
             break;
          
         default:
@@ -469,4 +478,9 @@ void AudioEffectSource::setTempo(float newTempo)
 {
     m_fTempo = newTempo;
     m_fSmallestTimeInterval   =  60.0f / (m_fTempo * MAX_CLOCK_DIVISOR);
+    
+    if (m_iEffectID == EFFECT_GRANULAR)
+    {
+        m_pcGranularizer->setTempo(m_fTempo);
+    }
 }

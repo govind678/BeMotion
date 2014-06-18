@@ -53,6 +53,8 @@ public:
     void motionUpdate(float* motion);
     
     int loadFXPreset(int pack, NSString* filepath);
+    
+    void setSettingsToggle(bool toggle);
     //========================================================
     
 
@@ -70,6 +72,8 @@ public:
     
     float getSampleCurrentPlaybackTime(int sampleID);
     bool  getSamplePlaybackStatus(int sampleID);
+    
+    bool getSettingsToggle();
     //========================================================
     
     
@@ -80,6 +84,8 @@ public:
 private:
     
     AudioEngine*    audioEngine;
+    
+    bool            m_bSettingsToggle;
     
 };
 

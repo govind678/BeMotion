@@ -26,7 +26,6 @@
 @interface BeMotionViewController : UIViewController {
     
     bool                            m_bSettingsToggle;
-    
     bool*                           m_pbMasterRecordToggle;
     bool*                           m_pbMasterBeginRecording;
     

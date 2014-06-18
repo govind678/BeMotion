@@ -44,7 +44,7 @@
 
 - (void)awakeFromNib
 {
-    self.effectNames  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer", @"Low Shelf"];
+    self.effectNames  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer"];
 }
 
 
@@ -747,13 +747,7 @@
         case 5:
             [self.slider1EffectParam setText:@"Rate"];
             [self.slider2EffectParam setText:@"Size"];
-            [self.slider3EffectParam setText:@"Pool"];
-            break;
-            
-        case 6:
-            [self.slider1EffectParam setText:@"Frequency"];
-            [self.slider2EffectParam setText:@"Gain"];
-            [self.slider3EffectParam setText:@"Null"];
+            [self.slider3EffectParam setText:@"Pitch"];
             break;
             
             

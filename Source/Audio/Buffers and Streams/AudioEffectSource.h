@@ -24,8 +24,7 @@
 //#include "Wah.h"
 #include "Wah2.h"
 #include "Granularizer2.h"
-#include "LowShelf.h"
-#include "HighShelf.h"
+#include "ShelfFilter.h"
 //------------------------------//
 
 
@@ -66,8 +65,8 @@ private:
     ScopedPointer<Wah>              m_pcWah;
     ScopedPointer<Granularizer2>    m_pcGranularizer;
     
-    ScopedPointer<LowShelf>         m_pcLowShelf;
-    ScopedPointer<HighShelf>        m_pcHighShelf;
+    ScopedPointer<ShelfFilter>      m_pcLowShelf;
+    ScopedPointer<ShelfFilter>      m_pcHighShelf;
     
     OwnedArray<Parameter>           m_pcParameter;
     Array<bool>                     m_pbGestureControl;

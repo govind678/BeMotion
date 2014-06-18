@@ -29,6 +29,7 @@ public:
         assert(iBufferLengthInSamples > 0);
         
         m_ptBuff        = new T [m_iBuffLength];
+        m_iWrapPoint    = m_iBuffLength;
         resetInstance();
     };
     
@@ -144,6 +145,10 @@ public:
         
 	}
     
+    void setWrapPoint(int wrapPoint)
+    {
+        m_iWrapPoint = wrapPoint;
+    }
     
 	void resetIndices()
 	{
@@ -166,12 +171,14 @@ private:
             // avoid negative buffer indices
             iOffset += m_iBuffLength;
         }
-        iIdx    = (iIdx + iOffset) % m_iBuffLength;
+        iIdx    = (iIdx + iOffset) % m_iWrapPoint;
     };
     
     int m_iBuffLength,              //!< length of the internal buffer
     m_iReadIdx,                 //!< current read index
     m_iWriteIdx;                //!< current write index
+    
+    int m_iWrapPoint;            // Change point of wrapping without resizing buffer
     
     T   *m_ptBuff;                  //!< data buffer
 };

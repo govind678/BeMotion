@@ -34,6 +34,8 @@ public:
 	void finishPlaying();
 	void process(float **audioBuffer, int numFrames);
     
+    void setTempo(float tempo);
+    
     
 private:
     
@@ -62,6 +64,8 @@ private:
     float                   m_fPitch;
     float                   m_fFloatIndex;
     float                   m_fPitchArray [NUM_PITCHES];
+    float                   m_fTempo;
+    int                     m_iQuantizationInterval;
     
     int                     m_iSamplesBuffered;
     bool                    m_bBufferingToggle;

@@ -48,7 +48,6 @@
     [_metronome setDelegate:self];
     
     
-    
     //--- Initialize Master Record Toggles ---//
     m_pbMasterRecordToggle      =   new bool [NUM_BUTTONS];
     m_pbMasterBeginRecording    =   new bool [NUM_BUTTONS];
@@ -65,9 +64,7 @@
         m_pbAudioRecordToggle[i]        =   false;
         m_pbAudioCurrentlyRecording[i]  =   false;
     }
-    
-    
-    m_bSettingsToggle                   =   true;
+
     
     
     
@@ -179,6 +176,22 @@
     
     //--- Set Background Image ---//
     [[self view] setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
+    
+    
+    m_bSettingsToggle   =   false;
+    //--- Retain Settings Status ---//
+    if (_backendInterface->getSettingsToggle()) {
+        
+        //--- Display Settings Buttons ---//
+        [self toggleSettings:true];
+//        _backendInterface->setSettingsToggle(false);
+        
+    } else {
+        
+        //--- Hide Settings Buttons ---//
+        [self toggleSettings:false];
+//        _backendInterface->setSettingsToggle(true);
+    }
 
 }
 
@@ -765,13 +778,15 @@
         
         //--- Display Settings Buttons ---//
         [self toggleSettings:true];
+        _backendInterface->setSettingsToggle(true);
         m_bSettingsToggle = false;
         
     } else {
         
         //--- Hide Settings Buttons ---//
         [self toggleSettings:false];
-        m_bSettingsToggle   =   true;
+        _backendInterface->setSettingsToggle(false);
+        m_bSettingsToggle = true;
     }
 }
 

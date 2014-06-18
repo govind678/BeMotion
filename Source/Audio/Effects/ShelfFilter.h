@@ -1,23 +1,23 @@
 //
-//  HighShelf.h
+//  ShelfFilter.h
 //  BeMotion
 //
 //  Created by Govinda Ram Pingali on 6/12/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
-#ifndef __BeMotion__HighShelf__
-#define __BeMotion__HighShelf__
+#ifndef __BeMotion__ShelfFilter__
+#define __BeMotion__ShelfFilter__
 
 #include <math.h>
 #include "Macros.h"
 
-class HighShelf
+class ShelfFilter
 {
 public:
     
-    HighShelf(int numChannels);
-    ~HighShelf();
+    ShelfFilter(int numChannels);
+    ~ShelfFilter();
     
     void prepareToPlay(float sampleRate);
 	void finishPlaying();
@@ -35,6 +35,8 @@ private:
     
     float   m_fNormFrequency;
     float   m_fGain;
+    int     m_iType;        //0-> Low, 1-> High
+    
     float   m_fV0;
     float   m_fH0;
     float   m_fC;
@@ -44,4 +46,4 @@ private:
     float*  m_pfAp_Y;
 };
 
-#endif /* defined(__BeMotion__HighShelf__) */
+#endif /* defined(__BeMotion__ShelfFilter__) */

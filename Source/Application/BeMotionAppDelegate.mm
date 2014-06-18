@@ -16,6 +16,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    
+    //--- Enable Push Notifications ---//
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    
+    
+    //--- Create Instance of Backend ---//
     backendInterface    =   new BeMotionInterface();
     
     
@@ -93,6 +102,19 @@
     [metronome dealloc];
     delete backendInterface;
 }
+
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+//	NSLog(@"Failed to get token, error: %@", error);
+}
+
+
 
 - (BeMotionInterface*)getBackendReference
 {

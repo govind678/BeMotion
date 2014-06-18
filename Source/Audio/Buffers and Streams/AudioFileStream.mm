@@ -193,6 +193,18 @@ void AudioFileStream::prepareToPlay(int samplesPerBlockExpected, double sampleRa
 void AudioFileStream::releaseResources()
 {
     transportSource.releaseResources();
+    
+    for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
+    {
+        if (audioEffectInitialized.getUnchecked(effectNo) == true)
+        {
+            if (m_pbBypassStateArray[effectNo] == false)
+            {
+                audioEffectSource.getUnchecked(effectNo)->audioDeviceStopped();
+            }
+        }
+    }
+
 }
 
 
@@ -254,20 +266,16 @@ void AudioFileStream::getNextAudioBlock(const AudioSourceChannelInfo &audioSourc
 
 void AudioFileStream::processAudioBlock(float **audioBuffer, int numSamples)
 {
-    if (audioEffectSource.size() > 0)
+    for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
     {
-        for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
+        if (audioEffectInitialized.getUnchecked(effectNo) == true)
         {
-            if (audioEffectInitialized.getUnchecked(effectNo) == true)
+            if (m_pbBypassStateArray[effectNo] == false)
             {
-                if (m_pbBypassStateArray[effectNo] == false)
-                {
-                    audioEffectSource.getUnchecked(effectNo)->process(audioBuffer,
+                audioEffectSource.getUnchecked(effectNo)->process(audioBuffer,
                                                                   numSamples);
-                }
             }
         }
-        
     }
     
     m_pcLimiter->process(audioBuffer, numSamples);
@@ -301,6 +309,19 @@ void AudioFileStream::stopPlayback()
 //    m_iSamplesRead = 0;
     if (m_iButtonMode != MODE_TRIGGER) {
         transportSource.stop();
+        
+        for (int effectNo = 0; effectNo < audioEffectSource.size(); effectNo++)
+        {
+            if (audioEffectInitialized.getUnchecked(effectNo) == true)
+            {
+                if (m_pbBypassStateArray[effectNo] == false)
+                {
+                    audioEffectSource.getUnchecked(effectNo)->audioDeviceStopped();
+                }
+            }
+        }
+        
+        
     }
     
 }
