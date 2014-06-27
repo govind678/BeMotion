@@ -9,7 +9,6 @@
 //============================================================================
 
 #import  <UIKit/UIKit.h>
-#import  <MediaPlayer/MediaPlayer.h>
 #import  <AVFoundation/AVFoundation.h>
 #import  <CoreMedia/CoreMedia.h>
 
@@ -19,14 +18,10 @@
 #import  "EffectsTable.h"
 
 
-@interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, MPMediaPickerControllerDelegate>
+@interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 {
     int             m_iCurrentEffectPosition;
     int             buttonMode;
-    
-    MPMediaPickerController* mediaPicker;
-    NSURL* currentSongURL;
-
 }
 
 @property (nonatomic, assign) BeMotionInterface* backendInterface;
@@ -80,8 +75,6 @@
 
 
 - (void) updateSlidersAndLabels;
-
-- (IBAction)launchMediaLibrary:(UIButton *)sender;
 
 
 

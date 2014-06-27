@@ -16,6 +16,8 @@ TrimAudio::TrimAudio()
     m_fSampleRate = DEFAULT_SAMPLE_RATE;
     
     formatManager.registerBasicFormats();
+    
+    workingFile = File(File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/trimming.wav");
 }
 
 
@@ -32,6 +34,16 @@ void TrimAudio::cropAudioFile(String filepath, float startTime_s, float stopTime
     AudioFormatReader* reader = formatManager.createReaderFor(audioFile);
     
     std::cout << "Audio File: " << audioFile.getFullPathName() << std::endl;
+    
+    
+    FileOutputStream* outputStream;
+    if (workingFile.exists())
+    {
+        workingFile.deleteFile();
+    }
+    outputStream = workingFile.createOutputStream();
+
+    
     
     if (reader != nullptr)
     {

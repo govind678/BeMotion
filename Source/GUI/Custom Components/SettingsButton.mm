@@ -46,28 +46,28 @@
         [recordButton setImage:[UIImage imageNamed:@"Record.png"] forState:UIControlStateNormal];
         [recordButton addTarget:self action:@selector(recordButtonClicked) forControlEvents:UIControlEventTouchDown];
         [recordButton addTarget:self action:@selector(recordButtonReleased) forControlEvents:UIControlEventTouchUpInside];
-        recordButton.frame = CGRectMake(12.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
+        recordButton.frame = CGRectMake(12.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
 //        [recordButton setClipsToBounds:YES];
 //        [[recordButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
-        
-        UIButton *fxButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [fxButton setImage:[UIImage imageNamed:@"FX.png"] forState:UIControlStateNormal];
-        [fxButton addTarget:self action:@selector(fxButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        fxButton.frame = CGRectMake(79.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-//        [fxButton setClipsToBounds:YES];
-//        [[fxButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
         UIButton *resampleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [resampleButton setImage:[UIImage imageNamed:@"Resample.png"] forState:UIControlStateNormal];
         [resampleButton addTarget:self action:@selector(resampleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        resampleButton.frame = CGRectMake(146.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
+        resampleButton.frame = CGRectMake(79.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
 //        [resampleButton setClipsToBounds:YES];
 //        [[resampleButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
+        UIButton *fxButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [fxButton setImage:[UIImage imageNamed:@"FX.png"] forState:UIControlStateNormal];
+        [fxButton addTarget:self action:@selector(fxButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        fxButton.frame = CGRectMake(146.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
+//        [fxButton setClipsToBounds:YES];
+//        [[fxButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+
         UIButton *importButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [importButton setImage:[UIImage imageNamed:@"Import.png"] forState:UIControlStateNormal];
         [importButton addTarget:self action:@selector(importButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        importButton.frame = CGRectMake(213.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
+        importButton.frame = CGRectMake(213.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
 //        [importButton setClipsToBounds:YES];
 //        [[importButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
         
@@ -119,7 +119,6 @@
 
 - (void)importButtonClicked
 {
-    NSLog(@"Launch Import View %d", buttonID);
     [delegate launchImportView:buttonID];
 }
 

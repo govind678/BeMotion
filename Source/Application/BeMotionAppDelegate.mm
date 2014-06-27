@@ -10,8 +10,23 @@
 
 
 #import "BeMotionAppDelegate.h"
+//#import "SCUI.h"
+
+
 
 @implementation BeMotionAppDelegate
+
+@synthesize sampleSets, fxPacks;
+
++ (void)initialize
+{
+//    [SCSoundCloud setClientID:@"YOUR_CLIENT_ID"
+//                       secret:@"YOUR_CLIENT_SECRET"
+//                  redirectURL:[NSURL URLWithString:@"sampleproject://oauth"]];
+    
+}
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -26,32 +41,86 @@
     
     //--- Create Instance of Backend ---//
     backendInterface    =   new BeMotionInterface();
+
+    
+    
+    //--- Generate Sample Sets ---//
+    
+    NSDictionary* initialSet =  @{
+                                  
+                   @"Electronic Kit"            : @[@"EKit0", @"EKit1", @"EKit2", @"EKit3", @"EKit4", @"Breakbeat4",
+                                                    [NSNumber numberWithInt:120]],
+                   
+                   @"Dubstep Loops"             : @[@"DubBeat0", @"DubBeat1", @"DubBeat2", @"DubBeat3", @"DubBeat4", @"EKit4",
+                                                    [NSNumber numberWithInt:140]],
+                   
+                   @"Breakbeat Drums"           : @[@"Breakbeat0", @"Breakbeat1", @"Breakbeat2", @"Breakbeat3", @"Breakbeat4", @"EKit4",
+                                                    [NSNumber numberWithInt:140]],
+                   
+                   @"Indian Percussion"         : @[@"Indian_Percussion0", @"Indian_Percussion1", @"Indian_Percussion2",
+                                                    @"Indian_Percussion3", @"Indian_Percussion4", @"Electronica4",
+                                                    [NSNumber numberWithInt:100]],
+                   
+                   @"Latin Loops"               : @[@"Latin_Loop0", @"Latin_Loop1", @"Latin_Loop2", @"Latin_Loop3", @"Latin_Loop4",
+                                                    @"Latin_Percussion4",
+                                                    [NSNumber numberWithInt:126]],
+                   
+                   @"Latin Percussion"          : @[@"Latin_Percussion0", @"Latin_Percussion1", @"Latin_Percussion2", @"Latin_Percussion3",
+                                                    @"Latin_Percussion4", @"Latin_Loop4",
+                                                    [NSNumber numberWithInt:126]],
+                   
+                   @"Electronic Set 1"          : @[@"Electronic0", @"Electronic1", @"Electronic2", @"Electronic3", @"Electronic4",
+                                                    @"Electronica4",
+                                                    [NSNumber numberWithInt:85]],
+                   
+                   @"Electronic Set 2"          : @[@"Electronica0", @"Electronica1", @"Electronica2", @"Electronica3", @"Electronica4",
+                                                    @"Electronic4",
+                                                    [NSNumber numberWithInt:85]],
+                   
+                   @"Embryo"                    : @[@"Embryo0", @"Embryo1", @"Embryo2", @"Embryo3", @"Embryo4", @"Latin_Percussion4",
+                                                    [NSNumber numberWithInt:200]],
+                   
+                   @"Machine Transformations"   : @[@"MachineTransformations0", @"MachineTransformations1", @"MachineTransformations2",
+                                                    @"MachineTransformations3", @"MachineTransformations4", @"Embryo4",
+                                                    [NSNumber numberWithInt:120]],
+                   
+                   @"Skies"                     : @[@"Skies0", @"Skies1", @"Skies2", @"Skies3", @"Skies4", @"Electronic4",
+                                                    [NSNumber numberWithInt:180]],
+                   };
+    
+    
+    sampleSets = [[NSMutableDictionary alloc] initWithDictionary:initialSet copyItems:YES];
     
     
     
-    //--- Preload Audio Samples ---//
-    NSString *samplePath0 = [[NSBundle mainBundle] pathForResource:@"EKit0" ofType:@"wav"];
-    NSString *samplePath1 = [[NSBundle mainBundle] pathForResource:@"EKit1" ofType:@"wav"];
-    NSString *samplePath2 = [[NSBundle mainBundle] pathForResource:@"EKit2" ofType:@"wav"];
-    NSString *samplePath3 = [[NSBundle mainBundle] pathForResource:@"EKit3" ofType:@"wav"];
-    NSString *samplePath4 = [[NSBundle mainBundle] pathForResource:@"EKit4" ofType:@"wav"];
-    
-    NSString *fxPath0 = [[NSBundle mainBundle] pathForResource:@"Percs_Delay" ofType:@"json"];
-    
-    backendInterface->loadAudioFile(0, samplePath0);
-    backendInterface->loadAudioFile(1, samplePath1);
-    backendInterface->loadAudioFile(2, samplePath2);
-    backendInterface->loadAudioFile(3, samplePath3);
-    backendInterface->loadAudioFile(4, samplePath4);
-    
-    backendInterface->loadFXPreset(0, fxPath0);
+    //--- Generate FX Packs ---//
+    NSArray* initialArray = @[@"Wah_Tremolo", @"Percs_Delay", @"DelayWah", @"BeatRepeat", @"Template"];
+    fxPacks = [[NSMutableArray alloc] initWithArray:initialArray copyItems:YES];
     
     
+    
+    //--- Preload Audio Samples and FX Path ---//
+    
+    NSArray *sectionSamples = [sampleSets objectForKey:@"Dubstep Loops"];
+    
+    for (int sample = 0; sample < NUM_SAMPLE_SOURCES; sample++) {
+        NSString *samplePath = [[NSBundle mainBundle] pathForResource:[sectionSamples objectAtIndex:sample] ofType:@"wav"];
+        backendInterface->loadAudioFile(sample, samplePath);
+    }
+    
+    NSString *fxPath = [[NSBundle mainBundle] pathForResource:[fxPacks objectAtIndex:0] ofType:@"json"];
+    backendInterface->loadFXPreset(fxPath);
+    
+    
+    
+    //--- Initialize Metronome ---//
     metronome   =   [[Metronome alloc] init];
     [metronome setBackendReference:backendInterface];
     
+    
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -87,7 +156,7 @@
     
     
     // Delete Media Selected Copies, if any
-    for (int i=0; i < 4; i++)
+    for (int i=0; i < NUM_BUTTONS; i++)
     {
         NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentPath = [searchPaths lastObject];
@@ -99,6 +168,8 @@
         }
     }
     
+    [sampleSets release];
+    [fxPacks release];
     [metronome dealloc];
     delete backendInterface;
 }
@@ -125,6 +196,7 @@
 {
     return metronome;
 }
+
 
 
 @end

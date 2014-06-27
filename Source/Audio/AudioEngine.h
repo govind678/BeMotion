@@ -44,8 +44,8 @@ public:
     void setSampleParameter(int sampleID, int parameterID, float value);
     float getSampleParameter(int sampleID, int parameterID);
 
-    void setCurrentPresetBank(int presetBank);
-    int  getCurrentPresetBank();
+    void setCurrentPresetBank(String presetBank);
+    String  getCurrentPresetBank();
     
     void addAudioEffect(int sampleID, int effectPosition, int effectID);
     void removeAudioEffect(int sampleID, int effectPosition);
@@ -72,8 +72,10 @@ public:
     
     void motionUpdate(float* motion);
     
-    int loadFXPreset(int pack, String filepath);
-    int getCurrentFXPack();
+    int loadFXPreset(String filepath);
+    String getCurrentFXPack();
+    
+    float* getSamplesToDrawWaveform(int sampleID);
     
     
 private:
@@ -103,8 +105,12 @@ private:
     AudioDeviceManager::AudioDeviceSetup    deviceSetup;
     
     bool m_bLiveAudioThreadRunning;
-    int  m_iCurrentPresetBankLoaded;
-    int  m_iCurrentFXPackLoaded;
+    
+    String              currentPresetBank;
+    String              currentFXPack;
+    
+    int                 m_iCurrentPresetBankLoaded;
+    int                 m_iCurrentFXPackLoaded;
     
 };
 

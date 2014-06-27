@@ -17,8 +17,28 @@
 	<string>Builds/BeMotion.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>006B8568-B97D-4823-AD3B-E9A01892668C</key>
+		<string>../../Soundcloud/OHAttributedLabel</string>
+		<key>0C0E272F-12F9-41F8-8DB3-9DFFFCA13DD1</key>
+		<string>../../Soundcloud/OAuth2Client</string>
+		<key>1B5D60E3-B0C8-4108-8B76-91D7D0499887</key>
+		<string>../../../Soundcloud/CocoaSoundCloudUI</string>
 		<key>2497C337-4FEA-455E-9CA8-43970DD75017</key>
 		<string>../../..</string>
+		<key>30B82A01-905C-44E7-9E49-3013DB7E1698</key>
+		<string>../../../Soundcloud/JSONKit</string>
+		<key>39F2ADC0-138F-4E67-9962-1A21A93D27DC</key>
+		<string>../../Soundcloud/JSONKit</string>
+		<key>4156DAE0-0ACC-47D9-A9CE-F44BD964FDC8</key>
+		<string>../../../Soundcloud/CocoaSoundCloudAPI</string>
+		<key>97B12BC9-596D-4641-B64F-8774803C2B6C</key>
+		<string>../../Soundcloud/CocoaSoundCloudUI</string>
+		<key>BA8C0A73-A73E-40C5-B45D-13877D7C43BA</key>
+		<string>../../../Soundcloud/OAuth2Client</string>
+		<key>CC4FAFA3-8CE5-44C9-9357-FDFB9BF4BCBB</key>
+		<string>../../Soundcloud/CocoaSoundCloudAPI</string>
+		<key>E8088BCB-F042-4E56-8CBA-26B26A27CB79</key>
+		<string>../../../Soundcloud/OHAttributedLabel</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/govind678/BeMotion.git</string>
@@ -35,6 +55,86 @@
 			<string>2497C337-4FEA-455E-9CA8-43970DD75017</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BeMotion</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4156DAE0-0ACC-47D9-A9CE-F44BD964FDC8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaSoundCloudAPI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CC4FAFA3-8CE5-44C9-9357-FDFB9BF4BCBB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaSoundCloudAPI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1B5D60E3-B0C8-4108-8B76-91D7D0499887</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaSoundCloudUI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>97B12BC9-596D-4641-B64F-8774803C2B6C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaSoundCloudUI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>30B82A01-905C-44E7-9E49-3013DB7E1698</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JSONKit</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>39F2ADC0-138F-4E67-9962-1A21A93D27DC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JSONKit</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BA8C0A73-A73E-40C5-B45D-13877D7C43BA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OAuth2Client</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0C0E272F-12F9-41F8-8DB3-9DFFFCA13DD1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OAuth2Client</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E8088BCB-F042-4E56-8CBA-26B26A27CB79</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OHAttributedLabel</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>006B8568-B97D-4823-AD3B-E9A01892668C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OHAttributedLabel</string>
 		</dict>
 	</array>
 </dict>

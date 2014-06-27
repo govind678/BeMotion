@@ -48,11 +48,11 @@ public:
     void beat(int beatNo);
     void setTempo(float newTempo);
     
-    void setCurrentPresetBank(int presetBank);
+    void setCurrentSampleBank(NSString* presetBank);
     
     void motionUpdate(float* motion);
     
-    int loadFXPreset(int pack, NSString* filepath);
+    int loadFXPreset(NSString* filepath);
     
     void setSettingsToggle(bool toggle);
     //========================================================
@@ -61,8 +61,8 @@ public:
     //============== Backend to GUI Methods ==================
     int getEffectType(int sampleID, int effectPosition);
     
-    int getCurrentAudioPresetBank();
-    int getCurrentFXPack();
+    NSString* getCurrentSampleBank();
+    NSString* getCurrentFXPack();
     
     float getEffectParameter(int sampleID, int effectPosition, int parameterID);
     float getSampleParameter(int sampleID, int parameterID);
@@ -74,6 +74,8 @@ public:
     bool  getSamplePlaybackStatus(int sampleID);
     
     bool getSettingsToggle();
+    
+    float* getSamplesToDrawWaveform(int sampleID);
     //========================================================
     
     

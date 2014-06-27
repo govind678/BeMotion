@@ -16,6 +16,13 @@
     
     float*                          motion;
     
+    float                           amplitude;
+    float                           lowpass;
+    float                           kLowpass;
+    
+    bool                            decayToggle;
+    int                             decayCounter;
+    
 }
 
 @property (nonatomic, assign) BeMotionInterface*  backendInterface;

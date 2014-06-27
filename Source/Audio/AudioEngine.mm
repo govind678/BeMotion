@@ -20,10 +20,11 @@ AudioEngine::AudioEngine()
     
     m_bLiveAudioThreadRunning   =   false;
     m_iCurrentPresetBankLoaded  =   PRESET_BANK_EKIT;
+    currentPresetBank           =   "Electronic Kit";
     m_iCurrentFXPackLoaded      =   0;
     
-    audioFileRecorder   =   new AudioFileRecord(sharedAudioDeviceManager);
-    audioMixer          =   new AudioMixerPlayer(sharedAudioDeviceManager);
+    audioFileRecorder           =   new AudioFileRecord(sharedAudioDeviceManager);
+    audioMixer                  =   new AudioMixerPlayer(sharedAudioDeviceManager);
 //    liveAudioStream     =   new AudioStream();
     
     
@@ -72,15 +73,35 @@ AudioEngine::~AudioEngine()
 }
 
 
-void AudioEngine::setCurrentPresetBank(int presetBank)
+
+
+//--- Sample Banks and FX Presets ---//
+
+void AudioEngine::setCurrentPresetBank(String presetBank)
 {
-    m_iCurrentPresetBankLoaded = presetBank;
+    currentPresetBank = presetBank;
 }
 
-int  AudioEngine::getCurrentPresetBank()
+String  AudioEngine::getCurrentPresetBank()
 {
-    return m_iCurrentPresetBankLoaded;
+    return currentPresetBank;
 }
+
+int AudioEngine::loadFXPreset(String filepath)
+{
+    File fi = File(filepath);
+    currentFXPack = fi.getFileNameWithoutExtension();
+    return (presetLoader->loadFXPreset(filepath));
+}
+
+String AudioEngine::getCurrentFXPack()
+{
+    return currentFXPack;
+}
+
+
+
+
 
 void AudioEngine::startLiveAudioStreaming()
 {
@@ -282,14 +303,7 @@ void AudioEngine::setTempo(float newTempo)
 }
 
 
-int AudioEngine::loadFXPreset(int pack, String filepath)
+float* AudioEngine::getSamplesToDrawWaveform(int sampleID)
 {
-    m_iCurrentFXPackLoaded = pack;
-    return (presetLoader->loadFXPreset(filepath));
+    return audioMixer->getSamplesToDrawWaveform(sampleID);
 }
-
-int AudioEngine::getCurrentFXPack()
-{
-    return m_iCurrentFXPackLoaded;
-}
-

@@ -34,7 +34,7 @@
                 
                 "slider1" :
                 {
-                    "value" : 0.0,
+                    "value" : 0.8,
                     "gesture" : 0
                 },
                 
@@ -153,7 +153,7 @@
                 
                 "slider1" :
                 {
-                    "value" : 0.0,
+                    "value" : 0.8,
                     "gesture" : 0
                 },
                 

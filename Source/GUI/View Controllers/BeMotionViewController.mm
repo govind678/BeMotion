@@ -25,12 +25,11 @@
 
 @implementation BeMotionViewController
 
-@synthesize metroBar0, metroBar1, metroBar2, metroBar3, metroBar4, metroBar5, metroBar6, metroBar7;
 @synthesize progressBar0, progressBar1, progressBar2, progressBar3;
 @synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
 @synthesize settingsButton0, settingsButton1, settingsButton2, settingsButton3;
 @synthesize metronomeButton, settingsButton;
-
+@synthesize metronomeBar;
 
 
 - (void)viewDidLoad
@@ -122,17 +121,6 @@
     
     
     
-    //--- Turn off Metronome Bars ---//
-    [metroBar0 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-    [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-    
-    
     //--- TODO: Retain Settings Status? ---//
     [settingsButton setAlpha:BUTTON_OFF_ALPHA];
     
@@ -153,23 +141,13 @@
     
     
     
+    //--- Initialize Metronome Bar ---//
+    metronomeBar = [[MetronomeBar alloc] initWithFrame:CGRectMake(20.0f, 480.0f, 280.0f, 5.0f)];
+    [[self view] addSubview:metronomeBar];
     
     
-    //--- Initialize Motion Manager ---//
-    
-    self.motionManager = [[CMMotionManager alloc] init];
-    self.motionManager.deviceMotionUpdateInterval = MOTION_UPDATE_RATE;
-    
-    
-    [self.motionManager startDeviceMotionUpdatesToQueue: [NSOperationQueue currentQueue]
-                                            withHandler:^ (CMDeviceMotion *deviceMotion, NSError *error) {
-                                                [self motionDeviceUpdate:deviceMotion];
-                                                if(error){
-                                                    NSLog(@"%@", error);
-                                                }
-                                            }];
-    
-    motion  =   new float [NUM_MOTION_PARAMS];
+    //--- Initialize Motion Control ---//
+    motionControl = [[MotionControl alloc] init];
     
     
     
@@ -216,15 +194,7 @@
     delete [] m_pbAudioCurrentlyRecording;
     delete [] m_pbAudioRecordToggle;
     
-    
-    [metroBar0 release];
-    [metroBar1 release];
-    [metroBar2 release];
-    [metroBar3 release];
-    [metroBar4 release];
-    [metroBar5 release];
-    [metroBar6 release];
-    [metroBar7 release];
+    [motionControl release];
     
     [progressBar0 release];
     [progressBar1 release];
@@ -247,251 +217,10 @@
     [metronomeButton release];
     [settingsButton release];
     
+    [metronomeBar release];
+    
     [super dealloc];
 }
-
-
-
-
-
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    UITouch *touch = [touches anyObject];
-//    
-//    //--- Red Sample ---//
-//    if ([touch view] == sampleButton0)
-//    {
-//        _backendInterface->startPlayback(0);
-//        
-//        m_pbPlaybackStatus[0] = true;
-//        m_piFingerDownStatus[0] ++;
-//        
-//        [sampleButton0 setAlpha:1.0f];
-//        [progressBar0 setAlpha:1.0f];
-//    }
-//    
-//    
-//    //--- Blue Sample ---//
-//    if ([touch view] == sampleButton1)
-//    {
-//        _backendInterface->startPlayback(1);
-//        m_pbPlaybackStatus[1] = true;
-//        
-//        m_piFingerDownStatus[1] ++;
-//        
-//        [sampleButton1 setAlpha:1.0f];
-//        [progressBar1 setAlpha:1.0f];
-//    }
-//    
-//    
-//    //--- Green Sample ---//
-//    if ([touch view] == sampleButton2)
-//    {
-//        _backendInterface->startPlayback(2);
-//        m_pbPlaybackStatus[2] = true;
-//        
-//        m_piFingerDownStatus[2] ++;
-//        
-//        [sampleButton2 setAlpha:1.0f];
-//        [progressBar2 setAlpha:1.0f];
-//    }
-//    
-//    
-//    //--- Yellow Sample ---//
-//    if ([touch view] == sampleButton3)
-//    {
-//        _backendInterface->startPlayback(3);
-//        m_pbPlaybackStatus[3] = true;
-//        
-//        m_piFingerDownStatus[3] ++;
-//        
-//        [sampleButton3 setAlpha:1.0f];
-//        [progressBar3 setAlpha:1.0f];
-//    }
-//    
-//    for (int i=0; i < NUM_BUTTONS; i++)
-//    {
-//        NSLog(@"Finger Down %i: %i", i, m_piFingerDownStatus[i]);
-//    }
-//}
-//
-//
-//
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-////    UITouch *touch = [touches anyObject];
-//    
-////    NSSet* touches0 = [event touchesForView:sampleButton0];
-////    NSSet* touches1 = [event touchesForView:sampleButton1];
-////    NSSet* touches2 = [event touchesForView:sampleButton2];
-////    NSSet* touches3 = [event touchesForView:sampleButton3];
-////    
-////    CGPoint pointToMove0 = [[touches0 anyObject] locationInView:sampleButton0];
-////    CGPoint pointToMove1 = [[touches1 anyObject] locationInView:sampleButton1];
-////    CGPoint pointToMove2 = [[touches2 anyObject] locationInView:sampleButton2];
-////    CGPoint pointToMove3 = [[touches3 anyObject] locationInView:sampleButton3];
-//    
-////    if (([sampleButton0 pointInside:pointToMove0 withEvent:event]) && (m_piFingerDownStatus[0] > 0)) {
-////    if ([sampleButton0 pointInside:pointToMove0 withEvent:event]) {
-////        m_pbFingerMoveStatus[0] = NO;
-////        NSLog(@"Moved inside Red: %i", m_pbFingerMoveStatus[0]);
-////    } else {
-////        m_pbFingerMoveStatus[0] = YES;
-////        NSLog(@"Moved outside Red: %i", m_pbFingerMoveStatus[0]);
-////    }
-//
-//    
-////    if (([sampleButton1 pointInside:pointToMove1 withEvent:event]) && (m_piFingerDownStatus[1] > 0)) {
-////        m_pbFingerMoveStatus[1] = NO;
-////        NSLog(@"Moved inside Blue: %i", m_pbFingerMoveStatus[1]);
-////    } else {
-////        m_pbFingerMoveStatus[1] = YES;
-////        NSLog(@"Moved outside Blue: %i", m_pbFingerMoveStatus[1]);
-////    }
-////    
-//    
-////    if ([sampleButton2 pointInside:pointToMove2 withEvent:event]) {
-//////        NSLog(@"Moved inside Green");
-////        m_pbFingerMoveStatus[2] = NO;
-////    } else {
-//////        NSLog(@"Moved outside Green");
-////        m_pbFingerMoveStatus[2] = YES;
-////    }
-////    
-////    
-////    if ([sampleButton3 pointInside:pointToMove3 withEvent:event]) {
-//////        NSLog(@"Moved inside Yellow");
-////        m_pbFingerMoveStatus[3] = NO;
-////    } else {
-//////        NSLog(@"Moved outside Yellow");
-////        m_pbFingerMoveStatus[3] = YES;
-////    }
-//}
-//
-//
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    UITouch *touch = [touches anyObject];
-//    
-//    
-//    //--- Red Sample ---//
-//    if ([touch view] == sampleButton0)
-//    {
-//        m_piFingerDownStatus[0] --;
-//        
-//        if ((m_piFingerDownStatus[0] <= 0) && (!m_pbFingerMoveStatus[0]))
-//        {
-//            _backendInterface->stopPlayback(0);
-//            m_pbPlaybackStatus[0] = false;
-//            
-//            [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
-//            [progressBar0 setAlpha:BUTTON_OFF_ALPHA];
-//            
-//            m_piFingerDownStatus[0] = 0;
-//        }
-//    }
-//    
-//    
-//    //--- Blue Sample ---//
-//    if ([touch view] == sampleButton1)
-//    {
-//        m_piFingerDownStatus[1] --;
-//        
-//        if ((m_piFingerDownStatus[1] <= 0)  && (!m_pbFingerMoveStatus[1]))
-//        {
-//            _backendInterface->stopPlayback(1);
-//            m_pbPlaybackStatus[1] = false;
-//            
-//            [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
-//            [progressBar1 setAlpha:BUTTON_OFF_ALPHA];
-//            
-//            m_piFingerDownStatus[1] = 0;
-//        }
-//    }
-//    
-//    
-//    //--- Green Sample ---//
-//    if ([touch view] == sampleButton2)
-//    {
-//        m_piFingerDownStatus[2] --;
-//        
-//        if ((m_piFingerDownStatus[2] <= 0)  && (!m_pbFingerMoveStatus[2]))
-//        {
-//            _backendInterface->stopPlayback(2);
-//            m_pbPlaybackStatus[2] = false;
-//            
-//            [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
-//            [progressBar2 setAlpha:BUTTON_OFF_ALPHA];
-//            
-//            m_piFingerDownStatus[2] = 0;
-//        }
-//    }
-//    
-//    
-//    //--- Yellow Sample ---//
-//    if ([touch view] == sampleButton3)
-//    {
-//        m_piFingerDownStatus[3] --;
-//        
-//        if ((m_piFingerDownStatus[3] <= 0)  && (!m_pbFingerMoveStatus[3]))
-//        {
-//            _backendInterface->stopPlayback(3);
-//            m_pbPlaybackStatus[3] = false;
-//            
-//            [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
-//            [progressBar3 setAlpha:BUTTON_OFF_ALPHA];
-//            
-//            m_piFingerDownStatus[3] = 0;
-//        }
-//    }
-//}
-
-
-
-
-
-//--- Motion Processing Methods ---//
-
-- (void) motionDeviceUpdate: (CMDeviceMotion*) deviceMotion
-{
-    
-//    motion[ATTITUDE_PITCH]  = (((deviceMotion.attitude.pitch + M_PI) / (2 * M_PI)) - 0.25f) * 2.0f;
-    motion[ATTITUDE_PITCH]  = (deviceMotion.attitude.pitch + 1.0f) * 0.5f;
-//    motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll + M_PI) / (2 * M_PI);
-    
-    if (deviceMotion.attitude.roll > M_PI_4) {
-        motion[ATTITUDE_ROLL]   = 1.25f - (deviceMotion.attitude.roll * M_1_PI);
-    } else if (deviceMotion.attitude.roll < -0.15f) {
-        motion[ATTITUDE_ROLL]   = (deviceMotion.attitude.roll * M_1_PI * -1.0f) - 0.25f;
-    } else {
-        motion[ATTITUDE_ROLL]   = 0.0f;
-    }
-    
-    motion[ATTITUDE_YAW]    = (deviceMotion.attitude.yaw + M_PI) / (2 * M_PI);
-    motion[ACCEL_X]         = deviceMotion.userAcceleration.x;
-    motion[ACCEL_Y]         = deviceMotion.userAcceleration.y;
-    motion[ACCEL_Z]         = deviceMotion.userAcceleration.z;
-    
-    [self processUserAcceleration:deviceMotion.userAcceleration];
-    
-    _backendInterface->motionUpdate(motion);
-}
-
-
-
-
-- (void)processUserAcceleration: (CMAcceleration) userAcceleration
-{
-    double amplitude = pow( (pow(userAcceleration.x, 2) + pow(userAcceleration.y, 2) + pow(userAcceleration.z, 2)), 0.5);
-    
-    if (amplitude > LIN_ACC_THRESHOLD || amplitude < -(LIN_ACC_THRESHOLD))
-    {
-        _backendInterface->startPlayback(4);
-    }
-}
-
-
-
 
 
 
@@ -525,45 +254,19 @@
     
     
     
-    //--- Display Metronome Ticks ---//
-    //--- Ugly Ass Code Below! Maybe use NS Dictionary, But later, not tonight!! ---//
+    //--- Display Metronome Ticks and Quantize Resampling ---//
     
-    switch (beatNo)
+    if (beatNo == 1)
     {
-        case 1:
-            
-            //--- Quantized Resampling ---//
-            for (int i=0; i < NUM_BUTTONS; i++)
+        //--- Quantized Resampling ---//
+        for (int i=0; i < NUM_BUTTONS; i++)
+        {
+            if (m_pbMasterBeginRecording[i])
             {
-                if (m_pbMasterBeginRecording[i])
-                {
-                    _backendInterface->stopRecordingOutput(i);
-                    NSLog(@"Stop Recording %i", i);
-                    m_pbMasterBeginRecording[i] = false;
-                    m_pbMasterRecordToggle[i]   = false;
-                    
-                    switch (i)
-                    {
-//                        case 0:
-//                            masterRecord0.alpha =   0.2f;
-//                            break;
-//                            
-//                        case 1:
-//                            masterRecord1.alpha =   0.2f;
-//                            break;
-//                            
-//                        case 2:
-//                            masterRecord2.alpha =   0.2f;
-//                            break;
-//                            
-//                        case 3:
-//                            masterRecord3.alpha =   0.2f;
-//                            break;
-                            
-                        default:
-                            break;
-                    }
-                }
+                _backendInterface->stopRecordingOutput(i);
+                NSLog(@"Stop Resampling %i", i);
+                m_pbMasterBeginRecording[i] = false;
+                m_pbMasterRecordToggle[i]   = false;
                 
                 
                 //--- Quantize Recording ---//
@@ -572,199 +275,18 @@
                     NSLog(@"Start Resampling %d", i);
                     _backendInterface->startRecordingOutput(i);
                     m_pbMasterBeginRecording[i] = true;
-                    
-                    switch (i)
-                    {
-//                        case 0:
-//                            masterRecord0.alpha =   1.0f;
-//                            break;
-//                            
-//                        case 1:
-//                            masterRecord1.alpha =   1.0f;
-//                            break;
-//                            
-//                        case 2:
-//                            masterRecord2.alpha =   1.0f;
-//                            break;
-//                            
-//                        case 3:
-//                            masterRecord3.alpha =   1.0f;
-//                            break;
-                            
-                        default:
-                            break;
-                    }
-                    
-                    
                 }
             }
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-        case 2:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-        case 3:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-            
-        case 4:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:1.0f];
-            [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-            
-        case 5:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:1.0f];
-            [metroBar4 setAlpha:1.0f];
-            [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-            
-        case 6:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:1.0f];
-            [metroBar4 setAlpha:1.0f];
-            [metroBar5 setAlpha:1.0f];
-            [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-            
-        case 7:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:1.0f];
-            [metroBar4 setAlpha:1.0f];
-            [metroBar5 setAlpha:1.0f];
-            [metroBar6 setAlpha:1.0f];
-            [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
-            
-            break;
-            
-            
-        case 8:
-            
-            [metroBar0 setAlpha:1.0f];
-            [metroBar1 setAlpha:1.0f];
-            [metroBar2 setAlpha:1.0f];
-            [metroBar3 setAlpha:1.0f];
-            [metroBar4 setAlpha:1.0f];
-            [metroBar5 setAlpha:1.0f];
-            [metroBar6 setAlpha:1.0f];
-            [metroBar7 setAlpha:1.0f];
-            
-            break;
-            
-        default:
-            break;
+        }
+
     }
-    
+        
+    [metronomeBar beat:beatNo];
 }
 
 
 
 
-
-
-//--- User Interface Methods ---//
-
-//- (IBAction)redMasterRecord:(UIButton *)sender
-//{
-//    if ([_metronome isRunning])
-//    {
-//        sender.alpha = 0.5f;
-//        m_pbMasterRecordToggle[0] = true;
-//    }
-//
-//}
-//
-//- (IBAction)blueMasterRecord:(UIButton *)sender
-//{
-//    if ([_metronome isRunning])
-//    {
-//        sender.alpha = 0.5f;
-//        m_pbMasterRecordToggle[1] = true;
-//    }
-//    
-//}
-//
-//- (IBAction)greenMasterRecord:(UIButton *)sender
-//{
-//    if ([_metronome isRunning])
-//    {
-//        sender.alpha = 0.5f;
-//        m_pbMasterRecordToggle[2] = true;
-//    }
-//    
-//}
-//
-//
-//- (IBAction)yellowMasterRecord:(UIButton *)sender
-//{
-//    if ([_metronome isRunning])
-//    {
-//        sender.alpha = 0.5f;
-//        m_pbMasterRecordToggle[3] = true;
-//    }
-//}
-//
 
 
 
@@ -802,14 +324,7 @@
     else {
         [_metronome stopClock];
         [metronomeButton setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar0 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar1 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar2 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar3 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar4 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar5 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar6 setAlpha:BUTTON_OFF_ALPHA];
-        [metroBar7 setAlpha:BUTTON_OFF_ALPHA];
+        [metronomeBar turnOff];
     }
 }
 
@@ -1021,9 +536,34 @@
 
 
 
-- (void) launchImportView:(int)sampleID {
-    
+//--- Media Picker ---//
+
+- (void) launchImportView:(int)sampleID
+{
+    LoadSampleViewController *loadSampleVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadSampleViewController"];
+    [loadSampleVC setSampleID:sampleID];
+    [[self navigationController] pushViewController:loadSampleVC animated:YES];
 }
+
+
+
+- (void) startCopyingMediaFile
+{
+    //    [[self view] setAlpha:0.4f];
+    //    [activityIndicator startAnimating];
+}
+
+
+- (void) stopCopyingMediaFile
+{
+    //    [[self view] setAlpha:1.0f];
+    //    [activityIndicator stopAnimating];
+}
+
+
+
+
+
 
 
 - (void) startResampling:(int)sampleID

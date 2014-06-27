@@ -12,18 +12,27 @@
 #import  <UIKit/UIKit.h>
 
 #include "BeMotionInterface.h"
+#import  "Metronome.h"
+
 #import  "EffectSettingsViewController.h"
 #import  "GlobalSettingsViewController.h"
+#import  "LoadSampleViewController.h"
+
 #import  "SettingsButton.h"
 #import  "SampleButton.h"
 
-#import "Metronome.h"
-#import <CoreMotion/CoreMotion.h>
+#import  "MetronomeBar.h"
+
+#import  "MotionControl.h"
+
+//#import <CoreMotion/CoreMotion.h>
+
 
 
 #define METRO_GUI_COUNT     8
 
-@interface BeMotionViewController : UIViewController {
+@interface BeMotionViewController : UIViewController
+{
     
     bool                            m_bSettingsToggle;
     bool*                           m_pbMasterRecordToggle;
@@ -33,6 +42,8 @@
     bool*                           m_pbAudioCurrentlyRecording;
     
     float*                          motion;
+    
+    MotionControl*                  motionControl;
 }
 
 
@@ -45,9 +56,9 @@
 
 //--- Motion Processing ---//
 
-@property (strong, nonatomic) CMMotionManager *motionManager;
-- (void)motionDeviceUpdate: (CMDeviceMotion*) deviceMotion;
-- (void)processUserAcceleration: (CMAcceleration) userAcceleration;
+//@property (strong, nonatomic) CMMotionManager *motionManager;
+//- (void)motionDeviceUpdate: (CMDeviceMotion*) deviceMotion;
+//- (void)processUserAcceleration: (CMAcceleration) userAcceleration;
 
 
 
@@ -97,16 +108,7 @@
 
 
 //--- Metronome Bars ---//
-@property (retain, nonatomic) IBOutlet UIButton *metroBar0;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar1;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar2;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar3;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar4;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar5;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar6;
-@property (retain, nonatomic) IBOutlet UIButton *metroBar7;
-
-
+@property (retain, nonatomic) MetronomeBar *metronomeBar;
 
 
 //--- View Methods ---//

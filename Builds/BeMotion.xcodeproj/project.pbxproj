@@ -92,6 +92,14 @@
 		FC30B6A3194046170020B7D2 /* LoadPreset.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B6A2194046170020B7D2 /* LoadPreset.mm */; };
 		FC30B6A5194068B40020B7D2 /* Wah_Tremolo.json in Resources */ = {isa = PBXBuildFile; fileRef = FC30B6A4194068B40020B7D2 /* Wah_Tremolo.json */; };
 		FC30B6A7194072F90020B7D2 /* BeatRepeat.json in Resources */ = {isa = PBXBuildFile; fileRef = FC30B6A6194072F90020B7D2 /* BeatRepeat.json */; };
+		FC76896E195ADA66005C971B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC76896D195ADA66005C971B /* SystemConfiguration.framework */; };
+		FC768971195AE035005C971B /* WaveformView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC768970195AE035005C971B /* WaveformView.mm */; };
+		FC768974195AE03D005C971B /* LoadSampleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC768973195AE03D005C971B /* LoadSampleViewController.mm */; };
+		FC768976195BFFDF005C971B /* net.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FC768975195BFFDF005C971B /* net.jpg */; };
+		FC768979195CC2D7005C971B /* MetronomeBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FC768978195CC2D7005C971B /* MetronomeBar.m */; };
+		FC95CEF719516DBE0037E887 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC95CEF219516DBE0037E887 /* QuartzCore.framework */; };
+		FC95CF011958F3650037E887 /* AudioFeatureExtraction.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC95CEFF1958F3650037E887 /* AudioFeatureExtraction.mm */; };
+		FC95CF0D1959012E0037E887 /* LoadMediaFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC95CF0C1959012E0037E887 /* LoadMediaFile.mm */; };
 		FCC38277194629E90042222F /* TrimAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCC38275194629E90042222F /* TrimAudio.mm */; };
 		FCC382AF1947A3A80042222F /* Breakbeat0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC3827A1947A3A80042222F /* Breakbeat0.wav */; };
 		FCC382B01947A3A80042222F /* Breakbeat1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FCC3827B1947A3A80042222F /* Breakbeat1.wav */; };
@@ -303,6 +311,23 @@
 		FC30B6A2194046170020B7D2 /* LoadPreset.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadPreset.mm; sourceTree = "<group>"; };
 		FC30B6A4194068B40020B7D2 /* Wah_Tremolo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Wah_Tremolo.json; sourceTree = "<group>"; };
 		FC30B6A6194072F90020B7D2 /* BeatRepeat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BeatRepeat.json; sourceTree = "<group>"; };
+		FC76896D195ADA66005C971B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FC76896F195AE035005C971B /* WaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveformView.h; sourceTree = "<group>"; };
+		FC768970195AE035005C971B /* WaveformView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WaveformView.mm; sourceTree = "<group>"; };
+		FC768972195AE03D005C971B /* LoadSampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadSampleViewController.h; sourceTree = "<group>"; };
+		FC768973195AE03D005C971B /* LoadSampleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadSampleViewController.mm; sourceTree = "<group>"; };
+		FC768975195BFFDF005C971B /* net.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = net.jpg; sourceTree = "<group>"; };
+		FC768977195CC2D7005C971B /* MetronomeBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetronomeBar.h; sourceTree = "<group>"; };
+		FC768978195CC2D7005C971B /* MetronomeBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetronomeBar.m; sourceTree = "<group>"; };
+		FC95CEEF19516DBE0037E887 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		FC95CEF019516DBE0037E887 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		FC95CEF119516DBE0037E887 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FC95CEF219516DBE0037E887 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FC95CEF319516DBE0037E887 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FC95CEFF1958F3650037E887 /* AudioFeatureExtraction.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioFeatureExtraction.mm; sourceTree = "<group>"; };
+		FC95CF001958F3650037E887 /* AudioFeatureExtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFeatureExtraction.h; sourceTree = "<group>"; };
+		FC95CF0B1959012E0037E887 /* LoadMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMediaFile.h; sourceTree = "<group>"; };
+		FC95CF0C1959012E0037E887 /* LoadMediaFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadMediaFile.mm; sourceTree = "<group>"; };
 		FCC38275194629E90042222F /* TrimAudio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TrimAudio.mm; sourceTree = "<group>"; };
 		FCC38276194629E90042222F /* TrimAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimAudio.h; sourceTree = "<group>"; };
 		FCC3827A1947A3A80042222F /* Breakbeat0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breakbeat0.wav; sourceTree = "<group>"; };
@@ -1385,15 +1410,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC76896E195ADA66005C971B /* SystemConfiguration.framework in Frameworks */,
+				FC95CEF719516DBE0037E887 /* QuartzCore.framework in Frameworks */,
+				FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */,
+				FCCF8FEE19266FC900B76E77 /* CoreText.framework in Frameworks */,
 				FCF660C31929E7AF006B7CB5 /* CoreMedia.framework in Frameworks */,
 				FCF660C11929DE23006B7CB5 /* AVFoundation.framework in Frameworks */,
 				FCF660BF192976CE006B7CB5 /* MediaPlayer.framework in Frameworks */,
-				FCCF8FEE19266FC900B76E77 /* CoreText.framework in Frameworks */,
 				FCCF8FEC19266FB200B76E77 /* AudioToolbox.framework in Frameworks */,
 				FCCF8FEA19266FAA00B76E77 /* CoreMotion.framework in Frameworks */,
 				FCCF8FE819266F9F00B76E77 /* CoreMIDI.framework in Frameworks */,
 				FCCF8FE619266F9900B76E77 /* Accelerate.framework in Frameworks */,
-				FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */,
 				FCCF84BC19266AC500B76E77 /* UIKit.framework in Frameworks */,
 				FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */,
 			);
@@ -1415,6 +1442,7 @@
 		FC1140E9193D98AF0045A92B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FC768975195BFFDF005C971B /* net.jpg */,
 				FC30B609193EE0100020B7D2 /* Settings View */,
 				FC1140EA193D98AF0045A92B /* Main */,
 				FC1140EF193D98AF0045A92B /* Presets */,
@@ -1637,6 +1665,8 @@
 				FC30B686193F18D00020B7D2 /* SettingsButton.mm */,
 				FC30B694193F19190020B7D2 /* EffectsTable.h */,
 				FC30B695193F19190020B7D2 /* EffectsTable.m */,
+				FC768977195CC2D7005C971B /* MetronomeBar.h */,
+				FC768978195CC2D7005C971B /* MetronomeBar.m */,
 			);
 			path = "Custom Components";
 			sourceTree = "<group>";
@@ -1644,6 +1674,8 @@
 		FC30B687193F18D00020B7D2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FC768972195AE03D005C971B /* LoadSampleViewController.h */,
+				FC768973195AE03D005C971B /* LoadSampleViewController.mm */,
 				FC30B688193F18D00020B7D2 /* BeMotionViewController.h */,
 				FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */,
 				FC30B68A193F18D00020B7D2 /* EffectSettingsViewController.h */,
@@ -1657,8 +1689,12 @@
 		FC30B697193F9F3B0020B7D2 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FC76896F195AE035005C971B /* WaveformView.h */,
+				FC768970195AE035005C971B /* WaveformView.mm */,
 				FC30B698193F9F730020B7D2 /* MotionControl.h */,
 				FC30B699193F9F730020B7D2 /* MotionControl.mm */,
+				FC95CF0B1959012E0037E887 /* LoadMediaFile.h */,
+				FC95CF0C1959012E0037E887 /* LoadMediaFile.mm */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1849,6 +1885,12 @@
 		FCCF84B619266AC500B76E77 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC76896D195ADA66005C971B /* SystemConfiguration.framework */,
+				FC95CEEF19516DBE0037E887 /* AddressBook.framework */,
+				FC95CEF019516DBE0037E887 /* AddressBookUI.framework */,
+				FC95CEF119516DBE0037E887 /* CoreLocation.framework */,
+				FC95CEF219516DBE0037E887 /* QuartzCore.framework */,
+				FC95CEF319516DBE0037E887 /* Security.framework */,
 				FCF660C21929E7AF006B7CB5 /* CoreMedia.framework */,
 				FCF660C01929DE23006B7CB5 /* AVFoundation.framework */,
 				FCF660BE192976CE006B7CB5 /* MediaPlayer.framework */,
@@ -1916,8 +1958,10 @@
 				FCCF850619266E5F00B76E77 /* AudioMixerPlayer.mm */,
 				FCCF850719266E5F00B76E77 /* LiveAudioStream.h */,
 				FCCF850819266E5F00B76E77 /* LiveAudioStream.mm */,
-				FCC38275194629E90042222F /* TrimAudio.mm */,
 				FCC38276194629E90042222F /* TrimAudio.h */,
+				FCC38275194629E90042222F /* TrimAudio.mm */,
+				FC95CF001958F3650037E887 /* AudioFeatureExtraction.h */,
+				FC95CEFF1958F3650037E887 /* AudioFeatureExtraction.mm */,
 			);
 			path = "Buffers and Streams";
 			sourceTree = "<group>";
@@ -3919,6 +3963,7 @@
 				FC30B60E193EE0100020B7D2 /* Activate.png in Resources */,
 				FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */,
 				FCC382CE1947A3A80042222F /* Latin_Percussion1.wav in Resources */,
+				FC768976195BFFDF005C971B /* net.jpg in Resources */,
 				FC11411A193D98AF0045A92B /* Record.png in Resources */,
 				FC30B677193F09F20020B7D2 /* Slot_Selected_1_3.png in Resources */,
 				FCC382CB1947A3A80042222F /* Latin_Loop3.wav in Resources */,
@@ -3951,6 +3996,7 @@
 				FCCF8FEF1926707C00B76E77 /* juce_audio_basics.mm in Sources */,
 				FCCF8FF6192670E700B76E77 /* juce_audio_devices.mm in Sources */,
 				FCCF8FF1192670B100B76E77 /* juce_audio_formats.mm in Sources */,
+				FC768979195CC2D7005C971B /* MetronomeBar.m in Sources */,
 				FCCF8FF2192670B100B76E77 /* juce_core.mm in Sources */,
 				FCCF8FF3192670B100B76E77 /* juce_cryptography.mm in Sources */,
 				FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */,
@@ -3962,6 +4008,7 @@
 				FC30B696193F19190020B7D2 /* EffectsTable.m in Sources */,
 				FCCF8FF5192670B100B76E77 /* juce_gui_basics.mm in Sources */,
 				FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */,
+				FC768974195AE03D005C971B /* LoadSampleViewController.mm in Sources */,
 				FCCF856419266E8E00B76E77 /* main.mm in Sources */,
 				FCCF854519266E5F00B76E77 /* Delay.mm in Sources */,
 				FCCF854B19266E5F00B76E77 /* Vibrato.mm in Sources */,
@@ -3981,7 +4028,10 @@
 				FCC38277194629E90042222F /* TrimAudio.mm in Sources */,
 				FCCF854019266E5F00B76E77 /* AudioEffectSource.mm in Sources */,
 				FC30B6A3194046170020B7D2 /* LoadPreset.mm in Sources */,
+				FC95CF0D1959012E0037E887 /* LoadMediaFile.mm in Sources */,
+				FC95CF011958F3650037E887 /* AudioFeatureExtraction.mm in Sources */,
 				FCCF853B19266E5F00B76E77 /* BeMotionAppDelegate.mm in Sources */,
+				FC768971195AE035005C971B /* WaveformView.mm in Sources */,
 				FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */,
 				FCCF854219266E5F00B76E77 /* AudioFileStream.mm in Sources */,
 				FC16330E194AD24800A462CB /* Granularizer2.mm in Sources */,
@@ -4106,8 +4156,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					$PROJECT_DIR,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
 				WRAPPER_EXTENSION = app;
@@ -4124,8 +4183,17 @@
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					$PROJECT_DIR,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
 				WRAPPER_EXTENSION = app;

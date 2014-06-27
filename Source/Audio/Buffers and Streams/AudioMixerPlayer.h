@@ -74,6 +74,7 @@ public:
     
     void setTempo(float newTempo);
     
+    float* getSamplesToDrawWaveform(int sampleID);
     
     
 private:

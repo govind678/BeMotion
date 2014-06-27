@@ -17,6 +17,7 @@
 #include "AudioEffectSource.h"
 #include "Limiter.h"
 #include "Parameter.h"
+#include "AudioFeatureExtraction.h"
 
 #define GAIN_SCALE      0.5f
 
@@ -72,6 +73,8 @@ public:
     
     void setTempo(float newTempo);
     
+    float* getSamplesToDrawWaveform();
+    
     
 private:
     
@@ -92,6 +95,7 @@ private:
     Array<bool>                     m_pbGestureControl;
 
     ScopedPointer<CLimiter>         m_pcLimiter;
+    ScopedPointer<AudioFeatureExtraction>   m_pcAudioFeature;
     
     TimeSliceThread thread;
     
@@ -111,6 +115,9 @@ private:
     
     int                             m_iBeat;
     float                           m_fGain;
+    
+    float                           m_fStartPoint_s;
+    Array<float>                    m_pfWaveformArray;
     
 };
 

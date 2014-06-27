@@ -29,11 +29,12 @@ public:
     
 private:
     
-    float m_fSampleRate;
+    float                                       m_fSampleRate;
     
-    AudioFormatManager              formatManager;
-    WavAudioFormat                  wavAudioFormat;
-    ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
+    File                                        workingFile;
+    AudioFormatManager                          formatManager;
+    WavAudioFormat                              wavAudioFormat;
+    ScopedPointer<AudioFormatReaderSource>      currentAudioFileSource;
     
 };
 

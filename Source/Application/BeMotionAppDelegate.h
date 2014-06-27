@@ -17,9 +17,15 @@
 {
     BeMotionInterface*              backendInterface;
     Metronome*                      metronome;
+    
+    NSMutableDictionary*            sampleSets;
+    NSMutableArray*                 fxPacks;
 }
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property(strong, nonatomic) NSMutableDictionary* sampleSets;
+@property(strong, nonatomic) NSMutableArray* fxPacks;
 
 - (BeMotionInterface*)getBackendReference;
 - (Metronome*)getMetronomeReference;

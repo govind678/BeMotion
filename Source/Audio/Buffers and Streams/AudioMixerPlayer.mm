@@ -161,7 +161,7 @@ void AudioMixerPlayer::beat(int beatNo)
 //        }
 //    }
 //
-    for (int i=0; i < NUM_SAMPLE_SOURCES - 1; i++)
+    for (int i=0; i < NUM_SAMPLE_SOURCES - 2; i++)
     {
         audioFileStream.getUnchecked(i)->beat(beatNo);
     }
@@ -258,7 +258,7 @@ void AudioMixerPlayer::audioDeviceStopped()
 
 void AudioMixerPlayer::motionUpdate(float *motion)
 {
-    for (int i = 0; i < NUM_SAMPLE_SOURCES - 1; i++)
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
     {
         audioFileStream.getUnchecked(i)->motionUpdate(motion);
     }
@@ -269,7 +269,7 @@ void AudioMixerPlayer::setTempo(float newTempo)
 {
     m_fTempo = newTempo;
     
-    for (int i = 0; i < NUM_SAMPLE_SOURCES - 1; i++)
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
     {
         audioFileStream.getUnchecked(i)->setTempo(newTempo);
     }
@@ -285,5 +285,10 @@ float AudioMixerPlayer::getSampleCurrentPlaybackTime(int sampleID)
 bool AudioMixerPlayer::getSamplePlaybackStatus(int sampleID)
 {
     return audioFileStream.getUnchecked(sampleID)->isPlaying();
+}
+
+float* AudioMixerPlayer::getSamplesToDrawWaveform(int sampleID)
+{
+    return audioFileStream.getUnchecked(sampleID)->getSamplesToDrawWaveform();
 }
 

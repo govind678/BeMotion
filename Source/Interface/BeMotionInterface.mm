@@ -124,15 +124,15 @@ void BeMotionInterface::motionUpdate(float *motion)
     audioEngine->motionUpdate(motion);
 }
 
-void BeMotionInterface::setCurrentPresetBank(int presetBank)
+void BeMotionInterface::setCurrentSampleBank(NSString* presetBank)
 {
-    audioEngine->setCurrentPresetBank(presetBank);
+    audioEngine->setCurrentPresetBank(String([presetBank UTF8String]));
 }
 
 
-int BeMotionInterface::loadFXPreset(int pack, NSString *filepath)
+int BeMotionInterface::loadFXPreset(NSString *filepath)
 {
-    return (audioEngine->loadFXPreset(pack, String([filepath UTF8String])));
+    return (audioEngine->loadFXPreset(String([filepath UTF8String])));
 }
 
 void BeMotionInterface::setSettingsToggle(bool toggle)
@@ -153,9 +153,10 @@ int BeMotionInterface::getEffectType(int sampleID, int effectPosition)
     return audioEngine->getEffectType(sampleID, effectPosition);
 }
 
-int BeMotionInterface::getCurrentAudioPresetBank()
+NSString* BeMotionInterface::getCurrentSampleBank()
 {
-    return audioEngine->getCurrentPresetBank();
+    NSString* string = [NSString stringWithUTF8String:audioEngine->getCurrentPresetBank().toRawUTF8()];
+    return string;
 }
 
 //==============================================================================
@@ -195,12 +196,18 @@ bool BeMotionInterface::getSamplePlaybackStatus(int sampleID)
     return audioEngine->getSamplePlaybackStatus(sampleID);
 }
 
-int BeMotionInterface::getCurrentFXPack()
+NSString* BeMotionInterface::getCurrentFXPack()
 {
-    return audioEngine->getCurrentFXPack();
+    NSString* string = [NSString stringWithUTF8String:audioEngine->getCurrentFXPack().toRawUTF8()];
+    return string;
 }
 
 bool BeMotionInterface::getSettingsToggle()
 {
     return m_bSettingsToggle;
+}
+
+float* BeMotionInterface::getSamplesToDrawWaveform(int sampleID)
+{
+    return audioEngine->getSamplesToDrawWaveform(sampleID);
 }

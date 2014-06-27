@@ -25,6 +25,7 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     m_iBeat                     =   0;
     m_fGain                     =   1.0f;
     m_fSampleRate               =   DEFAULT_SAMPLE_RATE;
+    m_fStartPoint_s             =   0.0f;
     
     transportSource.setSource(nullptr);
     formatManager.registerBasicFormats();
@@ -33,6 +34,13 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     audioEffectInitialized.clear();
     m_pbGestureControl.clear();
     m_pcParameter.clear();
+    
+    m_pfWaveformArray.clear();
+    for (int sample = 0; sample < (2 * WAVEFORM_WIDTH); sample++)
+    {
+        m_pfWaveformArray.add(0.0f);
+    }
+    
     
     for (int effectNo = 0; effectNo < NUM_EFFECTS_SLOTS; effectNo++)
     {
@@ -52,6 +60,7 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
         
 
     m_pcLimiter = new CLimiter(NUM_INPUT_CHANNELS);
+    m_pcAudioFeature = new AudioFeatureExtraction();
 
     
     thread.startThread(3);
@@ -70,8 +79,10 @@ AudioFileStream::~AudioFileStream()
     audioEffectSource.clear(true);
     m_pbBypassStateArray.clear();
     m_pcParameter.clear();
+    m_pfWaveformArray.clear();
     
     m_pcLimiter     =   nullptr;
+    m_pcAudioFeature = nullptr;
 
     thread.stopThread(20);
 }
@@ -95,11 +106,7 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
         currentAudioFileSource = new AudioFormatReaderSource (reader, true);
         m_fSampleRate = reader->sampleRate;
         
-//        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
-        transportSource.setSource(currentAudioFileSource, STREAMING_BUFFER_SIZE, &thread, m_fSampleRate);
-        transportSource.setGain(GAIN_SCALE);
-        
-        if (m_iSampleID != 4)
+        if (m_iSampleID < 4)
         {
             if ((m_iButtonMode == MODE_LOOP) || (m_iButtonMode == MODE_BEATREPEAT))
             {
@@ -108,7 +115,28 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
             
 //            firstAudioBlock = AudioSampleBuffer(2, STREAMING_BUFFER_SIZE);
 //            reader->read(&firstAudioBlock, 0, STREAMING_BUFFER_SIZE, 0, true, true);
+            m_fStartPoint_s = m_pcAudioFeature->detectFirstOnset(audioFilePath);
+            
+            
+            //--- Generate Array To Draw Waveform ---//
+            FloatVectorOperations::fill(m_pfWaveformArray.getRawDataPointer(), 0.0f, WAVEFORM_WIDTH);
+            
+            int samplesPerPixel  = int((float(reader->lengthInSamples) / (WAVEFORM_WIDTH * 2.0f)) + 0.5f);
+            
+            AudioSampleBuffer buffer = AudioSampleBuffer(1, samplesPerPixel);
+            
+            for (int block = 0; block < (WAVEFORM_WIDTH * 2); block++)
+            {
+                reader->read(&buffer, 0, samplesPerPixel, block * samplesPerPixel, true, false);
+                m_pfWaveformArray.set(block, (buffer.getArrayOfReadPointers()[0][0] + 1.0f) * (WAVEFORM_HEIGHT * 0.5f));
+            }
+            
+            
         }
+        
+//        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
+        transportSource.setSource(currentAudioFileSource, STREAMING_BUFFER_SIZE, &thread, m_fSampleRate);
+        transportSource.setGain(GAIN_SCALE);
         
         return 0;
     }
@@ -297,7 +325,7 @@ void AudioFileStream::startPlayback()
     
     if ((m_iButtonMode != MODE_BEATREPEAT))
     {
-        transportSource.setPosition(0);
+        transportSource.setPosition(m_fStartPoint_s);
         transportSource.start();
     }
 }
@@ -314,7 +342,7 @@ void AudioFileStream::stopPlayback()
         {
             if (audioEffectInitialized.getUnchecked(effectNo) == true)
             {
-                if (m_pbBypassStateArray[effectNo] == false)
+                if (m_pbBypassStateArray.getUnchecked(effectNo) == false)
                 {
                     audioEffectSource.getUnchecked(effectNo)->audioDeviceStopped();
                 }
@@ -587,4 +615,10 @@ void AudioFileStream::setTempo(float newTempo)
             audioEffectSource.getUnchecked(effect)->setTempo(newTempo);
         }
     }
+}
+
+
+float* AudioFileStream::getSamplesToDrawWaveform()
+{
+    return m_pfWaveformArray.getRawDataPointer();
 }

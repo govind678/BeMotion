@@ -67,7 +67,9 @@
 # define NUM_EFFECTS_SLOTS       4
 
 
-
+//========= Waveform View =============//
+# define WAVEFORM_WIDTH         280     // pixels
+# define WAVEFORM_HEIGHT        150     // pixels
 
 
 
@@ -81,7 +83,7 @@
 # define GUI_METRO_COUNT        8
 
 # define PROGRESS_UPDATE_RATE   0.1f
-# define MOTION_UPDATE_RATE     0.05f
+# define MOTION_UPDATE_RATE     0.05f       // 50 ms
 
 
 
@@ -138,8 +140,8 @@
 # define ACCEL_Y                4
 # define ACCEL_Z                5
 
-# define LIN_ACC_THRESHOLD      8.0f
-
+# define LIN_ACC_THRESHOLD      3.0f
+# define LIN_ACC_DECAY          0.5f    // 500 ms
 
 
 
@@ -158,6 +160,8 @@
 
 # define DEFAULT_SAMPLE_RATE     44100.0f
 # define NUM_CHANNELS            2
+
+# define SILENCE_AMPLITUDE       0.02f
 
 //=========================================================================================
 
