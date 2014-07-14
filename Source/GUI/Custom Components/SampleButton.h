@@ -1,32 +1,26 @@
 //
 //  SampleButton.h
-//  BeMotion
+//  SampleButton
 //
-//  Created by Govinda Ram Pingali on 6/3/14.
+//  Created by Govinda Ram Pingali on 7/6/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "PlayButton.h"
+#import "SettingsButton.h"
+#import "RecordingsButton.h"
 
-@interface SampleButton : UIView
+@interface SampleButton : UIScrollView
 {
-    int     touchDownCount;
-    bool    touchMovedStatus;
+    PlayButton* playButton;
+    SettingsButton* settingsButton;
+    RecordingsButton* recordingsButton;
+    
+    UIView* dragLeft;
+    UIView* dragRight;
 }
 
 @property (nonatomic, assign) int buttonID;
-@property (nonatomic, assign) id  delegate;
-
-//--- Touch Events ---//
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-
-
-- (void) setDelegate        :   (id) newDelegate;
-
-
-- (void) startPlayback : (int)sampleID;
-- (void) stopPlayback : (int)sampleID;
 
 @end

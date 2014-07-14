@@ -1,8 +1,8 @@
 //
 //  SampleButton.m
-//  BeMotion
+//  SampleButton
 //
-//  Created by Govinda Ram Pingali on 6/3/14.
+//  Created by Govinda Ram Pingali on 7/6/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @implementation SampleButton
 
-@synthesize buttonID, delegate;
+@synthesize buttonID;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,31 +19,31 @@
     if (self) {
         // Initialization code
         
-        switch (buttonID) {
-            case 0:
-                [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton0.png"]]];
-                break;
-                
-            case 1:
-                [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton1.png"]]];
-                break;
-                
-            case 2:
-                [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton2.png"]]];
-                break;
-                
-            case 3:
-                [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton3.png"]]];
-                break;
-                
-            default:
-                break;
-        }
+        [recordingsButton setButtonID:buttonID];
+        recordingsButton = [[RecordingsButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
+        [self addSubview:recordingsButton];
+        
+        [playButton setButtonID:buttonID];
+        playButton = [[PlayButton alloc] initWithFrame:CGRectMake(frame.size.width, 0.0f, frame.size.width, frame.size.height)];
+        [self addSubview:playButton];
+        
+        [settingsButton setButtonID:buttonID];
+        settingsButton = [[SettingsButton alloc] initWithFrame:CGRectMake(2.0 * frame.size.width, 0.0f, frame.size.width, frame.size.height)];
+        [self addSubview:settingsButton];
         
         
-        touchDownCount      =   0;
-        touchMovedStatus    =   NO;
+        [self setPagingEnabled:YES];
+        [self setContentSize:CGSizeMake(frame.size.width * 3.0, frame.size.height)];
+        [self setShowsHorizontalScrollIndicator:NO];
+        [self setShowsVerticalScrollIndicator:NO];
+        
+        CGRect initialFrame = frame;
+        initialFrame.origin.x = frame.size.width;
+        [self scrollRectToVisible:initialFrame animated:NO];
+        
+        [self setBackgroundColor:[UIColor lightGrayColor]];
     }
+    
     return self;
 }
 
@@ -55,60 +55,5 @@
     // Drawing code
 }
 */
-
-
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    [delegate startPlayback:buttonID];
-    touchDownCount++;
-    touchMovedStatus = NO;
-    
-//    NSLog(@"Touch Began: %d", buttonID);
-//    NSLog(@"%d Move: %d, Count: %d", buttonID, touchMovedStatus, touchDownCount);
-}
-
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    
-    if ([self pointInside:touchPoint withEvent:event]) {
-        // Point inside
-        touchMovedStatus = NO;
-    }else {
-        // Point isn't inside
-        touchMovedStatus = YES;
-    }
-    
-//    NSLog(@"%d Move: %d, Count: %d", buttonID, touchMovedStatus, touchDownCount);
-}
-
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
-    touchDownCount--;
-    
-    if (touchDownCount <= 0) {
-        if (touchMovedStatus == NO) {
-            [delegate stopPlayback:buttonID];
-        }
-        
-        touchDownCount = 0;
-    }
-    
-//    NSLog(@"%d Move: %d, Count: %d", buttonID, touchMovedStatus, touchDownCount);
-}
-
-
-
-- (void)startPlayback:(int)sampleID {
-    
-}
-
-- (void)stopPlayback:(int)sampleID {
-    
-}
-
 
 @end
