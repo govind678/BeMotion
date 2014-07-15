@@ -109,15 +109,6 @@ void BeMotionInterface::stopRecordingOutput(int sampleID)
     audioEngine->stopRecordingMaster(sampleID);
 }
 
-void BeMotionInterface::beat(int beatNo)
-{
-    audioEngine->beat(beatNo);
-}
-
-void BeMotionInterface::setTempo(float newTempo)
-{
-    audioEngine->setTempo(newTempo);
-}
 
 void BeMotionInterface::motionUpdate(float *motion)
 {
@@ -142,6 +133,34 @@ void BeMotionInterface::setSettingsToggle(bool toggle)
 
 
 
+//==============================================================================
+// Metronome Methods
+//==============================================================================
+
+void BeMotionInterface::beat(int beatNo)
+{
+    audioEngine->beat(beatNo);
+}
+
+void BeMotionInterface::setTempo(float newTempo)
+{
+    audioEngine->setTempo(newTempo);
+}
+
+void BeMotionInterface::startMetronome()
+{
+    audioEngine->startMetronome();
+}
+
+void BeMotionInterface::stopMetronome()
+{
+    audioEngine->stopMetronome();
+}
+
+
+
+
+
 
 //==============================================================================
 // Get Methods to update GUI
@@ -158,6 +177,7 @@ NSString* BeMotionInterface::getCurrentSampleBank()
     NSString* string = [NSString stringWithUTF8String:audioEngine->getCurrentPresetBank().toRawUTF8()];
     return string;
 }
+
 
 //==============================================================================
 // Get Methods to update GUI
@@ -210,4 +230,9 @@ bool BeMotionInterface::getSettingsToggle()
 float* BeMotionInterface::getSamplesToDrawWaveform(int sampleID)
 {
     return audioEngine->getSamplesToDrawWaveform(sampleID);
+}
+
+bool BeMotionInterface::getMetronomeStatus()
+{
+    return audioEngine->getMetronomeStatus();
 }

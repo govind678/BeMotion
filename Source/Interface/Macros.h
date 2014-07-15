@@ -68,7 +68,7 @@
 
 
 //========= Waveform View =============//
-# define WAVEFORM_WIDTH         280     // pixels
+# define WAVEFORM_WIDTH         1120    // 280 * 4
 # define WAVEFORM_HEIGHT        150     // pixels
 
 
@@ -76,7 +76,7 @@
 //========== Metronome Macros ===========//
 
 //-- Defaults --//
-# define DEFAULT_TEMPO          120.0f
+# define DEFAULT_TEMPO          120
 # define DEFAULT_NUMERATOR      64
 # define MAX_QUANTIZATION       3           //  2^n
 # define QUANTIZATION_LEVELS    6

@@ -26,11 +26,10 @@
 		FC114119193D98AF0045A92B /* Motion.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1140FF193D98AF0045A92B /* Motion.png */; };
 		FC11411A193D98AF0045A92B /* Record.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114100193D98AF0045A92B /* Record.png */; };
 		FC11411B193D98AF0045A92B /* Resample.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114101193D98AF0045A92B /* Resample.png */; };
-		FC11411D193D98AF0045A92B /* SettingsButton0.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114103193D98AF0045A92B /* SettingsButton0.png */; };
-		FC11411E193D98AF0045A92B /* SettingsButton1.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114104193D98AF0045A92B /* SettingsButton1.png */; };
-		FC11411F193D98AF0045A92B /* SettingsButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114105193D98AF0045A92B /* SettingsButton2.png */; };
-		FC114120193D98AF0045A92B /* SettingsButton3.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114106193D98AF0045A92B /* SettingsButton3.png */; };
 		FC114171193D99290045A92B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = FC114170193D99290045A92B /* Background.png */; };
+		FC1631C21975E68800E15DEF /* PlayButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC1631C11975E68800E15DEF /* PlayButton.mm */; };
+		FC1631C61975E7DA00E15DEF /* SettingsButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC1631C51975E7DA00E15DEF /* SettingsButton.mm */; };
+		FC1631C91975EC0B00E15DEF /* Metronome2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC1631C81975EC0B00E15DEF /* Metronome2.mm */; };
 		FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC163309194ACA1C00A462CB /* ShelfFilter.mm */; };
 		FC16330E194AD24800A462CB /* Granularizer2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC16330C194AD24800A462CB /* Granularizer2.mm */; };
 		FC30B60E193EE0100020B7D2 /* Activate.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60A193EE0100020B7D2 /* Activate.png */; };
@@ -80,13 +79,11 @@
 		FC30B67D193F09F20020B7D2 /* Slot_Selected_3_1.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B658193F09F20020B7D2 /* Slot_Selected_3_1.png */; };
 		FC30B67E193F09F20020B7D2 /* Slot_Selected_3_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B659193F09F20020B7D2 /* Slot_Selected_3_2.png */; };
 		FC30B67F193F09F20020B7D2 /* Slot_Selected_3_3.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B65A193F09F20020B7D2 /* Slot_Selected_3_3.png */; };
-		FC30B68E193F18D00020B7D2 /* CircularButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FC30B682193F18D00020B7D2 /* CircularButton.m */; };
 		FC30B68F193F18D00020B7D2 /* SampleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B684193F18D00020B7D2 /* SampleButton.mm */; };
-		FC30B690193F18D00020B7D2 /* SettingsButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B686193F18D00020B7D2 /* SettingsButton.mm */; };
 		FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */; };
 		FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */; };
 		FC30B693193F18D00020B7D2 /* GlobalSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68D193F18D00020B7D2 /* GlobalSettingsViewController.mm */; };
-		FC30B696193F19190020B7D2 /* EffectsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = FC30B695193F19190020B7D2 /* EffectsTable.m */; };
+		FC30B696193F19190020B7D2 /* EffectsTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B695193F19190020B7D2 /* EffectsTable.mm */; };
 		FC30B69A193F9F730020B7D2 /* MotionControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B699193F9F730020B7D2 /* MotionControl.mm */; };
 		FC30B69D194043C00020B7D2 /* Percs_Delay.json in Resources */ = {isa = PBXBuildFile; fileRef = FC30B69C194043C00020B7D2 /* Percs_Delay.json */; };
 		FC30B6A3194046170020B7D2 /* LoadPreset.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B6A2194046170020B7D2 /* LoadPreset.mm */; };
@@ -95,8 +92,7 @@
 		FC76896E195ADA66005C971B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC76896D195ADA66005C971B /* SystemConfiguration.framework */; };
 		FC768971195AE035005C971B /* WaveformView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC768970195AE035005C971B /* WaveformView.mm */; };
 		FC768974195AE03D005C971B /* LoadSampleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC768973195AE03D005C971B /* LoadSampleViewController.mm */; };
-		FC768976195BFFDF005C971B /* net.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FC768975195BFFDF005C971B /* net.jpg */; };
-		FC768979195CC2D7005C971B /* MetronomeBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FC768978195CC2D7005C971B /* MetronomeBar.m */; };
+		FC768979195CC2D7005C971B /* MetronomeBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC768978195CC2D7005C971B /* MetronomeBar.mm */; };
 		FC95CEF719516DBE0037E887 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC95CEF219516DBE0037E887 /* QuartzCore.framework */; };
 		FC95CF011958F3650037E887 /* AudioFeatureExtraction.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC95CEFF1958F3650037E887 /* AudioFeatureExtraction.mm */; };
 		FC95CF0D1959012E0037E887 /* LoadMediaFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC95CF0C1959012E0037E887 /* LoadMediaFile.mm */; };
@@ -234,11 +230,12 @@
 		FC1140FF193D98AF0045A92B /* Motion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Motion.png; sourceTree = "<group>"; };
 		FC114100193D98AF0045A92B /* Record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Record.png; sourceTree = "<group>"; };
 		FC114101193D98AF0045A92B /* Resample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Resample.png; sourceTree = "<group>"; };
-		FC114103193D98AF0045A92B /* SettingsButton0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton0.png; sourceTree = "<group>"; };
-		FC114104193D98AF0045A92B /* SettingsButton1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton1.png; sourceTree = "<group>"; };
-		FC114105193D98AF0045A92B /* SettingsButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton2.png; sourceTree = "<group>"; };
-		FC114106193D98AF0045A92B /* SettingsButton3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton3.png; sourceTree = "<group>"; };
 		FC114170193D99290045A92B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		FC1631C01975E68800E15DEF /* PlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayButton.h; sourceTree = "<group>"; };
+		FC1631C11975E68800E15DEF /* PlayButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayButton.mm; sourceTree = "<group>"; };
+		FC1631C51975E7DA00E15DEF /* SettingsButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsButton.mm; sourceTree = "<group>"; };
+		FC1631C71975EC0B00E15DEF /* Metronome2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome2.h; sourceTree = "<group>"; };
+		FC1631C81975EC0B00E15DEF /* Metronome2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Metronome2.mm; sourceTree = "<group>"; };
 		FC163309194ACA1C00A462CB /* ShelfFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShelfFilter.mm; sourceTree = "<group>"; };
 		FC16330C194AD24800A462CB /* Granularizer2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Granularizer2.mm; sourceTree = "<group>"; };
 		FC16330D194AD24800A462CB /* Granularizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer2.h; sourceTree = "<group>"; };
@@ -290,12 +287,9 @@
 		FC30B658193F09F20020B7D2 /* Slot_Selected_3_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slot_Selected_3_1.png; sourceTree = "<group>"; };
 		FC30B659193F09F20020B7D2 /* Slot_Selected_3_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slot_Selected_3_2.png; sourceTree = "<group>"; };
 		FC30B65A193F09F20020B7D2 /* Slot_Selected_3_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slot_Selected_3_3.png; sourceTree = "<group>"; };
-		FC30B681193F18D00020B7D2 /* CircularButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularButton.h; sourceTree = "<group>"; };
-		FC30B682193F18D00020B7D2 /* CircularButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularButton.m; sourceTree = "<group>"; };
 		FC30B683193F18D00020B7D2 /* SampleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleButton.h; sourceTree = "<group>"; };
 		FC30B684193F18D00020B7D2 /* SampleButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SampleButton.mm; sourceTree = "<group>"; };
 		FC30B685193F18D00020B7D2 /* SettingsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsButton.h; sourceTree = "<group>"; };
-		FC30B686193F18D00020B7D2 /* SettingsButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsButton.mm; sourceTree = "<group>"; };
 		FC30B688193F18D00020B7D2 /* BeMotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeMotionViewController.h; sourceTree = "<group>"; };
 		FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BeMotionViewController.mm; sourceTree = "<group>"; };
 		FC30B68A193F18D00020B7D2 /* EffectSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectSettingsViewController.h; sourceTree = "<group>"; };
@@ -303,7 +297,7 @@
 		FC30B68C193F18D00020B7D2 /* GlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettingsViewController.h; sourceTree = "<group>"; };
 		FC30B68D193F18D00020B7D2 /* GlobalSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GlobalSettingsViewController.mm; sourceTree = "<group>"; };
 		FC30B694193F19190020B7D2 /* EffectsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsTable.h; sourceTree = "<group>"; };
-		FC30B695193F19190020B7D2 /* EffectsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EffectsTable.m; sourceTree = "<group>"; };
+		FC30B695193F19190020B7D2 /* EffectsTable.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectsTable.mm; sourceTree = "<group>"; };
 		FC30B698193F9F730020B7D2 /* MotionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionControl.h; sourceTree = "<group>"; };
 		FC30B699193F9F730020B7D2 /* MotionControl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionControl.mm; sourceTree = "<group>"; };
 		FC30B69C194043C00020B7D2 /* Percs_Delay.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Percs_Delay.json; sourceTree = "<group>"; };
@@ -316,9 +310,8 @@
 		FC768970195AE035005C971B /* WaveformView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WaveformView.mm; sourceTree = "<group>"; };
 		FC768972195AE03D005C971B /* LoadSampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadSampleViewController.h; sourceTree = "<group>"; };
 		FC768973195AE03D005C971B /* LoadSampleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadSampleViewController.mm; sourceTree = "<group>"; };
-		FC768975195BFFDF005C971B /* net.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = net.jpg; sourceTree = "<group>"; };
 		FC768977195CC2D7005C971B /* MetronomeBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetronomeBar.h; sourceTree = "<group>"; };
-		FC768978195CC2D7005C971B /* MetronomeBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetronomeBar.m; sourceTree = "<group>"; };
+		FC768978195CC2D7005C971B /* MetronomeBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetronomeBar.mm; sourceTree = "<group>"; };
 		FC95CEEF19516DBE0037E887 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		FC95CEF019516DBE0037E887 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		FC95CEF119516DBE0037E887 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1442,7 +1435,6 @@
 		FC1140E9193D98AF0045A92B /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				FC768975195BFFDF005C971B /* net.jpg */,
 				FC30B609193EE0100020B7D2 /* Settings View */,
 				FC1140EA193D98AF0045A92B /* Main */,
 				FC1140EF193D98AF0045A92B /* Presets */,
@@ -1496,10 +1488,6 @@
 				FC1140FF193D98AF0045A92B /* Motion.png */,
 				FC114100193D98AF0045A92B /* Record.png */,
 				FC114101193D98AF0045A92B /* Resample.png */,
-				FC114103193D98AF0045A92B /* SettingsButton0.png */,
-				FC114104193D98AF0045A92B /* SettingsButton1.png */,
-				FC114105193D98AF0045A92B /* SettingsButton2.png */,
-				FC114106193D98AF0045A92B /* SettingsButton3.png */,
 			);
 			path = "Settings Button";
 			sourceTree = "<group>";
@@ -1657,16 +1645,16 @@
 		FC30B680193F18D00020B7D2 /* Custom Components */ = {
 			isa = PBXGroup;
 			children = (
-				FC30B681193F18D00020B7D2 /* CircularButton.h */,
-				FC30B682193F18D00020B7D2 /* CircularButton.m */,
+				FC1631C01975E68800E15DEF /* PlayButton.h */,
+				FC1631C11975E68800E15DEF /* PlayButton.mm */,
 				FC30B683193F18D00020B7D2 /* SampleButton.h */,
 				FC30B684193F18D00020B7D2 /* SampleButton.mm */,
 				FC30B685193F18D00020B7D2 /* SettingsButton.h */,
-				FC30B686193F18D00020B7D2 /* SettingsButton.mm */,
+				FC1631C51975E7DA00E15DEF /* SettingsButton.mm */,
 				FC30B694193F19190020B7D2 /* EffectsTable.h */,
-				FC30B695193F19190020B7D2 /* EffectsTable.m */,
+				FC30B695193F19190020B7D2 /* EffectsTable.mm */,
 				FC768977195CC2D7005C971B /* MetronomeBar.h */,
-				FC768978195CC2D7005C971B /* MetronomeBar.m */,
+				FC768978195CC2D7005C971B /* MetronomeBar.mm */,
 			);
 			path = "Custom Components";
 			sourceTree = "<group>";
@@ -1992,6 +1980,8 @@
 		FCCF851A19266E5F00B76E77 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FC1631C71975EC0B00E15DEF /* Metronome2.h */,
+				FC1631C81975EC0B00E15DEF /* Metronome2.mm */,
 				FCCF8FFD1926DA6C00B76E77 /* LFO.h */,
 				FCCF8FFE1926DA6C00B76E77 /* LFO.mm */,
 				FCCF851B19266E5F00B76E77 /* CUtil.h */,
@@ -3849,8 +3839,6 @@
 				FCC382D01947A3A80042222F /* Latin_Percussion3.wav in Resources */,
 				FC30B65D193F09F20020B7D2 /* Slot_Disabled_2.png in Resources */,
 				FCC382C01947A3A80042222F /* Embryo2.wav in Resources */,
-				FC114120193D98AF0045A92B /* SettingsButton3.png in Resources */,
-				FC11411F193D98AF0045A92B /* SettingsButton2.png in Resources */,
 				FC114109193D98AF0045A92B /* Global.png in Resources */,
 				FC30B674193F09F20020B7D2 /* Slot_Selected_1_0.png in Resources */,
 				FCC382E81947BAA30042222F /* Electronic4.wav in Resources */,
@@ -3874,7 +3862,6 @@
 				FC114114193D98AF0045A92B /* SampleButton1.png in Resources */,
 				FC30B660193F09F20020B7D2 /* Slot_Enabled_0_0.png in Resources */,
 				FCC382CC1947A3A80042222F /* Latin_Loop4.wav in Resources */,
-				FC11411D193D98AF0045A92B /* SettingsButton0.png in Resources */,
 				FCC382B61947A3A80042222F /* DubBeat2.wav in Resources */,
 				FC30B626193F01100020B7D2 /* SliderMinimum0.png in Resources */,
 				FC30B673193F09F20020B7D2 /* Slot_Selected_0_3.png in Resources */,
@@ -3944,7 +3931,6 @@
 				FC30B61F193EFBB00020B7D2 /* SliderThumb.png in Resources */,
 				FC114108193D98AF0045A92B /* Gesture.png in Resources */,
 				FC30B67D193F09F20020B7D2 /* Slot_Selected_3_1.png in Resources */,
-				FC11411E193D98AF0045A92B /* SettingsButton1.png in Resources */,
 				FC30B66F193F09F20020B7D2 /* Slot_Enabled_3_3.png in Resources */,
 				FCC382D81947A3A80042222F /* Skies1.wav in Resources */,
 				FC30B628193F01100020B7D2 /* SliderMinimum2.png in Resources */,
@@ -3963,7 +3949,6 @@
 				FC30B60E193EE0100020B7D2 /* Activate.png in Resources */,
 				FCC382F11947CC1A0042222F /* Electronica2.wav in Resources */,
 				FCC382CE1947A3A80042222F /* Latin_Percussion1.wav in Resources */,
-				FC768976195BFFDF005C971B /* net.jpg in Resources */,
 				FC11411A193D98AF0045A92B /* Record.png in Resources */,
 				FC30B677193F09F20020B7D2 /* Slot_Selected_1_3.png in Resources */,
 				FCC382CB1947A3A80042222F /* Latin_Loop3.wav in Resources */,
@@ -3992,20 +3977,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC30B690193F18D00020B7D2 /* SettingsButton.mm in Sources */,
 				FCCF8FEF1926707C00B76E77 /* juce_audio_basics.mm in Sources */,
 				FCCF8FF6192670E700B76E77 /* juce_audio_devices.mm in Sources */,
 				FCCF8FF1192670B100B76E77 /* juce_audio_formats.mm in Sources */,
-				FC768979195CC2D7005C971B /* MetronomeBar.m in Sources */,
+				FC768979195CC2D7005C971B /* MetronomeBar.mm in Sources */,
 				FCCF8FF2192670B100B76E77 /* juce_core.mm in Sources */,
 				FCCF8FF3192670B100B76E77 /* juce_cryptography.mm in Sources */,
 				FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */,
 				FCCF8FF71926710300B76E77 /* juce_data_structures.mm in Sources */,
+				FC1631C61975E7DA00E15DEF /* SettingsButton.mm in Sources */,
 				FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */,
 				FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */,
 				FC30B68F193F18D00020B7D2 /* SampleButton.mm in Sources */,
 				FCCF8FF4192670B100B76E77 /* juce_graphics.mm in Sources */,
-				FC30B696193F19190020B7D2 /* EffectsTable.m in Sources */,
+				FC30B696193F19190020B7D2 /* EffectsTable.mm in Sources */,
 				FCCF8FF5192670B100B76E77 /* juce_gui_basics.mm in Sources */,
 				FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */,
 				FC768974195AE03D005C971B /* LoadSampleViewController.mm in Sources */,
@@ -4019,8 +4004,8 @@
 				FC30B693193F18D00020B7D2 /* GlobalSettingsViewController.mm in Sources */,
 				FCCF853E19266E5F00B76E77 /* Metronome.mm in Sources */,
 				FCCF854419266E5F00B76E77 /* LiveAudioStream.mm in Sources */,
+				FC1631C91975EC0B00E15DEF /* Metronome2.mm in Sources */,
 				FCCF854A19266E5F00B76E77 /* Tremolo.mm in Sources */,
-				FC30B68E193F18D00020B7D2 /* CircularButton.m in Sources */,
 				FCCF854819266E5F00B76E77 /* Limiter.mm in Sources */,
 				FCCF855919266E5F00B76E77 /* BeMotionInterface.mm in Sources */,
 				FCCF854919266E5F00B76E77 /* PeakFilter.mm in Sources */,
@@ -4030,6 +4015,7 @@
 				FC30B6A3194046170020B7D2 /* LoadPreset.mm in Sources */,
 				FC95CF0D1959012E0037E887 /* LoadMediaFile.mm in Sources */,
 				FC95CF011958F3650037E887 /* AudioFeatureExtraction.mm in Sources */,
+				FC1631C21975E68800E15DEF /* PlayButton.mm in Sources */,
 				FCCF853B19266E5F00B76E77 /* BeMotionAppDelegate.mm in Sources */,
 				FC768971195AE035005C971B /* WaveformView.mm in Sources */,
 				FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */,

@@ -1,8 +1,8 @@
 //
 //  SettingsButton.m
-//  BeMotion
+//  SampleButton
 //
-//  Created by Govinda Ram Pingali on 6/2/14.
+//  Created by Govinda Ram Pingali on 7/6/14.
 //  Copyright (c) 2014 BeMotionLLC. All rights reserved.
 //
 
@@ -10,146 +10,77 @@
 
 @implementation SettingsButton
 
-@synthesize buttonID, delegate, recordLabel;
+@synthesize buttonID, delegate;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame : (int)identifier
 {
     self = [super initWithFrame:frame];
     
-    if (self)
-    {
+    if (self) {
         // Initialization code
         
-        switch (buttonID)
-        {
+        buttonID = identifier;
+        
+        
+        sideBar = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, frame.size.height)];
+        
+        switch (buttonID) {
             case 0:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton0.png"]]];
+                [sideBar setBackgroundColor:[UIColor colorWithPatternImage:[self getResizedImage:@"SettingsBar0.png":sideBar]]];
                 break;
                 
             case 1:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton1.png"]]];
+                [sideBar setBackgroundColor:[UIColor colorWithPatternImage:[self getResizedImage:@"SettingsBar1.png":sideBar]]];
                 break;
                 
             case 2:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton2.png"]]];
+                [sideBar setBackgroundColor:[UIColor colorWithPatternImage:[self getResizedImage:@"SettingsBar2.png":sideBar]]];
                 break;
                 
             case 3:
-                [self setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"SettingsButton3.png"]]];
+                [sideBar setBackgroundColor:[UIColor colorWithPatternImage:[self getResizedImage:@"SettingsBar3.png":sideBar]]];
                 break;
                 
             default:
                 break;
         }
+        [self addSubview:sideBar];
+        
+        
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[self getResizedImage:@"SettingsBackground.png":self]]];
+        
+        
         
         UIButton *recordButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [recordButton setImage:[UIImage imageNamed:@"Record.png"] forState:UIControlStateNormal];
         [recordButton addTarget:self action:@selector(recordButtonClicked) forControlEvents:UIControlEventTouchDown];
         [recordButton addTarget:self action:@selector(recordButtonReleased) forControlEvents:UIControlEventTouchUpInside];
-        recordButton.frame = CGRectMake(12.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-//        [recordButton setClipsToBounds:YES];
-//        [[recordButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
-        
-        UIButton *resampleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [resampleButton setImage:[UIImage imageNamed:@"Resample.png"] forState:UIControlStateNormal];
-        [resampleButton addTarget:self action:@selector(resampleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        resampleButton.frame = CGRectMake(79.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-//        [resampleButton setClipsToBounds:YES];
-//        [[resampleButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
+        recordButton.frame = CGRectMake(12.0f + 5.0f, 22.0f, 50.0f, 50.0f);
+        [self addSubview:recordButton];
         
         UIButton *fxButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [fxButton setImage:[UIImage imageNamed:@"FX.png"] forState:UIControlStateNormal];
         [fxButton addTarget:self action:@selector(fxButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        fxButton.frame = CGRectMake(146.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-//        [fxButton setClipsToBounds:YES];
-//        [[fxButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
-
+        fxButton.frame = CGRectMake(79.0f + 5.0f, 22.0f, 50.0f, 50.0f);
+        [self addSubview:fxButton];
+        
         UIButton *importButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [importButton setImage:[UIImage imageNamed:@"Import.png"] forState:UIControlStateNormal];
         [importButton addTarget:self action:@selector(importButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        importButton.frame = CGRectMake(213.0f + 5.0f, 22.0f, SETTINGS_ICON_RADIUS, SETTINGS_ICON_RADIUS);
-//        [importButton setClipsToBounds:YES];
-//        [[importButton layer] setCornerRadius:SETTINGS_ICON_RADIUS * 0.5f];
-        
-        recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 2.0f, 100.0f, 16.0f)];
-        [recordLabel setBackgroundColor:[UIColor clearColor]];
-        [recordLabel setTextAlignment:NSTextAlignmentLeft];
-        [recordLabel setTextColor:[UIColor whiteColor]];
-        [recordLabel setNumberOfLines:1];
-        [recordLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        [recordLabel setFont:[UIFont systemFontOfSize:8.0f]];
-        [recordLabel setText:@"Recording..."];
-        [recordLabel setUserInteractionEnabled:NO];
-        [recordLabel setHidden:YES];
-        
-        [self addSubview:recordButton];
-        [self addSubview:fxButton];
-        [self addSubview:resampleButton];
+        importButton.frame = CGRectMake(146.0f + 5.0f, 22.0f, 50.0f, 50.0f);
         [self addSubview:importButton];
-        [self addSubview:recordLabel];
+
+        UIButton *gestureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [gestureButton setImage:[UIImage imageNamed:@"Motion.png"] forState:UIControlStateNormal];
+        [gestureButton addTarget:self action:@selector(importButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        gestureButton.frame = CGRectMake(213.0f + 5.0f, 22.0f, 50.0f, 50.0f);
+        [self addSubview:gestureButton];
+
         
     }
     
     return self;
 }
-
-
-- (void)recordButtonClicked
-{
-    [delegate startRecording:buttonID];
-    [recordLabel setHidden:NO];
-    
-}
-
-- (void)recordButtonReleased
-{
-    [delegate stopRecording:buttonID];
-    [recordLabel setHidden:YES];
-}
-
-- (void)fxButtonClicked
-{
-    [delegate launchFXView:buttonID];
-}
-
-- (void)resampleButtonClicked
-{
-    [delegate startResampling:buttonID];
-}
-
-- (void)importButtonClicked
-{
-    [delegate launchImportView:buttonID];
-}
-
-
-
-
-- (void)startRecording : (int)sampleID
-{
-    
-}
-
-- (void)stopRecording:(int)sampleID
-{
-    
-}
-
-- (void)startResampling:(int)sampleID
-{
-    
-}
-
-- (void)launchFXView:(int)sampleID
-{
-    
-}
-
-- (void)launchImportView:(int)sampleID
-{
-    
-}
-
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -159,5 +90,58 @@
     // Drawing code
 }
 */
+
+
+- (void)fxButtonClicked {
+    [delegate launchFXView];
+}
+
+- (void)importButtonClicked {
+    [delegate launchImportView];
+}
+
+
+- (void)gestureButtonClicked {
+    
+}
+
+
+- (void)recordButtonClicked {
+    [delegate startRecording];
+}
+
+- (void)recordButtonReleased {
+    [delegate stopRecording];
+}
+
+
+
+- (void)startRecording {
+    // Start Recording
+}
+
+- (void)stopRecording {
+    // Stop Recording
+}
+
+
+- (void)launchFXView {
+    // Launch FX View
+}
+
+- (void)launchImportView {
+    // Launch Import View
+}
+
+
+- (UIImage*) getResizedImage : (NSString*)filename : (UIView*)view {
+    
+    UIGraphicsBeginImageContext(view.frame.size);
+    [[UIImage imageNamed:filename] drawInRect:view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 
 @end

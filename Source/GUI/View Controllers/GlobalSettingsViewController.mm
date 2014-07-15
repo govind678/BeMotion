@@ -66,15 +66,15 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 - (void)dealloc
@@ -119,8 +119,12 @@
         NSString *sectionTitle  = [sampleSectionTitles objectAtIndex:[indexPath row]];
         [[cell textLabel] setText:sectionTitle];
         [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-        [[cell textLabel] setTextColor:[UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:1.0f]];
-    
+        [[cell textLabel] setTextColor:[UIColor colorWithRed:0.6f green:0.6f blue:0.6f alpha:1.0f]];
+        
+        NSArray* objects = [sampleBanks objectForKey:sectionTitle];
+        NSString* imageTitle = [objects objectAtIndex:7];
+        [[cell imageView] setImage:[UIImage imageNamed:imageTitle]];
+        
     }
     
     if (tableView == fxPackTable) {
@@ -129,10 +133,10 @@
         NSString *sectionTitle  = [fxPackSet objectAtIndex:[indexPath row]];
         [[cell textLabel] setText:sectionTitle];
         [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-        [[cell textLabel] setTextColor:[UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:1.0f]];
+        [[cell textLabel] setTextColor:[UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f]];
         
     }
-   
+    
     return cell;
     
 }

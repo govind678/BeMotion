@@ -57,29 +57,29 @@
     _backendInterface   =  [appDelegate getBackendReference];
     
     //--- Set Background ---//
-//    switch (currentSampleID)
-//    {
-//        case 0:
-//            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f]];
-//            break;
-//            
-//        case 1:
-//            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f]];
-//            break;
-//            
-//        case 2:
-//            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f]];
-//            break;
-//            
-//        case 3:
-//            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f]];
-//            break;
-//            
-//        default:
-//            break;
-//    }
+    //    switch (currentSampleID)
+    //    {
+    //        case 0:
+    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f]];
+    //            break;
+    //
+    //        case 1:
+    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f]];
+    //            break;
+    //
+    //        case 2:
+    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f]];
+    //            break;
+    //
+    //        case 3:
+    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f]];
+    //            break;
+    //
+    //        default:
+    //            break;
+    //    }
     
-     m_iCurrentEffectPosition        =   0;
+    m_iCurrentEffectPosition        =   0;
     
     
     
@@ -135,7 +135,7 @@
     [triggerModeLabel setNumberOfLines:1];
     [triggerModeLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [triggerModeLabel setFont:[UIFont systemFontOfSize:10.0f]];
-    [triggerModeLabel setText:@"Trigger"];
+    [triggerModeLabel setText:@"One Shot"];
     
     UILabel* beatRepeatModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(160.0f, 110.0f, SETTINGS_ICON_RADIUS, 16.0f)];
     [beatRepeatModeLabel setBackgroundColor:[UIColor clearColor]];
@@ -179,7 +179,7 @@
     
     [slider1Object setThumbImage:[UIImage imageNamed:@"SliderThumb.png"] forState:UIControlStateNormal];
     [slider1Object setMaximumTrackImage:[UIImage imageNamed:@"SliderMaximum.png"] forState:UIControlStateNormal];
-
+    
     [slider2Object setThumbImage:[UIImage imageNamed:@"SliderThumb.png"] forState:UIControlStateNormal];
     [slider2Object setMaximumTrackImage:[UIImage imageNamed:@"SliderMaximum.png"] forState:UIControlStateNormal];
     
@@ -188,7 +188,7 @@
     
     
     switch (currentSampleID) {
-        
+            
         case 0:
             [gainSliderObject setMinimumTrackImage:[UIImage imageNamed:@"SliderMinimum0.png"] forState:UIControlStateNormal];
             [quantizationSliderObject setMinimumTrackImage:[UIImage imageNamed:@"SliderMinimum0.png"] forState:UIControlStateNormal];
@@ -414,7 +414,7 @@
 - (void)displayEffectParameters: (int)position {
     
     switch (position) {
-        
+            
         case 0:
             
             switch (currentSampleID) {
@@ -577,7 +577,7 @@
     int effectType = _backendInterface->getEffectType(currentSampleID, position);
     [pickerObject selectRow:effectType inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
-
+    
 }
 
 
@@ -867,14 +867,14 @@
     [slider1CurrentValue release];
     [slider2CurrentValue release];
     [slider3CurrentValue release];
-
+    
     [slider1Object release];
     [slider2Object release];
     [slider3Object release];
     [bypassButtonObject release];
     [pickerObject release];
     
-
+    
     [gainSliderObject release];
     [quantizationSliderObject release];
     [bypassButtonObject release];

@@ -53,6 +53,7 @@ AudioEngine::AudioEngine()
     presetLoader        =   new LoadPreset();
     presetLoader->setAudioMixerPlayer(audioMixer);
     
+    metronome           =   new Metronome2(sharedAudioDeviceManager);
 //    audioTrimmer        =   new TrimAudio();
 }
 
@@ -69,6 +70,7 @@ AudioEngine::~AudioEngine()
     audioMixer                  =   nullptr;
 //    liveAudioStream             =   nullptr;
     presetLoader                =   nullptr;
+    metronome                   =   nullptr;
 //    audioTrimmer                =   nullptr;
 }
 
@@ -289,6 +291,21 @@ bool AudioEngine::getSamplePlaybackStatus(int sampleID)
 void AudioEngine::beat(int beatNo)
 {
     audioMixer->beat(beatNo);
+}
+
+void AudioEngine::startMetronome()
+{
+    metronome->start();
+}
+
+void AudioEngine::stopMetronome()
+{
+    metronome->stop();
+}
+
+bool AudioEngine::getMetronomeStatus()
+{
+    return (metronome->getCurrentStatus());
 }
 
 

@@ -9,18 +9,37 @@
 #import <UIKit/UIKit.h>
 #import "PlayButton.h"
 #import "SettingsButton.h"
-#import "RecordingsButton.h"
+
+#import "BeMotionInterface.h"
+#import "Macros.h"
 
 @interface SampleButton : UIScrollView
 {
-    PlayButton* playButton;
-    SettingsButton* settingsButton;
-    RecordingsButton* recordingsButton;
-    
-    UIView* dragLeft;
-    UIView* dragRight;
+    PlayButton*         playButton;
+    SettingsButton*     settingsButton;
+    UIButton*           dragArrowButton;
+    UIView*             dragArrowBack;
 }
 
+- (id)initWithFrame:(CGRect)frame : (int)identifier;
+- (void)postInitialize;
+
+@property (nonatomic, assign) BeMotionInterface*  backendInterface;
 @property (nonatomic, assign) int buttonID;
+@property (nonatomic, assign) id  delegate;
+
+
+
+- (void) startPlayback;
+- (void) stopPlayback;
+- (void) startRecording;
+- (void) stopRecording;
+- (void) startResampling;
+- (void) launchFXView;
+- (void) launchImportView;
+
+- (void) launchFXView : (int)sampleID;
+- (void) launchImportView : (int)sampleID;
+
 
 @end

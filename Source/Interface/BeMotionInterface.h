@@ -47,6 +47,8 @@ public:
     
     void beat(int beatNo);
     void setTempo(float newTempo);
+    void startMetronome();
+    void stopMetronome();
     
     void setCurrentSampleBank(NSString* presetBank);
     
@@ -76,6 +78,8 @@ public:
     bool getSettingsToggle();
     
     float* getSamplesToDrawWaveform(int sampleID);
+    
+    bool getMetronomeStatus();
     //========================================================
     
     

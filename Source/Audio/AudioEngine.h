@@ -19,6 +19,7 @@
 #include "AudioFileRecord.h"
 #include "AudioMixerPlayer.h"
 #include "LoadPreset.h"
+#include "Metronome2.h"
 //#include "TrimAudio.h"
 
 class AudioEngine
@@ -69,6 +70,9 @@ public:
     
     void beat(int beatNo);
     void setTempo(float newTempo);
+    void startMetronome();
+    void stopMetronome();
+    bool getMetronomeStatus();
     
     void motionUpdate(float* motion);
     
@@ -88,6 +92,8 @@ private:
     
     ScopedPointer<LoadPreset>           presetLoader;
 //    ScopedPointer<TrimAudio>            audioTrimmer;
+    
+    ScopedPointer<Metronome2>           metronome;
     
     StringArray         recordingFilePathArray1;
     StringArray         recordingFilePathArray2;

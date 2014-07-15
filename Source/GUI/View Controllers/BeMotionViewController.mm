@@ -26,9 +26,7 @@
 @implementation BeMotionViewController
 
 @synthesize progressBar0, progressBar1, progressBar2, progressBar3;
-@synthesize sampleButton0, sampleButton1, sampleButton2, sampleButton3;
-@synthesize settingsButton0, settingsButton1, settingsButton2, settingsButton3;
-@synthesize metronomeButton, settingsButton;
+@synthesize metronomeButton;
 @synthesize metronomeBar;
 
 
@@ -63,71 +61,43 @@
         m_pbAudioRecordToggle[i]        =   false;
         m_pbAudioCurrentlyRecording[i]  =   false;
     }
-
+    
     
     
     
     
     //--- Sample Buttons Init ---//
-    
-    [sampleButton0 setButtonID:0];
+    sampleButton0 = [[SampleButton alloc] initWithFrame:CGRectMake(0.0f, 20.0f, 320.0f, 100.0f) : 0];
+    [sampleButton0 setBackendInterface:_backendInterface];
+    [sampleButton0 postInitialize];
     [sampleButton0 setDelegate:self];
-    [sampleButton0 init];
+    [[self view] addSubview:sampleButton0];
     
-    [sampleButton1 setButtonID:1];
+    
+    sampleButton1 = [[SampleButton alloc] initWithFrame:CGRectMake(0.0f, 135.0f, 320.0f, 100.0f) : 1];
+    [sampleButton1 setBackendInterface:_backendInterface];
+    [sampleButton1 postInitialize];
     [sampleButton1 setDelegate:self];
-    [sampleButton1 init];
+    [[self view] addSubview:sampleButton1];
     
-    [sampleButton2 setButtonID:2];
+    sampleButton2 = [[SampleButton alloc] initWithFrame:CGRectMake(0.0f, 250.0f, 320.0f, 100.0f) : 2];
+    [sampleButton2 setBackendInterface:_backendInterface];
+    [sampleButton2 postInitialize];
     [sampleButton2 setDelegate:self];
-    [sampleButton2 init];
+    [[self view] addSubview:sampleButton2];
     
-    [sampleButton3 setButtonID:3];
+    sampleButton3 = [[SampleButton alloc] initWithFrame:CGRectMake(0.0f, 365.0f, 320.0f, 100.0f) : 3];
+    [sampleButton3 setBackendInterface:_backendInterface];
+    [sampleButton3 postInitialize];
     [sampleButton3 setDelegate:self];
-    [sampleButton3 init];
+    [[self view] addSubview:sampleButton3];
     
     
-    //--- Set Sample Button and Progress Bar States ---//
-    [self setSamplePlaybackAlpha];
-    
-    
-    
-    //--- Settings Buttons Init ---//
-    
-    [settingsButton0 setButtonID:0];
-    [settingsButton0 setUserInteractionEnabled:NO];
-    [settingsButton0 setHidden:YES];
-    [settingsButton0 setDelegate:self];
-    [settingsButton0 init];
-    
-    [settingsButton1 setButtonID:1];
-    [settingsButton1 setUserInteractionEnabled:NO];
-    [settingsButton1 setHidden:YES];
-    [settingsButton1 setDelegate:self];
-    [settingsButton1 init];
-    
-    [settingsButton2 setButtonID:2];
-    [settingsButton2 setUserInteractionEnabled:NO];
-    [settingsButton2 setHidden:YES];
-    [settingsButton2 setDelegate:self];
-    [settingsButton2 init];
-    
-    [settingsButton3 setButtonID:3];
-    [settingsButton3 setUserInteractionEnabled:NO];
-    [settingsButton3 setHidden:YES];
-    [settingsButton3 setDelegate:self];
-    [settingsButton3 init];
-    
-    
-    
-    
-    //--- TODO: Retain Settings Status? ---//
-    [settingsButton setAlpha:BUTTON_OFF_ALPHA];
     
     if ([_metronome isRunning]) {
-        [metronomeButton setAlpha:1.0f];
+        [metronomeButton setSelected:YES];
     } else {
-        [metronomeButton setAlpha:BUTTON_OFF_ALPHA];
+        [metronomeButton setSelected:NO];
     }
     
     
@@ -156,21 +126,6 @@
     [[self view] setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
     
     
-    m_bSettingsToggle   =   false;
-    //--- Retain Settings Status ---//
-    if (_backendInterface->getSettingsToggle()) {
-        
-        //--- Display Settings Buttons ---//
-        [self toggleSettings:true];
-//        _backendInterface->setSettingsToggle(false);
-        
-    } else {
-        
-        //--- Hide Settings Buttons ---//
-        [self toggleSettings:false];
-//        _backendInterface->setSettingsToggle(true);
-    }
-
 }
 
 
@@ -202,20 +157,14 @@
     [progressBar3 release];
     
     
-  
+    
     [sampleButton0 release];
     [sampleButton1 release];
     [sampleButton2 release];
     [sampleButton3 release];
     
-    [settingsButton0 release];
-    [settingsButton1 release];
-    [settingsButton2 release];
-    [settingsButton3 release];
-    
     
     [metronomeButton release];
-    [settingsButton release];
     
     [metronomeBar release];
     
@@ -278,9 +227,9 @@
                 }
             }
         }
-
-    }
         
+    }
+    
     [metronomeBar beat:beatNo];
 }
 
@@ -293,37 +242,19 @@
 
 //--- Modifier Keys ---//
 
-
-- (IBAction)settingsToggleClicked:(UIButton *)sender
-{
-    if (m_bSettingsToggle) {
-        
-        //--- Display Settings Buttons ---//
-        [self toggleSettings:true];
-        _backendInterface->setSettingsToggle(true);
-        m_bSettingsToggle = false;
-        
-    } else {
-        
-        //--- Hide Settings Buttons ---//
-        [self toggleSettings:false];
-        _backendInterface->setSettingsToggle(false);
-        m_bSettingsToggle = true;
-    }
-}
-
-
-
 - (IBAction)metronomeToggleClicked:(UIButton *)sender
 {
-    if ([_metronome isRunning] == NO) {
-        [_metronome startClock];
-        [metronomeButton setAlpha:1.0f];
+    //    if ([_metronome isRunning] == NO) {
+    if (_backendInterface->getMetronomeStatus() == false) {
+        //        [_metronome startClock];
+        _backendInterface->startMetronome();
+        [metronomeButton setSelected:YES];
     }
     
     else {
-        [_metronome stopClock];
-        [metronomeButton setAlpha:BUTTON_OFF_ALPHA];
+        //        [_metronome stopClock];
+        _backendInterface->stopMetronome();
+        [metronomeButton setSelected:NO];
         [metronomeBar turnOff];
     }
 }
@@ -366,140 +297,62 @@
 }
 
 
-//--- Settings Button Methods ---//
-
-- (void)toggleSettings:(bool)toggle {
-    
-    if (toggle == YES) {
-        
-        [settingsButton setAlpha:1.0f];
-        
-        [sampleButton0 setHidden:YES];
-        [sampleButton1 setHidden:YES];
-        [sampleButton2 setHidden:YES];
-        [sampleButton3 setHidden:YES];
-        
-        [sampleButton0 setUserInteractionEnabled:NO];
-        [sampleButton1 setUserInteractionEnabled:NO];
-        [sampleButton2 setUserInteractionEnabled:NO];
-        [sampleButton3 setUserInteractionEnabled:NO];
-        
-        [progressBar0 setHidden:YES];
-        [progressBar1 setHidden:YES];
-        [progressBar2 setHidden:YES];
-        [progressBar3 setHidden:YES];
-            
-        [settingsButton0 setHidden:NO];
-        [settingsButton0 setUserInteractionEnabled:YES];
-        
-        [settingsButton1 setHidden:NO];
-        [settingsButton1 setUserInteractionEnabled:YES];
-        
-        [settingsButton2 setHidden:NO];
-        [settingsButton2 setUserInteractionEnabled:YES];
-        
-        [settingsButton3 setHidden:NO];
-        [settingsButton3 setUserInteractionEnabled:YES];
-
-    }
-    
-    else {
-        
-        [settingsButton setAlpha:BUTTON_OFF_ALPHA];
-        
-        [progressBar0 setHidden:NO];
-        [progressBar1 setHidden:NO];
-        [progressBar2 setHidden:NO];
-        [progressBar3 setHidden:NO];
-        
-        [self setSamplePlaybackAlpha];
-        
-        [sampleButton0 setHidden:NO];
-        [sampleButton1 setHidden:NO];
-        [sampleButton2 setHidden:NO];
-        [sampleButton3 setHidden:NO];
-        
-        [sampleButton0 setUserInteractionEnabled:YES];
-        [sampleButton1 setUserInteractionEnabled:YES];
-        [sampleButton2 setUserInteractionEnabled:YES];
-        [sampleButton3 setUserInteractionEnabled:YES];
-        
-
-            
-        [settingsButton0 setHidden:YES];
-        [settingsButton0 setUserInteractionEnabled:NO];
-        
-        [settingsButton1 setHidden:YES];
-        [settingsButton1 setUserInteractionEnabled:NO];
-        
-        [settingsButton2 setHidden:YES];
-        [settingsButton2 setUserInteractionEnabled:NO];
-        
-        [settingsButton3 setHidden:YES];
-        [settingsButton3 setUserInteractionEnabled:NO];
-
-    }
-    
-}
-
-
-
 
 
 //--- Sample Buttons Delegate Methods ---//
 
-- (void)startPlayback:(int)sampleID {
-    
-    _backendInterface->startPlayback(sampleID);
-    
-    switch (sampleID) {
-        case 0:
-            [sampleButton0 setAlpha:1.0f];
-            break;
-            
-        case 1:
-            [sampleButton1 setAlpha:1.0f];
-            break;
-            
-        case 2:
-            [sampleButton2 setAlpha:1.0f];
-            break;
-            
-        case 3:
-            [sampleButton3 setAlpha:1.0f];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
-- (void)stopPlayback:(int)sampleID {
-    
-    _backendInterface->stopPlayback(sampleID);
-    
-    switch (sampleID) {
-        case 0:
-            [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
-            break;
-            
-        case 1:
-            [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
-            break;
-            
-        case 2:
-            [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
-            break;
-            
-        case 3:
-            [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
-            break;
-            
-        default:
-            break;
-    }
-}
+//- (void)startPlayback:(int)sampleID {
+//
+//    _backendInterface->startPlayback(sampleID);
+//
+//    switch (sampleID) {
+//        case 0:
+//            [sampleButton0 setAlpha:1.0f];
+//            break;
+//
+//        case 1:
+//            [sampleButton1 setAlpha:1.0f];
+//            break;
+//
+//        case 2:
+//            [sampleButton2 setAlpha:1.0f];
+//            break;
+//
+//        case 3:
+//            [sampleButton3 setAlpha:1.0f];
+//            break;
+//
+//        default:
+//            break;
+//    }
+//}
+//
+//
+//- (void)stopPlayback:(int)sampleID {
+//
+//    _backendInterface->stopPlayback(sampleID);
+//
+//    switch (sampleID) {
+//        case 0:
+//            [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
+//            break;
+//
+//        case 1:
+//            [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
+//            break;
+//
+//        case 2:
+//            [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
+//            break;
+//
+//        case 3:
+//            [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
+//            break;
+//
+//        default:
+//            break;
+//    }
+//}
 
 
 
@@ -507,24 +360,24 @@
 
 //--- Settings Buttons Delegate Methods ---//
 
-- (void) startRecording:(int)sampleID {
-    
-    if ([_metronome isRunning] == YES) {
-        m_pbAudioRecordToggle[sampleID] = true;
-    } else {
-        _backendInterface->startRecording(sampleID);
-    }
-}
-
-
-- (void) stopRecording:(int)sampleID {
-    
-    if ([_metronome isRunning] == YES) {
-        m_pbAudioRecordToggle[sampleID] = false;
-    } else {
-        _backendInterface->stopRecording(sampleID);
-    }
-}
+//- (void) startRecording:(int)sampleID {
+//
+//    if ([_metronome isRunning] == YES) {
+//        m_pbAudioRecordToggle[sampleID] = true;
+//    } else {
+//        _backendInterface->startRecording(sampleID);
+//    }
+//}
+//
+//
+//- (void) stopRecording:(int)sampleID {
+//
+//    if ([_metronome isRunning] == YES) {
+//        m_pbAudioRecordToggle[sampleID] = false;
+//    } else {
+//        _backendInterface->stopRecording(sampleID);
+//    }
+//}
 
 
 - (void) launchFXView:(int)sampleID {
@@ -572,48 +425,8 @@
     {
         m_pbMasterRecordToggle[sampleID] = true;
     }
-
+    
 }
-
-
-
-//--- Utility Methods ---//
-
-- (void) setSamplePlaybackAlpha {
-    
-    if (_backendInterface->getSamplePlaybackStatus(0)) {
-        [sampleButton0 setAlpha:1.0f];
-        [progressBar0 setAlpha:1.0f];
-    } else {
-        [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
-        [progressBar0 setAlpha:0.0f];
-    }
-    
-    if (_backendInterface->getSamplePlaybackStatus(1)) {
-        [sampleButton1 setAlpha:1.0f];
-        [progressBar1 setAlpha:1.0f];
-    } else {
-        [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
-        [progressBar1 setAlpha:0.0f];
-    }
-    
-    if (_backendInterface->getSamplePlaybackStatus(2)) {
-        [sampleButton2 setAlpha:1.0f];
-        [progressBar2 setAlpha:1.0f];
-    } else {
-        [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
-        [progressBar2 setAlpha:0.0f];
-    }
-    
-    if (_backendInterface->getSamplePlaybackStatus(3)) {
-        [sampleButton3 setAlpha:1.0f];
-        [progressBar2 setAlpha:1.0f];
-    } else {
-        [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
-        [progressBar3 setAlpha:0.0f];
-    }
-}
-
 
 
 @end

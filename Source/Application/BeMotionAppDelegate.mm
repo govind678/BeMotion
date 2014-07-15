@@ -49,43 +49,43 @@
     NSDictionary* initialSet =  @{
                                   
                    @"Electronic Kit"            : @[@"EKit0", @"EKit1", @"EKit2", @"EKit3", @"EKit4", @"Breakbeat4",
-                                                    [NSNumber numberWithInt:120]],
+                                                    [NSNumber numberWithInt:120], @"Electronic Kit.png"],
                    
                    @"Dubstep Loops"             : @[@"DubBeat0", @"DubBeat1", @"DubBeat2", @"DubBeat3", @"DubBeat4", @"EKit4",
-                                                    [NSNumber numberWithInt:140]],
+                                                    [NSNumber numberWithInt:140], @"Dubstep.png"],
                    
                    @"Breakbeat Drums"           : @[@"Breakbeat0", @"Breakbeat1", @"Breakbeat2", @"Breakbeat3", @"Breakbeat4", @"EKit4",
-                                                    [NSNumber numberWithInt:140]],
+                                                    [NSNumber numberWithInt:140], @"Breakbeat.png"],
                    
                    @"Indian Percussion"         : @[@"Indian_Percussion0", @"Indian_Percussion1", @"Indian_Percussion2",
                                                     @"Indian_Percussion3", @"Indian_Percussion4", @"Electronica4",
-                                                    [NSNumber numberWithInt:100]],
+                                                    [NSNumber numberWithInt:100], @"Indian Percussion.png"],
                    
                    @"Latin Loops"               : @[@"Latin_Loop0", @"Latin_Loop1", @"Latin_Loop2", @"Latin_Loop3", @"Latin_Loop4",
                                                     @"Latin_Percussion4",
-                                                    [NSNumber numberWithInt:126]],
+                                                    [NSNumber numberWithInt:126], @"Latin Loop.png"],
                    
                    @"Latin Percussion"          : @[@"Latin_Percussion0", @"Latin_Percussion1", @"Latin_Percussion2", @"Latin_Percussion3",
                                                     @"Latin_Percussion4", @"Latin_Loop4",
-                                                    [NSNumber numberWithInt:126]],
+                                                    [NSNumber numberWithInt:126], @"Latin Percussion.png"],
                    
                    @"Electronic Set 1"          : @[@"Electronic0", @"Electronic1", @"Electronic2", @"Electronic3", @"Electronic4",
                                                     @"Electronica4",
-                                                    [NSNumber numberWithInt:85]],
+                                                    [NSNumber numberWithInt:85], @"Electronic Set.png"],
                    
                    @"Electronic Set 2"          : @[@"Electronica0", @"Electronica1", @"Electronica2", @"Electronica3", @"Electronica4",
                                                     @"Electronic4",
-                                                    [NSNumber numberWithInt:85]],
+                                                    [NSNumber numberWithInt:85], @"Electronic Set.png"],
                    
                    @"Embryo"                    : @[@"Embryo0", @"Embryo1", @"Embryo2", @"Embryo3", @"Embryo4", @"Latin_Percussion4",
-                                                    [NSNumber numberWithInt:200]],
+                                                    [NSNumber numberWithInt:200], @"Embryo.png"],
                    
                    @"Machine Transformations"   : @[@"MachineTransformations0", @"MachineTransformations1", @"MachineTransformations2",
                                                     @"MachineTransformations3", @"MachineTransformations4", @"Embryo4",
-                                                    [NSNumber numberWithInt:120]],
+                                                    [NSNumber numberWithInt:120], @"Machine Transformations.png"],
                    
                    @"Skies"                     : @[@"Skies0", @"Skies1", @"Skies2", @"Skies3", @"Skies4", @"Electronic4",
-                                                    [NSNumber numberWithInt:180]],
+                                                    [NSNumber numberWithInt:180], @"Skies.png"],
                    };
     
     
@@ -178,6 +178,33 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	NSLog(@"My token is: %@", deviceToken);
+    
+    
+    NSString *receipt1 = @"username";
+    
+    NSString *post =[NSString stringWithFormat:@"receipt=%@",receipt1];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+    [request setURL:[NSURL URLWithString:@"http://www.govindarampingali.com/projects/bemotion.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSHTTPURLResponse* urlResponse = nil;
+    NSError *error = [[NSError alloc] init];
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+    NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"Response Code: %ld", (long)[urlResponse statusCode]);
+    
+    if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300)
+    {
+        NSLog(@"Response: %@", result);
+    }
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

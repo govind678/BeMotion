@@ -10,15 +10,28 @@
 
 @interface PlayButton : UIView
 {
+    int     touchDownCount;
+    bool    touchMovedStatus;
     
+    UIView* overlay;
+    UIView* hit;
 }
 
+
+- (id)initWithFrame:(CGRect)frame : (int)identifier;
+
+
 @property (nonatomic, assign) int buttonID;
+@property (nonatomic, assign) id  delegate;
 
 
 //--- Touch Events ---//
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void) postInitialize : (BOOL)playbackStatus;
+- (void) startPlayback;
+- (void) stopPlayback;
 
 @end

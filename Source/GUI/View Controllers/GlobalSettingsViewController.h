@@ -25,7 +25,7 @@
     NSMutableDictionary* sampleBanks;
     
     NSMutableArray* fxPackSet;
-
+    
 }
 
 

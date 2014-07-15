@@ -36,7 +36,7 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     m_pcParameter.clear();
     
     m_pfWaveformArray.clear();
-    for (int sample = 0; sample < (2 * WAVEFORM_WIDTH); sample++)
+    for (int sample = 0; sample < (WAVEFORM_WIDTH); sample++)
     {
         m_pfWaveformArray.add(0.0f);
     }
@@ -55,7 +55,7 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
         m_pbGestureControl.add(false);
         
         m_pcParameter.add(new Parameter());
-        m_pcParameter.getUnchecked(param)->setSmoothingParameter(0.6f);
+        m_pcParameter.getUnchecked(param)->setSmoothingParameter(0.4f);
     }
         
 
@@ -121,11 +121,13 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
             //--- Generate Array To Draw Waveform ---//
             FloatVectorOperations::fill(m_pfWaveformArray.getRawDataPointer(), 0.0f, WAVEFORM_WIDTH);
             
-            int samplesPerPixel  = int((float(reader->lengthInSamples) / (WAVEFORM_WIDTH * 2.0f)) + 0.5f);
+            int samplesPerPixel  = int((float(reader->lengthInSamples) / WAVEFORM_WIDTH) + 0.5f);
+            
+            std::cout << "Sample " << m_iSampleID << " : " << samplesPerPixel << std::endl;
             
             AudioSampleBuffer buffer = AudioSampleBuffer(1, samplesPerPixel);
             
-            for (int block = 0; block < (WAVEFORM_WIDTH * 2); block++)
+            for (int block = 0; block < WAVEFORM_WIDTH; block++)
             {
                 reader->read(&buffer, 0, samplesPerPixel, block * samplesPerPixel, true, false);
                 m_pfWaveformArray.set(block, (buffer.getArrayOfReadPointers()[0][0] + 1.0f) * (WAVEFORM_HEIGHT * 0.5f));

@@ -10,9 +10,18 @@
 
 @interface SettingsButton : UIView
 {
+    UIView* sideBar;
     
 }
 
+- (id)initWithFrame:(CGRect)frame : (int)identifier;
+
 @property (nonatomic, assign) int buttonID;
+@property (nonatomic, assign) id  delegate;
+
+- (void)startRecording;
+- (void)stopRecording;
+- (void)launchFXView;
+- (void)launchImportView;
 
 @end

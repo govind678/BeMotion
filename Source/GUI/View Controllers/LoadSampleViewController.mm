@@ -78,15 +78,15 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 
@@ -128,10 +128,10 @@
     CGFloat yDisplacement = location.y - lastLocation.y;
     
     NSLog(@"XDisp: %f, YDisp: %f", xDisplacement, yDisplacement);
-//    CGRect frame = touch.view.frame;
-//    frame.origin.x += xDisplacement;
-//    frame.origin.y += yDisplacement;
-//    touch.view.frame = frame;
+    //    CGRect frame = touch.view.frame;
+    //    frame.origin.x += xDisplacement;
+    //    frame.origin.y += yDisplacement;
+    //    touch.view.frame = frame;
     
     
 }
