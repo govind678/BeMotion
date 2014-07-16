@@ -68,11 +68,14 @@ public:
     float getSampleCurrentPlaybackTime(int sampleID);
     bool  getSamplePlaybackStatus(int sampleID);
     
+    
+    
     void beat(int beatNo);
     
     void motionUpdate(float* motion);
     
-    void setTempo(float newTempo);
+    void setTempo(int newTempo);
+    int getTempo();
     
     float* getSamplesToDrawWaveform(int sampleID);
     
@@ -91,7 +94,7 @@ private:
     
     bool                                m_bRecording;
     
-    float                               m_fTempo;
+    int                                 m_iTempo;
     
     Time                                m_cTime;
 };

@@ -123,7 +123,7 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
             
             int samplesPerPixel  = int((float(reader->lengthInSamples) / WAVEFORM_WIDTH) + 0.5f);
             
-            std::cout << "Sample " << m_iSampleID << " : " << samplesPerPixel << std::endl;
+//            std::cout << "Sample " << m_iSampleID << " : " << samplesPerPixel << std::endl;
             
             AudioSampleBuffer buffer = AudioSampleBuffer(1, samplesPerPixel);
             
@@ -608,7 +608,7 @@ void AudioFileStream::motionUpdate(float *motion)
 }
 
 
-void AudioFileStream::setTempo(float newTempo)
+void AudioFileStream::setTempo(int newTempo)
 {
     for (int effect = 0; effect < NUM_EFFECTS_SLOTS ; effect++)
     {

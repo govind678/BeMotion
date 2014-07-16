@@ -34,4 +34,7 @@
 - (void) startPlayback;
 - (void) stopPlayback;
 
+- (void) reloadFromBackground;
+
+
 @end

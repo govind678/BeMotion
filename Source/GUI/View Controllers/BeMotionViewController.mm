@@ -25,9 +25,9 @@
 
 @implementation BeMotionViewController
 
-@synthesize progressBar0, progressBar1, progressBar2, progressBar3;
 @synthesize metronomeButton;
 @synthesize metronomeBar;
+@synthesize tempoPicker;
 
 
 - (void)viewDidLoad
@@ -43,6 +43,14 @@
     //--- Get Reference to Metronome ---//
     _metronome          =   [appDelegate getMetronomeReference];
     [_metronome setDelegate:self];
+    
+    
+    
+    //--- Subscribe to OS Notifications ---//
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadFromBackground)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     
     
     //--- Initialize Master Record Toggles ---//
@@ -102,12 +110,22 @@
     
     
     
-    //--- Initialize Timer for Progress Bar Updates ---//
-    [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
-                                     target:self
-                                   selector:@selector(updatePlaybackProgress)
-                                   userInfo:nil
-                                    repeats:YES];
+    //--- Tempo Picker Init ---//
+    tempoPicker = [[TempoPicker alloc] initWithFrame:CGRectMake(60.0f, 210.0f, 200.0f, 260.0f)];
+    [tempoPicker setDelegate:self];
+    [tempoPicker setTempo:_backendInterface->getTempo()];
+    [tempoPicker setAlpha:0.9];
+    [[self view] addSubview:tempoPicker];
+    [tempoPicker setUserInteractionEnabled:NO];
+    [tempoPicker setHidden:YES];
+    tempoDisplayToggle = NO;
+    
+//    //--- Initialize Timer for Progress Bar Updates ---//
+//    [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
+//                                     target:self
+//                                   selector:@selector(updatePlaybackProgress)
+//                                   userInfo:nil
+//                                    repeats:YES];
     
     
     
@@ -151,11 +169,6 @@
     
     [motionControl release];
     
-    [progressBar0 release];
-    [progressBar1 release];
-    [progressBar2 release];
-    [progressBar3 release];
-    
     
     
     [sampleButton0 release];
@@ -168,9 +181,19 @@
     
     [metronomeBar release];
     
+    [tempoPicker release];
     [super dealloc];
 }
 
+
+
+
+- (void) viewWillDisappear:(BOOL)animated {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidBecomeActiveNotification
+                                                  object:nil];
+}
 
 
 
@@ -245,116 +268,69 @@
 - (IBAction)metronomeToggleClicked:(UIButton *)sender
 {
     //    if ([_metronome isRunning] == NO) {
-    if (_backendInterface->getMetronomeStatus() == false) {
-        //        [_metronome startClock];
-        _backendInterface->startMetronome();
-        [metronomeButton setSelected:YES];
+    if (tempoDisplayToggle == NO) {
+        
+        [tempoPicker setUserInteractionEnabled:YES];
+        [tempoPicker setHidden:NO];
+        tempoDisplayToggle = YES;
+        
+//        if (_backendInterface->getMetronomeStatus() == false) {
+//            //        [_metronome startClock];
+//            _backendInterface->startMetronome();
+//            [metronomeButton setSelected:YES];
+//        }
+//        
+//        else {
+//            //        [_metronome stopClock];
+//            _backendInterface->stopMetronome();
+//            [metronomeButton setSelected:NO];
+//            [metronomeBar turnOff];
+//        }
     }
     
     else {
-        //        [_metronome stopClock];
-        _backendInterface->stopMetronome();
-        [metronomeButton setSelected:NO];
-        [metronomeBar turnOff];
+        [tempoPicker setUserInteractionEnabled:NO];
+        [tempoPicker setHidden:YES];
+        tempoDisplayToggle = NO;
     }
 }
 
 
-- (void) setTempo:(float)tempo
+- (void) setTempo:(int)tempo
 {
     _backendInterface->setTempo(tempo);
 }
 
 
 
-- (void) updatePlaybackProgress
-{
-    for (int i=0; i < NUM_BUTTONS; i++)
-    {
-        switch (i)
-        {
-            case 0:
-                progressBar0.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
-                break;
-                
-            case 1:
-                progressBar1.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
-                break;
-                
-            case 2:
-                progressBar2.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
-                break;
-                
-            case 3:
-                progressBar3.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-}
-
-
-
-
-//--- Sample Buttons Delegate Methods ---//
-
-//- (void)startPlayback:(int)sampleID {
-//
-//    _backendInterface->startPlayback(sampleID);
-//
-//    switch (sampleID) {
-//        case 0:
-//            [sampleButton0 setAlpha:1.0f];
-//            break;
-//
-//        case 1:
-//            [sampleButton1 setAlpha:1.0f];
-//            break;
-//
-//        case 2:
-//            [sampleButton2 setAlpha:1.0f];
-//            break;
-//
-//        case 3:
-//            [sampleButton3 setAlpha:1.0f];
-//            break;
-//
-//        default:
-//            break;
+//- (void) updatePlaybackProgress
+//{
+//    for (int i=0; i < NUM_BUTTONS; i++)
+//    {
+//        switch (i)
+//        {
+//            case 0:
+//                progressBar0.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+//                break;
+//                
+//            case 1:
+//                progressBar1.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+//                break;
+//                
+//            case 2:
+//                progressBar2.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+//                break;
+//                
+//            case 3:
+//                progressBar3.progress = _backendInterface->getSampleCurrentPlaybackTime(i);
+//                break;
+//                
+//            default:
+//                break;
+//        }
 //    }
+//    
 //}
-//
-//
-//- (void)stopPlayback:(int)sampleID {
-//
-//    _backendInterface->stopPlayback(sampleID);
-//
-//    switch (sampleID) {
-//        case 0:
-//            [sampleButton0 setAlpha:BUTTON_OFF_ALPHA];
-//            break;
-//
-//        case 1:
-//            [sampleButton1 setAlpha:BUTTON_OFF_ALPHA];
-//            break;
-//
-//        case 2:
-//            [sampleButton2 setAlpha:BUTTON_OFF_ALPHA];
-//            break;
-//
-//        case 3:
-//            [sampleButton3 setAlpha:BUTTON_OFF_ALPHA];
-//            break;
-//
-//        default:
-//            break;
-//    }
-//}
-
-
 
 
 
@@ -378,6 +354,8 @@
 //        _backendInterface->stopRecording(sampleID);
 //    }
 //}
+
+
 
 
 - (void) launchFXView:(int)sampleID {
@@ -414,11 +392,6 @@
 }
 
 
-
-
-
-
-
 - (void) startResampling:(int)sampleID
 {
     if ([_metronome isRunning])
@@ -426,6 +399,38 @@
         m_pbMasterRecordToggle[sampleID] = true;
     }
     
+}
+
+
+
+
+#pragma mark - Tempo Picker Methods
+
+- (void) toggleMetronome : (BOOL) value {
+    
+    if (value == YES) {
+        _backendInterface->startMetronome();
+        [metronomeButton setSelected:YES];
+    } else {
+        _backendInterface->stopMetronome();
+        [metronomeButton setSelected:NO];
+    }
+}
+
+
+- (void) toggleMetronomeAudio : (BOOL) value {
+    
+}
+
+
+
+
+
+- (void)reloadFromBackground {
+    [sampleButton0 reloadFromBackground];
+    [sampleButton1 reloadFromBackground];
+    [sampleButton2 reloadFromBackground];
+    [sampleButton3 reloadFromBackground];
 }
 
 

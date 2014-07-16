@@ -146,4 +146,9 @@
     //Stop Playback
 }
 
+
+- (void) reloadFromBackground {
+    [overlay setHidden:YES];
+}
+
 @end

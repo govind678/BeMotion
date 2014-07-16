@@ -156,7 +156,7 @@
 
 # define STREAMING_BUFFER_SIZE   32768
 
-# define VIBRATO_MAX_MOD_WIDTH   250
+# define VIBRATO_MAX_MOD_WIDTH   100
 
 # define DEFAULT_SAMPLE_RATE     44100.0f
 # define NUM_CHANNELS            2

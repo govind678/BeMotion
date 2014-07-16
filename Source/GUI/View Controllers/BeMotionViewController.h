@@ -19,8 +19,8 @@
 #import  "LoadSampleViewController.h"
 
 #import  "SampleButton.h"
-
 #import  "MetronomeBar.h"
+#import  "TempoPicker.h"
 
 #import  "MotionControl.h"
 
@@ -47,6 +47,8 @@
     SampleButton* sampleButton1;
     SampleButton* sampleButton2;
     SampleButton* sampleButton3;
+    
+    BOOL                            tempoDisplayToggle;
 }
 
 
@@ -57,35 +59,29 @@
 
 
 
-
-
-
-//--- Sample Progress Bars ---//
-@property (retain, nonatomic) IBOutlet UIProgressView *progressBar0;
-@property (retain, nonatomic) IBOutlet UIProgressView *progressBar1;
-@property (retain, nonatomic) IBOutlet UIProgressView *progressBar2;
-@property (retain, nonatomic) IBOutlet UIProgressView *progressBar3;
-
-
-
-
 //--- Modifier Keys ---//
 - (IBAction)metronomeToggleClicked:(UIButton *)sender;
 
 @property (retain, nonatomic) IBOutlet UIButton *metronomeButton;
 
 
-
 //--- Metronome Bars ---//
 @property (retain, nonatomic) MetronomeBar *metronomeBar;
 
 
+//--- Tempo Picker ---//
+@property (retain, nonatomic) TempoPicker *tempoPicker;
+
 
 //--- View Methods ---//
 - (void) guiBeat: (int) beatNo;
-- (void) setTempo: (float) tempo;
-- (void) updatePlaybackProgress;
+//- (void) updatePlaybackProgress;
 
+
+//--- Tempo Picker Methods ---//
+- (void) toggleMetronome : (BOOL) value;
+- (void) toggleMetronomeAudio : (BOOL) value;
+- (void) setTempo : (int)tempo;
 
 
 //--- Sample Button Delegate Methods ---//

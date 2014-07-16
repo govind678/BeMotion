@@ -33,7 +33,7 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     
     m_bRecording            = false;
     
-    m_fTempo                =   DEFAULT_TEMPO;
+    m_iTempo                =   DEFAULT_TEMPO;
     
     deviceManager.addAudioCallback(this);
 }
@@ -179,7 +179,7 @@ void AudioMixerPlayer::addAudioEffect(int sampleID, int effectPosition, int effe
 {
     deviceManager.removeAudioCallback(this);
     audioFileStream.getUnchecked(sampleID)->addAudioEffect(effectPosition, effectID);
-    audioFileStream.getUnchecked(sampleID)->setTempo(m_fTempo);
+    audioFileStream.getUnchecked(sampleID)->setTempo(m_iTempo);
     deviceManager.addAudioCallback(this);
 }
 
@@ -265,14 +265,18 @@ void AudioMixerPlayer::motionUpdate(float *motion)
 }
 
 
-void AudioMixerPlayer::setTempo(float newTempo)
+void AudioMixerPlayer::setTempo(int newTempo)
 {
-    m_fTempo = newTempo;
-    
+    m_iTempo = newTempo;
     for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
     {
         audioFileStream.getUnchecked(i)->setTempo(newTempo);
     }
+}
+
+int AudioMixerPlayer::getTempo()
+{
+    return m_iTempo;
 }
 
 

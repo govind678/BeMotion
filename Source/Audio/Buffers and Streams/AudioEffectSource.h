@@ -53,7 +53,7 @@ public:
     void process(float** audioBuffer, int blockSize);
     void audioDeviceStopped();
     
-    void setTempo(float newTempo);
+    void setTempo(int newTempo);
     
     void motionUpdate(float* motion);
     

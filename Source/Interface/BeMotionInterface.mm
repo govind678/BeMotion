@@ -142,7 +142,7 @@ void BeMotionInterface::beat(int beatNo)
     audioEngine->beat(beatNo);
 }
 
-void BeMotionInterface::setTempo(float newTempo)
+void BeMotionInterface::setTempo(int newTempo)
 {
     audioEngine->setTempo(newTempo);
 }
@@ -235,4 +235,9 @@ float* BeMotionInterface::getSamplesToDrawWaveform(int sampleID)
 bool BeMotionInterface::getMetronomeStatus()
 {
     return audioEngine->getMetronomeStatus();
+}
+
+int BeMotionInterface::getTempo()
+{
+    return audioEngine->getTempo();
 }

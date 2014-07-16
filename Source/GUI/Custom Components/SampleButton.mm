@@ -152,4 +152,8 @@
     
 }
 
+
+- (void)reloadFromBackground {
+    [playButton reloadFromBackground];
+}
 @end

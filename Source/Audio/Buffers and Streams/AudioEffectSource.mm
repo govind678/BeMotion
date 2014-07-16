@@ -474,10 +474,14 @@ void AudioEffectSource::process(float **audioBuffer, int blockSize)
 
 
 
-void AudioEffectSource::setTempo(float newTempo)
+void AudioEffectSource::setTempo(int newTempo)
 {
-    m_fTempo = newTempo;
+    m_fTempo = (float)newTempo;
     m_fSmallestTimeInterval   =  60.0f / (m_fTempo * MAX_CLOCK_DIVISOR);
+    
+    
+    // Recalculate Time Based Effects
+    setParameter(PARAM_1, m_pfRawParameter.getUnchecked(PARAM_1 - 1));
     
     if (m_iEffectID == EFFECT_GRANULAR)
     {

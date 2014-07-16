@@ -491,7 +491,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YNO-l9-BOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="178" y="247"/>
+            <point key="canvasLocation" x="80" y="247"/>
         </scene>
     </scenes>
     <resources>
@@ -510,6 +510,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="LLu-g9-EV4"/>
+        <segue reference="o49-vc-8yM"/>
     </inferredMetricsTieBreakers>
 </document>

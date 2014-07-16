@@ -101,7 +101,7 @@
     
     //--- Preload Audio Samples and FX Path ---//
     
-    NSArray *sectionSamples = [sampleSets objectForKey:@"Dubstep Loops"];
+    NSArray *sectionSamples = [sampleSets objectForKey:@"Embryo"];
     
     for (int sample = 0; sample < NUM_SAMPLE_SOURCES; sample++) {
         NSString *samplePath = [[NSBundle mainBundle] pathForResource:[sectionSamples objectAtIndex:sample] ofType:@"wav"];
@@ -110,6 +110,8 @@
     
     NSString *fxPath = [[NSBundle mainBundle] pathForResource:[fxPacks objectAtIndex:0] ofType:@"json"];
     backendInterface->loadFXPreset(fxPath);
+    
+    backendInterface->setTempo([[sectionSamples objectAtIndex:6] floatValue]);
     
     
     
@@ -135,7 +137,6 @@
     
     for (int i=0; i < NUM_BUTTONS; i++)
     {
-        backendInterface->stopRecording(i);
         backendInterface->stopPlayback(i);
     }
 }
@@ -148,6 +149,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

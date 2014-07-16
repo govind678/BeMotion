@@ -102,28 +102,35 @@ public:
         numInputChannels = activeInputChans.countNumberOfSetBits();
         monoInputChannelNumber = activeInputChans.findNextSetBit (0);
 
-        AudioSessionSetActive (true);
-//        [[AVAudioSession sharedInstance] setActive:true];
+//        AudioSessionSetActive (true);
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
 
         if (numInputChannels > 0 && audioInputIsAvailable)
         {
-            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_PlayAndRecord);
-            setSessionUInt32Property (kAudioSessionProperty_OverrideCategoryEnableBluetoothInput, 1);
+//            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_PlayAndRecord);
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+//            setSessionUInt32Property (kAudioSessionProperty_OverrideCategoryEnableBluetoothInput, 1);
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
         }
         else
         {
-            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_MediaPlayback);
+//            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_MediaPlayback);
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         }
 
         AudioSessionAddPropertyListener (kAudioSessionProperty_AudioRouteChange, routingChangedStatic, this);
+        
+        
 
         fixAudioRouteIfSetToReceiver();
         updateDeviceInfo();
 
-        setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, targetSampleRate);
+//        setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, targetSampleRate);
+        [[AVAudioSession sharedInstance] setPreferredSampleRate:targetSampleRate error:nil];
         updateSampleRates();
 
-        setSessionFloat32Property (kAudioSessionProperty_PreferredHardwareIOBufferDuration, preferredBufferSize / sampleRate);
+//        setSessionFloat32Property (kAudioSessionProperty_PreferredHardwareIOBufferDuration, preferredBufferSize / sampleRate);
+        [[AVAudioSession sharedInstance] setPreferredIOBufferDuration:(NSTimeInterval)(preferredBufferSize / sampleRate) error:nil];
         updateCurrentBufferSize();
 
         prepareFloatBuffers (actualBufferSize);
@@ -141,12 +148,15 @@ public:
         {
             isRunning = false;
 
-            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_MediaPlayback);
+//            setSessionUInt32Property (kAudioSessionProperty_AudioCategory, kAudioSessionCategory_MediaPlayback);
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 
             AudioSessionRemovePropertyListenerWithUserData (kAudioSessionProperty_AudioRouteChange, routingChangedStatic, this);
-            AudioSessionSetActive (false);
-//            [[AVAudioSession sharedInstance] setActive:false];
+            
+//            AudioSessionSetActive (false);
+            [[AVAudioSession sharedInstance] setActive:NO error:nil];
 
+            
             if (audioUnit != 0)
             {
                 AudioComponentInstanceDispose (audioUnit);
@@ -320,13 +330,18 @@ private:
 
     void updateDeviceInfo()
     {
-        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
-        getSessionProperty (kAudioSessionProperty_AudioInputAvailable, audioInputIsAvailable);
+        AVAudioSession* session = [AVAudioSession sharedInstance];
+//        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
+        sampleRate = session.sampleRate;
+//        getSessionProperty (kAudioSessionProperty_AudioInputAvailable, audioInputIsAvailable);
+        audioInputIsAvailable = session.inputAvailable;
     }
 
     void updateSampleRates()
     {
-        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
+        AVAudioSession* session = [AVAudioSession sharedInstance];
+//        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
+        sampleRate = session.sampleRate;
 
         sampleRates.clear();
         sampleRates.add (sampleRate);
@@ -339,10 +354,12 @@ private:
 
             if (rate != sampleRate)
             {
-                setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, rate);
+//                setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, rate);
+                [session setPreferredSampleRate:rate error:nil];
 
                 Float64 actualSampleRate = 0.0;
-                getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, actualSampleRate);
+//                getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, actualSampleRate);
+                actualSampleRate = session.sampleRate;
 
                 if (actualSampleRate == rate)
                     sampleRates.add (actualSampleRate);
@@ -352,14 +369,18 @@ private:
         DefaultElementComparator<Float64> comparator;
         sampleRates.sort (comparator);
 
-        setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, sampleRate);
-        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
+//        setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, sampleRate);
+        [session setPreferredSampleRate:sampleRate error:nil];
+        
+//        getSessionProperty (kAudioSessionProperty_CurrentHardwareSampleRate, sampleRate);
+        sampleRate = session.sampleRate;
     }
 
     void updateCurrentBufferSize()
     {
         Float32 bufferDuration = sampleRate > 0 ? (Float32) (preferredBufferSize / sampleRate) : 0.0f;
-        getSessionProperty (kAudioSessionProperty_CurrentHardwareIOBufferDuration, bufferDuration);
+        bufferDuration = [[AVAudioSession sharedInstance] IOBufferDuration];
+//        getSessionProperty (kAudioSessionProperty_CurrentHardwareIOBufferDuration, bufferDuration);
         actualBufferSize = (int) (sampleRate * bufferDuration + 0.5);
     }
 
@@ -389,8 +410,8 @@ private:
         updateDeviceInfo();
         createAudioUnit();
 
-        AudioSessionSetActive (true);
-//        [[AVAudioSession sharedInstance] setActive:true];
+//        AudioSessionSetActive (true);
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
 
         if (audioUnit != 0)
         {
@@ -407,7 +428,9 @@ private:
     {
         AudioSessionHolder()
         {
-            AudioSessionInitialize (0, 0, interruptionListenerCallback, this);
+//            AudioSessionInitialize (0, 0, interruptionListenerCallback, this);
+            [AVAudioSession sharedInstance];
+//            [[AVAudioSession sharedInstance] in];
 
         }
 
@@ -434,8 +457,9 @@ private:
         {
             isRunning = false;
             AudioOutputUnitStop (audioUnit);
-            AudioSessionSetActive (false);
-//            [[AVAudioSession sharedInstance] setActive:false];
+            
+            [[AVAudioSession sharedInstance] setActive:NO error:nil];
+//            AudioSessionSetActive (false);
 
             const ScopedLock sl (callbackLock);
 
@@ -446,8 +470,8 @@ private:
         if (interruptionType == kAudioSessionEndInterruption)
         {
             isRunning = true;
-            AudioSessionSetActive (true);
-//            [[AVAudioSession sharedInstance] setActive:true];
+//            AudioSessionSetActive (true);
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
             AudioOutputUnitStart (audioUnit);
 
             const ScopedLock sl (callbackLock);
@@ -537,41 +561,53 @@ private:
     // to make it loud. Needed because by default when using an input + output, the output is kept quiet.
     static void fixAudioRouteIfSetToReceiver()
     {
-        CFStringRef audioRoute = 0;
-        if (getSessionProperty (kAudioSessionProperty_AudioRoute, audioRoute) == noErr)
-        {
-            NSString* route = (NSString*) audioRoute;
-
-            //DBG ("audio route: " + nsStringToJuce (route));
-
-            if ([route hasPrefix: @"Receiver"])
-                setSessionUInt32Property (kAudioSessionProperty_OverrideAudioRoute, kAudioSessionOverrideAudioRoute_Speaker);
-
-            CFRelease (audioRoute);
+//        CFStringRef audioRoute = 0;
+//        if (getSessionProperty (kAudioSessionProperty_AudioRoute, audioRoute) == noErr)
+        
+        AVAudioSessionRouteDescription* audioRoute = [[AVAudioSession sharedInstance] currentRoute];
+        NSArray* outArray = [audioRoute outputs];
+        
+        for (AVAudioSessionPortDescription* desc in outArray) {
+//            NSLog(@"%@", [desc portName]);
+            if ([[desc portName] hasPrefix:@"Receiver"]) {
+                [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+            }
         }
+        
+//        if ([audioRoute description])
+//        {
+//            NSString* route = (NSString*) audioRoute;
+//
+//            //DBG ("audio route: " + nsStringToJuce (route));
+//
+//            if ([route hasPrefix: @"Receiver"]) {
+//                setSessionUInt32Property (kAudioSessionProperty_OverrideAudioRoute, kAudioSessionOverrideAudioRoute_Speaker);
+//
+//            }
+//            
+//            
+//            CFRelease (audioRoute);
+//        }
     }
 
-    template <typename Type>
-    static OSStatus getSessionProperty (AudioSessionPropertyID propID, Type& result) noexcept
-    {
-        UInt32 valueSize = sizeof (result);
-//        [[AVAudioSession sharedInstance] get]
-        return AudioSessionGetProperty (propID, &valueSize, &result);
-    }
+//    template <typename Type>
+//    static OSStatus getSessionProperty (AudioSessionPropertyID propID, Type& result) noexcept
+//    {
+//        UInt32 valueSize = sizeof (result);
+//        return AudioSessionGetProperty (propID, &valueSize, &result);
+//    }
 
-    static void setSessionUInt32Property  (AudioSessionPropertyID propID, UInt32  v) noexcept {
-        AudioSessionSetProperty (propID, sizeof (v), &v);
-//        NSError* error;
-//        [[AVAudioSession sharedInstance] setCategory:propID error:&error];
-    }
-    
-    static void setSessionFloat32Property (AudioSessionPropertyID propID, Float32 v) noexcept  {
-        AudioSessionSetProperty (propID, sizeof (v), &v);
-    }
-    
-    static void setSessionFloat64Property (AudioSessionPropertyID propID, Float64 v) noexcept  {
-        AudioSessionSetProperty (propID, sizeof (v), &v);
-    }
+//    static void setSessionUInt32Property  (AudioSessionPropertyID propID, UInt32  v) noexcept {
+//        AudioSessionSetProperty (propID, sizeof (v), &v);
+//    }
+//    
+//    static void setSessionFloat32Property (AudioSessionPropertyID propID, Float32 v) noexcept  {
+//        AudioSessionSetProperty (propID, sizeof (v), &v);
+//    }
+//    
+//    static void setSessionFloat64Property (AudioSessionPropertyID propID, Float64 v) noexcept  {
+//        AudioSessionSetProperty (propID, sizeof (v), &v);
+//    }
 
     JUCE_DECLARE_NON_COPYABLE (iOSAudioIODevice)
 };

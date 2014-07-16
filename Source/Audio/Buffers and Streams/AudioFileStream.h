@@ -71,7 +71,7 @@ public:
     
     void motionUpdate(float* motion);
     
-    void setTempo(float newTempo);
+    void setTempo(int newTempo);
     
     float* getSamplesToDrawWaveform();
     

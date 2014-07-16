@@ -314,9 +314,14 @@ void AudioEngine::motionUpdate(float *motion)
     audioMixer->motionUpdate(motion);
 }
 
-void AudioEngine::setTempo(float newTempo)
+void AudioEngine::setTempo(int newTempo)
 {
     audioMixer->setTempo(newTempo);
+}
+
+int AudioEngine::getTempo()
+{
+    return audioMixer->getTempo();
 }
 
 

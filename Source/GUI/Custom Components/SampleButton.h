@@ -41,5 +41,6 @@
 - (void) launchFXView : (int)sampleID;
 - (void) launchImportView : (int)sampleID;
 
+- (void) reloadFromBackground;
 
 @end
