@@ -15,17 +15,15 @@
 #include "BeMotionInterface.h"
 #include "Macros.h"
 
-#import  "EffectsTable.h"
 
-
-@interface EffectSettingsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface EffectSettingsViewController : UIViewController
 {
-    int             m_iCurrentEffectPosition;
     int             buttonMode;
 }
 
 @property (nonatomic, assign) BeMotionInterface* backendInterface;
 @property (nonatomic, assign) int  currentSampleID;
+@property (nonatomic, assign) int  currentEffectPosition;
 @property (nonatomic, retain) NSArray *effectNames;
 
 
@@ -48,8 +46,7 @@
 @property (retain, nonatomic) UIButton *effectSlotButton2;
 @property (retain, nonatomic) UIButton *effectSlotButton3;
 
-@property (retain, nonatomic) IBOutlet EffectsTable *effectsDropDown;
-@property (retain, nonatomic) IBOutlet UIPickerView *pickerObject;
+@property (retain, nonatomic) IBOutlet UIButton *effectTypeButton;
 
 @property (retain, nonatomic) IBOutlet UISlider *slider1Object;
 @property (retain, nonatomic) IBOutlet UISlider *slider2Object;

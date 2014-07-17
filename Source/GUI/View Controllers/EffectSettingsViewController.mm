@@ -9,8 +9,9 @@
 //============================================================================
 
 
-#import  "EffectSettingsViewController.h"
+#import "EffectSettingsViewController.h"
 #import "BeMotionAppDelegate.h"
+#import "EffectTableViewController.h"
 
 
 @interface EffectSettingsViewController ()
@@ -25,11 +26,11 @@
 
 @implementation EffectSettingsViewController
 
-@synthesize currentSampleID;
+@synthesize currentSampleID, currentEffectPosition;
 
 @synthesize effectNames;
 @synthesize gainSliderObject, quantizationSliderObject;
-@synthesize pickerObject, bypassButtonObject;
+@synthesize bypassButtonObject;
 @synthesize slider1Object, slider2Object, slider3Object;
 @synthesize slider1CurrentValue, slider2CurrentValue, slider3CurrentValue;
 @synthesize slider1EffectParam, slider2EffectParam, slider3EffectParam;
@@ -37,8 +38,7 @@
 @synthesize gainLabel, quantizationLabel;
 @synthesize triggerModeButton, loopModeButton, beatRepeatModeButton, fourthModeButton;
 @synthesize effectSlotButton0, effectSlotButton1, effectSlotButton2, effectSlotButton3;
-@synthesize effectsDropDown;
-
+@synthesize effectTypeButton;
 
 
 
@@ -55,31 +55,6 @@
     //--- Get Reference to Backend ---//
     appDelegate = [[UIApplication sharedApplication] delegate];
     _backendInterface   =  [appDelegate getBackendReference];
-    
-    //--- Set Background ---//
-    //    switch (currentSampleID)
-    //    {
-    //        case 0:
-    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.2f blue:0.2f alpha:1.0f]];
-    //            break;
-    //
-    //        case 1:
-    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:1.0f]];
-    //            break;
-    //
-    //        case 2:
-    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.2f green:0.5f blue:0.2f alpha:1.0f]];
-    //            break;
-    //
-    //        case 3:
-    //            [[self view] setBackgroundColor:[UIColor colorWithRed:0.5f green:0.5f blue:0.2f alpha:1.0f]];
-    //            break;
-    //
-    //        default:
-    //            break;
-    //    }
-    
-    m_iCurrentEffectPosition        =   0;
     
     
     
@@ -262,9 +237,6 @@
     
     
     
-    //--- Effects Drop Down Menu ---//
-    [effectsDropDown init];
-    
     //--- Get Sample Parameters ---//
     
     buttonMode = _backendInterface->getSampleParameter(currentSampleID, PARAM_PLAYBACK_MODE);
@@ -307,13 +279,22 @@
     
     
     //--- Get Effect Parameters ---//
-    [pickerObject selectRow:_backendInterface->getEffectType(currentSampleID, m_iCurrentEffectPosition) inComponent:0 animated:YES];
     [self updateSlidersAndLabels];
     
     
     
+    //--- Effect Type Button Settings ---//
+    [effectTypeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [effectTypeButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    [effectTypeButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [[effectTypeButton titleLabel] setFont:[UIFont systemFontOfSize:14.0f]];
+    NSString* buttonTitle = [effectNames objectAtIndex:_backendInterface->getEffectType(currentSampleID, currentEffectPosition)];
+    [effectTypeButton setTitle:buttonTitle forState:UIControlStateNormal];
+    
+    
+    
     //--- Update Display of Effect Type and Slider Values ---//
-    [self displayEffectParameters:m_iCurrentEffectPosition];
+    [self displayEffectParameters:currentEffectPosition];
     
     
     
@@ -390,23 +371,23 @@
 //--- Effect Slot Methods ---//
 
 - (void)effectSlotButtonClicked0 {
-    m_iCurrentEffectPosition = 0;
-    [self displayEffectParameters:m_iCurrentEffectPosition];
+    currentEffectPosition = 0;
+    [self displayEffectParameters:currentEffectPosition];
 }
 
 - (void)effectSlotButtonClicked1 {
-    m_iCurrentEffectPosition = 1;
-    [self displayEffectParameters:m_iCurrentEffectPosition];
+    currentEffectPosition = 1;
+    [self displayEffectParameters:currentEffectPosition];
 }
 
 - (void)effectSlotButtonClicked2 {
-    m_iCurrentEffectPosition = 2;
-    [self displayEffectParameters:m_iCurrentEffectPosition];
+    currentEffectPosition = 2;
+    [self displayEffectParameters:currentEffectPosition];
 }
 
 - (void)effectSlotButtonClicked3 {
-    m_iCurrentEffectPosition = 3;
-    [self displayEffectParameters:m_iCurrentEffectPosition];
+    currentEffectPosition = 3;
+    [self displayEffectParameters:currentEffectPosition];
 }
 
 
@@ -574,8 +555,8 @@
     }
     
     
-    int effectType = _backendInterface->getEffectType(currentSampleID, position);
-    [pickerObject selectRow:effectType inComponent:0 animated:YES];
+    NSString* buttonTitle = [effectNames objectAtIndex:_backendInterface->getEffectType(currentSampleID, currentEffectPosition)];
+    [effectTypeButton setTitle:buttonTitle forState:UIControlStateNormal];
     [self updateSlidersAndLabels];
     
 }
@@ -603,53 +584,27 @@
 
 
 
-//--- UI Picker View Stuff for Choosing Audio Effect ---//
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1; // Only 1 component
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return NUM_EFFECTS_TYPES;
-}
-
-// Fill Picker View with effect names
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return effectNames[row];
-}
-
-// Callback when picker row is changed
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    _backendInterface->addAudioEffect(currentSampleID, m_iCurrentEffectPosition, (int)row);
-    [self updateSlidersAndLabels];
-}
-
-
 
 - (IBAction)bypassToggleButtonChanged:(UISwitch *)sender
 {
-    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS, sender.on);
+    _backendInterface->setEffectParameter(currentSampleID, currentEffectPosition, PARAM_BYPASS, sender.on);
 }
 
 - (IBAction)Slider1Changed:(UISlider *)sender
 {
-    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_1, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, currentEffectPosition, PARAM_1, sender.value);
     [slider1CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider2Changed:(UISlider *)sender
 {
-    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_2, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, currentEffectPosition, PARAM_2, sender.value);
     [slider2CurrentValue setText:[@(sender.value) stringValue]];
 }
 
 - (IBAction)Slider3Changed:(UISlider *)sender
 {
-    _backendInterface->setEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_3, sender.value);
+    _backendInterface->setEffectParameter(currentSampleID, currentEffectPosition, PARAM_3, sender.value);
     [slider3CurrentValue setText:[@(sender.value) stringValue]];
 }
 
@@ -660,9 +615,9 @@
 
 - (void) updateSlidersAndLabels
 {
-    float param1 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_1);
-    float param2 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_2);
-    float param3 = _backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_3);
+    float param1 = _backendInterface->getEffectParameter(currentSampleID, currentEffectPosition, PARAM_1);
+    float param2 = _backendInterface->getEffectParameter(currentSampleID, currentEffectPosition, PARAM_2);
+    float param3 = _backendInterface->getEffectParameter(currentSampleID, currentEffectPosition, PARAM_3);
     
     [slider1Object setValue:param1];
     [slider2Object setValue:param2];
@@ -672,12 +627,12 @@
     [slider2CurrentValue setText:[@(param2) stringValue]];
     [slider3CurrentValue setText:[@(param3) stringValue]];
     
-    [bypassButtonObject setSelected:_backendInterface->getEffectParameter(currentSampleID, m_iCurrentEffectPosition, PARAM_BYPASS)];
+    [bypassButtonObject setSelected:_backendInterface->getEffectParameter(currentSampleID, currentEffectPosition, PARAM_BYPASS)];
     
     
     //-- Update Gesture Control Buttons --//
     
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM1))
     {
         [param1GestureObject setAlpha:1.0f];
     }
@@ -687,7 +642,7 @@
         [param1GestureObject setAlpha:0.4f];
     }
     
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM2))
     {
         [param2GestureObject setAlpha:1.0f];
     }
@@ -697,7 +652,7 @@
         [param2GestureObject setAlpha:0.4f];
     }
     
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM3))
     {
         [param3GestureObject setAlpha:1.0f];
     }
@@ -711,7 +666,7 @@
     
     
     
-    switch (_backendInterface->getEffectType(currentSampleID, m_iCurrentEffectPosition))
+    switch (_backendInterface->getEffectType(currentSampleID, currentEffectPosition))
     {
         case 0:
             [self.slider1EffectParam setText:@"Null"];
@@ -797,45 +752,45 @@
 
 - (IBAction)param1GestureToggle:(UIButton *)sender
 {
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM1))
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM1, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM1, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM1, true);
         sender.alpha = 1.0f;
     }
 }
 
 - (IBAction)param2GestureToggle:(UIButton *)sender
 {
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM2))
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM2, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM2, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM2, true);
         sender.alpha = 1.0f;
     }
 }
 
 - (IBAction)param3GestureToggle:(UIButton *)sender
 {
-    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3))
+    if (_backendInterface->getEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM3))
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, false);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM3, false);
         sender.alpha = 0.4;
     }
     
     else
     {
-        _backendInterface->setEffectGestureControlToggle(currentSampleID, m_iCurrentEffectPosition, PARAM_MOTION_PARAM3, true);
+        _backendInterface->setEffectGestureControlToggle(currentSampleID, currentEffectPosition, PARAM_MOTION_PARAM3, true);
         sender.alpha = 1.0f;
     }
     
@@ -858,6 +813,20 @@
 
 
 
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"loadEffectTable"]) {
+        
+        EffectTableViewController* vc = [segue destinationViewController];
+        [vc setSampleID:currentSampleID];
+        [vc setEffectPosition: currentEffectPosition];
+    }
+    
+    
+}
+
+
 - (void)dealloc
 {
     [effectNames release];
@@ -872,7 +841,6 @@
     [slider2Object release];
     [slider3Object release];
     [bypassButtonObject release];
-    [pickerObject release];
     
     
     [gainSliderObject release];
@@ -892,8 +860,8 @@
     [loopModeButton release];
     [beatRepeatModeButton release];
     [fourthModeButton release];
-    
-    [effectsDropDown release];
+
+    [effectTypeButton release];
     
     [super dealloc];
 }

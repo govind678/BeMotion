@@ -48,6 +48,10 @@
 		FC1631F01975F34500E15DEF /* SettingsDown.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1631EA1975F34500E15DEF /* SettingsDown.png */; };
 		FC1631F11975F34500E15DEF /* SettingsUp.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1631EB1975F34500E15DEF /* SettingsUp.png */; };
 		FC1631F41976871100E15DEF /* TempoPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC1631F31976871100E15DEF /* TempoPicker.mm */; };
+		FC1631F81977252800E15DEF /* switchBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1631F61977252800E15DEF /* switchBackground.png */; };
+		FC1631F91977252800E15DEF /* switchHandle.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1631F71977252800E15DEF /* switchHandle.png */; };
+		FC1631FB197742BF00E15DEF /* EffectNameBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1631FA197742BF00E15DEF /* EffectNameBackground@2x.png */; };
+		FC1631FE197743E900E15DEF /* EffectTableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC1631FD197743E900E15DEF /* EffectTableViewController.mm */; };
 		FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC163309194ACA1C00A462CB /* ShelfFilter.mm */; };
 		FC16330E194AD24800A462CB /* Granularizer2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC16330C194AD24800A462CB /* Granularizer2.mm */; };
 		FC30B60E193EE0100020B7D2 /* Activate.png in Resources */ = {isa = PBXBuildFile; fileRef = FC30B60A193EE0100020B7D2 /* Activate.png */; };
@@ -101,7 +105,6 @@
 		FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */; };
 		FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */; };
 		FC30B693193F18D00020B7D2 /* GlobalSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68D193F18D00020B7D2 /* GlobalSettingsViewController.mm */; };
-		FC30B696193F19190020B7D2 /* EffectsTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B695193F19190020B7D2 /* EffectsTable.mm */; };
 		FC30B69A193F9F730020B7D2 /* MotionControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B699193F9F730020B7D2 /* MotionControl.mm */; };
 		FC30B69D194043C00020B7D2 /* Percs_Delay.json in Resources */ = {isa = PBXBuildFile; fileRef = FC30B69C194043C00020B7D2 /* Percs_Delay.json */; };
 		FC30B6A3194046170020B7D2 /* LoadPreset.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B6A2194046170020B7D2 /* LoadPreset.mm */; };
@@ -273,6 +276,11 @@
 		FC1631EB1975F34500E15DEF /* SettingsUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsUp.png; sourceTree = "<group>"; };
 		FC1631F21976871100E15DEF /* TempoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempoPicker.h; sourceTree = "<group>"; };
 		FC1631F31976871100E15DEF /* TempoPicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TempoPicker.mm; sourceTree = "<group>"; };
+		FC1631F61977252800E15DEF /* switchBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchBackground.png; sourceTree = "<group>"; };
+		FC1631F71977252800E15DEF /* switchHandle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchHandle.png; sourceTree = "<group>"; };
+		FC1631FA197742BF00E15DEF /* EffectNameBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EffectNameBackground@2x.png"; sourceTree = "<group>"; };
+		FC1631FC197743E900E15DEF /* EffectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTableViewController.h; sourceTree = "<group>"; };
+		FC1631FD197743E900E15DEF /* EffectTableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectTableViewController.mm; sourceTree = "<group>"; };
 		FC163309194ACA1C00A462CB /* ShelfFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShelfFilter.mm; sourceTree = "<group>"; };
 		FC16330C194AD24800A462CB /* Granularizer2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Granularizer2.mm; sourceTree = "<group>"; };
 		FC16330D194AD24800A462CB /* Granularizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer2.h; sourceTree = "<group>"; };
@@ -333,8 +341,6 @@
 		FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectSettingsViewController.mm; sourceTree = "<group>"; };
 		FC30B68C193F18D00020B7D2 /* GlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSettingsViewController.h; sourceTree = "<group>"; };
 		FC30B68D193F18D00020B7D2 /* GlobalSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GlobalSettingsViewController.mm; sourceTree = "<group>"; };
-		FC30B694193F19190020B7D2 /* EffectsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsTable.h; sourceTree = "<group>"; };
-		FC30B695193F19190020B7D2 /* EffectsTable.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EffectsTable.mm; sourceTree = "<group>"; };
 		FC30B698193F9F730020B7D2 /* MotionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionControl.h; sourceTree = "<group>"; };
 		FC30B699193F9F730020B7D2 /* MotionControl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionControl.mm; sourceTree = "<group>"; };
 		FC30B69C194043C00020B7D2 /* Percs_Delay.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Percs_Delay.json; sourceTree = "<group>"; };
@@ -1484,6 +1490,7 @@
 		FC1140EA193D98AF0045A92B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				FC1631F51977252800E15DEF /* Toggle Switch */,
 				FC1631E61975F34500E15DEF /* MetronomeDown.png */,
 				FC1631E71975F34500E15DEF /* MetronomeUp.png */,
 				FC1631E81975F34500E15DEF /* RecordingDown.png */,
@@ -1546,9 +1553,19 @@
 			path = "Settings Button";
 			sourceTree = "<group>";
 		};
+		FC1631F51977252800E15DEF /* Toggle Switch */ = {
+			isa = PBXGroup;
+			children = (
+				FC1631F61977252800E15DEF /* switchBackground.png */,
+				FC1631F71977252800E15DEF /* switchHandle.png */,
+			);
+			path = "Toggle Switch";
+			sourceTree = "<group>";
+		};
 		FC30B609193EE0100020B7D2 /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
+				FC1631FA197742BF00E15DEF /* EffectNameBackground@2x.png */,
 				FC30B62A193F09F20020B7D2 /* Effect Slots */,
 				FC30B620193F01100020B7D2 /* SliderMaximum.png */,
 				FC30B621193F01100020B7D2 /* SliderMinimum0.png */,
@@ -1705,8 +1722,6 @@
 				FC30B684193F18D00020B7D2 /* SampleButton.mm */,
 				FC30B685193F18D00020B7D2 /* SettingsButton.h */,
 				FC1631C51975E7DA00E15DEF /* SettingsButton.mm */,
-				FC30B694193F19190020B7D2 /* EffectsTable.h */,
-				FC30B695193F19190020B7D2 /* EffectsTable.mm */,
 				FC768977195CC2D7005C971B /* MetronomeBar.h */,
 				FC768978195CC2D7005C971B /* MetronomeBar.mm */,
 				FC1631F21976871100E15DEF /* TempoPicker.h */,
@@ -1724,6 +1739,8 @@
 				FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */,
 				FC30B68A193F18D00020B7D2 /* EffectSettingsViewController.h */,
 				FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */,
+				FC1631FC197743E900E15DEF /* EffectTableViewController.h */,
+				FC1631FD197743E900E15DEF /* EffectTableViewController.mm */,
 				FC30B68C193F18D00020B7D2 /* GlobalSettingsViewController.h */,
 				FC30B68D193F18D00020B7D2 /* GlobalSettingsViewController.mm */,
 			);
@@ -3893,6 +3910,7 @@
 				FC30B66A193F09F20020B7D2 /* Slot_Enabled_2_2.png in Resources */,
 				FCC382D01947A3A80042222F /* Latin_Percussion3.wav in Resources */,
 				FC1631EC1975F34500E15DEF /* MetronomeDown.png in Resources */,
+				FC1631F91977252800E15DEF /* switchHandle.png in Resources */,
 				FC30B65D193F09F20020B7D2 /* Slot_Disabled_2.png in Resources */,
 				FCC382C01947A3A80042222F /* Embryo2.wav in Resources */,
 				FC30B674193F09F20020B7D2 /* Slot_Selected_1_0.png in Resources */,
@@ -3909,6 +3927,7 @@
 				FC114119193D98AF0045A92B /* Motion.png in Resources */,
 				FCC382EF1947CC1A0042222F /* Electronica0.wav in Resources */,
 				FCC382E51947BAA30042222F /* Electronic1.wav in Resources */,
+				FC1631FB197742BF00E15DEF /* EffectNameBackground@2x.png in Resources */,
 				FC30B666193F09F20020B7D2 /* Slot_Enabled_1_2.png in Resources */,
 				FC30B668193F09F20020B7D2 /* Slot_Enabled_2_0.png in Resources */,
 				FCC382DD1947AA2A0042222F /* DelayWah.json in Resources */,
@@ -3947,6 +3966,7 @@
 				FCC382E41947BAA30042222F /* Electronic0.wav in Resources */,
 				FCC382D31947A3A80042222F /* MachineTransformations1.wav in Resources */,
 				FC30B611193EE0100020B7D2 /* Trigger.png in Resources */,
+				FC1631F81977252800E15DEF /* switchBackground.png in Resources */,
 				FC30B610193EE0100020B7D2 /* Loop.png in Resources */,
 				FC30B663193F09F20020B7D2 /* Slot_Enabled_0_3.png in Resources */,
 				FC30B66D193F09F20020B7D2 /* Slot_Enabled_3_1.png in Resources */,
@@ -4063,8 +4083,8 @@
 				FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */,
 				FCCF8FF81926711C00B76E77 /* juce_events.mm in Sources */,
 				FC30B68F193F18D00020B7D2 /* SampleButton.mm in Sources */,
+				FC1631FE197743E900E15DEF /* EffectTableViewController.mm in Sources */,
 				FCCF8FF4192670B100B76E77 /* juce_graphics.mm in Sources */,
-				FC30B696193F19190020B7D2 /* EffectsTable.mm in Sources */,
 				FCCF8FF5192670B100B76E77 /* juce_gui_basics.mm in Sources */,
 				FCCF854E19266E5F00B76E77 /* Parameter.mm in Sources */,
 				FC768974195AE03D005C971B /* LoadSampleViewController.mm in Sources */,

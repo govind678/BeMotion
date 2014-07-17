@@ -32,33 +32,42 @@
         [hit setUserInteractionEnabled:NO];
         [hit setAlpha:0.0f];
         
+        progress = [[UIProgressView alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 2.5f, frame.size.width, 3.0f)];
+        [progress setProgressViewStyle:UIProgressViewStyleBar];
+        [progress setUserInteractionEnabled:NO];
+        [self addSubview:progress];
+        
         
         switch (buttonID) {
             case 0:
                 [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton0.png"]]];
                 [hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButtonHit0.png"]]];
+//                [progress setProgressTintColor:[UIColor colorWithRed:0.98f green:0.34f blue:0.14f alpha:1.0f]];
                 break;
                 
             case 1:
                 [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton1.png"]]];
                 [hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButtonHit1.png"]]];
+//                [progress setTrackTintColor:[UIColor colorWithRed:0.15f green:0.39f blue:0.78f alpha:1.0f]];
                 break;
                 
             case 2:
                 [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton2.png"]]];
                 [hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButtonHit2.png"]]];
+//                [progress setTrackTintColor:[UIColor colorWithRed:0.0f green:0.74f blue:0.42f alpha:1.0f]];
                 break;
                 
             case 3:
                 [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButton3.png"]]];
                 [hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"SampleButtonHit3.png"]]];
+//                [progress setTrackTintColor:[UIColor colorWithRed:0.96f green:0.93f blue:0.17f alpha:1.0f]];
                 break;
                 
             default:
                 break;
         }
         
-        
+       
         [self setMultipleTouchEnabled:YES];
         
         touchDownCount      =   0;
@@ -145,6 +154,12 @@
     
     //Stop Playback
 }
+
+
+- (void) updateProgress:(float)value {
+    [progress setProgress:value animated:NO];
+}
+
 
 
 - (void) reloadFromBackground {

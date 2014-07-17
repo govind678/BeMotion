@@ -52,8 +52,6 @@
     [waveformView setSampleID:sampleID];
     [waveformView setArrayToDrawWaveform : _backendInterface->getSamplesToDrawWaveform(sampleID)];
     
-    
-    
     //--- Samples Table ---//
     
     sampleSectionTitles = [[NSMutableArray alloc] initWithArray:[sampleBanks allKeys]];

@@ -15,6 +15,7 @@
     
     UIView* overlay;
     UIView* hit;
+    UIProgressView* progress;
 }
 
 
@@ -33,6 +34,8 @@
 - (void) postInitialize : (BOOL)playbackStatus;
 - (void) startPlayback;
 - (void) stopPlayback;
+
+- (void) updateProgress : (float)value;
 
 - (void) reloadFromBackground;
 

@@ -16,7 +16,7 @@
 
 @implementation BeMotionAppDelegate
 
-@synthesize sampleSets, fxPacks;
+@synthesize sampleSets, fxPacks, fxTypes;
 
 + (void)initialize
 {
@@ -96,6 +96,11 @@
     //--- Generate FX Packs ---//
     NSArray* initialArray = @[@"Wah_Tremolo", @"Percs_Delay", @"DelayWah", @"BeatRepeat", @"Template"];
     fxPacks = [[NSMutableArray alloc] initWithArray:initialArray copyItems:YES];
+    
+    
+    //--- Generate FX Types ---//
+    NSArray* array = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer"];
+    fxTypes = [[NSMutableArray alloc] initWithArray:array copyItems:YES];
     
     
     

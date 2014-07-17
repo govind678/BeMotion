@@ -153,6 +153,10 @@
 }
 
 
+- (void) updateProgress:(float)value {
+    [playButton updateProgress:value];
+}
+
 - (void)reloadFromBackground {
     [playButton reloadFromBackground];
 }

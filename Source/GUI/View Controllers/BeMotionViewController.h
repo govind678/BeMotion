@@ -75,7 +75,7 @@
 
 //--- View Methods ---//
 - (void) guiBeat: (int) beatNo;
-//- (void) updatePlaybackProgress;
+- (void) updatePlaybackProgress;
 
 
 //--- Tempo Picker Methods ---//

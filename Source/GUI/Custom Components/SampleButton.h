@@ -43,4 +43,6 @@
 
 - (void) reloadFromBackground;
 
+- (void) updateProgress : (float)value;
+
 @end

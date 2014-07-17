@@ -114,18 +114,18 @@
     tempoPicker = [[TempoPicker alloc] initWithFrame:CGRectMake(60.0f, 210.0f, 200.0f, 260.0f)];
     [tempoPicker setDelegate:self];
     [tempoPicker setTempo:_backendInterface->getTempo()];
-    [tempoPicker setAlpha:0.9];
+    [tempoPicker setAlpha:0.95];
     [[self view] addSubview:tempoPicker];
     [tempoPicker setUserInteractionEnabled:NO];
     [tempoPicker setHidden:YES];
     tempoDisplayToggle = NO;
     
-//    //--- Initialize Timer for Progress Bar Updates ---//
-//    [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
-//                                     target:self
-//                                   selector:@selector(updatePlaybackProgress)
-//                                   userInfo:nil
-//                                    repeats:YES];
+    //--- Initialize Timer for Progress Bar Updates ---//
+    [NSTimer scheduledTimerWithTimeInterval:PROGRESS_UPDATE_RATE
+                                     target:self
+                                   selector:@selector(updatePlaybackProgress)
+                                   userInfo:nil
+                                    repeats:YES];
     
     
     
@@ -303,8 +303,13 @@
 
 
 
-//- (void) updatePlaybackProgress
-//{
+- (void) updatePlaybackProgress
+{
+    [sampleButton0 updateProgress:_backendInterface->getSampleCurrentPlaybackTime(0)];
+    [sampleButton1 updateProgress:_backendInterface->getSampleCurrentPlaybackTime(1)];
+    [sampleButton2 updateProgress:_backendInterface->getSampleCurrentPlaybackTime(2)];
+    [sampleButton3 updateProgress:_backendInterface->getSampleCurrentPlaybackTime(3)];
+    
 //    for (int i=0; i < NUM_BUTTONS; i++)
 //    {
 //        switch (i)
@@ -330,7 +335,7 @@
 //        }
 //    }
 //    
-//}
+}
 
 
 

@@ -29,6 +29,8 @@
 @property (nonatomic, assign) BeMotionInterface* backendInterface;
 @property (nonatomic, assign) int  sampleID;
 
+@property (nonatomic, assign) NSIndexPath* checkedPath;
+
 - (IBAction)launchMediaLibrary:(UIButton *)sender;
 
 @end

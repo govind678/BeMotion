@@ -45,6 +45,7 @@
         picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, frame.size.height - 160.0f, 200.0f, 160.0f)];
         [picker setDataSource:self];
         [picker setDelegate:self];
+        [picker setBackgroundColor:[UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:1.0f]];
         [[picker layer] setBorderWidth:1.5f];
         [[picker layer] setBorderColor:[[UIColor darkGrayColor] CGColor]];
         [self addSubview:picker];
