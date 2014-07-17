@@ -92,7 +92,6 @@
     sampleSets = [[NSMutableDictionary alloc] initWithDictionary:initialSet copyItems:YES];
     
     
-    
     //--- Generate FX Packs ---//
     NSArray* initialArray = @[@"Wah_Tremolo", @"Percs_Delay", @"DelayWah", @"BeatRepeat", @"Template"];
     fxPacks = [[NSMutableArray alloc] initWithArray:initialArray copyItems:YES];

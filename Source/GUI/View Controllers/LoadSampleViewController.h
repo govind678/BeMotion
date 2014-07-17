@@ -19,7 +19,7 @@
     NSMutableDictionary     *sampleBanks;
     NSMutableArray          *sampleSectionTitles;
     
-    LoadMediaFile*                  mediaPicker;
+    LoadMediaFile*          mediaPicker;
 }
 
 @property (nonatomic, retain) IBOutlet WaveformView *waveformView;
