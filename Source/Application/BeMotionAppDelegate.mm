@@ -45,61 +45,18 @@
     
     
     //--- Generate Sample Sets ---//
-    
-    NSDictionary* initialSet =  @{
-                                  
-                   @"Electronic Kit"            : @[@"EKit0", @"EKit1", @"EKit2", @"EKit3", @"EKit4", @"Breakbeat4",
-                                                    [NSNumber numberWithInt:120], @"Electronic Kit.png"],
-                   
-                   @"Dubstep Loops"             : @[@"DubBeat0", @"DubBeat1", @"DubBeat2", @"DubBeat3", @"DubBeat4", @"EKit4",
-                                                    [NSNumber numberWithInt:140], @"Dubstep.png"],
-                   
-                   @"Breakbeat Drums"           : @[@"Breakbeat0", @"Breakbeat1", @"Breakbeat2", @"Breakbeat3", @"Breakbeat4", @"EKit4",
-                                                    [NSNumber numberWithInt:140], @"Breakbeat.png"],
-                   
-                   @"Indian Percussion"         : @[@"Indian_Percussion0", @"Indian_Percussion1", @"Indian_Percussion2",
-                                                    @"Indian_Percussion3", @"Indian_Percussion4", @"Electronica4",
-                                                    [NSNumber numberWithInt:100], @"Indian Percussion.png"],
-                   
-                   @"Latin Loops"               : @[@"Latin_Loop0", @"Latin_Loop1", @"Latin_Loop2", @"Latin_Loop3", @"Latin_Loop4",
-                                                    @"Latin_Percussion4",
-                                                    [NSNumber numberWithInt:126], @"Latin Loop.png"],
-                   
-                   @"Latin Percussion"          : @[@"Latin_Percussion0", @"Latin_Percussion1", @"Latin_Percussion2", @"Latin_Percussion3",
-                                                    @"Latin_Percussion4", @"Latin_Loop4",
-                                                    [NSNumber numberWithInt:126], @"Latin Percussion.png"],
-                   
-                   @"Electronic Set 1"          : @[@"Electronic0", @"Electronic1", @"Electronic2", @"Electronic3", @"Electronic4",
-                                                    @"Electronica4",
-                                                    [NSNumber numberWithInt:85], @"Electronic Set.png"],
-                   
-                   @"Electronic Set 2"          : @[@"Electronica0", @"Electronica1", @"Electronica2", @"Electronica3", @"Electronica4",
-                                                    @"Electronic4",
-                                                    [NSNumber numberWithInt:85], @"Electronic Set.png"],
-                   
-                   @"Embryo"                    : @[@"Embryo0", @"Embryo1", @"Embryo2", @"Embryo3", @"Embryo4", @"Latin_Percussion4",
-                                                    [NSNumber numberWithInt:200], @"Embryo.png"],
-                   
-                   @"Machine Transformations"   : @[@"MachineTransformations0", @"MachineTransformations1", @"MachineTransformations2",
-                                                    @"MachineTransformations3", @"MachineTransformations4", @"Embryo4",
-                                                    [NSNumber numberWithInt:120], @"Machine Transformations.png"],
-                   
-                   @"Skies"                     : @[@"Skies0", @"Skies1", @"Skies2", @"Skies3", @"Skies4", @"Electronic4",
-                                                    [NSNumber numberWithInt:180], @"Skies.png"],
-                   };
-    
-    
-    sampleSets = [[NSMutableDictionary alloc] initWithDictionary:initialSet copyItems:YES];
+    NSString* sampleSetsPath = [[NSBundle mainBundle] pathForResource:@"SamplePacks" ofType:@"plist"];
+    sampleSets = [[NSMutableDictionary alloc] initWithContentsOfFile:sampleSetsPath];
     
     
     //--- Generate FX Packs ---//
-    NSArray* initialArray = @[@"Wah_Tremolo", @"Percs_Delay", @"DelayWah", @"BeatRepeat", @"Template"];
-    fxPacks = [[NSMutableArray alloc] initWithArray:initialArray copyItems:YES];
+    NSString* fxPacksPath = [[NSBundle mainBundle] pathForResource:@"FXPacks" ofType:@"plist"];
+    fxPacks = [[NSMutableArray alloc] initWithContentsOfFile:fxPacksPath];
     
     
     //--- Generate FX Types ---//
-    NSArray* array = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer"];
-    fxTypes = [[NSMutableArray alloc] initWithArray:array copyItems:YES];
+    NSString* fxTypesPath = [[NSBundle mainBundle] pathForResource:@"FXTypes" ofType:@"plist"];
+    fxTypes = [[NSMutableDictionary alloc] initWithContentsOfFile:fxTypesPath];
     
     
     
@@ -215,7 +172,7 @@
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-//	NSLog(@"Failed to get token, error: %@", error);
+	NSLog(@"Failed to get token, error: %@", error);
 }
 
 

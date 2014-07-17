@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Electronic Kit</key>
+	<array>
+		<string>EKit0</string>
+		<string>EKit1</string>
+		<string>EKit2</string>
+		<string>EKit3</string>
+		<string>EKit4</string>
+		<string>Breakbeat4</string>
+		<integer>120</integer>
+		<string>Electronic Kit.png</string>
+	</array>
+	<key>Dubstep Loops</key>
+	<array>
+		<string>DubBeat0</string>
+		<string>DubBeat1</string>
+		<string>DubBeat2</string>
+		<string>DubBeat3</string>
+		<string>DubBeat4</string>
+		<string>EKit4</string>
+		<integer>140</integer>
+		<string>Dubstep.png</string>
+	</array>
+	<key>Breakbeat Drums</key>
+	<array>
+		<string>Breakbeat0</string>
+		<string>Breakbeat1</string>
+		<string>Breakbeat2</string>
+		<string>Breakbeat3</string>
+		<string>Breakbeat4</string>
+		<string>EKit4</string>
+		<integer>140</integer>
+		<string>Breakbeat.png</string>
+	</array>
+	<key>Indian Percussion</key>
+	<array>
+		<string>Indian_Percussion0</string>
+		<string>Indian_Percussion1</string>
+		<string>Indian_Percussion2</string>
+		<string>Indian_Percussion3</string>
+		<string>Indian_Percussion4</string>
+		<string>Electronica4</string>
+		<integer>100</integer>
+		<string>Indian Percussion.png</string>
+	</array>
+	<key>Latin Loops</key>
+	<array>
+		<string>Latin_Loop0</string>
+		<string>Latin_Loop1</string>
+		<string>Latin_Loop2</string>
+		<string>Latin_Loop3</string>
+		<string>Latin_Loop4</string>
+		<string>Latin_Percussion4</string>
+		<integer>126</integer>
+		<string>Latin Loop.png</string>
+	</array>
+	<key>Latin Percussion</key>
+	<array>
+		<string>Latin_Percussion0</string>
+		<string>Latin_Percussion1</string>
+		<string>Latin_Percussion2</string>
+		<string>Latin_Percussion3</string>
+		<string>Latin_Percussion4</string>
+		<string>Latin_Loop4</string>
+		<integer>126</integer>
+		<string>Latin Percussion.png</string>
+	</array>
+	<key>Electronic Set 1</key>
+	<array>
+		<string>Electronic0</string>
+		<string>Electronic1</string>
+		<string>Electronic2</string>
+		<string>Electronic3</string>
+		<string>Electronic4</string>
+		<string>Electronica4</string>
+		<string>85</string>
+		<string>Electronic Set.png</string>
+	</array>
+	<key>Electronic Set 2</key>
+	<array>
+		<string>Electronica0</string>
+		<string>Electronica1</string>
+		<string>Electronica2</string>
+		<string>Electronica3</string>
+		<string>Electronica4</string>
+		<string>Electronic4</string>
+		<string>85</string>
+		<string>Electronic Set.png</string>
+	</array>
+	<key>Embryo</key>
+	<array>
+		<string>Embryo0</string>
+		<string>Embryo1</string>
+		<string>Embryo2</string>
+		<string>Embryo3</string>
+		<string>Embryo4</string>
+		<string>Latin_Percussion4</string>
+		<string>200</string>
+		<string>Embryo.png</string>
+	</array>
+	<key>Machine Transformations</key>
+	<array>
+		<string>MachineTransformations0</string>
+		<string>MachineTransformations1</string>
+		<string>MachineTransformations2</string>
+		<string>MachineTransformations3</string>
+		<string>MachineTransformations4</string>
+		<string>Embryo4</string>
+		<string>120</string>
+		<string>Machine Transformations.png</string>
+	</array>
+	<key>Skies</key>
+	<array>
+		<string>Skies0</string>
+		<string>Skies1</string>
+		<string>Skies2</string>
+		<string>Skies3</string>
+		<string>Skies4</string>
+		<string>Electronic4</string>
+		<string>180</string>
+		<string>Skies.png</string>
+	</array>
+</dict>
+</plist>

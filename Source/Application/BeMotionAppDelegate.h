@@ -20,14 +20,14 @@
     
     NSMutableDictionary*            sampleSets;
     NSMutableArray*                 fxPacks;
-    NSMutableArray*                 fxTypes;
+    NSMutableDictionary*            fxTypes;
 }
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property(strong, nonatomic) NSMutableDictionary* sampleSets;
 @property(strong, nonatomic) NSMutableArray* fxPacks;
-@property(strong, nonatomic) NSMutableArray* fxTypes;
+@property(strong, nonatomic) NSMutableDictionary* fxTypes;
 
 - (BeMotionInterface*)getBackendReference;
 - (Metronome*)getMetronomeReference;

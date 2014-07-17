@@ -19,7 +19,7 @@
 
 @implementation EffectTableViewController
 
-@synthesize effectTable, sampleID, effectPosition;
+@synthesize effectTable, sampleID, effectPosition, fxNames;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +37,7 @@
     
     // Reference to App Delegate
     appDelegate = [[UIApplication sharedApplication] delegate];
-    fxTypes = [appDelegate fxTypes];
+    fxNames = [[NSArray alloc] initWithArray:[[appDelegate fxTypes] allKeys] copyItems:YES];
     _backendInterface = [appDelegate getBackendReference];
     
     
@@ -110,7 +110,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [fxTypes count];
+    return [fxNames count];
 }
 
 
@@ -118,7 +118,7 @@
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"effectCell"];
     
-    NSString* title = [fxTypes objectAtIndex:[indexPath row]];
+    NSString* title = [fxNames objectAtIndex:[indexPath row]];
     [[cell textLabel] setText:title];
     [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica" size:14.0]];
     [[cell textLabel] setTextColor:currentColor];
@@ -154,6 +154,7 @@
 
 
 - (void)dealloc {
+    [fxNames release];
     [effectTable release];
     [_headerLabel release];
     [super dealloc];

@@ -18,13 +18,16 @@
 
 @interface EffectSettingsViewController : UIViewController
 {
-    int             buttonMode;
+    int                     buttonMode;
+    NSMutableDictionary*    effectDict;
+    NSArray*                effectNames;
 }
 
 @property (nonatomic, assign) BeMotionInterface* backendInterface;
 @property (nonatomic, assign) int  currentSampleID;
 @property (nonatomic, assign) int  currentEffectPosition;
-@property (nonatomic, retain) NSArray *effectNames;
+@property (nonatomic, retain) NSMutableDictionary* effectDict;
+@property (nonatomic, retain) NSArray* effectNames;
 
 
 //--- UI Objects ---//

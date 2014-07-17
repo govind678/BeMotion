@@ -11,7 +11,7 @@
 
 @interface EffectTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    NSArray* fxTypes;
+    NSArray* fxNames;
     UIColor* currentColor;
 }
 
@@ -21,5 +21,7 @@
 @property (nonatomic, assign) int sampleID;
 @property (nonatomic, assign) int effectPosition;
 @property (retain, nonatomic) IBOutlet UILabel *headerLabel;
+
+@property (nonatomic, retain) NSArray* fxNames;
 
 @end

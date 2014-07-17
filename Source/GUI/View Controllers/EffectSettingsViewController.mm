@@ -27,8 +27,6 @@
 @implementation EffectSettingsViewController
 
 @synthesize currentSampleID, currentEffectPosition;
-
-@synthesize effectNames;
 @synthesize gainSliderObject, quantizationSliderObject;
 @synthesize bypassButtonObject;
 @synthesize slider1Object, slider2Object, slider3Object;
@@ -38,14 +36,8 @@
 @synthesize gainLabel, quantizationLabel;
 @synthesize triggerModeButton, loopModeButton, beatRepeatModeButton, fourthModeButton;
 @synthesize effectSlotButton0, effectSlotButton1, effectSlotButton2, effectSlotButton3;
-@synthesize effectTypeButton;
+@synthesize effectTypeButton, effectDict, effectNames;
 
-
-
-- (void)awakeFromNib
-{
-    self.effectNames  = @[@"None", @"Tremolo", @"Delay", @"Vibrato", @"Wah", @"Granularizer"];
-}
 
 
 - (void)viewDidLoad
@@ -56,7 +48,8 @@
     appDelegate = [[UIApplication sharedApplication] delegate];
     _backendInterface   =  [appDelegate getBackendReference];
     
-    
+    effectDict = [[NSMutableDictionary alloc] initWithDictionary:[appDelegate fxTypes] copyItems:YES];
+    effectNames = [[NSArray alloc] initWithArray:[effectDict allKeys] copyItems:YES];
     
     
     //--- Sample Mode Buttons and Labels ---//
@@ -663,52 +656,17 @@
     }
     
     
+    NSString* effectTitle = [effectNames objectAtIndex:_backendInterface->getEffectType(currentSampleID, currentEffectPosition)];
+    NSArray* params = [effectDict objectForKey:effectTitle];
     
+    NSString* text1 = [params objectAtIndex:0];
+    NSString* text2 = [params objectAtIndex:1];
+    NSString* text3 = [params objectAtIndex:2];
     
+    [self.slider1EffectParam setText:text1];
+    [self.slider2EffectParam setText:text2];
+    [self.slider3EffectParam setText:text3];
     
-    switch (_backendInterface->getEffectType(currentSampleID, currentEffectPosition))
-    {
-        case 0:
-            [self.slider1EffectParam setText:@"Null"];
-            [self.slider2EffectParam setText:@"Null"];
-            [self.slider3EffectParam setText:@"Null"];
-            break;
-            
-        case 1:
-            [self.slider1EffectParam setText:@"Rate"];
-            [self.slider2EffectParam setText:@"Depth"];
-            [self.slider3EffectParam setText:@"Shape"];
-            break;
-            
-        case 2:
-            [self.slider1EffectParam setText:@"Time"];
-            [self.slider2EffectParam setText:@"Dry/Wet"];
-            [self.slider3EffectParam setText:@"Feedback"];
-            break;
-            
-        case 3:
-            [self.slider1EffectParam setText:@"Rate"];
-            [self.slider2EffectParam setText:@"Width"];
-            [self.slider3EffectParam setText:@"Shape"];
-            break;
-            
-        case 4:
-            [self.slider1EffectParam setText:@"Frequency"];
-            [self.slider2EffectParam setText:@"Resonance"];
-            [self.slider3EffectParam setText:@"Range"];
-            break;
-            
-            
-        case 5:
-            [self.slider1EffectParam setText:@"Rate"];
-            [self.slider2EffectParam setText:@"Size"];
-            [self.slider3EffectParam setText:@"Pitch"];
-            break;
-            
-            
-        default:
-            break;
-    }
 }
 
 

@@ -63,8 +63,6 @@
 		FC1632FB1977CA1D00E15DEF /* MachineTransformations2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC16323B1977CA1D00E15DEF /* MachineTransformations2.wav */; };
 		FC1632FC1977CA1D00E15DEF /* MachineTransformations3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC16323C1977CA1D00E15DEF /* MachineTransformations3.wav */; };
 		FC1632FD1977CA1D00E15DEF /* MachineTransformations4.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC16323D1977CA1D00E15DEF /* MachineTransformations4.wav */; };
-		FC1632FE1977CA1D00E15DEF /* normalize.m in Sources */ = {isa = PBXBuildFile; fileRef = FC16323E1977CA1D00E15DEF /* normalize.m */; };
-		FC1632FF1977CA1D00E15DEF /* NormFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = FC16323F1977CA1D00E15DEF /* NormFiles.m */; };
 		FC1633001977CA1D00E15DEF /* Skies0.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC1632411977CA1D00E15DEF /* Skies0.wav */; };
 		FC1633011977CA1D00E15DEF /* Skies1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC1632421977CA1D00E15DEF /* Skies1.wav */; };
 		FC1633021977CA1D00E15DEF /* Skies2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC1632431977CA1D00E15DEF /* Skies2.wav */; };
@@ -183,6 +181,9 @@
 		FC1633711977CA1D00E15DEF /* SliderThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1632C81977CA1D00E15DEF /* SliderThumb.png */; };
 		FC1633721977CA1D00E15DEF /* SliderTrack.psd in Resources */ = {isa = PBXBuildFile; fileRef = FC1632C91977CA1D00E15DEF /* SliderTrack.psd */; };
 		FC1633731977CA1D00E15DEF /* Trigger.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1632CA1977CA1D00E15DEF /* Trigger.png */; };
+		FC1633761977CB3400E15DEF /* SamplePacks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633751977CB3400E15DEF /* SamplePacks.plist */; };
+		FC1633781977D19300E15DEF /* FXPacks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633771977D19300E15DEF /* FXPacks.plist */; };
+		FC16337A1977D23700E15DEF /* FXTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633791977D23700E15DEF /* FXTypes.plist */; };
 		FC30B68F193F18D00020B7D2 /* SampleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B684193F18D00020B7D2 /* SampleButton.mm */; };
 		FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */; };
 		FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */; };
@@ -314,8 +315,6 @@
 		FC16323B1977CA1D00E15DEF /* MachineTransformations2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations2.wav; sourceTree = "<group>"; };
 		FC16323C1977CA1D00E15DEF /* MachineTransformations3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations3.wav; sourceTree = "<group>"; };
 		FC16323D1977CA1D00E15DEF /* MachineTransformations4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MachineTransformations4.wav; sourceTree = "<group>"; };
-		FC16323E1977CA1D00E15DEF /* normalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = normalize.m; sourceTree = "<group>"; };
-		FC16323F1977CA1D00E15DEF /* NormFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormFiles.m; sourceTree = "<group>"; };
 		FC1632411977CA1D00E15DEF /* Skies0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Skies0.wav; sourceTree = "<group>"; };
 		FC1632421977CA1D00E15DEF /* Skies1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Skies1.wav; sourceTree = "<group>"; };
 		FC1632431977CA1D00E15DEF /* Skies2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Skies2.wav; sourceTree = "<group>"; };
@@ -435,6 +434,9 @@
 		FC163309194ACA1C00A462CB /* ShelfFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShelfFilter.mm; sourceTree = "<group>"; };
 		FC16330C194AD24800A462CB /* Granularizer2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Granularizer2.mm; sourceTree = "<group>"; };
 		FC16330D194AD24800A462CB /* Granularizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer2.h; sourceTree = "<group>"; };
+		FC1633751977CB3400E15DEF /* SamplePacks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SamplePacks.plist; sourceTree = "<group>"; };
+		FC1633771977D19300E15DEF /* FXPacks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXPacks.plist; sourceTree = "<group>"; };
+		FC1633791977D23700E15DEF /* FXTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXTypes.plist; sourceTree = "<group>"; };
 		FC30B602194A537C005F4ED3 /* ShelfFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfFilter.h; sourceTree = "<group>"; };
 		FC30B683193F18D00020B7D2 /* SampleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleButton.h; sourceTree = "<group>"; };
 		FC30B684193F18D00020B7D2 /* SampleButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SampleButton.mm; sourceTree = "<group>"; };
@@ -1522,6 +1524,7 @@
 		FC1631FF1977CA1D00E15DEF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FC1633741977CAFE00E15DEF /* Properties */,
 				FC1632001977CA1D00E15DEF /* Audio Samples */,
 				FC1632461977CA1D00E15DEF /* FX Packs */,
 				FC16324C1977CA1D00E15DEF /* Images */,
@@ -1543,8 +1546,6 @@
 				FC16322C1977CA1D00E15DEF /* Latin Loop 126 */,
 				FC1632321977CA1D00E15DEF /* Latin Percussion 126 */,
 				FC1632381977CA1D00E15DEF /* Machine Transformations 120 */,
-				FC16323E1977CA1D00E15DEF /* normalize.m */,
-				FC16323F1977CA1D00E15DEF /* NormFiles.m */,
 				FC1632401977CA1D00E15DEF /* Skies 90 */,
 			);
 			path = "Audio Samples";
@@ -1966,6 +1967,16 @@
 				FC1632C01977CA1D00E15DEF /* Slot_Selected_3_3.png */,
 			);
 			path = 3;
+			sourceTree = "<group>";
+		};
+		FC1633741977CAFE00E15DEF /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				FC1633751977CB3400E15DEF /* SamplePacks.plist */,
+				FC1633771977D19300E15DEF /* FXPacks.plist */,
+				FC1633791977D23700E15DEF /* FXTypes.plist */,
+			);
+			path = Properties;
 			sourceTree = "<group>";
 		};
 		FC30B680193F18D00020B7D2 /* Custom Components */ = {
@@ -4033,6 +4044,7 @@
 				FC16332B1977CA1D00E15DEF /* SampleButton0.png in Resources */,
 				FC16331E1977CA1D00E15DEF /* MotionScreen.psd in Resources */,
 				FC1633581977CA1D00E15DEF /* Slot_Enabled_3_2.png in Resources */,
+				FC16337A1977D23700E15DEF /* FXTypes.plist in Resources */,
 				FC1632E01977CA1D00E15DEF /* Electronica0.wav in Resources */,
 				FC1633261977CA1D00E15DEF /* Latin Percussion.png in Resources */,
 				FC1633341977CA1D00E15DEF /* SampleButtonOverlay.psd in Resources */,
@@ -4048,6 +4060,7 @@
 				FC1633381977CA1D00E15DEF /* Motion.png in Resources */,
 				FC1633491977CA1D00E15DEF /* EffectSlots.psd in Resources */,
 				FC1633301977CA1D00E15DEF /* SampleButtonHit1.png in Resources */,
+				FC1633781977D19300E15DEF /* FXPacks.plist in Resources */,
 				FC1632F51977CA1D00E15DEF /* Latin_Percussion1.wav in Resources */,
 				FC1632F41977CA1D00E15DEF /* Latin_Percussion0.wav in Resources */,
 				FC1633021977CA1D00E15DEF /* Skies2.wav in Resources */,
@@ -4133,6 +4146,7 @@
 				FC16334C1977CA1D00E15DEF /* Slot_Enabled_0_2.png in Resources */,
 				FC1633721977CA1D00E15DEF /* SliderTrack.psd in Resources */,
 				FC16330C1977CA1D00E15DEF /* DragArrowBack1.png in Resources */,
+				FC1633761977CB3400E15DEF /* SamplePacks.plist in Resources */,
 				FC1633431977CA1D00E15DEF /* Back.png in Resources */,
 				FC16335A1977CA1D00E15DEF /* Slot_Selected_0_0.png in Resources */,
 				FC16330E1977CA1D00E15DEF /* DragArrowBack3.png in Resources */,
@@ -4177,7 +4191,6 @@
 				FCCF8FF1192670B100B76E77 /* juce_audio_formats.mm in Sources */,
 				FC768979195CC2D7005C971B /* MetronomeBar.mm in Sources */,
 				FCCF8FF2192670B100B76E77 /* juce_core.mm in Sources */,
-				FC1632FF1977CA1D00E15DEF /* NormFiles.m in Sources */,
 				FC1631F41976871100E15DEF /* TempoPicker.mm in Sources */,
 				FCCF8FF3192670B100B76E77 /* juce_cryptography.mm in Sources */,
 				FC16330B194ACA1C00A462CB /* ShelfFilter.mm in Sources */,
@@ -4197,7 +4210,6 @@
 				FC30B69A193F9F730020B7D2 /* MotionControl.mm in Sources */,
 				FCCF8FFF1926DA6C00B76E77 /* LFO.mm in Sources */,
 				FCC382F9194981CD0042222F /* Wah2.cpp in Sources */,
-				FC1632FE1977CA1D00E15DEF /* normalize.m in Sources */,
 				FCCF854119266E5F00B76E77 /* AudioFileRecord.mm in Sources */,
 				FC30B693193F18D00020B7D2 /* GlobalSettingsViewController.mm in Sources */,
 				FCCF853E19266E5F00B76E77 /* Metronome.mm in Sources */,
