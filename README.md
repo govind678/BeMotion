@@ -1,26 +1,31 @@
 BeMotion
 =================
 
-iOS/Android application that uses motion gestures to control audio effects
+iOS audio sampling, looping application that uses motion gestures to control audio effects
 
 Native iOS for GUI, CoreMotion for motion processing and JUCE for audio processing
 
 JUCE: https://github.com/julianstorer/JUCE
 
 
-Prospective Effects:
+Effects Implemented:
 
-Phase 1:
-  Tremolo (LFO),
-  Delay (IIR / FIR),
-  Vibrato (LFO)
-
-Phase 2:
-  Wah (IIR / FIR),
-  Reverb,
-  Granular Synthesis
+	Tremolo (LFO),
+  	Delay (IIR / FIR),
+  	Vibrato (LFO)
+  	Wah (IIR / FIR),
+  	Granularizer
+	Auto-Limiter
   
-Phase 3:
-  Pitch Shifting,
-  Overdrive / Distortion
+  
+  
+To Be Implemented:
+
+	Compressor,
+	Pitch Shifting,
+	Time Stretching,
+	Reverb,
+	Phaser,
+	Flanger,
+	Ring Modulation
   
