@@ -9,24 +9,21 @@ JUCE: https://github.com/julianstorer/JUCE
 
 
 Effects Implemented:
-
-  Tremolo (LFO),
-  Delay (IIR / FIR),
-  Vibrato (LFO)
-  Wah (IIR / FIR),
-  Granularizer
-  
-  Auto-Limiter
+	Tremolo (LFO),
+  	Delay (IIR / FIR),
+  	Vibrato (LFO)
+  	Wah (IIR / FIR),
+  	Granularizer
+	Auto-Limiter
   
   
   
 To Be Implemented:
-
-	Compressor
-  Pitch Shifting,
-  Time Stretching,
-  Reverb,
-  Phaser,
-  Flanger,
-  Ring Modulation
+	Compressor,
+	Pitch Shifting,
+	Time Stretching,
+	Reverb,
+	Phaser,
+	Flanger,
+	Ring Modulation
   
