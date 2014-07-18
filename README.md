@@ -16,7 +16,13 @@ Effects Implemented:
   Wah (IIR / FIR),
   Granularizer
   
+  Auto-Limiter
+  
+  
+  
 To Be Implemented:
+
+	Compressor
   Pitch Shifting,
   Time Stretching,
   Reverb,
