@@ -9,6 +9,7 @@ JUCE: https://github.com/julianstorer/JUCE
 
 
 Effects Implemented:
+
 	Tremolo (LFO),
   	Delay (IIR / FIR),
   	Vibrato (LFO)
@@ -19,6 +20,7 @@ Effects Implemented:
   
   
 To Be Implemented:
+
 	Compressor,
 	Pitch Shifting,
 	Time Stretching,
