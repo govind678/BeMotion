@@ -295,12 +295,14 @@ void AudioEngine::beat(int beatNo)
 
 void AudioEngine::startMetronome()
 {
-    metronome->start();
+//    metronome->start();
+    audioMixer->startClock();
 }
 
 void AudioEngine::stopMetronome()
 {
-    metronome->stop();
+//    metronome->stop();
+    audioMixer->stopClock();
 }
 
 bool AudioEngine::getMetronomeStatus()
@@ -314,7 +316,7 @@ void AudioEngine::motionUpdate(float *motion)
     audioMixer->motionUpdate(motion);
 }
 
-void AudioEngine::setTempo(int newTempo)
+void AudioEngine::setTempo(float newTempo)
 {
     audioMixer->setTempo(newTempo);
 }

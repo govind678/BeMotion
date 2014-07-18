@@ -69,7 +69,7 @@ public:
     bool  getSamplePlaybackStatus(int sampleID);
     
     void beat(int beatNo);
-    void setTempo(int newTempo);
+    void setTempo(float newTempo);
     int getTempo();
     void startMetronome();
     void stopMetronome();

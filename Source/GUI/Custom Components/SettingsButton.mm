@@ -72,7 +72,7 @@
 
         UIButton *gestureButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [gestureButton setImage:[UIImage imageNamed:@"Motion.png"] forState:UIControlStateNormal];
-        [gestureButton addTarget:self action:@selector(importButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [gestureButton addTarget:self action:@selector(gestureButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         gestureButton.frame = CGRectMake(213.0f + 5.0f, 22.0f, 50.0f, 50.0f);
         [self addSubview:gestureButton];
 
@@ -102,7 +102,7 @@
 
 
 - (void)gestureButtonClicked {
-    
+    [delegate toggleGestureControl];
 }
 
 
@@ -133,6 +133,10 @@
     // Launch Import View
 }
 
+
+- (void) toggleGestureControl {
+    // Toggle Gesture Control
+}
 
 - (UIImage*) getResizedImage : (NSString*)filename : (UIView*)view {
     

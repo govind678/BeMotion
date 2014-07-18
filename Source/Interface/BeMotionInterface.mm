@@ -142,7 +142,7 @@ void BeMotionInterface::beat(int beatNo)
     audioEngine->beat(beatNo);
 }
 
-void BeMotionInterface::setTempo(int newTempo)
+void BeMotionInterface::setTempo(float newTempo)
 {
     audioEngine->setTempo(newTempo);
 }

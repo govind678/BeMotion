@@ -48,8 +48,9 @@
     appDelegate = [[UIApplication sharedApplication] delegate];
     _backendInterface   =  [appDelegate getBackendReference];
     
-    effectDict = [[NSMutableDictionary alloc] initWithDictionary:[appDelegate fxTypes] copyItems:YES];
-    effectNames = [[NSArray alloc] initWithArray:[effectDict allKeys] copyItems:YES];
+    NSString* fxParamsPath = [[NSBundle mainBundle] pathForResource:@"FXParameterNames" ofType:@"plist"];
+    effectDict = [[NSMutableDictionary alloc] initWithContentsOfFile:fxParamsPath];
+    effectNames = [[NSArray alloc] initWithArray:[appDelegate fxTypes] copyItems:YES];
     
     
     //--- Sample Mode Buttons and Labels ---//

@@ -46,7 +46,7 @@ public:
     void setEffectGestureControlToggle(int sampleID, int effectPosition, int parameterID, bool toggle);
     
     void beat(int beatNo);
-    void setTempo(int newTempo);
+    void setTempo(float newTempo);
     void startMetronome();
     void stopMetronome();
     

@@ -37,9 +37,11 @@
 - (void) startResampling;
 - (void) launchFXView;
 - (void) launchImportView;
+- (void) toggleGestureControl;
 
 - (void) launchFXView : (int)sampleID;
 - (void) launchImportView : (int)sampleID;
+- (void) toggleGestureControl : (int)sampleID;
 
 - (void) reloadFromBackground;
 

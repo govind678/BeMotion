@@ -67,14 +67,14 @@
 
 
 
-- (void) setTempo:(float)newTempo
+- (void) setTempo:(int)newTempo
 {
     tempo = newTempo;
-    [delegate setTempo: tempo];
+//    [delegate setTempo: tempo];
     [self updateTimer];
 }
 
-- (float) getTempo
+- (int) getTempo
 {
     return tempo;
 }

@@ -107,7 +107,8 @@
   #endif
 
   #if ! (defined (DEBUG) || defined (_DEBUG) || defined (NDEBUG) || defined (_NDEBUG))
-    #warning "Neither NDEBUG or DEBUG has been defined - you should set one of these to make it clear whether this is a release build,"
+    #define NDEBUG  1
+//    #warning "Neither NDEBUG or DEBUG has been defined - you should set one of these to make it clear whether this is a release build,"
   #endif
 
   #ifdef __LITTLE_ENDIAN__

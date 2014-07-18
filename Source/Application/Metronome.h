@@ -14,7 +14,7 @@
 
 @interface Metronome : NSObject
 {
-    float   tempo;
+    int     tempo;
     int     numerator;
     BOOL    status;
     
@@ -36,8 +36,8 @@
 - (void) stopClock;
 
 
-- (void) setTempo           :   (float) newTempo;
-- (float)getTempo;
+- (void) setTempo           :   (int) newTempo;
+- (int) getTempo;
 - (void) setMeter           :   (int)   newMeter;
 
 - (void) updateTimer;

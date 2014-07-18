@@ -144,11 +144,21 @@
     [delegate launchImportView:buttonID];
 }
 
+- (void)toggleGestureControl {
+    [delegate toggleGestureControl:buttonID];
+}
+
+
+
 - (void)launchFXView:(int)sampleID {
     
 }
 
 - (void)launchImportView:(int)sampleID {
+    
+}
+
+- (void) toggleGestureControl:(int)sampleID {
     
 }
 

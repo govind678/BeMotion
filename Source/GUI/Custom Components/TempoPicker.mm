@@ -28,7 +28,7 @@
         
         toggleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(frame.size.width - 61.0f, 10.0f, 51.0f, 31.0f)];
         [toggleSwitch addTarget:self action:@selector(toggleSwitchChanged) forControlEvents:UIControlEventValueChanged];
-        [toggleSwitch setSelected:NO];
+        [toggleSwitch setSelected:[delegate getMetronomeStatus]];
         [self addSubview:toggleSwitch];
         
         UILabel *audioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 46.0f, frame.size.width / 2.0f, 31.0f)];
@@ -48,6 +48,7 @@
         [picker setBackgroundColor:[UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:1.0f]];
         [[picker layer] setBorderWidth:1.5f];
         [[picker layer] setBorderColor:[[UIColor darkGrayColor] CGColor]];
+        
         [self addSubview:picker];
         
         [self setBackgroundColor:[UIColor lightGrayColor]];
@@ -99,10 +100,20 @@
 }
 
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+//    
+//    NSString* returnString = [NSString stringWithFormat:@"%d",row];
+//    return returnString;
+//}
+
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *title = [NSString stringWithFormat:@"%ld",(long)row];
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
-    NSString* returnString = [NSString stringWithFormat:@"%d",row];
-    return returnString;
+    return attString;
+    
 }
 
 
@@ -120,7 +131,7 @@
 // PickerView Callback
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    pickerValue[component] = row;
+    pickerValue[component] = (int)row;
     [self calculateTempo];
 }
 
@@ -186,6 +197,9 @@
 }
 
 
+- (BOOL)getMetronomeStatus {
+    return NO;
+}
 
 - (void) dealloc {
     [picker release];

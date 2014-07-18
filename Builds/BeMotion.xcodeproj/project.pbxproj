@@ -183,7 +183,8 @@
 		FC1633731977CA1D00E15DEF /* Trigger.png in Resources */ = {isa = PBXBuildFile; fileRef = FC1632CA1977CA1D00E15DEF /* Trigger.png */; };
 		FC1633761977CB3400E15DEF /* SamplePacks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633751977CB3400E15DEF /* SamplePacks.plist */; };
 		FC1633781977D19300E15DEF /* FXPacks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633771977D19300E15DEF /* FXPacks.plist */; };
-		FC16337A1977D23700E15DEF /* FXTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633791977D23700E15DEF /* FXTypes.plist */; };
+		FC16337A1977D23700E15DEF /* FXParameterNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633791977D23700E15DEF /* FXParameterNames.plist */; };
+		FC1633821978564D00E15DEF /* FXTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC1633811978564D00E15DEF /* FXTypes.plist */; };
 		FC30B68F193F18D00020B7D2 /* SampleButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B684193F18D00020B7D2 /* SampleButton.mm */; };
 		FC30B691193F18D00020B7D2 /* BeMotionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B689193F18D00020B7D2 /* BeMotionViewController.mm */; };
 		FC30B692193F18D00020B7D2 /* EffectSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC30B68B193F18D00020B7D2 /* EffectSettingsViewController.mm */; };
@@ -436,7 +437,8 @@
 		FC16330D194AD24800A462CB /* Granularizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granularizer2.h; sourceTree = "<group>"; };
 		FC1633751977CB3400E15DEF /* SamplePacks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SamplePacks.plist; sourceTree = "<group>"; };
 		FC1633771977D19300E15DEF /* FXPacks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXPacks.plist; sourceTree = "<group>"; };
-		FC1633791977D23700E15DEF /* FXTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXTypes.plist; sourceTree = "<group>"; };
+		FC1633791977D23700E15DEF /* FXParameterNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXParameterNames.plist; sourceTree = "<group>"; };
+		FC1633811978564D00E15DEF /* FXTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FXTypes.plist; sourceTree = "<group>"; };
 		FC30B602194A537C005F4ED3 /* ShelfFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfFilter.h; sourceTree = "<group>"; };
 		FC30B683193F18D00020B7D2 /* SampleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleButton.h; sourceTree = "<group>"; };
 		FC30B684193F18D00020B7D2 /* SampleButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SampleButton.mm; sourceTree = "<group>"; };
@@ -1974,7 +1976,8 @@
 			children = (
 				FC1633751977CB3400E15DEF /* SamplePacks.plist */,
 				FC1633771977D19300E15DEF /* FXPacks.plist */,
-				FC1633791977D23700E15DEF /* FXTypes.plist */,
+				FC1633791977D23700E15DEF /* FXParameterNames.plist */,
+				FC1633811978564D00E15DEF /* FXTypes.plist */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -4044,7 +4047,7 @@
 				FC16332B1977CA1D00E15DEF /* SampleButton0.png in Resources */,
 				FC16331E1977CA1D00E15DEF /* MotionScreen.psd in Resources */,
 				FC1633581977CA1D00E15DEF /* Slot_Enabled_3_2.png in Resources */,
-				FC16337A1977D23700E15DEF /* FXTypes.plist in Resources */,
+				FC16337A1977D23700E15DEF /* FXParameterNames.plist in Resources */,
 				FC1632E01977CA1D00E15DEF /* Electronica0.wav in Resources */,
 				FC1633261977CA1D00E15DEF /* Latin Percussion.png in Resources */,
 				FC1633341977CA1D00E15DEF /* SampleButtonOverlay.psd in Resources */,
@@ -4072,6 +4075,7 @@
 				FC1633101977CA1D00E15DEF /* DragArrowUp.png in Resources */,
 				FC1632EA1977CA1D00E15DEF /* Indian_Percussion0.wav in Resources */,
 				FC1632D21977CA1D00E15DEF /* DubBeat1.wav in Resources */,
+				FC1633821978564D00E15DEF /* FXTypes.plist in Resources */,
 				FC16333B1977CA1D00E15DEF /* SettingsBackground.png in Resources */,
 				FC1632F01977CA1D00E15DEF /* Latin_Loop1.wav in Resources */,
 				FC1633121977CA1D00E15DEF /* Gesture.png in Resources */,

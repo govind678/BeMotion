@@ -34,5 +34,7 @@
 - (void) toggleMetronomeAudio : (BOOL)value;
 - (void) setTempo : (int)newTempo;
 
+- (BOOL) getMetronomeStatus;
+
 
 @end

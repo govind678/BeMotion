@@ -33,7 +33,7 @@ AudioMixerPlayer::AudioMixerPlayer(AudioDeviceManager& sharedDeviceManager)   : 
     
     m_bRecording            = false;
     
-    m_iTempo                =   DEFAULT_TEMPO;
+    m_fTempo                =   DEFAULT_TEMPO;
     
     deviceManager.addAudioCallback(this);
 }
@@ -179,7 +179,7 @@ void AudioMixerPlayer::addAudioEffect(int sampleID, int effectPosition, int effe
 {
     deviceManager.removeAudioCallback(this);
     audioFileStream.getUnchecked(sampleID)->addAudioEffect(effectPosition, effectID);
-    audioFileStream.getUnchecked(sampleID)->setTempo(m_iTempo);
+    audioFileStream.getUnchecked(sampleID)->setTempo(m_fTempo);
     deviceManager.addAudioCallback(this);
 }
 
@@ -265,19 +265,40 @@ void AudioMixerPlayer::motionUpdate(float *motion)
 }
 
 
-void AudioMixerPlayer::setTempo(int newTempo)
+
+//--- Metronome ---//
+
+void AudioMixerPlayer::setTempo(float newTempo)
 {
-    m_iTempo = newTempo;
+    m_fTempo = newTempo;
     for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
     {
         audioFileStream.getUnchecked(i)->setTempo(newTempo);
     }
 }
 
-int AudioMixerPlayer::getTempo()
+float AudioMixerPlayer::getTempo()
 {
-    return m_iTempo;
+    return m_fTempo;
 }
+
+void AudioMixerPlayer::startClock()
+{
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
+    {
+        audioFileStream.getUnchecked(i)->startClock();
+    }
+}
+
+void AudioMixerPlayer::stopClock()
+{
+    for (int i = 0; i < NUM_SAMPLE_SOURCES - 2; i++)
+    {
+        audioFileStream.getUnchecked(i)->stopClock();
+    }
+}
+
+
 
 
 

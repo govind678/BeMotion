@@ -23,5 +23,6 @@
 - (void)stopRecording;
 - (void)launchFXView;
 - (void)launchImportView;
+- (void)toggleGestureControl;
 
 @end

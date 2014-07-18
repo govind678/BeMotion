@@ -71,7 +71,11 @@ public:
     
     void motionUpdate(float* motion);
     
-    void setTempo(int newTempo);
+    
+    //--- Metronome ---//
+    void setTempo(float newTempo);
+    void startClock();
+    void stopClock();
     
     float* getSamplesToDrawWaveform();
     
@@ -118,6 +122,14 @@ private:
     
     float                           m_fStartPoint_s;
     Array<float>                    m_pfWaveformArray;
+    
+    
+    //--- Metronome ---//
+    float                           m_fTempo;
+    int64                           m_iSampleCount;
+    bool                            m_bMetronomeStatus;
+    int64                           m_iSampleLength;
+    int                             m_iBeatLength;
     
 };
 

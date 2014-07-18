@@ -26,6 +26,10 @@ AudioFileStream::AudioFileStream(int sampleID)    : thread("Sample Playback No. 
     m_fGain                     =   1.0f;
     m_fSampleRate               =   DEFAULT_SAMPLE_RATE;
     m_fStartPoint_s             =   0.0f;
+    m_fTempo                    =   DEFAULT_TEMPO;
+    m_iSampleCount              =   0;
+    m_bMetronomeStatus          =   false;
+    m_iSampleLength             =   0;
     
     transportSource.setSource(nullptr);
     formatManager.registerBasicFormats();
@@ -133,7 +137,9 @@ int AudioFileStream::loadAudioFile(String audioFilePath)
                 m_pfWaveformArray.set(block, (buffer.getArrayOfReadPointers()[0][0] + 1.0f) * (WAVEFORM_HEIGHT * 0.5f));
             }
             
-            
+            m_iSampleLength = reader->lengthInSamples;
+            m_iBeatLength = (m_fTempo / 60.0f) * (m_iSampleLength / m_fSampleRate);
+            std::cout << "Beats: " << m_iBeatLength << std::endl;
         }
         
 //        transportSource.setSource(currentAudioFileSource, 32768, &thread, deviceManager.getCurrentAudioDevice()->getCurrentSampleRate());
@@ -287,6 +293,13 @@ void AudioFileStream::getNextAudioBlock(const AudioSourceChannelInfo &audioSourc
 //        audioSourceChannelInfo.buffer->clear();
 //    }
     
+    if (m_bMetronomeStatus) {
+        m_iSampleCount += audioSourceChannelInfo.numSamples;
+        std::cout << "Sample Count: " << m_iSampleCount << std::endl;
+    }
+    
+    
+    
     transportSource.getNextAudioBlock(audioSourceChannelInfo);
     processAudioBlock(audioSourceChannelInfo.buffer->getArrayOfWritePointers(), audioSourceChannelInfo.numSamples);
 
@@ -335,6 +348,7 @@ void AudioFileStream::startPlayback()
 void AudioFileStream::stopPlayback()
 {
     m_bAudioCurrentlyPlaying    =   false;
+    m_iSampleCount = 0;
 //    m_bPlayingFromMemory        =   false;
 //    m_iSamplesRead = 0;
     if (m_iButtonMode != MODE_TRIGGER) {
@@ -608,8 +622,13 @@ void AudioFileStream::motionUpdate(float *motion)
 }
 
 
-void AudioFileStream::setTempo(int newTempo)
+
+//--- Metronome ---//
+
+void AudioFileStream::setTempo(float newTempo)
 {
+    m_fTempo = newTempo;
+    
     for (int effect = 0; effect < NUM_EFFECTS_SLOTS ; effect++)
     {
         if (audioEffectInitialized.getUnchecked(effect))
@@ -618,6 +637,19 @@ void AudioFileStream::setTempo(int newTempo)
         }
     }
 }
+
+
+void AudioFileStream::startClock() {
+    m_bMetronomeStatus = true;
+}
+
+
+void AudioFileStream::stopClock() {
+    m_bMetronomeStatus = false;
+    m_iSampleCount = 0;
+}
+
+
 
 
 float* AudioFileStream::getSamplesToDrawWaveform()

@@ -298,7 +298,8 @@
 
 - (void) setTempo:(int)tempo
 {
-    _backendInterface->setTempo(tempo);
+    [_metronome setTempo:tempo];
+//    _backendInterface->setTempo(tempo);
 }
 
 
@@ -381,7 +382,10 @@
     [[self navigationController] pushViewController:loadSampleVC animated:YES];
 }
 
-
+- (void) toggleGestureControl:(int)sampleID
+{
+    
+}
 
 - (void) startCopyingMediaFile
 {
@@ -414,10 +418,13 @@
 - (void) toggleMetronome : (BOOL) value {
     
     if (value == YES) {
-        _backendInterface->startMetronome();
+//        _backendInterface->startMetronome();
+        [_metronome startClock];
         [metronomeButton setSelected:YES];
     } else {
-        _backendInterface->stopMetronome();
+//        _backendInterface->stopMetronome();
+        [_metronome stopClock];
+        [metronomeBar turnOff];
         [metronomeButton setSelected:NO];
     }
 }
@@ -428,6 +435,9 @@
 }
 
 
+- (BOOL) getMetronomeStatus {
+    return [_metronome isRunning];
+}
 
 
 

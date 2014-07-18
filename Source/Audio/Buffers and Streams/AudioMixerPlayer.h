@@ -74,8 +74,10 @@ public:
     
     void motionUpdate(float* motion);
     
-    void setTempo(int newTempo);
-    int getTempo();
+    void setTempo(float newTempo);
+    float getTempo();
+    void startClock();
+    void stopClock();
     
     float* getSamplesToDrawWaveform(int sampleID);
     
@@ -94,7 +96,7 @@ private:
     
     bool                                m_bRecording;
     
-    int                                 m_iTempo;
+    float                               m_fTempo;
     
     Time                                m_cTime;
 };

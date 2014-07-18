@@ -37,7 +37,7 @@
     
     // Reference to App Delegate
     appDelegate = [[UIApplication sharedApplication] delegate];
-    fxNames = [[NSArray alloc] initWithArray:[[appDelegate fxTypes] allKeys] copyItems:YES];
+    fxNames = [[NSArray alloc] initWithArray:[appDelegate fxTypes] copyItems:YES];
     _backendInterface = [appDelegate getBackendReference];
     
     
@@ -138,7 +138,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.checkedPath = indexPath;
     [tableView reloadData];
-    _backendInterface->addAudioEffect(sampleID, effectPosition, [indexPath row]);
+    _backendInterface->addAudioEffect(sampleID, effectPosition, (int)[indexPath row]);
 }
 
 

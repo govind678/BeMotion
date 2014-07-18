@@ -56,13 +56,14 @@
     
     //--- Generate FX Types ---//
     NSString* fxTypesPath = [[NSBundle mainBundle] pathForResource:@"FXTypes" ofType:@"plist"];
-    fxTypes = [[NSMutableDictionary alloc] initWithContentsOfFile:fxTypesPath];
-    
+    fxTypes = [[NSMutableArray alloc] initWithContentsOfFile:fxTypesPath];
     
     
     //--- Preload Audio Samples and FX Path ---//
     
     NSArray *sectionSamples = [sampleSets objectForKey:@"Embryo"];
+    
+    backendInterface->setTempo([[sectionSamples objectAtIndex:6] floatValue]);
     
     for (int sample = 0; sample < NUM_SAMPLE_SOURCES; sample++) {
         NSString *samplePath = [[NSBundle mainBundle] pathForResource:[sectionSamples objectAtIndex:sample] ofType:@"wav"];
@@ -72,13 +73,12 @@
     NSString *fxPath = [[NSBundle mainBundle] pathForResource:[fxPacks objectAtIndex:0] ofType:@"json"];
     backendInterface->loadFXPreset(fxPath);
     
-    backendInterface->setTempo([[sectionSamples objectAtIndex:6] floatValue]);
-    
     
     
     //--- Initialize Metronome ---//
     metronome   =   [[Metronome alloc] init];
     [metronome setBackendReference:backendInterface];
+    [metronome setTempo:[[sectionSamples objectAtIndex:6] floatValue]];
     
     
     return YES;

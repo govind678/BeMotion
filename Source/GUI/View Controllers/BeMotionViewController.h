@@ -82,6 +82,7 @@
 - (void) toggleMetronome : (BOOL) value;
 - (void) toggleMetronomeAudio : (BOOL) value;
 - (void) setTempo : (int)tempo;
+- (BOOL) getMetronomeStatus;
 
 
 //--- Sample Button Delegate Methods ---//
@@ -95,6 +96,7 @@
 //- (void)startResampling: (int)sampleID;
 - (void)launchFXView: (int)sampleID;
 - (void)launchImportView: (int)sampleID;
+- (void)toggleGestureControl: (int)sampleID;
 
 
 @end
