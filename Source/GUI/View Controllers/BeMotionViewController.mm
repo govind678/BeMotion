@@ -299,6 +299,7 @@
 - (void) setTempo:(int)tempo
 {
     [_metronome setTempo:tempo];
+    [tempoPicker setTempo:tempo];
 //    _backendInterface->setTempo(tempo);
 }
 

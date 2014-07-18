@@ -30,7 +30,7 @@
 	<array>
 		<string>Frequency</string>
 		<string>Resonance</string>
-		<string>Shape</string>
+		<string>Range</string>
 	</array>
 	<key>Granularizer</key>
 	<array>

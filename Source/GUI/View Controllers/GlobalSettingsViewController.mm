@@ -196,7 +196,7 @@
     //--- Set Tempo from Presets ---//
     
     m_iTempo = int([[sectionSamples objectAtIndex:6] integerValue]);
-//    _backendInterface->setTempo(m_iTempo);
+    _backendInterface->setTempo(m_iTempo);
     [_metronome setTempo:m_iTempo];
 }
 
