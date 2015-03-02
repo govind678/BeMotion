@@ -1,29 +1,18 @@
-# README #
+BeMotion
+=================
 
-BeMotion is an audio sampling and looping iOS application that uses motion gestures to control audio effect parameters.
+iOS audio sampling, looping application that uses motion gestures to control audio effects
 
-### What is this repository for? ###
+Native iOS for GUI, CoreMotion for motion processing and JUCE for audio processing
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+JUCE: https://github.com/julianstorer/JUCE
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Effects Implemented:
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+	Tremolo (LFO),
+  	Delay (IIR / FIR),
+  	Vibrato (LFO)
+  	Wah (IIR / FIR),
+  	Granularizer
+	Auto-Limiter
