@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>None</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Tremolo</key>
+	<array>
+		<string>Rate</string>
+		<string>Depth</string>
+		<string>Shape</string>
+	</array>
+	<key>Delay</key>
+	<array>
+		<string>Time</string>
+		<string>Dry/Wet</string>
+		<string>Feedback</string>
+	</array>
+	<key>Vibrato</key>
+	<array>
+		<string>Rate</string>
+		<string>Width</string>
+		<string>Shape</string>
+	</array>
+	<key>Wah</key>
+	<array>
+		<string>Frequency</string>
+		<string>Resonance</string>
+		<string>Blend</string>
+	</array>
+	<key>Granularizer</key>
+	<array>
+		<string>Rate</string>
+		<string>Size</string>
+		<string>Pitch</string>
+	</array>
+</dict>
+</plist>

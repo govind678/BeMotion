@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Aliquam</key>
+	<array>
+		<string>Aliquam Bass</string>
+		<string>Aliquam Choir</string>
+		<string>Aliquam Drums</string>
+		<string>Aliquam Guitar</string>
+		<string>Crash</string>
+		<string>Embryo Crash</string>
+		<integer>100</integer>
+		<string>Aliquam.png</string>
+	</array>
+	<key>Beatbox</key>
+	<array>
+		<string>Beatbox Bass</string>
+		<string>Beatbox Hat</string>
+		<string>Beatbox Snare</string>
+		<string>Beatbox Hum</string>
+		<string>Beatbox Crash</string>
+		<string>Crash</string>
+		<integer>100</integer>
+		<string>Beatbox.png</string>
+	</array>
+	<key>Electro Kit</key>
+	<array>
+		<string>Kick</string>
+		<string>Snare</string>
+		<string>Closed Hat</string>
+		<string>Open Hat</string>
+		<string>Embryo Crash</string>
+		<string>Crash</string>
+		<integer>120</integer>
+		<string>Electronic Kit.png</string>
+	</array>
+	<key>Iterop</key>
+	<array>
+		<string>Iterop Chords</string>
+		<string>Iterop Bass</string>
+		<string>Iterop Strum</string>
+		<string>Iterop Drums</string>
+		<string>Crash</string>
+		<string>Embryo Crash</string>
+		<integer>200</integer>
+		<string>Iterop.png</string>
+	</array>
+	<key>Metabolaic</key>
+	<array>
+		<string>Metabolaic Distortion</string>
+		<string>Metabolaic Lead</string>
+		<string>Metabolaic Strum</string>
+		<string>Metabolaic Drums</string>
+		<string>Metabolaic Crash</string>
+		<string>Embryo Crash</string>
+		<integer>100</integer>
+		<string>Machine Transformations.png</string>
+	</array>
+	<key>Tripudia</key>
+	<array>
+		<string>Tripudia Guitar</string>
+		<string>Tripudia Bass</string>
+		<string>Tripudia Highs</string>
+		<string>Tripudia Drums</string>
+		<string>Embryo Crash</string>
+		<string>Crash</string>
+		<integer>200</integer>
+		<string>Electronic Set.png</string>
+	</array>
+	<key>Embryo</key>
+	<array>
+		<string>Embryo Synth</string>
+		<string>Embryo Bass</string>
+		<string>Embryo Percussion</string>
+		<string>Embryo Drums</string>
+		<string>Embryo Crash</string>
+		<string>Crash</string>
+		<string>200</string>
+		<string>Embryo.png</string>
+	</array>
+	<key>Indian Percussion</key>
+	<array>
+		<string>Mrudangam Low</string>
+		<string>Mrudangam Bells</string>
+		<string>Morsing</string>
+		<string>Ghatam</string>
+		<string>Indian Hit</string>
+		<string>Crash</string>
+		<string>100</string>
+		<string>Indian Percussion.png</string>
+	</array>
+	<key>Breakbeat</key>
+	<array>
+		<string>Breakbeat0</string>
+		<string>Breakbeat1</string>
+		<string>Breakbeat2</string>
+		<string>Breakbeat3</string>
+		<string>Breakbeat4</string>
+		<string>DubBeat4</string>
+		<string>140</string>
+		<string>Breakbeat.png</string>
+	</array>
+	<key>DubBeat</key>
+	<array>
+		<string>DubBeat0</string>
+		<string>DubBeat1</string>
+		<string>DubBeat2</string>
+		<string>DubBeat3</string>
+		<string>DubBeat4</string>
+		<string>Breakbeat4</string>
+		<string>140</string>
+		<string>DubBeat.png</string>
+	</array>
+	<key>Latin Loop</key>
+	<array>
+		<string>Latin_Loop0</string>
+		<string>Latin_Loop1</string>
+		<string>Latin_Loop2</string>
+		<string>Latin_Loop3</string>
+		<string>Latin_Loop4</string>
+		<string>Latin_Percussion4</string>
+		<string>126</string>
+		<string>Latin Loop.png</string>
+	</array>
+	<key>Latin Percussion</key>
+	<array>
+		<string>Latin_Percussion0</string>
+		<string>Latin_Percussion1</string>
+		<string>Latin_Percussion2</string>
+		<string>Latin_Percussion3</string>
+		<string>Latin_Percussion4</string>
+		<string>Latin_Loop4</string>
+		<string>126</string>
+		<string>Latin Percussion.png</string>
+	</array>
+	<key>Machine Transformations</key>
+	<array>
+		<string>MachineTransformations0</string>
+		<string>MachineTransformations1</string>
+		<string>MachineTransformations2</string>
+		<string>MachineTransformations3</string>
+		<string>MachineTransformations4</string>
+		<string>Crash</string>
+		<string>120</string>
+		<string>Machine Transformations.png</string>
+	</array>
+</dict>
+</plist>

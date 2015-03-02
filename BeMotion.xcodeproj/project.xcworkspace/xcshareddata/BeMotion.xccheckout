@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9E9F0242-EE63-4C4C-90CB-01AA722B3E55</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BeMotion</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AB83E89FB59D728872C8F232EA53549B28054806</key>
+		<string>https://bitbucket.org/govind678/bemotion.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BeMotion.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AB83E89FB59D728872C8F232EA53549B28054806</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/govind678/bemotion.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AB83E89FB59D728872C8F232EA53549B28054806</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AB83E89FB59D728872C8F232EA53549B28054806</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bemotion</string>
+		</dict>
+	</array>
+</dict>
+</plist>
