@@ -25,6 +25,9 @@
     
     DGTAuthenticateButton *authenticateButton = [DGTAuthenticateButton buttonWithAuthenticationCompletion:^(DGTSession *session, NSError *error) {
         // play with Digits session
+        NSString* phoneNumber = [session phoneNumber];
+        NSLog(@"Phone Number: %@", phoneNumber);
+        NSLog(@"User ID: %@", [session userID]);
     }];
     authenticateButton.center = self.view.center;
     [self.view addSubview:authenticateButton];
@@ -34,6 +37,8 @@
     [backButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
     [backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
 
 }
 
