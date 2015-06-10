@@ -41,12 +41,12 @@ AudioEffectSource::AudioEffectSource(int effectID, int numChannels)
     //--- Better Way To Generate This? ---//
     m_iTimeQuantizationPoints[0] = 1;
     m_iTimeQuantizationPoints[1] = 2;
-    m_iTimeQuantizationPoints[2] = 3;
-    m_iTimeQuantizationPoints[3] = 4;
-    m_iTimeQuantizationPoints[4] = 6;
-    m_iTimeQuantizationPoints[5] = 8;
-    m_iTimeQuantizationPoints[6] = 12;
-    m_iTimeQuantizationPoints[7] = 16;
+    m_iTimeQuantizationPoints[2] = 4;
+    m_iTimeQuantizationPoints[3] = 6;
+    m_iTimeQuantizationPoints[4] = 8;
+    m_iTimeQuantizationPoints[5] = 12;
+    m_iTimeQuantizationPoints[6] = 16;
+    m_iTimeQuantizationPoints[7] = 24;
     
     
     m_fTempo = 0.0f;
