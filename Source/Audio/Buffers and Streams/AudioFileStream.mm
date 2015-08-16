@@ -338,6 +338,8 @@ void AudioFileStream::startPlayback()
     m_bAudioCurrentlyPlaying    =   true;
 //    m_bPlayingFromMemory        =   true;
     
+    transportSource.setGain(m_fGain * m_fGain * GAIN_SCALE);
+    
     if ((m_iButtonMode != MODE_BEATREPEAT))
     {
         transportSource.setPosition(m_fStartPoint_s);
