@@ -17,7 +17,7 @@
 
 @synthesize sampleSets, fxPacks, fxTypes;
 
-static NSString * const kDefaultSampleSet = @"Machine Transformations";
+static NSString * const kDefaultSampleSet = @"DubBeat";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
