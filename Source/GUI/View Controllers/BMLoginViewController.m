@@ -23,14 +23,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    DGTAuthenticateButton *authenticateButton = [DGTAuthenticateButton buttonWithAuthenticationCompletion:^(DGTSession *session, NSError *error) {
-        // play with Digits session
-        NSString* phoneNumber = [session phoneNumber];
-        NSLog(@"Phone Number: %@", phoneNumber);
-        NSLog(@"User ID: %@", [session userID]);
-    }];
-    authenticateButton.center = self.view.center;
-    [self.view addSubview:authenticateButton];
+//    DGTAuthenticateButton *authenticateButton = [DGTAuthenticateButton buttonWithAuthenticationCompletion:^(DGTSession *session, NSError *error) {
+//        // play with Digits session
+//        NSString* phoneNumber = [session phoneNumber];
+//        NSLog(@"Phone Number: %@", phoneNumber);
+//        NSLog(@"User ID: %@", [session userID]);
+//    }];
+//    authenticateButton.center = self.view.center;
+//    [self.view addSubview:authenticateButton];
     
     backButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 30.0f, 30.0f)];
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
