@@ -80,8 +80,7 @@
 		28BE561E1A972503000D42FC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28BE561A1A972503000D42FC /* Images.xcassets */; };
 		28BE561F1A972503000D42FC /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28BE561B1A972503000D42FC /* main.mm */; };
 		28BE56221A972558000D42FC /* BMAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28BE56211A972558000D42FC /* BMAppDelegate.mm */; };
-		28EB108C1AA0CA0D00DE802B /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28EB108A1AA0CA0D00DE802B /* TwitterKit.framework */; };
-		28EB108D1AA0CA0D00DE802B /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 28EB108B1AA0CA0D00DE802B /* TwitterKitResources.bundle */; };
+		28CA9E8B1C6C32EB009BFB7B /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */; };
 		28EB10901AA0CA8700DE802B /* BMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EB108F1AA0CA8700DE802B /* BMLoginViewController.m */; };
 		28F8AAEE1A8C231F0059E833 /* Indian Percussion.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AAED1A8C231F0059E833 /* Indian Percussion.png */; };
 		28F8AB0B1A8C25BD0059E833 /* Breakbeat.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AB071A8C25BD0059E833 /* Breakbeat.png */; };
@@ -824,11 +823,10 @@
 		28BE561B1A972503000D42FC /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = main.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28BE56201A972558000D42FC /* BMAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BMAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28BE56211A972558000D42FC /* BMAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = BMAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterCore.framework; path = Dependencies/TwitterCore.framework; sourceTree = "<group>"; };
 		28DC51361A96FFFB005983AB /* BeatMotionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeatMotionTests.m; sourceTree = "<group>"; };
 		28DC51371A96FFFB005983AB /* BeMotionTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BeMotionTests-Info.plist"; sourceTree = "<group>"; };
 		28DC51391A96FFFB005983AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		28EB108A1AA0CA0D00DE802B /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterKit.framework; path = Dependencies/TwitterKit.framework; sourceTree = "<group>"; };
-		28EB108B1AA0CA0D00DE802B /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = Dependencies/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		28EB108E1AA0CA8700DE802B /* BMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLoginViewController.h; sourceTree = "<group>"; };
 		28EB108F1AA0CA8700DE802B /* BMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMLoginViewController.m; sourceTree = "<group>"; };
 		28F8AAED1A8C231F0059E833 /* Indian Percussion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indian Percussion.png"; sourceTree = "<group>"; };
@@ -1035,8 +1033,8 @@
 				FCDF3C01197CC93800FFF800 /* AVFoundation.framework in Frameworks */,
 				FCDF3BFF197CC92F00FFF800 /* CoreText.framework in Frameworks */,
 				FCDF3BFD197CC92800FFF800 /* QuartzCore.framework in Frameworks */,
-				28EB108C1AA0CA0D00DE802B /* TwitterKit.framework in Frameworks */,
 				FCDF3BCA197CC8CA00FFF800 /* CoreGraphics.framework in Frameworks */,
+				28CA9E8B1C6C32EB009BFB7B /* TwitterCore.framework in Frameworks */,
 				FCDF3BCC197CC8CA00FFF800 /* UIKit.framework in Frameworks */,
 				FCDF3BC8197CC8CA00FFF800 /* Foundation.framework in Frameworks */,
 			);
@@ -2258,8 +2256,7 @@
 		FCDF3BC6197CC8CA00FFF800 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				28EB108A1AA0CA0D00DE802B /* TwitterKit.framework */,
-				28EB108B1AA0CA0D00DE802B /* TwitterKitResources.bundle */,
+				28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */,
 				28726E651A98FB2600A6EF0A /* Crashlytics.framework */,
 				28726E661A98FB2600A6EF0A /* Fabric.framework */,
 				FCDF4C59197CF1FC00FFF800 /* AudioToolbox.framework */,
@@ -2731,7 +2728,6 @@
 				286045771B805100008A99A5 /* Latin_Percussion0.wav in Resources */,
 				2860455F1B805100008A99A5 /* Closed Hat.wav in Resources */,
 				FCDF4EF6197E139500FFF800 /* Icon-60.png in Resources */,
-				28EB108D1AA0CA0D00DE802B /* TwitterKitResources.bundle in Resources */,
 				FCDF4EF7197E139500FFF800 /* Icon-60@2x.png in Resources */,
 				286045861B805100008A99A5 /* Tripudia Bass.wav in Resources */,
 				2860457A1B805100008A99A5 /* Latin_Percussion3.wav in Resources */,

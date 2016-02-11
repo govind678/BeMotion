@@ -45,6 +45,17 @@
 				<key>KitName</key>
 				<string>Twitter</string>
 			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>23816xC6DZ320MqJN2V4KE6cN</string>
+					<key>consumerSecret</key>
+					<string>5ppGD1tP80fNHzpLujyzcu2NpogbKSYKza7H0gdcYDdbNQKQzC</string>
+				</dict>
+				<key>KitName</key>
+				<string>Digits</string>
+			</dict>
 		</array>
 	</dict>
 	<key>LSRequiresIPhoneOS</key>

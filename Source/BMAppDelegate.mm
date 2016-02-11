@@ -9,7 +9,7 @@
 #import "BMAppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <TwitterKit/TwitterKit.h>
+//#import <TwitterKit/TwitterKit.h>
 
 
 
@@ -21,7 +21,10 @@ static NSString * const kDefaultSampleSet = @"DubBeat";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Fabric with:@[CrashlyticsKit, TwitterKit]];
+    // Initialize Crashlytics
+    [Fabric with:@[[Crashlytics class]]];
+    
+//    [Fabric with:@[CrashlyticsKit, TwitterKit]];
 
 
 //    //--- Enable Push Notifications ---//
