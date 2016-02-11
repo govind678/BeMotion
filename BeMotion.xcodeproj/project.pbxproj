@@ -3074,6 +3074,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3084,7 +3085,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = BeMotion;
-				PROVISIONING_PROFILE = "a35e7542-1136-408d-bfc6-add7ba94c442";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3097,6 +3098,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3107,7 +3109,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = BeMotion;
-				PROVISIONING_PROFILE = "a35e7542-1136-408d-bfc6-add7ba94c442";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
