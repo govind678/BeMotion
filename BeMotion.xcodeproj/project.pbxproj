@@ -3084,6 +3084,7 @@
 				GCC_PREFIX_HEADER = "Source/Supporting Files/BeMotion-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = BeMotion;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -3108,6 +3109,7 @@
 				GCC_PREFIX_HEADER = "Source/Supporting Files/BeMotion-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Supporting Files/BeMotion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = BeMotion;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
