@@ -1,0 +1,17 @@
+{
+  "Embryo": {
+    "Tempo": 200,
+    "Samples": ["Embryo Bass", 
+                "Embryo Drums",
+                "Embryo Percussion",
+                "Embryo Synth"]
+  },
+  
+  "Dubstep": {
+    "Tempo": 140,
+    "Samples": ["Dubstep Synth", 
+                "Dubstep Bass",
+                "Dubstep Lead",
+                "Dubstep Drums"]
+  }
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Title</key>
+		<string>None (Add Effect)</string>
+		<key>Parameters</key>
+		<array>
+			<string>None</string>
+			<string>None</string>
+			<string>None</string>
+		</array>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Filter (Wah)</string>
+		<key>Parameters</key>
+		<array>
+			<string>Frequency</string>
+			<string>Dry/Wet Ratio</string>
+			<string>Bandwidth (Q)</string>
+		</array>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Tremolo</string>
+		<key>Parameters</key>
+		<array>
+			<string>Time (s)</string>
+			<string>Depth</string>
+			<string>Shape</string>
+		</array>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Vibrato</string>
+		<key>Parameters</key>
+		<array>
+			<string>Time (s)</string>
+			<string>Width</string>
+			<string>Shape</string>
+		</array>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Delay</string>
+		<key>Parameters</key>
+		<array>
+			<string>Time (s)</string>
+			<string>Dry/Wet Ratio</string>
+			<string>Feedback</string>
+		</array>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Granularizer</string>
+		<key>Parameters</key>
+		<array>
+			<string>Time (s)</string>
+			<string>Grain Size</string>
+			<string>None</string>
+		</array>
+	</dict>
+</array>
+</plist>
