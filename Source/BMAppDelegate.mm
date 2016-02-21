@@ -11,6 +11,11 @@
 #import <Crashlytics/Crashlytics.h>
 //#import <TwitterKit/TwitterKit.h>
 
+#import <AWSCore/AWSCore.h>
+#import <AWSCognito/AWSCognito.h>
+#import <AWSS3/AWSS3.h>
+
+#import "BMConstants.h"
 
 
 @implementation BMAppDelegate
@@ -75,6 +80,19 @@ static NSString * const kDefaultSampleSet = @"DubBeat";
     [metronome setTempo:[[sectionSamples objectAtIndex:6] floatValue]];
     
     
+    //--- Initialize AWS ---//
+    AWSCognitoCredentialsProvider* credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1
+                                                                                                    identityPoolId:kAWSCognitoIdentityPoolId];
+    
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1
+                                                                         credentialsProvider:credentialsProvider];
+    
+    AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
+    
+    // Retrieve your Amazon Cognito ID.
+//    NSString *cognitoId = credentialsProvider.identityId;
+    
+    
     return YES;
 }
 							
@@ -129,6 +147,11 @@ static NSString * const kDefaultSampleSet = @"DubBeat";
 }
 
 
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    
+    // Store Completion Handler
+    [AWSS3TransferUtility interceptApplication:application handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
+}
 
 //- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 //{

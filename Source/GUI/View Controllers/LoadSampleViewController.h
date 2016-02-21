@@ -23,12 +23,16 @@
     LoadMediaFile*          mediaPicker;
     
     int                     currentSegment;
+    
+    UIActivityIndicatorView*    _activityIndicator;
+    UIView*                     _busyView;
 //    SampleSelect*           sampleSelector;
 }
 
 @property (retain, nonatomic) IBOutlet WaveformView *waveformView;
 
 @property (retain, nonatomic) IBOutlet UITableView *samplesTable;
+@property (nonatomic, retain) NSString* downloadPath;
 
 
 - (IBAction)segmentedControlChanged:(UISegmentedControl *)sender;

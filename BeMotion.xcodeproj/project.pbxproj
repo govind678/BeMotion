@@ -81,6 +81,10 @@
 		28BE561F1A972503000D42FC /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28BE561B1A972503000D42FC /* main.mm */; };
 		28BE56221A972558000D42FC /* BMAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28BE56211A972558000D42FC /* BMAppDelegate.mm */; };
 		28CA9E8B1C6C32EB009BFB7B /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */; };
+		28CA9EED1C7042A4009BFB7B /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CA9EEC1C7042A4009BFB7B /* AWSS3.framework */; };
+		28CA9EF11C704325009BFB7B /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CA9EF01C704325009BFB7B /* AWSCore.framework */; };
+		28CA9EF31C706B55009BFB7B /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CA9EF21C706B55009BFB7B /* AWSCognito.framework */; };
+		28CA9EF61C706BEA009BFB7B /* BMConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28CA9EF51C706BEA009BFB7B /* BMConstants.mm */; };
 		28EB10901AA0CA8700DE802B /* BMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EB108F1AA0CA8700DE802B /* BMLoginViewController.m */; };
 		28F8AAEE1A8C231F0059E833 /* Indian Percussion.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AAED1A8C231F0059E833 /* Indian Percussion.png */; };
 		28F8AB0B1A8C25BD0059E833 /* Breakbeat.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8AB071A8C25BD0059E833 /* Breakbeat.png */; };
@@ -824,6 +828,11 @@
 		28BE56201A972558000D42FC /* BMAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BMAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28BE56211A972558000D42FC /* BMAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = BMAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterCore.framework; path = Dependencies/TwitterCore.framework; sourceTree = "<group>"; };
+		28CA9EEC1C7042A4009BFB7B /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSS3.framework; path = Dependencies/AWSS3.framework; sourceTree = "<group>"; };
+		28CA9EF01C704325009BFB7B /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = Dependencies/AWSCore.framework; sourceTree = "<group>"; };
+		28CA9EF21C706B55009BFB7B /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = Dependencies/AWSCognito.framework; sourceTree = "<group>"; };
+		28CA9EF41C706BEA009BFB7B /* BMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMConstants.h; sourceTree = "<group>"; };
+		28CA9EF51C706BEA009BFB7B /* BMConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BMConstants.mm; sourceTree = "<group>"; };
 		28DC51361A96FFFB005983AB /* BeatMotionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeatMotionTests.m; sourceTree = "<group>"; };
 		28DC51371A96FFFB005983AB /* BeMotionTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BeMotionTests-Info.plist"; sourceTree = "<group>"; };
 		28DC51391A96FFFB005983AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1022,6 +1031,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28CA9EF31C706B55009BFB7B /* AWSCognito.framework in Frameworks */,
+				28CA9EF11C704325009BFB7B /* AWSCore.framework in Frameworks */,
+				28CA9EED1C7042A4009BFB7B /* AWSS3.framework in Frameworks */,
 				FCDF4C5A197CF1FC00FFF800 /* AudioToolbox.framework in Frameworks */,
 				28726E671A98FB2600A6EF0A /* Crashlytics.framework in Frameworks */,
 				FCDF4C58197CF1F000FFF800 /* CoreMotion.framework in Frameworks */,
@@ -2256,6 +2268,9 @@
 		FCDF3BC6197CC8CA00FFF800 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28CA9EF21C706B55009BFB7B /* AWSCognito.framework */,
+				28CA9EF01C704325009BFB7B /* AWSCore.framework */,
+				28CA9EEC1C7042A4009BFB7B /* AWSS3.framework */,
 				28CA9E881C6C32EB009BFB7B /* TwitterCore.framework */,
 				28726E651A98FB2600A6EF0A /* Crashlytics.framework */,
 				28726E661A98FB2600A6EF0A /* Fabric.framework */,
@@ -2298,6 +2313,8 @@
 				FCDF4C91197D637A00FFF800 /* Macros.h */,
 				FCDF4C92197D637A00FFF800 /* Metronome.h */,
 				FCDF4C93197D637A00FFF800 /* Metronome.mm */,
+				28CA9EF41C706BEA009BFB7B /* BMConstants.h */,
+				28CA9EF51C706BEA009BFB7B /* BMConstants.mm */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -2920,6 +2937,7 @@
 				FCDF4EAB197D95EB00FFF800 /* SegueLR.m in Sources */,
 				FCDF4E92197D86D400FFF800 /* Tremolo.mm in Sources */,
 				FCDF4E93197D86D400FFF800 /* Vibrato.mm in Sources */,
+				28CA9EF61C706BEA009BFB7B /* BMConstants.mm in Sources */,
 				FCDF4E94197D86D400FFF800 /* Wah2.mm in Sources */,
 				FCDF4E95197D86D400FFF800 /* LoadPreset.mm in Sources */,
 				FCDF4E96197D86D400FFF800 /* LFO.mm in Sources */,
