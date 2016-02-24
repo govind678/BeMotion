@@ -115,6 +115,10 @@ float AudioController::getNormalizedPlaybackProgress(int track)
     return _streams.getUnchecked(track)->getNormalizedPlaybackProgress();
 }
 
+float AudioController::getTotalTimeOfTrack(int track)
+{
+    return _streams.getUnchecked(track)->getTotalTime();
+}
 
 void AudioController::saveMicRecordingForTrack(String filepath, int track)
 {

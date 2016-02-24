@@ -10,7 +10,7 @@
 
 @interface BMSettings : NSObject
 
-@property (nonatomic) BOOL ranOnce;
+@property (nonatomic, readwrite, getter = didRunOnce) BOOL ranOnce;
 
 
 /** Returns the current user's settings.

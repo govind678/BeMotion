@@ -26,7 +26,7 @@
 @property (nonatomic) BOOL recordingLock;
 @property (nonatomic, weak) id <BMSampleViewDelegate> sampleDelegate;
 
-- (void)updatePlaybackProgress;
 - (void)reloadWaveform;
+- (void)tick:(int)count;
 
 @end

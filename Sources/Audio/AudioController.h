@@ -42,6 +42,7 @@ public:
     void startPlaybackOfTrack(int track);
     void stopPlaybackOfTrack(int track);
     float getNormalizedPlaybackProgress(int track);
+    float getTotalTimeOfTrack(int track);
     
     void setTrackGain(int track, float gain);
     float getTrackGain(int track);

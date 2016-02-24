@@ -1,17 +1,32 @@
 {
-  "Embryo": {
-    "Tempo": 200,
-    "Samples": ["Embryo Bass", 
-                "Embryo Drums",
-                "Embryo Percussion",
-                "Embryo Synth"]
-  },
-  
-  "Dubstep": {
-    "Tempo": 140,
-    "Samples": ["Dubstep Synth", 
-                "Dubstep Bass",
-                "Dubstep Lead",
-                "Dubstep Drums"]
-  }
+    
+    "Embryo": {
+        
+        "Time": {
+            "Tempo": 200,
+            "Meter": 8,
+            "Interval": 8
+        },
+        
+        "Samples": ["Embryo Bass",
+                    "Embryo Drums",
+                    "Embryo Percussion",
+                    "Embryo Synth"]
+    },
+    
+    
+    "Dubstep": {
+        
+        "Time": {
+            "Tempo": 140,
+            "Meter": 8,
+            "Interval": 8
+        },
+        
+        "Samples": ["Dubstep Synth",
+                    "Dubstep Bass",
+                    "Dubstep Lead",
+                    "Dubstep Drums"]
+    }
+    
 }

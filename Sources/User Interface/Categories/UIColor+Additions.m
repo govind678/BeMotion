@@ -59,6 +59,14 @@
     return [UIColor colorWithRed:0.96f green:0.93f blue:0.17f alpha:1.0f];
 }
 
++ (UIColor*)textWhiteColor {
+    return [UIColor colorWithWhite:0.8f alpha:1.0f];
+}
+
++ (UIColor*)elementWhiteColor {
+    return [UIColor colorWithWhite:0.6f alpha:1.0f];
+}
+
 + (NSArray*)trackColors {
     return [NSArray arrayWithObjects:[UIColor appRedColor], [UIColor appBlueColor], [UIColor appGreenColor], [UIColor appYellowColor], nil];
 }

@@ -12,6 +12,7 @@
 
 #import "JuceHeader.h"
 #import "AudioController.h"
+//#import "BMSequencer.h"
 #import "BMConstants.h"
 
 //static NSString* const kMicRecordingDirectory       = @"MicRecordings";
@@ -69,6 +70,9 @@
             BMIndexPath* indexPath = [[BMIndexPath alloc] init];
             [_trackIndexPaths addObject:indexPath];
         }
+        
+        // Initialise Sequencer and Set Delegate
+//        [BMSequencer sharedSequencer];
     }
     
     return self;
@@ -176,6 +180,10 @@
     return _audioController->getNormalizedPlaybackProgress(track);
 }
 
+- (float)getTotalTime:(int)track {
+    return _audioController->getTotalTimeOfTrack(track);
+}
+
 - (void)startRecordingAtTrack:(int)track {
     _audioController->startRecordingAtTrack(track);
 }
@@ -245,6 +253,7 @@
 }
 
 
+
 #pragma mark - Private Methods
 
 - (juce::String)fromNSString:(NSString*)string {
@@ -254,7 +263,6 @@
 - (NSString*)toNSString:(juce::String)string {
     return [NSString stringWithUTF8String:string.toUTF8()];
 }
-
 
 @end
 

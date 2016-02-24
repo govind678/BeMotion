@@ -9,9 +9,11 @@
 #import "BMSettings.h"
 #import "BMConstants.h"
 #import "BMAudioController.h"
+#import "BMSequencer.h"
 
 static NSString* const kRanOnceKey          = @"settings.ranOnce";
 static NSString* const kIndexPathsKey       = @"settings.sampleIndexPaths";
+static NSString* const kTimeKey             = @"settings.time";
 
 @implementation BMSettings
 
@@ -62,6 +64,15 @@ static NSString* const kIndexPathsKey       = @"settings.sampleIndexPaths";
     [defaults setObject:trackIndexPaths forKey:kIndexPathsKey];
     
     
+    // Saving Tempo
+    NSArray* tempo = [NSArray arrayWithObjects:
+                      [NSNumber numberWithFloat:[[BMSequencer sharedSequencer] tempo]],
+                      [NSNumber numberWithInt:[[BMSequencer sharedSequencer] meter]],
+                      [NSNumber numberWithInt:[[BMSequencer sharedSequencer] interval]], nil];
+    [defaults setObject:tempo forKey:kTimeKey];
+    
+    
+    
     [defaults synchronize];
 }
 
@@ -78,10 +89,11 @@ static NSString* const kIndexPathsKey       = @"settings.sampleIndexPaths";
     _ranOnce = [defaults boolForKey:kRanOnceKey];
     
     
-    // Loading Index Paths
+    // Loading Index Paths and Tempo
     
     if (_ranOnce) {
         
+        // Loading Index Paths
         NSArray* indexPaths = (NSArray*)[defaults objectForKey:kIndexPathsKey];
         for (int i=0; i < indexPaths.count; i++) {
             NSArray* array = (NSArray*)[indexPaths objectAtIndex:i];
@@ -94,8 +106,17 @@ static NSString* const kIndexPathsKey       = @"settings.sampleIndexPaths";
             }
         }
         
+        // Loading Tempo
+        NSArray* time = (NSArray*)[defaults objectForKey:kTimeKey];
+        [[BMSequencer sharedSequencer] setTempo:[[time objectAtIndex:0] floatValue]];
+        [[BMSequencer sharedSequencer] setMeter:[[time objectAtIndex:1] intValue]];
+        [[BMSequencer sharedSequencer] setInterval:[[time objectAtIndex:2] intValue]];
+
+        
+        
     } else {
         
+        // Loading Index Paths
         for (int i=0; i < kNumTracks; i++) {
             BMIndexPath* path = [[BMAudioController sharedController] getIndexPathForTrack:i];
             path.library = 0;

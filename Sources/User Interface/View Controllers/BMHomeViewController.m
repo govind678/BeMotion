@@ -9,12 +9,15 @@
 #import "BMHomeViewController.h"
 
 #import "BMAudioController.h"
+#import "BMSequencer.h"
 #import "BMConstants.h"
 
 #import "BMEffectsViewController.h"
 #import "BMLoadFileViewController.h"
+#import "BMTempoViewController.h"
 
 #import "BMSampleView.h"
+#import "BMTempoView.h"
 #import "BMHorizontalSlider.h"
 #import "BMPanSlider.h"
 
@@ -22,24 +25,27 @@
 static float const kTrackButtonHeight               = 100.0f;
 static float const kButtonYGap                      = 15.0f;
 static const float kOptionButtonSize                = 60.0f;
-
-static float const kPlaybackProgressInterval        = 0.01f;
+static const float kTempoViewHeight                 = 5.0f;
 
 static NSString* const kMasterRecordNormalImage     = @"Recording-Normal.png";
 static NSString* const kMasterRecordSelectedImage   = @"Recording-Selected.png";
 static NSString* const kMixerNormalImage            = @"Mixer-Normal.png";
 static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
+static NSString* const kMetronomeNormalImage        = @"Metronome-Normal.png";
+static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
 
-@interface BMHomeViewController() <BMSampleViewDelegate>
+@interface BMHomeViewController() <BMSampleViewDelegate, BMSequencerDelegate>
 {
     NSArray*        _sampleViews;
-    NSTimer*        _progressTimer;
     
     NSArray*        _gainSliders;
     NSArray*        _panSliders;
     
     UIButton*       _masterRecordButton;
     UIButton*       _mixerButton;
+    UIButton*       _tempoButton;
+    
+    BMTempoView*    _tempoView;
 }
 @end
 
@@ -95,11 +101,9 @@ static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
     _panSliders = [[NSArray alloc] initWithArray:panSliders];
     
     
-    // Start Track Playback Progress Timer
-    
-    _progressTimer = [NSTimer scheduledTimerWithTimeInterval:kPlaybackProgressInterval target:self selector:@selector(playbackProgressTimerCallback) userInfo:nil repeats:YES];
-    
-    
+    // Setup Tempo Bar
+    _tempoView = [[BMTempoView alloc] initWithFrame:CGRectMake(self.margin, self.view.frame.size.height - kOptionButtonSize - self.margin - kTempoViewHeight - 5.0f, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
+    [self.view addSubview:_tempoView];
     
     // Setup Option Buttons
     
@@ -114,6 +118,12 @@ static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
     [_mixerButton setImage:[UIImage imageNamed:kMixerSelectedImage] forState:UIControlStateSelected];
     [_mixerButton addTarget:self action:@selector(mixerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_mixerButton];
+    
+    _tempoButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - kOptionButtonSize) / 2.0f, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    [_tempoButton setImage:[UIImage imageNamed:kMetronomeNormalImage] forState:UIControlStateNormal];
+    [_tempoButton setImage:[UIImage imageNamed:kMetronomeSelectedImage] forState:UIControlStateSelected];
+    [_tempoButton addTarget:self action:@selector(tempoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_tempoButton];
     
 }
 
@@ -137,6 +147,17 @@ static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
         BMPanSlider* panSlider = (BMPanSlider*)[_panSliders objectAtIndex:i];
         [panSlider setValue:[[BMAudioController sharedController] getPanOnTrack:i]];
     }
+    
+    // Sequencer
+    [[BMSequencer sharedSequencer] setDelegate:self];
+    [_tempoView setMeter:[[BMSequencer sharedSequencer] meter]];
+    if (![[BMSequencer sharedSequencer] isClockRunning]) {
+        [_tempoView tick:-1];
+        [_tempoButton setSelected:NO];
+    } else {
+        [_tempoButton setSelected:YES];
+    }
+    
 }
 
 #pragma mark - BMSampleViewDelegate
@@ -177,6 +198,18 @@ static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
     }
 }
 
+- (void)tempoButtonTapped {
+//    if ([_tempoButton isSelected]) {
+//        [[BMSequencer sharedSequencer] stopClock];
+//        [_tempoButton setSelected:NO];
+//    } else {
+//        [[BMSequencer sharedSequencer] startClock];
+//        [_tempoButton setSelected:YES];
+//    }
+    BMTempoViewController* vc = [[BMTempoViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)gainSliderValueChanged:(BMHorizontalSlider*)sender {
     [[BMAudioController sharedController] setGainOnTrack:(int)sender.tag withGain:sender.value];
 }
@@ -185,13 +218,17 @@ static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
     [[BMAudioController sharedController] setPanOnTrack:(int)sender.tag withPan:sender.value];
 }
 
-#pragma mark - Private Methods
+#pragma mark - BMSequencerDelegate
 
-- (void)playbackProgressTimerCallback {
+- (void)tick:(NSUInteger)count {
+    
     for (BMSampleView* sampleView in _sampleViews) {
-        [sampleView updatePlaybackProgress];
+        [sampleView tick:(int)count];
     }
+    [_tempoView tick:(int)count];
 }
+
+#pragma mark - Private Methods
 
 - (void)launchSaveRecordingDialog {
     

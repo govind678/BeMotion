@@ -1,31 +1,27 @@
 //
-//  BMPlayButton.m
+//  BMRecordButton.m
 //  BeMotion
 //
-//  Created by Govinda Pingali on 2/15/16.
+//  Created by Govinda Pingali on 2/24/16.
 //  Copyright © 2016 Plasmatio Tech. All rights reserved.
 //
 
-#import "BMPlayButton.h"
+#import "BMRecordButton.h"
 #import "BMAudioController.h"
-#import "BMWaveformView.h"
 #import "BMSequencer.h"
+#import "UIColor+Additions.h"
+#import "UIFont+Additions.h"
 
-static NSString* const kOverlayImage                = @"SampleButtonOverlay.png";
-static NSString* const kBackgroundImagePrefix       = @"SampleButton";
-static NSString* const kHitImagePrefix              = @"SampleButtonHit";
+static NSString* const kBackgroundImage             = @"MicRecord-Normal.png";
+static NSString* const kOverlayImage                = @"MicRecord-Overlay.png";
+static NSString* const kHitImage                    = @"MicRecord-Hit.png";
 
-static float const kHitAnimationTime                = 0.1f;
-static float const kProgressViewWidth               = 5.0f;
+static float const kHitAnimationTime                = 0.05f;
 
-@interface BMPlayButton()
+@interface BMRecordButton()
 {
     UIView*             _overlay;
     UIView*             _hit;
-//    BMWaveformView*     _waveformView;
-    
-    UIView*             _progress;
-    CGRect              _progressRect;
     
     int                 _touchDownCount;
     BOOL                _touchMovedStatus;
@@ -37,7 +33,8 @@ static float const kProgressViewWidth               = 5.0f;
 @end
 
 
-@implementation BMPlayButton
+@implementation BMRecordButton
+
 
 - (id)initWithFrame:(CGRect)frame {
     
@@ -49,68 +46,46 @@ static float const kProgressViewWidth               = 5.0f;
         [_overlay setHidden:YES];
         [self addSubview:_overlay];
         
+        UILabel* recordingLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 5.0f, frame.size.width, 20.0f)];
+        [recordingLabel setTextColor:[UIColor blackColor]];
+        [recordingLabel setFont:[UIFont lightDefaultFontOfSize:10.0f]];
+        [recordingLabel setTextAlignment:NSTextAlignmentLeft];
+        [recordingLabel setText:@"Recording..."];
+        [_overlay addSubview:recordingLabel];
+        
         _hit = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
         [_hit setUserInteractionEnabled:NO];
         [_hit setAlpha:0.0f];
+        [_hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kHitImage]]];
         [self addSubview:_hit];
-        
-//        _waveformView = [[BMWaveformView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
-//        [self addSubview:_waveformView];
-        
-        _progressRect = CGRectMake(0.0f, 0.0f, kProgressViewWidth, frame.size.height);
-        _progress = [[UIView alloc] initWithFrame:_progressRect];
-        [_progress setUserInteractionEnabled:NO];
-        [_progress setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
-        [_progress setHidden:YES];
-        [self addSubview:_progress];
         
         _awaitingStart = NO;
         _awaitingStop = NO;
         _triggerCount = 0;
         
-        [self setMultipleTouchEnabled:YES];
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kBackgroundImage]]];
     }
     
     return self;
 }
 
+
 #pragma mark - Public Methods
-
-- (void)setTrackID:(int)trackID {
-    
-    _trackID = trackID;
-    
-    NSString* backgroundImageName = [NSString stringWithFormat:@"%@%d.png", kBackgroundImagePrefix, trackID];
-    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:backgroundImageName]]];
-    
-    NSString* hitImageName = [NSString stringWithFormat:@"%@%d.png", kHitImagePrefix, trackID];
-    [_hit setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:hitImageName]]];
-    
-//    [_waveformView setTrackID:trackID];
-}
-
-- (void)reloadWaveform {
-//    [_waveformView reloadWaveform];
-}
 
 - (void)tick:(int)count {
     
     if (count == _triggerCount) {
         
         if (_awaitingStart) {
-            [[BMAudioController sharedController] startPlaybackOfTrack:_trackID];
-            
+            [[BMAudioController sharedController] startRecordingAtTrack:_trackID];
             [_overlay setHidden:NO];
-            [self startPlaybackProgress];
             [self pulseHit];
             _awaitingStart = NO;
         }
         
         if (_awaitingStop) {
-            [[BMAudioController sharedController] stopPlaybackOfTrack:_trackID];
-            
+            [[BMAudioController sharedController] stopRecordingAtTrack:_trackID];
             [_overlay setHidden:YES];
-            [self stopPlaybackProgress];
             _awaitingStop = NO;
         }
     }
@@ -129,9 +104,8 @@ static float const kProgressViewWidth               = 5.0f;
     if ([[BMSequencer sharedSequencer] isClockRunning]) {
         [self sequenceStartOnNextClock];
     } else {
-        [[BMAudioController sharedController] startPlaybackOfTrack:_trackID];
+        [[BMAudioController sharedController] startRecordingAtTrack:_trackID];
         [_overlay setHidden:NO];
-        [self startPlaybackProgress];
         [self hit];
     }
     
@@ -165,18 +139,14 @@ static float const kProgressViewWidth               = 5.0f;
             if ([[BMSequencer sharedSequencer] isClockRunning]) {
                 [self sequenceStopOnNextClock];
             } else {
-                [[BMAudioController sharedController] stopPlaybackOfTrack:_trackID];
-                
+                [[BMAudioController sharedController] stopRecordingAtTrack:_trackID];
                 [_overlay setHidden:YES];
-                [self stopPlaybackProgress];
             }
         }
-        
         
         _touchDownCount = 0;
     }
 }
-
 
 
 #pragma mark - Private Methods
@@ -215,26 +185,8 @@ static float const kProgressViewWidth               = 5.0f;
     } else {
         _awaitingStop = YES;
     }
+
 }
 
-- (void)startPlaybackProgress {
-    
-    [_progress setHidden:NO];
-    _progressRect.origin.x = self.frame.size.width - _progressRect.size.width;
-    
-    [UIView animateWithDuration:[[BMAudioController sharedController] getTotalTime:_trackID]
-                          delay:0.0f
-                        options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear
-                     animations:^{
-        [_progress setFrame:_progressRect];
-    } completion:^(BOOL finished) {}];
-}
-
-- (void)stopPlaybackProgress {
-    [_progress setHidden:YES];
-    _progressRect.origin.x = 0.0f;
-    [_progress setFrame:_progressRect];
-    [_progress.layer removeAllAnimations];
-}
 
 @end

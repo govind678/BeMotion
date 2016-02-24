@@ -1,4 +1,4 @@
-GestureController
+BeMotion
 =================
 
-iOS/Android application that uses gestures to control audio effects
+iOS sampling/looping application that uses motion gestures to control audio effects

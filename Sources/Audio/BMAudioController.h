@@ -23,6 +23,7 @@
 
 //====================================================================================
 
+
 @interface BMAudioController : NSObject
 
 //--------------------------------------------------------------
@@ -70,6 +71,7 @@
 - (void)startPlaybackOfTrack:(int)track;
 - (void)stopPlaybackOfTrack:(int)track;
 - (float)getNormalizedPlaybackProgress:(int)track;
+- (float)getTotalTime:(int)track;
 - (void)startRecordingAtTrack:(int)track;
 - (void)stopRecordingAtTrack:(int)track;
 - (void)setGainOnTrack:(int)track withGain:(float)gain;

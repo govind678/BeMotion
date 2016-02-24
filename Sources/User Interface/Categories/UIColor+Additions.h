@@ -36,6 +36,9 @@
 + (UIColor*) appGreenColor;
 + (UIColor*) appYellowColor;
 
++ (UIColor*) textWhiteColor;
++ (UIColor*) elementWhiteColor;
+
 + (NSArray*) trackColors;
 
 

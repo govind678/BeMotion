@@ -17,6 +17,8 @@
 #include "BMGranularizer.h"
 #include "BMConstants.h"
 
+static const float kGainScaleExponent = 2.0f;
+
 AudioFileStream::AudioFileStream(int numChannels)  : _thread("file stream")
 {
     _numChannels = numChannels;
@@ -125,15 +127,20 @@ float AudioFileStream::getNormalizedPlaybackProgress()
     }
 }
 
+float AudioFileStream::getTotalTime()
+{
+    return _transportSource.getLengthInSeconds();
+}
 
 void AudioFileStream::setPlaybackGain(float gain)
 {
-    _transportSource.setGain(gain);
+    float scaled = powf(gain, kGainScaleExponent);
+    _transportSource.setGain(scaled);
 }
 
 float AudioFileStream::getPlaybackGain()
 {
-    return _transportSource.getGain();
+    return powf(_transportSource.getGain(), 1.0f/kGainScaleExponent);
 }
 
 void AudioFileStream::setPlaybackPan(float pan)

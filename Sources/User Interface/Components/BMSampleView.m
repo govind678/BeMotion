@@ -8,7 +8,9 @@
 
 #import "BMSampleView.h"
 #import "BMPlayButton.h"
+#import "BMRecordButton.h"
 #import "BMAudioController.h"
+#import "BMSequencer.h"
 
 static float const kMarginWidth     = 20.0f;
 //static float const kSidebarWidth    = 5.0f;
@@ -31,10 +33,12 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
 @interface BMSampleView()
 {
     BMPlayButton*       _playButton;
+    BMRecordButton*     _recordButton;
+    
     UIView*             _settingsView;
     
     UIButton*           _fxButton;
-    UIButton*           _recordButton;
+//    UIButton*           _recordButton;
     UIButton*           _loadSampleButton;
     
     UIButton*           _dragArrowLeftButton;
@@ -93,14 +97,10 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
         
         float buttonWidth = (settingsWidth) / 3.0f;
         
-        _recordButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, frame.size.height)];
-        [_recordButton setImage:[UIImage imageNamed:kRecordNormalImage] forState:UIControlStateNormal];
-        [_recordButton setImage:[UIImage imageNamed:kRecordSelectedImage] forState:UIControlStateHighlighted];
-        [_recordButton addTarget:self action:@selector(recordButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-        [_recordButton addTarget:self action:@selector(recordButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        [_recordButton addTarget:self action:@selector(recordButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        _recordButton = [[BMRecordButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, frame.size.height)];
         [_recordButton setTag:300];
         [_settingsView addSubview:_recordButton];
+        
         
         _fxButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonWidth, 0.0f, buttonWidth, frame.size.height)];
         [_fxButton setImage:[UIImage imageNamed:kEffectsNormalImage] forState:UIControlStateNormal];
@@ -130,6 +130,8 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
     [_playButton setTrackID:trackID];
     [_playButton setTag:trackID + 100];
     
+    [_recordButton setTrackID:trackID];
+    
     [_settingsView setTag:trackID + 200];
     
     NSString* dragArrowbackgroundImage = [NSString stringWithFormat:@"%@%d.png", kDragArrowBackPrefix, trackID];
@@ -137,12 +139,14 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
     [_dragArrowRightBackgroundView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:dragArrowbackgroundImage]]];
 }
 
-- (void)updatePlaybackProgress {
-    [_playButton updatePlaybackProgress];
-}
-
 - (void)reloadWaveform {
     [_playButton reloadWaveform];
+}
+
+- (void)tick:(int)count {
+    
+    [_playButton tick:count];
+    [_recordButton tick:count];
 }
 
 #pragma mark - UIScrollView Touch Events
@@ -167,21 +171,6 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
 
 #pragma mark - UIButton Events
 
-- (void)recordButtonTouchDown:(UIButton*)sender {
-    if (!_recordingLock) {
-        [[BMAudioController sharedController] startRecordingAtTrack:_trackID];
-    }
-}
-
-- (void)recordButtonTouchUpInside:(UIButton*)sender {
-    [[BMAudioController sharedController] stopRecordingAtTrack:_trackID];
-}
-
-- (void)recordButtonTouchUpOutside:(UIButton*)sender {
-    [[BMAudioController sharedController] stopRecordingAtTrack:_trackID];
-}
-
-
 - (void)fxButtonTapped {
     if ([self.sampleDelegate respondsToSelector:@selector(effectsButtonTappedAtTrack:)]) {
         [self.sampleDelegate effectsButtonTappedAtTrack:_trackID];
@@ -193,7 +182,5 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
         [self.sampleDelegate loadSampleButtonTappedAtTrack:_trackID];
     }
 }
-
-
 
 @end
