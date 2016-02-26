@@ -27,6 +27,8 @@ static float const kButtonYGap                      = 15.0f;
 static const float kOptionButtonSize                = 60.0f;
 static const float kTempoViewHeight                 = 5.0f;
 
+static const float kProgressTimeInterval            = 0.05f;
+
 static NSString* const kMasterRecordNormalImage     = @"Recording-Normal.png";
 static NSString* const kMasterRecordSelectedImage   = @"Recording-Selected.png";
 static NSString* const kMixerNormalImage            = @"Mixer-Normal.png";
@@ -46,6 +48,7 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
     UIButton*       _tempoButton;
     
     BMTempoView*    _tempoView;
+    NSTimer*        _progressTimer;
 }
 @end
 
@@ -125,6 +128,15 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
     [_tempoButton addTarget:self action:@selector(tempoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_tempoButton];
     
+    
+    // Register for App State Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    
+    // Setup Progress Timer
+    _progressTimer = [NSTimer timerWithTimeInterval:kProgressTimeInterval target:self selector:@selector(progressTimerCallback) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_progressTimer forMode:NSRunLoopCommonModes];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,6 +151,7 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
         
         BMSampleView* sampleView = (BMSampleView*)[_sampleViews objectAtIndex:i];
         [sampleView setContentOffset:CGPointZero animated:animated];
+        [sampleView reset];
         [sampleView reloadWaveform];
         
         BMHorizontalSlider* gainSlider = (BMHorizontalSlider*)[_gainSliders objectAtIndex:i];
@@ -158,6 +171,13 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
         [_tempoButton setSelected:YES];
     }
     
+}
+
+
+- (void)didEnterBackground:(NSNotification*)notification {
+    for (BMSampleView* sampleView in _sampleViews) {
+        [sampleView reset];
+    }
 }
 
 #pragma mark - BMSampleViewDelegate
@@ -257,6 +277,12 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
             [gainSlider setAlpha:targetAlpha];
             [panSlider setAlpha:targetAlpha];
         }];
+    }
+}
+
+- (void)progressTimerCallback {
+    for (BMSampleView* sampleView in _sampleViews) {
+        [sampleView updatePlaybackProgress:kProgressTimeInterval];
     }
 }
 

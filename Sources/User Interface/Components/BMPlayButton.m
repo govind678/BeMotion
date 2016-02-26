@@ -10,6 +10,7 @@
 #import "BMAudioController.h"
 #import "BMWaveformView.h"
 #import "BMSequencer.h"
+#import <QuartzCore/QuartzCore.h>
 
 static NSString* const kOverlayImage                = @"SampleButtonOverlay.png";
 static NSString* const kBackgroundImagePrefix       = @"SampleButton";
@@ -121,12 +122,29 @@ static float const kProgressViewWidth               = 5.0f;
     
 }
 
+- (void)reset {
+    [_overlay setHidden:YES];
+    [self stopPlaybackProgress];
+}
+
+- (void)updatePlaybackProgress:(float)timeInterval {
+    
+    _progressRect.origin.x = self.frame.size.width * [[BMAudioController sharedController] getNormalizedPlaybackProgress:_trackID];
+    
+    [UIView animateWithDuration:timeInterval
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [_progress setFrame:_progressRect];
+                     } completion:^(BOOL finished) {}];
+}
+
 
 #pragma mark - Touch Events
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if ([[BMSequencer sharedSequencer] isClockRunning]) {
+    if ([[BMSequencer sharedSequencer] isClockRunning] && [[BMSequencer sharedSequencer] quantization]) {
         [self sequenceStartOnNextClock];
     } else {
         [[BMAudioController sharedController] startPlaybackOfTrack:_trackID];
@@ -162,7 +180,7 @@ static float const kProgressViewWidth               = 5.0f;
         
         if (_touchMovedStatus == NO) {
             
-            if ([[BMSequencer sharedSequencer] isClockRunning]) {
+            if ([[BMSequencer sharedSequencer] isClockRunning] && [[BMSequencer sharedSequencer] quantization]) {
                 [self sequenceStopOnNextClock];
             } else {
                 [[BMAudioController sharedController] stopPlaybackOfTrack:_trackID];
@@ -197,14 +215,13 @@ static float const kProgressViewWidth               = 5.0f;
 }
 
 - (void)sequenceStartOnNextClock {
-    int next = (int)[[BMSequencer sharedSequencer] nextTriggerCount];
-    _triggerCount = next;
+    _triggerCount = 0;
     _awaitingStart = YES;
 }
 
 - (void)sequenceStopOnNextClock {
-    int next = (int)[[BMSequencer sharedSequencer] nextTriggerCount];
-    _triggerCount = next;
+    
+    _triggerCount = 0;
     
     if ([_overlay isHidden]) {
         if (_awaitingStart) {
@@ -218,16 +235,10 @@ static float const kProgressViewWidth               = 5.0f;
 }
 
 - (void)startPlaybackProgress {
-    
+    [_progress.layer removeAllAnimations];
+    _progressRect.origin.x = 0.0f;
+    [_progress setFrame:_progressRect];
     [_progress setHidden:NO];
-    _progressRect.origin.x = self.frame.size.width - _progressRect.size.width;
-    
-    [UIView animateWithDuration:[[BMAudioController sharedController] getTotalTime:_trackID]
-                          delay:0.0f
-                        options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear
-                     animations:^{
-        [_progress setFrame:_progressRect];
-    } completion:^(BOOL finished) {}];
 }
 
 - (void)stopPlaybackProgress {

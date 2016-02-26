@@ -96,12 +96,15 @@ static float const kHitAnimationTime                = 0.05f;
     
 }
 
+- (void)reset {
+    [_overlay setHidden:YES];
+}
 
 #pragma mark - Touch Events
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if ([[BMSequencer sharedSequencer] isClockRunning]) {
+    if ([[BMSequencer sharedSequencer] isClockRunning] && [[BMSequencer sharedSequencer] quantization]) {
         [self sequenceStartOnNextClock];
     } else {
         [[BMAudioController sharedController] startRecordingAtTrack:_trackID];
@@ -136,7 +139,7 @@ static float const kHitAnimationTime                = 0.05f;
         
         if (_touchMovedStatus == NO) {
             
-            if ([[BMSequencer sharedSequencer] isClockRunning]) {
+            if ([[BMSequencer sharedSequencer] isClockRunning] && [[BMSequencer sharedSequencer] quantization]) {
                 [self sequenceStopOnNextClock];
             } else {
                 [[BMAudioController sharedController] stopRecordingAtTrack:_trackID];
@@ -167,14 +170,13 @@ static float const kHitAnimationTime                = 0.05f;
 }
 
 - (void)sequenceStartOnNextClock {
-    int next = (int)[[BMSequencer sharedSequencer] nextTriggerCount];
-    _triggerCount = next;
+    _triggerCount = 0;
     _awaitingStart = YES;
 }
 
 - (void)sequenceStopOnNextClock {
-    int next = (int)[[BMSequencer sharedSequencer] nextTriggerCount];
-    _triggerCount = next;
+    
+    _triggerCount = 0;
     
     if ([_overlay isHidden]) {
         if (_awaitingStart) {

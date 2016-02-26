@@ -41,6 +41,7 @@ public:
     
     void startPlaybackOfTrack(int track);
     void stopPlaybackOfTrack(int track);
+    bool isTrackPlaying(int track);
     float getNormalizedPlaybackProgress(int track);
     float getTotalTimeOfTrack(int track);
     
@@ -53,6 +54,8 @@ public:
     void saveMicRecordingForTrack(String filepath, int track);
     void startRecordingAtTrack(int track);
     void stopRecordingAtTrack(int track);
+    bool isTrackRecording(int track);
+    void loadRecordedFileIntoTrack(int track);
     
     float* getSamplesForWaveformAtTrack(int track);
     

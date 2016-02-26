@@ -29,7 +29,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     UIStepper*              _meterStepper;
     UILabel*                _meterStepperLabel;
     UISegmentedControl*     _intervalSegment;
-    UISegmentedControl*     _quantizationSegment;
+    UISwitch*               _quantizationSwitch;
 }
 @end
 
@@ -156,15 +156,13 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [quantizationLabel setText:@"Quantization"];
     [self.view addSubview:quantizationLabel];
     
-    NSArray* quantSegments = [NSArray arrayWithObjects:@"Off", @"1", @"1/2", @"1/4", nil];
-    _quantizationSegment = [[UISegmentedControl alloc] initWithItems:quantSegments];
-    [_quantizationSegment setFrame:CGRectMake(self.view.frame.size.width/2.0f, quantizationYPos, (self.view.frame.size.width / 2.0f) - self.margin, switchHeight)];
-    [_quantizationSegment setTitleTextAttributes:attribute forState:UIControlStateNormal];
-    [_quantizationSegment setTintColor:[UIColor elementWhiteColor]];
-    [_quantizationSegment setSelectedSegmentIndex:0];
-    [_quantizationSegment addTarget:self action:@selector(quantSegmentChanged) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:_quantizationSegment];
-    
+    _quantizationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    [_quantizationSwitch setFrame:CGRectMake(self.view.frame.size.width - switchWidth - self.margin, quantizationYPos, switchWidth, switchHeight)];
+    [_quantizationSwitch setOnTintColor:[UIColor textWhiteColor]];
+    [_quantizationSwitch setThumbTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
+    [_quantizationSwitch setTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
+    [_quantizationSwitch addTarget:self action:@selector(quantSwitchTapped) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:_quantizationSwitch];
     
     
     [[BMSequencer sharedSequencer] setDelegate:self];
@@ -190,8 +188,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     int interval = [[BMSequencer sharedSequencer] interval];
     [_intervalSegment setSelectedSegmentIndex:log2f(interval) - 2];
     
-    NSUInteger quantization = [[BMSequencer sharedSequencer] quantization];
-    [_quantizationSegment setSelectedSegmentIndex:quantization];
+    [_quantizationSwitch setOn:[[BMSequencer sharedSequencer] quantization]];
     
     if (![[BMSequencer sharedSequencer] isClockRunning]) {
         [_tempoView tick:-1];
@@ -225,8 +222,8 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [[BMSequencer sharedSequencer] setInterval:interval];
 }
 
-- (void)quantSegmentChanged {
-    [[BMSequencer sharedSequencer] setQuantization:_quantizationSegment.selectedSegmentIndex];
+- (void)quantSwitchTapped {
+    [[BMSequencer sharedSequencer] setQuantization:_quantizationSwitch.isOn];
 }
 
 

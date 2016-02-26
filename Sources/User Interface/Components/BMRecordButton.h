@@ -12,6 +12,7 @@
 
 @property (nonatomic) int trackID;
 
+- (void)reset;
 - (void)tick:(int)count;
 
 @end

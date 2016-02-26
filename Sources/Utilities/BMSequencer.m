@@ -22,7 +22,7 @@ static const int kMinMeter                  = 2;
 static const int kMaxMeter                  = 16;
 static const int kDefaultMeter              = 8;
 
-static const NSUInteger kDefaultQuantization = 1; // 1 Bar
+static const BOOL kDefaultQuantization      = NO;
 
 
 @interface BMSequencer()
@@ -115,23 +115,6 @@ static const NSUInteger kDefaultQuantization = 1; // 1 Bar
 - (int)maximumMeter { return kMaxMeter; }
 - (int)minimumTempo { return kMinTempo; }
 - (int)maximumTempo { return kMaxTempo; }
-
-
-- (NSUInteger)nextTriggerCount {
-    if (_quantization == 1) { // 1 bar
-        return 0;
-    } else if (_quantization == 2) {
-        
-        return ((int)((_meter - _currentTick) / (_meter / 2.0f)) * (_meter / 2.0f));
-        
-    } else if (_quantization == 3) {
-        
-        return ((int)((_meter - _currentTick) / (_meter / 4.0f)) * (_meter / 4.0f));
-        
-    } else {
-        return -1;
-    }
-}
 
 
 #pragma mark - Private Methods

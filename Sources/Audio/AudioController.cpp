@@ -110,6 +110,11 @@ void AudioController::stopPlaybackOfTrack(int track)
     _streams.getUnchecked(track)->stopPlayback();
 }
 
+bool AudioController::isTrackPlaying(int track)
+{
+    return _streams.getUnchecked(track)->isPlaying();
+}
+
 float AudioController::getNormalizedPlaybackProgress(int track)
 {
     return _streams.getUnchecked(track)->getNormalizedPlaybackProgress();
@@ -138,6 +143,15 @@ void AudioController::startRecordingAtTrack(int track)
 void AudioController::stopRecordingAtTrack(int track)
 {
     _recorders.getUnchecked(track)->stopRecording();
+}
+
+bool AudioController::isTrackRecording(int track)
+{
+    return _recorders.getUnchecked(track)->isRecording();
+}
+
+void AudioController::loadRecordedFileIntoTrack(int track)
+{
     String filepath = _recorderPaths.getReference(track + int(!_recorderPathToggles.getReference(track)));
     loadAudioFileIntoTrack(filepath, track);
 }

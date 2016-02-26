@@ -30,13 +30,11 @@
 - (int)minimumTempo;
 - (int)maximumTempo;
 
-- (NSUInteger)nextTriggerCount;
-
 @property (nonatomic, readonly) BOOL isClockRunning;
 @property (nonatomic, assign) float tempo;
 @property (nonatomic, assign) int meter;
 @property (nonatomic, assign) int interval;
-@property (nonatomic, assign) NSUInteger quantization;
+@property (nonatomic, assign) BOOL quantization;
 @property (nonatomic, readonly) float timeInterval;
 
 @property (nonatomic, weak) id <BMSequencerDelegate> delegate;

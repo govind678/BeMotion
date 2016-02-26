@@ -32,6 +32,7 @@ public:
     
     void startPlayback();
     void stopPlayback();
+    bool isPlaying();
     float getNormalizedPlaybackProgress();
     float getTotalTime();
     

@@ -149,6 +149,15 @@ static NSString* const kRecordSelectedImage                 = @"MicRecord-Select
     [_recordButton tick:count];
 }
 
+- (void)reset {
+    [_playButton reset];
+    [_recordButton reset];
+}
+
+- (void)updatePlaybackProgress:(float)timeInterval {
+    [_playButton updatePlaybackProgress:timeInterval];
+}
+
 #pragma mark - UIScrollView Touch Events
 
 - (BOOL)touchesShouldBegin:(NSSet *)touches withEvent:(UIEvent *)event inContentView:(UIView *)view {

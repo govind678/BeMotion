@@ -118,6 +118,11 @@ void AudioFileStream::stopPlayback()
     _transportSource.stop();
 }
 
+bool AudioFileStream::isPlaying()
+{
+    return _transportSource.isPlaying();
+}
+
 float AudioFileStream::getNormalizedPlaybackProgress()
 {
     if (_transportSource.getLengthInSeconds() == 0.0f) {

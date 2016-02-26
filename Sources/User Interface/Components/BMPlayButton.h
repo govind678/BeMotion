@@ -12,6 +12,8 @@
 
 @property (nonatomic) int trackID;
 
+- (void)updatePlaybackProgress:(float)timeInterval;
+- (void)reset;
 - (void)tick:(int)count;
 - (void)reloadWaveform;
 

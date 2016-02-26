@@ -70,10 +70,12 @@
 - (int)loadAudioFileIntoTrack:(int)track withPath:(NSString*)filepath;
 - (void)startPlaybackOfTrack:(int)track;
 - (void)stopPlaybackOfTrack:(int)track;
+- (BOOL)isTrackPlaying:(int)track;
 - (float)getNormalizedPlaybackProgress:(int)track;
 - (float)getTotalTime:(int)track;
 - (void)startRecordingAtTrack:(int)track;
 - (void)stopRecordingAtTrack:(int)track;
+- (BOOL)isTrackRecording:(int)track;
 - (void)setGainOnTrack:(int)track withGain:(float)gain;
 - (float)getGainOnTrack:(int)track;
 - (void)setPanOnTrack:(int)track withPan:(float)pan;

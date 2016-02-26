@@ -12,7 +12,6 @@
 
 #import "JuceHeader.h"
 #import "AudioController.h"
-//#import "BMSequencer.h"
 #import "BMConstants.h"
 
 //static NSString* const kMicRecordingDirectory       = @"MicRecordings";
@@ -89,10 +88,16 @@
 
 - (void)enterBackground {
     
+    for (int i=0; i < kNumTracks; i++) {
+        _audioController->stopPlaybackOfTrack(i);
+        _audioController->stopRecordingAtTrack(i);
+    }
+    
+    _audioController->closeSession();
 }
 
 - (void)enterForeground {
-    
+    _audioController->openSession();
 }
 
 
@@ -176,6 +181,10 @@
     _audioController->stopPlaybackOfTrack(track);
 }
 
+- (BOOL)isTrackPlaying:(int)track {
+    return _audioController->isTrackPlaying(track);
+}
+
 - (float)getNormalizedPlaybackProgress:(int)track {
     return _audioController->getNormalizedPlaybackProgress(track);
 }
@@ -190,6 +199,11 @@
 
 - (void)stopRecordingAtTrack:(int)track {
     _audioController->stopRecordingAtTrack(track);
+    _audioController->loadRecordedFileIntoTrack(track);
+}
+
+- (BOOL)isTrackRecording:(int)track {
+    return _audioController->isTrackRecording(track);
 }
 
 - (void)setGainOnTrack:(int)track withGain:(float)gain {
