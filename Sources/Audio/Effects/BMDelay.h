@@ -40,9 +40,9 @@ private:
     
     float getWetDry();
     float getFeedback();
-    float getReadIdx();
+    float getDelayInSamples();
     
-    CRingBuffer<float>**        wetSignal;
+    CRingBuffer<float>**        _wetSignal;
     
     float   m_fSampleRate;
     int     m_iNumChannels;
@@ -53,8 +53,8 @@ private:
     float   _currentWetDry;
     float   _newWetDry;
     
-    float   _currentReadIdx;
-    float   _newReadIdx;
+    float   _currentDelayInSamples;
+    float   _newDelayInSamples;
     float   _delayTime_s;
 };
 

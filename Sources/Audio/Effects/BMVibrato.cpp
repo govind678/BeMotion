@@ -9,8 +9,9 @@
 */
 
 #include "BMVibrato.h"
+#include <stdio.h>
 
-static const float kVibratoMaxModWidth = 100.0f;
+static const float kVibratoMaxModWidth = 50.0f;
 
 BMVibrato::BMVibrato(int numChannels)
 

@@ -10,29 +10,30 @@
 
 #include "BMDelay.h"
 #include <math.h>
+#include <stdio.h>
 
 static const long kMaxDelaySamples = 96000;
 static const float kSmoothFactor = 0.001f;
+static const float kTimeSmoothFactor = 0.0002f;
 
 BMDelay::BMDelay(int numChannels)
 {
-    m_iNumChannels      =   numChannels;
-    m_fSampleRate       =   48000.0f;
+    m_iNumChannels          =   numChannels;
+    m_fSampleRate           =   48000.0f;
     
-    _currentFeedback    =   0.5f;
-    _newFeedback        =   0.5f;
-    _currentWetDry      =   0.5f;
-    _newWetDry          =   0.5f;
-    _delayTime_s        =   0.5f;
-    _currentReadIdx     =   0.0f;
-    _newReadIdx         =   0.0f;
+    _currentFeedback        =   0.5f;
+    _newFeedback            =   0.5f;
+    _currentWetDry          =   0.5f;
+    _newWetDry              =   0.5f;
+    _delayTime_s            =   0.5f;
+    _currentDelayInSamples  =   _newDelayInSamples  =  m_fSampleRate * _delayTime_s;
     
-    wetSignal  = new CRingBuffer<float>* [numChannels];
+    _wetSignal  = new CRingBuffer<float>* [numChannels];
     
     for (int n = 0; n < numChannels; n++)
     {
-        wetSignal[n]    = new CRingBuffer<float> (kMaxDelaySamples);
-        wetSignal[n]->resetInstance();
+        _wetSignal[n]    = new CRingBuffer<float> (kMaxDelaySamples);
+        _wetSignal[n]->resetInstance();
     }
 }
 
@@ -40,10 +41,10 @@ BMDelay::~BMDelay()
 {
     for (int n = 0; n < m_iNumChannels; n++)
     {
-        delete wetSignal[n];
+        delete _wetSignal[n];
     }
     
-    delete [] wetSignal;
+    delete [] _wetSignal;
 }
 
 
@@ -55,12 +56,12 @@ BMDelay::~BMDelay()
 void BMDelay::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     m_fSampleRate   =   sampleRate;
-    
-    for (int n = 0; n < m_iNumChannels; n++)
-    {
-        wetSignal[n]->setReadIdx(wetSignal[n]->getWriteIdx() - (_delayTime_s * m_fSampleRate));
-        _currentReadIdx = _newReadIdx = wetSignal[n]->getReadIdx();
-    }
+    _currentDelayInSamples  =   _newDelayInSamples  =  m_fSampleRate * _delayTime_s;
+//    for (int n = 0; n < m_iNumChannels; n++)
+//    {
+//        _wetSignal[n]->setReadIdx(_wetSignal[n]->getWriteIdx() - (_delayTime_s * m_fSampleRate));
+//        _currentReadIdx = _newReadIdx = _wetSignal[n]->getReadIdx();
+//    }
 }
 
 void BMDelay::process (float** buffer, int numChannels, int numSamples)
@@ -69,17 +70,21 @@ void BMDelay::process (float** buffer, int numChannels, int numSamples)
     {
         float feedback = getFeedback();
         float wetDry = getWetDry();
+        float delaySamples = getDelayInSamples();
         
         for (int channel = 0; channel < m_iNumChannels; channel++)
         {
-            wetSignal[channel]->putPostInc(buffer[channel][sample] + (feedback * wetSignal[channel]->get()));
+            float readIndex = _wetSignal[channel]->getWriteIdx() - delaySamples;
+            
+            float xn = buffer[channel][sample];
+            float yn = _wetSignal[channel]->getAtFloatIdx(readIndex);
+            
+            _wetSignal[channel]->putPostInc(xn + (feedback*yn));
             
             float dryScale = cosf(wetDry * M_PI_2);
             float wetScale = sinf(wetDry * M_PI_2);
             
-            buffer[channel][sample] = (dryScale * buffer[channel][sample]) + (wetScale * wetSignal[channel]->getPostInc());
-            
-            
+            buffer[channel][sample] = (dryScale * xn) + (wetScale * yn);
         }
     }
 }
@@ -102,14 +107,8 @@ void BMDelay::setParameter(int parameterID, float value)
     switch(parameterID)
     {
         case 0:
-            
             _delayTime_s = value;
-            
-            for (int n = 0; n < m_iNumChannels; n++)
-            {
-                wetSignal[n]->setReadIdx(wetSignal[n]->getWriteIdx() - (_delayTime_s * m_fSampleRate));
-            }
-            
+            _newDelayInSamples = _delayTime_s * m_fSampleRate;
             break;
             
             
@@ -167,8 +166,8 @@ float BMDelay::getWetDry()
     return _currentWetDry;
 }
 
-float BMDelay::getReadIdx()
+float BMDelay::getDelayInSamples()
 {
-    _currentReadIdx = (kSmoothFactor * _newReadIdx) + ((1.0f - kSmoothFactor) * _currentReadIdx);
-    return _currentReadIdx;
+    _currentDelayInSamples = (kTimeSmoothFactor * _newDelayInSamples) + ((1.0f - kTimeSmoothFactor) * _currentDelayInSamples);
+    return _currentDelayInSamples;
 }

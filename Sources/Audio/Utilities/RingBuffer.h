@@ -159,8 +159,14 @@ public:
     
 	void incReadIdx()
 	{
-		m_iReadIdx++;
+        incIdx(m_iReadIdx);
 	}
+    
+    void incWriteIdx()
+    {
+        incIdx(m_iWriteIdx);
+        
+    }
     
     
 private:
