@@ -15,6 +15,7 @@
 #import "BMEffectsViewController.h"
 #import "BMLoadFileViewController.h"
 #import "BMTempoViewController.h"
+#import "BMSettingsViewController.h"
 
 #import "BMSampleView.h"
 #import "BMTempoView.h"
@@ -27,7 +28,7 @@ static float const kButtonYGap                      = 15.0f;
 static const float kOptionButtonSize                = 60.0f;
 static const float kTempoViewHeight                 = 5.0f;
 
-static const float kProgressTimeInterval            = 0.05f;
+static const float kProgressTimeInterval            = 0.02f;
 
 static NSString* const kMasterRecordNormalImage     = @"Recording-Normal.png";
 static NSString* const kMasterRecordSelectedImage   = @"Recording-Selected.png";
@@ -35,6 +36,8 @@ static NSString* const kMixerNormalImage            = @"Mixer-Normal.png";
 static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
 static NSString* const kMetronomeNormalImage        = @"Metronome-Normal.png";
 static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
+static NSString* const kSettingsNormalImage         = @"Settings-Normal.png";
+static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
 
 @interface BMHomeViewController() <BMSampleViewDelegate, BMSequencerDelegate>
 {
@@ -46,6 +49,7 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
     UIButton*       _masterRecordButton;
     UIButton*       _mixerButton;
     UIButton*       _tempoButton;
+    UIButton*       _settingsButton;
     
     BMTempoView*    _tempoView;
     NSTimer*        _progressTimer;
@@ -110,23 +114,32 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
     
     // Setup Option Buttons
     
-    _masterRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.margin, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    float margin = 14.0f;
+    float optionsButtonGap = (self.view.frame.size.width - (2.0f * margin) - (4.0f * kOptionButtonSize)) / 3.0f;
+    
+    _masterRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(margin, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
     [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordNormalImage] forState:UIControlStateNormal];
     [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordSelectedImage] forState:UIControlStateSelected];
     [_masterRecordButton addTarget:self action:@selector(masterRecordButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_masterRecordButton];
     
-    _mixerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - self.margin - kOptionButtonSize, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    _mixerButton = [[UIButton alloc] initWithFrame:CGRectMake(margin + kOptionButtonSize + optionsButtonGap, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
     [_mixerButton setImage:[UIImage imageNamed:kMixerNormalImage] forState:UIControlStateNormal];
     [_mixerButton setImage:[UIImage imageNamed:kMixerSelectedImage] forState:UIControlStateSelected];
     [_mixerButton addTarget:self action:@selector(mixerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_mixerButton];
     
-    _tempoButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - kOptionButtonSize) / 2.0f, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    _tempoButton = [[UIButton alloc] initWithFrame:CGRectMake(margin + 2.0f * (kOptionButtonSize + optionsButtonGap), self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
     [_tempoButton setImage:[UIImage imageNamed:kMetronomeNormalImage] forState:UIControlStateNormal];
     [_tempoButton setImage:[UIImage imageNamed:kMetronomeSelectedImage] forState:UIControlStateSelected];
     [_tempoButton addTarget:self action:@selector(tempoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_tempoButton];
+    
+    _settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - kOptionButtonSize - margin, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    [_settingsButton setImage:[UIImage imageNamed:kSettingsNormalImage] forState:UIControlStateNormal];
+    [_settingsButton setImage:[UIImage imageNamed:kSettingsSelectedImage] forState:UIControlStateSelected];
+    [_settingsButton addTarget:self action:@selector(settingsButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_settingsButton];
     
     
     // Register for App State Notifications
@@ -151,7 +164,6 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
         
         BMSampleView* sampleView = (BMSampleView*)[_sampleViews objectAtIndex:i];
         [sampleView setContentOffset:CGPointZero animated:animated];
-        [sampleView reset];
         [sampleView reloadWaveform];
         
         BMHorizontalSlider* gainSlider = (BMHorizontalSlider*)[_gainSliders objectAtIndex:i];
@@ -229,6 +241,12 @@ static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
     BMTempoViewController* vc = [[BMTempoViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+- (void)settingsButtonTapped {
+    BMSettingsViewController* vc = [[BMSettingsViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 - (void)gainSliderValueChanged:(BMHorizontalSlider*)sender {
     [[BMAudioController sharedController] setGainOnTrack:(int)sender.tag withGain:sender.value];

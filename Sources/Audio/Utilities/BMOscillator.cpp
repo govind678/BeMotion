@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-    Oscillator.cpp
+    BMOscillator.cpp
     Created: 1 Feb 2016 3:20:17pm
     Author:  Govinda Pingali
 
   ==============================================================================
 */
 
-#include "Oscillator.h"
+#include "BMOscillator.h"
 #include <math.h>
 
-Oscillator::Oscillator()
+BMOscillator::BMOscillator()
 {
     //--- Create Sine Wavetable ---//
     for (int sample = 0; sample < kWaveTableSize; sample++)
@@ -31,24 +31,24 @@ Oscillator::Oscillator()
     _newScale           = 0.0f;
 }
 
-Oscillator::~Oscillator()
+BMOscillator::~BMOscillator()
 {
     
 }
 
-void Oscillator::setNormalizedFrequency(float frequency)
+void BMOscillator::setNormalizedFrequency(float frequency)
 {
     _frequency = frequency;
     _newIncrement = kWaveTableSize * _frequency;
 }
 
-void Oscillator::setShape(float shape)
+void BMOscillator::setShape(float shape)
 {
     _shape = shape;
     _newScale = 40.0f * powf(1000.0f, (_shape - 1.0f));
 }
 
-float Oscillator::getNextSample()
+float BMOscillator::getNextSample()
 {
     //-- Get Interpolated Increment --//
     float increment = getIncrement();
@@ -75,18 +75,18 @@ float Oscillator::getNextSample()
     return _currentSample;
 }
 
-void Oscillator::restart()
+void BMOscillator::restart()
 {
     _phase = 0;
 }
 
-float Oscillator::getIncrement()
+float BMOscillator::getIncrement()
 {
     _currentIncrement = (kSmoothingFactor * _newIncrement) + ((1.0f - kSmoothingFactor) * _currentIncrement);
     return _currentIncrement;
 }
 
-float Oscillator::getScale()
+float BMOscillator::getScale()
 {
     _currentScale = (kSmoothingFactor * _newScale) + ((1.0f - kSmoothingFactor) * _currentScale);
 //    printf("Target: %f, Current: %f\n", _newScale, _currentScale);

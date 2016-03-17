@@ -25,6 +25,7 @@ public:
     virtual ~AudioEffect() {}
     
     /** Audio Callback */
+    virtual void reset() {}
     virtual void prepareToPlay (int samplesPerBlockExpected, double sampleRate) {}
     virtual void process (float** buffer, int numChannels, int numSamples) {}
     virtual void releaseResources() {}

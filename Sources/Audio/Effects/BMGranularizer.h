@@ -26,6 +26,7 @@ public:
     ~BMGranularizer();
     
     //========= AudioEffect =========//
+    void reset() override;
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void process (float** buffer, int numChannels, int numSamples) override;
     void releaseResources() override;
@@ -34,17 +35,18 @@ public:
     void setParameter(int parameterID, float value) override;
     float getParameter(int parameterID) override;
     
-    void setTempo(float tempo);
     
 private:
     //===========================================================================
     
-    void generateGrain();
+//    void generateGrain();
     void calculateParameters();
     
+    float getRateInSamples();
+    float getSizeInSamples();
+    float getAttackInSamples();
+    
     CRingBuffer<float>**    _buffer;
-    CRingBuffer<float>**    _grain;
-    float                   _envelope[kEnvelopeSamples];
     
     float                   _sampleRate;
     int                     _numChannels;
@@ -54,18 +56,19 @@ private:
     float                   _sizePerGrain;
     float                   _attackTime;
     
-    int                     _rateInSamples;
-    int                     _sizeInSamples;
+    float                   _currentRateInSamples;
+    float                   _newRateInSamples;
     
-    int                     _startIndex;
-    int                     _sampleCount;
-    float                   _floatIndex;
-    float                   _tempo;
-    int                     _quantizationInterval;
+    float                   _currentGrainSizeInSamples;
+    float                   _newGrainSizeInSamples;
     
+    float                   _currentAttackSamples;
+    float                   _newAttackSamples;
+    
+    int                     _rateSampleCount;
+    int                     _sizeSampleCount;
     int                     _samplesBuffered;
-    bool                    _bufferingToggle;
-    bool                    _grainToggle;
+    bool                    _finishedBuffering;
 };
 
 

@@ -27,6 +27,11 @@ BMStereo::~BMStereo()
 
 //========= AudioEffect =========//
 
+void BMStereo::reset()
+{
+    
+}
+
 void BMStereo::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     

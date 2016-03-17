@@ -12,7 +12,7 @@
 #define BMTREMOLO_H_INCLUDED
 
 #include "AudioEffect.h"
-#include "Oscillator.h"
+#include "BMOscillator.h"
 
 class BMTremolo     :   public AudioEffect
 {
@@ -23,6 +23,7 @@ public:
     ~BMTremolo();
     
     //========= AudioEffect =========//
+    void reset() override;
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void process (float** buffer, int numChannels, int numSamples) override;
     void releaseResources() override;
@@ -36,7 +37,7 @@ private:
     
     float getDepth();
     
-    Oscillator*     _lfo;
+    BMOscillator*   _lfo;
     
     int             _numChannels;
     float           _sampleRate;

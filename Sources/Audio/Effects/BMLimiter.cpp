@@ -52,7 +52,11 @@ BMLimiter::~BMLimiter()
 // AudioEffect
 //==============================================================================
 
-/** Audio Callback */
+void BMLimiter::reset()
+{
+    
+}
+
 void BMLimiter::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     
@@ -67,9 +71,12 @@ void BMLimiter::process (float** buffer, int numChannels, int numSamples)
             if (fabs(buffer[channel][sample]) > _peak[channel])
             {
                 _coeff[channel] = _attackTimeInSec;
-            } else {
+            }
+            else
+            {
                 _coeff[channel] = _releaseTimeInSec;
             }
+            
             
             _peak[channel] = (1.0f - _coeff[channel]) * _peak[channel] + _coeff[channel] * fabs(buffer[channel][sample]);
             

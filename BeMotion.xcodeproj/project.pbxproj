@@ -105,7 +105,7 @@
 		28DEB5061C72068400C78981 /* BMVibrato.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28DEB4F91C72068400C78981 /* BMVibrato.cpp */; };
 		28DEB5071C72068400C78981 /* AudioFileRecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28DEB4FC1C72068400C78981 /* AudioFileRecord.cpp */; };
 		28DEB5081C72068400C78981 /* AudioFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28DEB4FE1C72068400C78981 /* AudioFileStream.cpp */; };
-		28DEB50E1C72070500C78981 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28DEB50B1C72070500C78981 /* Oscillator.cpp */; };
+		28DEB50E1C72070500C78981 /* BMOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28DEB50B1C72070500C78981 /* BMOscillator.cpp */; };
 		28DEB5161C7208A400C78981 /* Embryo Bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28DEB5111C7208A400C78981 /* Embryo Bass.wav */; };
 		28DEB5181C7208A400C78981 /* Embryo Drums.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28DEB5131C7208A400C78981 /* Embryo Drums.wav */; };
 		28DEB5191C7208A400C78981 /* Embryo Percussion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28DEB5141C7208A400C78981 /* Embryo Percussion.wav */; };
@@ -129,6 +129,11 @@
 		28F8FC921C7DC3A9005519C6 /* MicRecord-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8FC901C7DC3A9005519C6 /* MicRecord-Normal@2x.png */; };
 		28F8FC931C7DC3A9005519C6 /* MicRecord-Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8FC911C7DC3A9005519C6 /* MicRecord-Overlay@2x.png */; };
 		28F8FC951C7DC3FE005519C6 /* MicRecord-Hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8FC941C7DC3FE005519C6 /* MicRecord-Hit@2x.png */; };
+		28F8FCAD1C803EF0005519C6 /* Settings-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8FCAB1C803EF0005519C6 /* Settings-Normal.png */; };
+		28F8FCAE1C803EF0005519C6 /* Settings-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F8FCAC1C803EF0005519C6 /* Settings-Selected.png */; };
+		28F8FCB11C80428F005519C6 /* BMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F8FCB01C80428F005519C6 /* BMSettingsViewController.m */; };
+		28FBFC6B1C89149700ECE541 /* BMEqualizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28FBFC691C89149700ECE541 /* BMEqualizer.cpp */; };
+		28FBFC6E1C89190A00ECE541 /* BMBiquadFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28FBFC6C1C89190A00ECE541 /* BMBiquadFilter.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -821,8 +826,8 @@
 		28DEB4FE1C72068400C78981 /* AudioFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioFileStream.cpp; sourceTree = "<group>"; };
 		28DEB4FF1C72068400C78981 /* AudioFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileStream.h; sourceTree = "<group>"; };
 		28DEB50A1C72070500C78981 /* CUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUtil.h; sourceTree = "<group>"; };
-		28DEB50B1C72070500C78981 /* Oscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
-		28DEB50C1C72070500C78981 /* Oscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
+		28DEB50B1C72070500C78981 /* BMOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMOscillator.cpp; sourceTree = "<group>"; };
+		28DEB50C1C72070500C78981 /* BMOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMOscillator.h; sourceTree = "<group>"; };
 		28DEB50D1C72070500C78981 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		28DEB5111C7208A400C78981 /* Embryo Bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Embryo Bass.wav"; sourceTree = "<group>"; };
 		28DEB5131C7208A400C78981 /* Embryo Drums.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Embryo Drums.wav"; sourceTree = "<group>"; };
@@ -854,6 +859,14 @@
 		28F8FC901C7DC3A9005519C6 /* MicRecord-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MicRecord-Normal@2x.png"; sourceTree = "<group>"; };
 		28F8FC911C7DC3A9005519C6 /* MicRecord-Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MicRecord-Overlay@2x.png"; sourceTree = "<group>"; };
 		28F8FC941C7DC3FE005519C6 /* MicRecord-Hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MicRecord-Hit@2x.png"; sourceTree = "<group>"; };
+		28F8FCAB1C803EF0005519C6 /* Settings-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Normal.png"; sourceTree = "<group>"; };
+		28F8FCAC1C803EF0005519C6 /* Settings-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Selected.png"; sourceTree = "<group>"; };
+		28F8FCAF1C80428F005519C6 /* BMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSettingsViewController.h; sourceTree = "<group>"; };
+		28F8FCB01C80428F005519C6 /* BMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSettingsViewController.m; sourceTree = "<group>"; };
+		28FBFC691C89149700ECE541 /* BMEqualizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMEqualizer.cpp; sourceTree = "<group>"; };
+		28FBFC6A1C89149700ECE541 /* BMEqualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEqualizer.h; sourceTree = "<group>"; };
+		28FBFC6C1C89190A00ECE541 /* BMBiquadFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMBiquadFilter.cpp; sourceTree = "<group>"; };
+		28FBFC6D1C89190A00ECE541 /* BMBiquadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMBiquadFilter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -890,6 +903,8 @@
 		283A35191C73DF9F00B4CF6F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				28F8FCAB1C803EF0005519C6 /* Settings-Normal.png */,
+				28F8FCAC1C803EF0005519C6 /* Settings-Selected.png */,
 				28C3A8291C79D94A0053FBCD /* Metronome-Normal.png */,
 				28C3A82A1C79D94A0053FBCD /* Metronome-Selected.png */,
 				283A35291C7472F900B4CF6F /* Mixer-Normal.png */,
@@ -1061,6 +1076,8 @@
 				2876F1741C751D6F00777009 /* BMLoadFileViewController.m */,
 				284E5B0C1C7AFC52002BCA0C /* BMTempoViewController.h */,
 				284E5B0D1C7AFC52002BCA0C /* BMTempoViewController.m */,
+				28F8FCAF1C80428F005519C6 /* BMSettingsViewController.h */,
+				28F8FCB01C80428F005519C6 /* BMSettingsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2209,6 +2226,8 @@
 				28DEB4FA1C72068400C78981 /* BMVibrato.h */,
 				283A351E1C7457A200B4CF6F /* BMStereo.cpp */,
 				283A351F1C7457A200B4CF6F /* BMStereo.h */,
+				28FBFC691C89149700ECE541 /* BMEqualizer.cpp */,
+				28FBFC6A1C89149700ECE541 /* BMEqualizer.h */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -2228,9 +2247,11 @@
 			isa = PBXGroup;
 			children = (
 				28DEB50A1C72070500C78981 /* CUtil.h */,
-				28DEB50B1C72070500C78981 /* Oscillator.cpp */,
-				28DEB50C1C72070500C78981 /* Oscillator.h */,
+				28DEB50B1C72070500C78981 /* BMOscillator.cpp */,
+				28DEB50C1C72070500C78981 /* BMOscillator.h */,
 				28DEB50D1C72070500C78981 /* RingBuffer.h */,
+				28FBFC6C1C89190A00ECE541 /* BMBiquadFilter.cpp */,
+				28FBFC6D1C89190A00ECE541 /* BMBiquadFilter.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2420,6 +2441,7 @@
 				28CAA0481C71DD4E009BFB7B /* ImportTrack-Selected.png in Resources */,
 				28F8FC951C7DC3FE005519C6 /* MicRecord-Hit@2x.png in Resources */,
 				28DEB5381C72A32700C78981 /* OpenSans-Light.ttf in Resources */,
+				28F8FCAE1C803EF0005519C6 /* Settings-Selected.png in Resources */,
 				28CAA0001C71C295009BFB7B /* Icon-50.png in Resources */,
 				28CAA02F1C71CCC3009BFB7B /* DragArrowBack1.png in Resources */,
 				2876F1721C751B1000777009 /* SampleSets.json in Resources */,
@@ -2456,6 +2478,7 @@
 				28CA9FFF1C71C295009BFB7B /* Icon-40@3x.png in Resources */,
 				28CAA0311C71CCC3009BFB7B /* DragArrowBack3.png in Resources */,
 				28CAA0071C71C296009BFB7B /* Icon-72.png in Resources */,
+				28F8FCAD1C803EF0005519C6 /* Settings-Normal.png in Resources */,
 				28CAA0021C71C295009BFB7B /* Icon-57.png in Resources */,
 				28CAA0271C71C58B009BFB7B /* Default-568h@2x.png in Resources */,
 				28DEB55C1C72BF3300C78981 /* AudioEffects.plist in Resources */,
@@ -2499,6 +2522,7 @@
 				28CAA4931C71ECB5009BFB7B /* juce_audio_formats.mm in Sources */,
 				28DEB52C1C72917E00C78981 /* BMConstants.m in Sources */,
 				28DEB52F1C729FC000C78981 /* BMEffectsViewController.m in Sources */,
+				28F8FCB11C80428F005519C6 /* BMSettingsViewController.m in Sources */,
 				28DEB5061C72068400C78981 /* BMVibrato.cpp in Sources */,
 				28DEB54D1C72A69400C78981 /* BMHeaderView.m in Sources */,
 				28CAA4921C71ECAA009BFB7B /* juce_audio_devices.mm in Sources */,
@@ -2506,15 +2530,17 @@
 				28DEB5081C72068400C78981 /* AudioFileStream.cpp in Sources */,
 				28CAA4911C71EC9B009BFB7B /* juce_audio_basics.mm in Sources */,
 				283A35201C7457A200B4CF6F /* BMStereo.cpp in Sources */,
+				28FBFC6E1C89190A00ECE541 /* BMBiquadFilter.cpp in Sources */,
 				28CA9FB81C719640009BFB7B /* BMViewController.m in Sources */,
 				28DEB55F1C72C04600C78981 /* BMLoadEffectsViewController.m in Sources */,
 				284A4E141C75C0BC001D517A /* BMWaveformView.m in Sources */,
 				28DEB5001C72068400C78981 /* AudioController.cpp in Sources */,
-				28DEB50E1C72070500C78981 /* Oscillator.cpp in Sources */,
+				28DEB50E1C72070500C78981 /* BMOscillator.cpp in Sources */,
 				28DEB5031C72068400C78981 /* BMGranularizer.cpp in Sources */,
 				28CA9FD11C71BD55009BFB7B /* BMPlayButton.m in Sources */,
 				28DEB5471C72A54F00C78981 /* UIFont+Additions.m in Sources */,
 				28DEB5021C72068400C78981 /* BMFilter.cpp in Sources */,
+				28FBFC6B1C89149700ECE541 /* BMEqualizer.cpp in Sources */,
 				28CA9FCA1C71B3AF009BFB7B /* BMSampleView.m in Sources */,
 				28DEB5011C72068400C78981 /* BMDelay.cpp in Sources */,
 				28CA9FB71C719640009BFB7B /* main.m in Sources */,
@@ -2648,6 +2674,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2677,6 +2704,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = YES;
 				FRAMEWORK_SEARCH_PATHS = (

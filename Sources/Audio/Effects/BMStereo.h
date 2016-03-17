@@ -26,6 +26,7 @@ public:
     ~BMStereo();
     
     //========= AudioEffect =========//
+    void reset() override;
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void process (float** buffer, int numChannels, int numSamples) override;
     void releaseResources() override;

@@ -52,7 +52,11 @@ BMDelay::~BMDelay()
 // AudioEffect
 //==============================================================================
 
-/** Audio Callback */
+void BMDelay::reset()
+{
+    
+}
+
 void BMDelay::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     m_fSampleRate   =   sampleRate;

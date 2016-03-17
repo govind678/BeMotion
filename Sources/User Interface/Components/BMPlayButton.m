@@ -129,14 +129,17 @@ static float const kProgressViewWidth               = 5.0f;
 
 - (void)updatePlaybackProgress:(float)timeInterval {
     
-    _progressRect.origin.x = self.frame.size.width * [[BMAudioController sharedController] getNormalizedPlaybackProgress:_trackID];
+    if (!_progress.isHidden) {
+        
+        _progressRect.origin.x = (self.frame.size.width - _progressRect.size.width) * [[BMAudioController sharedController] getNormalizedPlaybackProgress:_trackID];
     
-    [UIView animateWithDuration:timeInterval
+        [UIView animateWithDuration:timeInterval
                           delay:0.0f
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
                          [_progress setFrame:_progressRect];
                      } completion:^(BOOL finished) {}];
+    }
 }
 
 

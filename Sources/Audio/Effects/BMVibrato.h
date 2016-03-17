@@ -13,7 +13,7 @@
 
 #include "AudioEffect.h"
 #include "RingBuffer.h"
-#include "Oscillator.h"
+#include "BMOscillator.h"
 
 class BMVibrato     :   public AudioEffect
 {
@@ -24,6 +24,7 @@ public:
     ~BMVibrato();
     
     //========= AudioEffect =========//
+    void reset() override;
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void process (float** buffer, int numChannels, int numSamples) override;
     void releaseResources() override;
@@ -35,16 +36,22 @@ public:
 private:
     //===========================================================================
     
+    float getModulationWidth();
+    
     float               _sampleRate;
     int                 _numChannels;
     
     float               _floatIndex;
     
     float               _modulation_Freq_Hz;
-    int                 _modulation_Width_Samples;
+//    int                 _modulation_Width_Samples;
+    
+    float               _currentModulation;
+    float               _newModulation;
+    
     float               _shape;
     
-    Oscillator*         _lfo;
+    BMOscillator*        _lfo;
     CRingBuffer<float>** _ringBuffer;
 };
 

@@ -9,9 +9,9 @@
 */
 
 #include "BMVibrato.h"
-#include <stdio.h>
 
 static const float kVibratoMaxModWidth = 50.0f;
+static const float kSmoothFactor = 0.001f;
 
 BMVibrato::BMVibrato(int numChannels)
 
@@ -20,16 +20,18 @@ BMVibrato::BMVibrato(int numChannels)
     _numChannels = numChannels;
     
     _modulation_Freq_Hz           =   5.0f;
-    _modulation_Width_Samples     =   100;
     _shape                        =   0.01f;
+    _currentModulation            =   100.0f;
+    _newModulation                =   100.0f;
     
     _ringBuffer = new CRingBuffer<float>*[_numChannels];
     for (int channel=0; channel < _numChannels; channel++)
     {
         _ringBuffer[channel] = new CRingBuffer<float>(2 * (kVibratoMaxModWidth  * _sampleRate) / 1000.0f);
+        _ringBuffer[channel]->setWriteIdx(_ringBuffer[channel]->getReadIdx() + kVibratoMaxModWidth - 1);
     }
     
-    _lfo = new Oscillator();
+    _lfo = new BMOscillator();
     _lfo->setShape(_shape);
     _lfo->setNormalizedFrequency(_modulation_Freq_Hz / _sampleRate);
 }
@@ -48,6 +50,10 @@ BMVibrato::~BMVibrato()
 }
 
 
+void BMVibrato::reset()
+{
+    _lfo->restart();
+}
 
 void BMVibrato::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
@@ -62,11 +68,12 @@ void BMVibrato::process(float** buffer, int numChannels, int numSamples)
     for (int sample = 0; sample < numSamples; sample++)
     {
         float lfoSample = _lfo->getNextSample();
+        float width = getModulationWidth();
         
         //-- Iterate Through Samples in Each Block --//
         for(int channel=0; channel < numChannels; channel++)
         {
-            _floatIndex = ((1.0f + lfoSample) * _modulation_Width_Samples);
+            _floatIndex = ((1.0f + lfoSample) * width);
             
             float currentIndex = _ringBuffer[channel]->getWriteIdx() - _floatIndex;
             
@@ -102,11 +109,7 @@ void BMVibrato::setParameter(int parameterID, float value)
             break;
             
         case 1:
-            _modulation_Width_Samples = int(((value * kVibratoMaxModWidth * _sampleRate) / 1000.0f) + 0.5f);
-            for (int channel = 0; channel < _numChannels; channel++)
-            {
-                _ringBuffer[channel]->setWriteIdx(_ringBuffer[channel]->getReadIdx() + (2.0f * _modulation_Width_Samples));
-            }
+            _newModulation = ((value * kVibratoMaxModWidth * _sampleRate) / 1000.0f) + 0.5f;
             break;
             
         case 2:
@@ -130,7 +133,7 @@ float BMVibrato::getParameter(int parameterID)
             break;
             
         case 1:
-            return ((float(_modulation_Width_Samples) - 0.5f) * 1000.0f) / (kVibratoMaxModWidth * _sampleRate);
+            return ((_newModulation - 0.5f) * 1000.0f) / (kVibratoMaxModWidth * _sampleRate);
             break;
             
         case 2:
@@ -141,4 +144,11 @@ float BMVibrato::getParameter(int parameterID)
             return 0.0f;
             break;
     }
+}
+
+
+float BMVibrato::getModulationWidth()
+{
+    _currentModulation = (kSmoothFactor * _newModulation) + ((1.0f - kSmoothFactor) * _currentModulation);
+    return _currentModulation;
 }

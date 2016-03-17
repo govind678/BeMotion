@@ -116,6 +116,14 @@ void AudioFileStream::startPlayback()
 void AudioFileStream::stopPlayback()
 {
     _transportSource.stop();
+    
+    for (int i=0; i < _effects.size(); i++)
+    {
+        if (_effectsEnable.getUnchecked(i))
+        {
+            _effects.getUnchecked(i)->reset();
+        }
+    }
 }
 
 bool AudioFileStream::isPlaying()

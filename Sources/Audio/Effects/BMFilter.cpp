@@ -113,6 +113,10 @@ float BMFilter::getParameter(int parameterID)
     }
 }
 
+void BMFilter::reset()
+{
+    
+}
 
 void BMFilter::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {

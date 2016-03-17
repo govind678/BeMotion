@@ -14,7 +14,7 @@ static const float kMaxRate = 30.0f;
 
 BMTremolo::BMTremolo(int numChannels)
 {
-    _lfo = new Oscillator();
+    _lfo = new BMOscillator();
     _sampleRate = 48000.0f;
     
     _currentDepth   = 1.0;
@@ -36,7 +36,11 @@ BMTremolo::~BMTremolo()
 // AudioEffect
 //==============================================================================
 
-/** Audio Callback */
+void BMTremolo::reset()
+{
+    _lfo->restart();
+}
+
 void BMTremolo::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     _sampleRate = sampleRate;

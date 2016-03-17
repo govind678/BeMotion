@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    Oscillator.h
+    BMOscillator.h
     Created: 1 Feb 2016 3:20:17pm
     Author:  Govinda Pingali
 
   ==============================================================================
 */
 
-#ifndef OSCILLATOR_H_INCLUDED
-#define OSCILLATOR_H_INCLUDED
+#ifndef BMOSCILLATOR_H_INCLUDED
+#define BMOSCILLATOR_H_INCLUDED
 
 static const int kWaveTableSize = 4096;
 static const float kSmoothingFactor = 0.001f;
@@ -25,13 +25,13 @@ enum WaveShape
 //==============================================================================
 
 
-class Oscillator
+class BMOscillator
 {
 public:
     //===========================================================================
     
-    Oscillator();
-    ~Oscillator();
+    BMOscillator();
+    ~BMOscillator();
     
     void setNormalizedFrequency(float frequency);
     
@@ -64,4 +64,4 @@ private:
 
 
 
-#endif  // OSCILLATOR_H_INCLUDED
+#endif  // BMOSCILLATOR_H_INCLUDED

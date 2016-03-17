@@ -9,6 +9,9 @@
 */
 
 #include "BMGranularizer.h"
+#include <stdio.h>
+
+static const float kSmoothFactor = 0.001f;
 
 BMGranularizer::BMGranularizer(int numChannels)
 {
@@ -17,35 +20,26 @@ BMGranularizer::BMGranularizer(int numChannels)
     
     
     _buffer     = new CRingBuffer<float>* [_numChannels];
-    _grain      = new CRingBuffer<float>* [_numChannels];
-    
     for (int channel = 0; channel < _numChannels; channel++)
     {
         _buffer[channel]    = new CRingBuffer<float> (kMaxSamples);
-        _grain[channel]     = new CRingBuffer<float> (kMaxSamples * 0.5f);
     }
     
-    for (int i=0; i < kEnvelopeSamples; i++)
-    {
-        _envelope[i] = tanhf(i / 4.0f);
-    }
+    _sizePerGrain               =   0.5f; // % grain size
+    _rateInSeconds              =   0.1f;
+    _attackTime                 =   0.5f;
+    _samplesBuffered            =   0;
     
-    _sizePerGrain           =   0.5f;
-    _rateInSeconds          =   0.1f;
-    _attackTime             =   0.5f; // % grain size
-    _startIndex             =   0;
-    _samplesBuffered        =   0;
-    _sizeInSamples          =   0;
-    _rateInSamples          =   0;
-    _floatIndex             =   0.0f;
-    _bufferingToggle        =   false;
-    _grainToggle            =   false;
+    _currentGrainSizeInSamples  =   0.0f;
+    _newGrainSizeInSamples      =   0.0f;
+    _currentRateInSamples       =   0.0f;
+    _newRateInSamples           =   0.0f;
     
-    setTempo(120.0f);
+    _rateSampleCount            =   0;
+    _sizeSampleCount            =   0;
+    _finishedBuffering          =   false;
     
     calculateParameters();
-    
-    _sampleCount            =   _rateInSamples;
 }
 
 BMGranularizer::~BMGranularizer()
@@ -53,11 +47,9 @@ BMGranularizer::~BMGranularizer()
     for (int channel = 0; channel < _numChannels; channel++)
     {
         delete _buffer[channel];
-        delete _grain[channel];
     }
     
     delete [] _buffer;
-    delete [] _grain;
 }
 
 
@@ -70,15 +62,15 @@ void BMGranularizer::setParameter(int parameterID, float value)
     switch (parameterID)
     {
         case 0:
-            if (value < 0.03f) {
-                value = 0.03f;
+            if (value < 0.02f) {
+                value = 0.02f;
             }
             _rateInSeconds = value;
             calculateParameters();
             break;
             
         case 1:
-            _sizePerGrain = (1.0f - value);
+            _sizePerGrain = value;
             calculateParameters();
             break;
             
@@ -103,7 +95,7 @@ float BMGranularizer::getParameter(int parameterID)
             break;
             
         case 1:
-            return (1.0f - _sizePerGrain);
+            return _sizePerGrain;
             break;
             
         case 2:
@@ -117,6 +109,19 @@ float BMGranularizer::getParameter(int parameterID)
 }
 
 
+void BMGranularizer::reset()
+{
+    _finishedBuffering = false;
+    _samplesBuffered = 0;
+    _rateSampleCount = 0;
+    _sizeSampleCount = 0;
+    
+    for (int channel = 0; channel < _numChannels; channel++)
+    {
+        _buffer[channel]->resetInstance();
+    }
+}
+
 void BMGranularizer::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
     _sampleRate = sampleRate;
@@ -126,107 +131,174 @@ void BMGranularizer::prepareToPlay(int samplesPerBlockExpected, double sampleRat
 
 void BMGranularizer::process(float** buffer, int numChannels, int numSamples)
 {
-    for (int sample = 0; sample < numSamples; sample++)
+    // 1. Store samples into buffer
+    
+    for (int sample=0; sample < numSamples; sample++)
     {
-        _sampleCount--;
-        
-        if (_sampleCount <= 0)
-        {
-            generateGrain();
-            _sampleCount = _rateInSamples;
-            _grainToggle = true;
-        }
-        
-        //--- Initially check number of samples buffered ---//
-        if (!_bufferingToggle)
-        {
-            _samplesBuffered++;
-            
-            if (_samplesBuffered >= kMaxSamples)
-            {
-                _bufferingToggle = true;
-            }
-        }
-        
-        
-        for (int channel = 0; channel < _numChannels; channel++)
+        for (int channel=0; channel < numChannels; channel++)
         {
             _buffer[channel]->putPostInc(buffer[channel][sample]);
-            
-            if (_grainToggle)
+        }
+        
+        
+        // At start of playback, wait for granular synthesis until minimum number of samples are buffered
+        
+        if (_samplesBuffered < kMaxSamples)
+        {
+            _samplesBuffered++;
+        }
+        
+        if (!_finishedBuffering)
+        {
+            if (_samplesBuffered >= getSizeInSamples())
             {
-                buffer[channel][sample] = _grain[channel]->getPostInc();
+                _finishedBuffering = true;
             }
-            
         }
     }
     
-}
-
-
-void BMGranularizer::generateGrain()
-{
-    int randomIndex = ((double) rand() / (RAND_MAX)) * _samplesBuffered;
-    _startIndex = randomIndex - (randomIndex % _quantizationInterval);
-    if (_startIndex < 0)
-        _startIndex = 0;
     
-    for (int channel = 0; channel < _numChannels; channel++)
+    // 2. Generate Grain if minimum number of samples are buffered
+    
+    if (_finishedBuffering)
     {
-        _grain[channel]->resetIndices();
-        
-        for (int sample = 0; sample < (_sizeInSamples / 1.0f); sample++)
+        for (int sample=0; sample < numSamples; sample++)
         {
-            _floatIndex = _startIndex + (sample * 1.0f);
-            
-            if (sample < kEnvelopeSamples)
+            // Grain Rate
+            if (_rateSampleCount == 0)
             {
-                _grain[channel]->putPostInc(_buffer[channel]->getAtFloatIdx(_floatIndex) * _envelope[sample]);
+                int randomIndex = ((double) rand() / (RAND_MAX)) * _samplesBuffered;
+                
+                for (int channel=0; channel < numChannels; channel++)
+                {
+                    _buffer[channel]->setReadIdx(randomIndex);
+                }
+                
+                _sizeSampleCount = 0;
+            }
+            
+            _rateSampleCount = (_rateSampleCount + 1) % (int)getRateInSamples();
+            
+            
+            
+            // Grain Size
+            if (_sizeSampleCount <= getSizeInSamples())
+            {
+                for (int channel=0; channel < numChannels; channel++)
+                {
+                    buffer[channel][sample] = _buffer[channel]->getPostInc();
+                }
+                
+                _sizeSampleCount++;
             }
             
             else
             {
-                _grain[channel]->putPostInc(_buffer[channel]->getAtFloatIdx(_floatIndex));
+                for (int channel=0; channel < numChannels; channel++)
+                {
+                    buffer[channel][sample] = 0.0f;
+                }
             }
-            
-        }
-        
-        for (int sample = 0; sample < _rateInSamples - (_sizeInSamples / 1.0f); sample++)
-        {
-            _grain[channel]->putPostInc(0.0f);
         }
     }
+    
+    
+//    for (int sample = 0; sample < numSamples; sample++)
+//    {
+//        _sampleCount--;
+//        
+//        if (_sampleCount <= 0)
+//        {
+//            generateGrain();
+//            _sampleCount = _rateInSamples;
+//            _grainToggle = true;
+//        }
+//        
+//        //--- Initially check number of samples buffered ---//
+//        if (!_bufferingToggle)
+//        {
+//            _samplesBuffered++;
+//            
+//            if (_samplesBuffered >= kMaxSamples)
+//            {
+//                _bufferingToggle = true;
+//            }
+//        }
+//        
+//        
+//        for (int channel = 0; channel < _numChannels; channel++)
+//        {
+//            _buffer[channel]->putPostInc(buffer[channel][sample]);
+//            
+//            if (_grainToggle)
+//            {
+//                buffer[channel][sample] = _grain[channel]->getPostInc();
+//            }
+//        }
+//    }
     
 }
 
 
+//void BMGranularizer::generateGrain()
+//{
+//    int randomIndex = ((double) rand() / (RAND_MAX)) * _samplesBuffered;
+//    
+//    _startIndex = randomIndex - (randomIndex % _quantizationInterval);
+//    if (_startIndex < 0)
+//        _startIndex = 0;
+//    
+//    for (int channel = 0; channel < _numChannels; channel++)
+//    {
+//        _grain[channel]->resetIndices();
+//        
+//        for (int sample = 0; sample < (_grainSizeInSamples / 1.0f); sample++)
+//        {
+//            _floatIndex = _startIndex + (sample * 1.0f);
+//            
+//            if (sample < kEnvelopeSamples)
+//            {
+//                _grain[channel]->putPostInc(_buffer[channel]->getAtFloatIdx(_floatIndex) * _envelope[sample]);
+//            }
+//            
+//            else
+//            {
+//                _grain[channel]->putPostInc(_buffer[channel]->getAtFloatIdx(_floatIndex));
+//            }
+//            
+//        }
+//        
+//        for (int sample = 0; sample < _rateInSamples - (_grainSizeInSamples / 1.0f); sample++)
+//        {
+//            _grain[channel]->putPostInc(0.0f);
+//        }
+//    }
+//    
+//}
+
+
 void BMGranularizer::calculateParameters()
 {
-    _rateInSamples = _rateInSeconds * _sampleRate;
-    _sizeInSamples = (((1.0f - _sizePerGrain) * 0.99f) + 0.01f) * _rateInSamples;
+    _newRateInSamples = _rateInSeconds * _sampleRate;
+    _newGrainSizeInSamples = ((_sizePerGrain * 0.99f) + 0.01f) * _newRateInSamples;
 }
 
 
 void BMGranularizer::releaseResources()
 {
-    for (int channel = 0; channel < _numChannels; channel++)
-    {
-        _grain[channel]->resetInstance();
-        _buffer[channel]->resetInstance();
-        _bufferingToggle = false;
-        _grainToggle     = false;
-        _samplesBuffered = 0;
-    }
+    reset();
 }
 
 
-void BMGranularizer::setTempo(float tempo)
+float BMGranularizer::getRateInSamples()
 {
-    _tempo = tempo;
-    _quantizationInterval = (60.0f / (_tempo * 4.0f)) * _sampleRate;
-    
-    for (int channel = 0; channel < _numChannels; channel++)
-    {
-        _buffer[channel]->setWrapPoint(kMaxSamples - (kMaxSamples % _quantizationInterval));
-    }
+    _currentRateInSamples = (kSmoothFactor * _newRateInSamples) + ((1.0f - kSmoothFactor) * _currentRateInSamples);
+    return _currentRateInSamples;
 }
+
+float BMGranularizer::getSizeInSamples()
+{
+    _currentGrainSizeInSamples = (kSmoothFactor * _newGrainSizeInSamples) + ((1.0f - kSmoothFactor) * _currentGrainSizeInSamples);
+    return _currentGrainSizeInSamples;
+}
+
