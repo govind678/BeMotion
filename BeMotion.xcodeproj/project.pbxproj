@@ -28,7 +28,6 @@
 		2876F1751C751D6F00777009 /* BMLoadFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2876F1741C751D6F00777009 /* BMLoadFileViewController.m */; };
 		28C3A82B1C79D94A0053FBCD /* Metronome-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C3A8291C79D94A0053FBCD /* Metronome-Normal.png */; };
 		28C3A82C1C79D94A0053FBCD /* Metronome-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C3A82A1C79D94A0053FBCD /* Metronome-Selected.png */; };
-		28C3A82F1C79DA1C0053FBCD /* BMTempoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C3A82E1C79DA1C0053FBCD /* BMTempoView.m */; };
 		28CA9FB21C719640009BFB7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA9F9E1C719640009BFB7B /* AppDelegate.m */; };
 		28CA9FB31C719640009BFB7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28CA9FA21C719640009BFB7B /* Assets.xcassets */; };
 		28CA9FB71C719640009BFB7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA9FA81C719640009BFB7B /* main.m */; };
@@ -134,6 +133,7 @@
 		28F8FCB11C80428F005519C6 /* BMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F8FCB01C80428F005519C6 /* BMSettingsViewController.m */; };
 		28FBFC6B1C89149700ECE541 /* BMEqualizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28FBFC691C89149700ECE541 /* BMEqualizer.cpp */; };
 		28FBFC6E1C89190A00ECE541 /* BMBiquadFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28FBFC6C1C89190A00ECE541 /* BMBiquadFilter.cpp */; };
+		FC6AEAFE1D77FE130023874C /* BMTempoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6AEAFD1D77FE130023874C /* BMTempoView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,8 +182,6 @@
 		2876F1741C751D6F00777009 /* BMLoadFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMLoadFileViewController.m; sourceTree = "<group>"; };
 		28C3A8291C79D94A0053FBCD /* Metronome-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Metronome-Normal.png"; sourceTree = "<group>"; };
 		28C3A82A1C79D94A0053FBCD /* Metronome-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Metronome-Selected.png"; sourceTree = "<group>"; };
-		28C3A82D1C79DA1C0053FBCD /* BMTempoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMTempoView.h; path = "../../../../BeMotion-2/Sources/User Interface/Components/BMTempoView.h"; sourceTree = "<group>"; };
-		28C3A82E1C79DA1C0053FBCD /* BMTempoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMTempoView.m; path = "../../../../BeMotion-2/Sources/User Interface/Components/BMTempoView.m"; sourceTree = "<group>"; };
 		28CA9F3F1C71956A009BFB7B /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28CA9F581C71956A009BFB7B /* BeMotionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeMotionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28CA9F631C71956A009BFB7B /* BeMotionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeMotionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -867,6 +865,8 @@
 		28FBFC6A1C89149700ECE541 /* BMEqualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEqualizer.h; sourceTree = "<group>"; };
 		28FBFC6C1C89190A00ECE541 /* BMBiquadFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMBiquadFilter.cpp; sourceTree = "<group>"; };
 		28FBFC6D1C89190A00ECE541 /* BMBiquadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMBiquadFilter.h; sourceTree = "<group>"; };
+		FC6AEAFC1D77FE130023874C /* BMTempoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMTempoView.h; sourceTree = "<group>"; };
+		FC6AEAFD1D77FE130023874C /* BMTempoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMTempoView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1055,8 +1055,8 @@
 				283A352E1C74775400B4CF6F /* BMPanSlider.m */,
 				284A4E121C75C0BC001D517A /* BMWaveformView.h */,
 				284A4E131C75C0BC001D517A /* BMWaveformView.m */,
-				28C3A82D1C79DA1C0053FBCD /* BMTempoView.h */,
-				28C3A82E1C79DA1C0053FBCD /* BMTempoView.m */,
+				FC6AEAFC1D77FE130023874C /* BMTempoView.h */,
+				FC6AEAFD1D77FE130023874C /* BMTempoView.m */,
 				28F8FC8B1C7DBEE1005519C6 /* BMRecordButton.h */,
 				28F8FC8C1C7DBEE1005519C6 /* BMRecordButton.m */,
 			);
@@ -2550,7 +2550,7 @@
 				28CA9FB21C719640009BFB7B /* AppDelegate.m in Sources */,
 				283A35231C74620C00B4CF6F /* BMHorizontalSlider.m in Sources */,
 				284A4E111C75B2D2001D517A /* BMSequencer.m in Sources */,
-				28C3A82F1C79DA1C0053FBCD /* BMTempoView.m in Sources */,
+				FC6AEAFE1D77FE130023874C /* BMTempoView.m in Sources */,
 				2876F1751C751D6F00777009 /* BMLoadFileViewController.m in Sources */,
 				28DEB5071C72068400C78981 /* AudioFileRecord.cpp in Sources */,
 				28CA9FBF1C7197C6009BFB7B /* BMSettings.m in Sources */,
