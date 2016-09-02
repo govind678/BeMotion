@@ -200,6 +200,8 @@
 		FC95CF0D1959012E0037E887 /* LoadMediaFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC95CF0C1959012E0037E887 /* LoadMediaFile.mm */; };
 		FCC38277194629E90042222F /* TrimAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCC38275194629E90042222F /* TrimAudio.mm */; };
 		FCC382F9194981CD0042222F /* Wah2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC382F7194981CD0042222F /* Wah2.cpp */; };
+		FCCAEB461D7885A900CDC526 /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = FCCAEB441D7885A900CDC526 /* Icons */; };
+		FCCAEB471D7885A900CDC526 /* Launch in Resources */ = {isa = PBXBuildFile; fileRef = FCCAEB451D7885A900CDC526 /* Launch */; };
 		FCCF84B819266AC500B76E77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B719266AC500B76E77 /* Foundation.framework */; };
 		FCCF84BA19266AC500B76E77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84B919266AC500B76E77 /* CoreGraphics.framework */; };
 		FCCF84BC19266AC500B76E77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCCF84BB19266AC500B76E77 /* UIKit.framework */; };
@@ -473,6 +475,8 @@
 		FCC38276194629E90042222F /* TrimAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimAudio.h; sourceTree = "<group>"; };
 		FCC382F7194981CD0042222F /* Wah2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wah2.cpp; sourceTree = "<group>"; };
 		FCC382F8194981CD0042222F /* Wah2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wah2.h; sourceTree = "<group>"; };
+		FCCAEB441D7885A900CDC526 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
+		FCCAEB451D7885A900CDC526 /* Launch */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Launch; sourceTree = "<group>"; };
 		FCCF84B419266AC500B76E77 /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCF84B719266AC500B76E77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCCF84B919266AC500B76E77 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1701,6 +1705,8 @@
 		FC16324C1977CA1D00E15DEF /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FCCAEB441D7885A900CDC526 /* Icons */,
+				FCCAEB451D7885A900CDC526 /* Launch */,
 				FC16324D1977CA1D00E15DEF /* DragArrow */,
 				FC1632551977CA1D00E15DEF /* Main */,
 				FC1632631977CA1D00E15DEF /* MainScreen.psd */,
@@ -4006,6 +4012,7 @@
 				FC1632D91977CA1D00E15DEF /* Electronic3.wav in Resources */,
 				FC1632E11977CA1D00E15DEF /* Electronica1.wav in Resources */,
 				FC1633061977CA1D00E15DEF /* DelayWah.json in Resources */,
+				FCCAEB461D7885A900CDC526 /* Icons in Resources */,
 				FC1632D71977CA1D00E15DEF /* Electronic1.wav in Resources */,
 				FC16331B1977CA1D00E15DEF /* switchHandle.png in Resources */,
 				FC1633531977CA1D00E15DEF /* Slot_Enabled_2_1.png in Resources */,
@@ -4143,6 +4150,7 @@
 				FC1632CE1977CA1D00E15DEF /* Breakbeat2.wav in Resources */,
 				FC1632DC1977CA1D00E15DEF /* EKit1.wav in Resources */,
 				FC1633601977CA1D00E15DEF /* Slot_Selected_1_2.png in Resources */,
+				FCCAEB471D7885A900CDC526 /* Launch in Resources */,
 				FC16336A1977CA1D00E15DEF /* EffectNameBackground@2x.png in Resources */,
 				FC1633671977CA1D00E15DEF /* Slot_Selected_3_1.png in Resources */,
 				FC1633011977CA1D00E15DEF /* Skies1.wav in Resources */,
@@ -4352,8 +4360,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4368,7 +4376,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
+				PROVISIONING_PROFILE = "c379ec77-e276-4428-afe6-434e20190962";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4378,8 +4386,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: BeMotionLLC.BeMotion";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Govinda Ram Pingali (46E2UU9245)";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting Files/BeMotion-Prefix.pch";
@@ -4395,7 +4403,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A5618B03-C269-4FC7-AD2B-9E44AE7D9223";
+				PROVISIONING_PROFILE = "c379ec77-e276-4428-afe6-434e20190962";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
