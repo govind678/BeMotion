@@ -2,22 +2,28 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   Copyright (c) 2016 - ROLI Ltd.
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
+   Permission is granted to use this software under the terms of the ISC license
+   http://www.isc.org/downloads/software-support-policy/isc-license/
 
-   Details of these licenses can be found at: www.gnu.org/licenses
+   Permission to use, copy, modify, and/or distribute this software for any
+   purpose with or without fee is hereby granted, provided that the above
+   copyright notice and this permission notice appear in all copies.
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD
+   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+   FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT,
+   OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+   USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+   TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+   OF THIS SOFTWARE.
 
-   ------------------------------------------------------------------------------
+   -----------------------------------------------------------------------------
 
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
+   To release a closed-source product which uses other parts of JUCE not
+   licensed under the ISC terms, commercial licenses are available: visit
+   www.juce.com for more information.
 
   ==============================================================================
 */
@@ -30,13 +36,12 @@ import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Handler;
-import android.os.Build;
-import android.os.Process;
 import android.os.ParcelUuid;
 import android.os.Environment;
 import android.view.*;
@@ -50,20 +55,17 @@ import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import java.lang.Runnable;
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.TimerTask;
+import java.util.*;
 import java.io.*;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
-
-$$JuceAndroidMidiImports$$ // If you get an error here, you need to re-save your project with the introjucer!
+import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
+import android.Manifest;
+$$JuceAndroidMidiImports$$ // If you get an error here, you need to re-save your project with the Projucer!
 
 
 //==============================================================================
@@ -74,6 +76,75 @@ public class JuceAppActivity   extends Activity
     {
         System.loadLibrary ("juce_jni");
     }
+
+    //==============================================================================
+    public boolean isPermissionDeclaredInManifest (int permissionID)
+    {
+        String permissionToCheck = getAndroidPermissionName(permissionID);
+
+        try
+        {
+            PackageInfo info = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_PERMISSIONS);
+
+            if (info.requestedPermissions != null)
+                for (String permission : info.requestedPermissions)
+                    if (permission.equals (permissionToCheck))
+                        return true;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            Log.d ("JUCE", "isPermissionDeclaredInManifest: PackageManager.NameNotFoundException = " + e.toString());
+        }
+
+        Log.d ("JUCE", "isPermissionDeclaredInManifest: could not find requested permission " + permissionToCheck);
+        return false;
+    }
+
+    //==============================================================================
+    // these have to match the values of enum PermissionID in C++ class RuntimePermissions:
+    private static final int JUCE_PERMISSIONS_RECORD_AUDIO = 1;
+    private static final int JUCE_PERMISSIONS_BLUETOOTH_MIDI = 2;
+
+    private static String getAndroidPermissionName (int permissionID)
+    {
+        switch (permissionID)
+        {
+            case JUCE_PERMISSIONS_RECORD_AUDIO:     return Manifest.permission.RECORD_AUDIO;
+            case JUCE_PERMISSIONS_BLUETOOTH_MIDI:   return Manifest.permission.ACCESS_COARSE_LOCATION;
+        }
+
+        // unknown permission ID!
+        assert false;
+        return new String();
+    }
+
+    public boolean isPermissionGranted (int permissionID)
+    {
+        return ContextCompat.checkSelfPermission (this, getAndroidPermissionName (permissionID)) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private Map<Integer, Long> permissionCallbackPtrMap;
+
+    public void requestRuntimePermission (int permissionID, long ptrToCallback)
+    {
+        String permissionName = getAndroidPermissionName (permissionID);
+
+        if (ContextCompat.checkSelfPermission (this, permissionName) != PackageManager.PERMISSION_GRANTED)
+        {
+            // remember callbackPtr, request permissions, and let onRequestPermissionResult call callback asynchronously
+            permissionCallbackPtrMap.put (permissionID, ptrToCallback);
+            ActivityCompat.requestPermissions (this, new String[]{permissionName}, permissionID);
+        }
+        else
+        {
+            // permissions were already granted before, we can call callback directly
+            androidRuntimePermissionsCallback (true, ptrToCallback);
+        }
+    }
+
+    private native void androidRuntimePermissionsCallback (boolean permissionWasGranted, long ptrToCallback);
+
+    $$JuceAndroidRuntimePermissionsCode$$ // If you get an error here, you need to re-save your project with the Projucer!
 
     //==============================================================================
     public static class MidiPortID extends Object
@@ -124,7 +195,7 @@ public class JuceAppActivity   extends Activity
     }
 
     //==============================================================================
-    $$JuceAndroidMidiCode$$ // If you get an error here, you need to re-save your project with the introjucer!
+    $$JuceAndroidMidiCode$$ // If you get an error here, you need to re-save your project with the Projucer!
 
     //==============================================================================
     @Override
@@ -138,6 +209,8 @@ public class JuceAppActivity   extends Activity
         setContentView (viewHolder);
 
         setVolumeControlStream (AudioManager.STREAM_MUSIC);
+
+        permissionCallbackPtrMap = new HashMap<Integer, Long>();
     }
 
     @Override
@@ -153,6 +226,13 @@ public class JuceAppActivity   extends Activity
     protected void onPause()
     {
         suspendApp();
+
+        try
+        {
+            Thread.sleep (1000); // This is a bit of a hack to avoid some hard-to-track-down
+                                 // openGL glitches when pausing/resuming apps..
+        } catch (InterruptedException e) {}
+
         super.onPause();
     }
 

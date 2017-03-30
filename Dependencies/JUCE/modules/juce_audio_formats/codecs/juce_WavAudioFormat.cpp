@@ -656,7 +656,10 @@ namespace WavFileHelpers
 
                 if (infoLength > 0)
                 {
-                    infoLength = jlimit ((int64) 0, infoLength, (int64) input.readInt());
+                    infoLength = jmin (infoLength, (int64) input.readInt());
+
+                    if (infoLength <= 0)
+                        return;
 
                     for (int i = 0; i < numElementsInArray (types); ++i)
                     {
@@ -664,7 +667,8 @@ namespace WavFileHelpers
                         {
                             MemoryBlock mb;
                             input.readIntoMemoryBlock (mb, (ssize_t) infoLength);
-                            values.set (types[i], mb.toString());
+                            values.set (types[i], String::createStringFromData ((const char*) mb.getData(),
+                                                                                (int) mb.getSize()));
                             break;
                         }
                     }
@@ -1258,7 +1262,7 @@ public:
         if (writeFailed)
             return false;
 
-        const size_t bytes = numChannels * (unsigned int) numSamples * bitsPerSample / 8;
+        const size_t bytes = numChannels * (size_t) numSamples * bitsPerSample / 8;
         tempBlock.ensureSize (bytes, false);
 
         switch (bitsPerSample)
@@ -1591,12 +1595,17 @@ AudioFormatReader* WavAudioFormat::createReaderFor (InputStream* sourceStream,
 
 MemoryMappedAudioFormatReader* WavAudioFormat::createMemoryMappedReader (const File& file)
 {
-    if (FileInputStream* fin = file.createInputStream())
+    return createMemoryMappedReader (file.createInputStream());
+}
+
+MemoryMappedAudioFormatReader* WavAudioFormat::createMemoryMappedReader (FileInputStream* fin)
+{
+    if (fin != nullptr)
     {
         WavAudioFormatReader reader (fin);
 
         if (reader.lengthInSamples > 0)
-            return new MemoryMappedWavReader (file, reader);
+            return new MemoryMappedWavReader (fin->getFile(), reader);
     }
 
     return nullptr;

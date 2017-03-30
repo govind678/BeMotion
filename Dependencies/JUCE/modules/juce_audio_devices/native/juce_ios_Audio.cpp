@@ -2,22 +2,28 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   Copyright (c) 2016 - ROLI Ltd.
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
+   Permission is granted to use this software under the terms of the ISC license
+   http://www.isc.org/downloads/software-support-policy/isc-license/
 
-   Details of these licenses can be found at: www.gnu.org/licenses
+   Permission to use, copy, modify, and/or distribute this software for any
+   purpose with or without fee is hereby granted, provided that the above
+   copyright notice and this permission notice appear in all copies.
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD
+   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+   FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT,
+   OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+   USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+   TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+   OF THIS SOFTWARE.
 
-   ------------------------------------------------------------------------------
+   -----------------------------------------------------------------------------
 
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
+   To release a closed-source product which uses other parts of JUCE not
+   licensed under the ISC terms, commercial licenses are available: visit
+   www.juce.com for more information.
 
   ==============================================================================
 */
@@ -26,7 +32,7 @@ class iOSAudioIODevice;
 
 static const char* const iOSAudioDeviceName = "iOS Audio";
 
-//==================================================================================================
+//==============================================================================
 struct AudioSessionHolder
 {
     AudioSessionHolder();
@@ -76,7 +82,7 @@ bool getNotificationValueForKey (NSNotification* notification, NSString* key, NS
 
 } // juce namespace
 
-//==================================================================================================
+//==============================================================================
 @interface iOSAudioSessionNative  : NSObject
 {
 @private
@@ -86,7 +92,7 @@ bool getNotificationValueForKey (NSNotification* notification, NSString* key, NS
 - (id) init: (juce::AudioSessionHolder*) holder;
 - (void) dealloc;
 
-- (void) audioSessionDidChangeInterruptionType: (NSNotification*) notification;
+- (void) audioSessionChangedInterruptionType: (NSNotification*) notification;
 - (void) handleMediaServicesReset;
 - (void) handleMediaServicesLost;
 - (void) handleRouteChange: (NSNotification*) notification;
@@ -106,7 +112,7 @@ bool getNotificationValueForKey (NSNotification* notification, NSString* key, NS
         auto centre = [NSNotificationCenter defaultCenter];
 
         [centre addObserver: self
-                   selector: @selector (audioSessionDidChangeInterruptionType:)
+                   selector: @selector (audioSessionChangedInterruptionType:)
                        name: AVAudioSessionInterruptionNotification
                      object: session];
 
@@ -139,7 +145,7 @@ bool getNotificationValueForKey (NSNotification* notification, NSString* key, NS
     [super dealloc];
 }
 
-- (void) audioSessionDidChangeInterruptionType: (NSNotification*) notification
+- (void) audioSessionChangedInterruptionType: (NSNotification*) notification
 {
     NSUInteger value;
 
@@ -180,7 +186,7 @@ bool getNotificationValueForKey (NSNotification* notification, NSString* key, NS
 
 @end
 
-//==================================================================================================
+//==============================================================================
 namespace juce {
 
 #ifndef JUCE_IOS_AUDIO_LOGGING
@@ -205,7 +211,7 @@ static void logNSError (NSError* e)
 #define JUCE_NSERROR_CHECK(X)     { NSError* error = nil; X; logNSError (error); }
 
 
-//==================================================================================================
+//==============================================================================
 class iOSAudioIODevice  : public AudioIODevice
 {
 public:
@@ -257,6 +263,11 @@ public:
         // depending on whether the headphones are plugged in or not!
         setAudioSessionActive (true);
 
+        AudioUnitRemovePropertyListenerWithUserData (audioUnit,
+                                                     kAudioUnitProperty_StreamFormat,
+                                                     handleStreamFormatChangeCallback,
+                                                     this);
+
         const double lowestRate = trySampleRate (4000);
         const double highestRate = trySampleRate (192000);
 
@@ -267,6 +278,13 @@ public:
             rates.addIfNotAlreadyThere (supportedRate);
             rate = jmax (rate, supportedRate);
         }
+
+        trySampleRate (getCurrentSampleRate());
+
+        AudioUnitAddPropertyListener (audioUnit,
+                                      kAudioUnitProperty_StreamFormat,
+                                      handleStreamFormatChangeCallback,
+                                      this);
 
         for (auto r : rates)
         {
@@ -281,13 +299,20 @@ public:
     {
         Array<int> r;
 
-        for (int i = 6; i < 12; ++i)
+        for (int i = 6; i < 13; ++i)
             r.add (1 << i);
 
         return r;
     }
 
-    int getDefaultBufferSize() override         { return 256; }
+    int getDefaultBufferSize() override
+    {
+       #if TARGET_IPHONE_SIMULATOR
+        return 512;
+       #else
+        return 256;
+       #endif
+    }
 
     String open (const BigInteger& inputChannelsWanted,
                  const BigInteger& outputChannelsWanted,
@@ -431,6 +456,8 @@ public:
 
     void handleStatusChange (bool enabled, const char* reason)
     {
+        const ScopedLock myScopedLock (callbackLock);
+
         JUCE_IOS_AUDIO_LOG ("handleStatusChange: enabled: " << (int) enabled << ", reason: " << reason);
 
         isRunning = enabled;
@@ -447,6 +474,8 @@ public:
 
     void handleRouteChange (const char* reason)
     {
+        const ScopedLock myScopedLock (callbackLock);
+
         JUCE_IOS_AUDIO_LOG ("handleRouteChange: reason: " << reason);
 
         fixAudioRouteIfSetToReceiver();
@@ -467,13 +496,16 @@ public:
                 AudioOutputUnitStart (audioUnit);
             }
 
-            if (callback)
+            if (callback != nullptr)
+            {
+                callback->audioDeviceStopped();
                 callback->audioDeviceAboutToStart (this);
+            }
         }
     }
 
 private:
-    //==================================================================================================
+    //==============================================================================
     SharedResourcePointer<AudioSessionHolder> sessionHolder;
     CriticalSection callbackLock;
     NSTimeInterval sampleRate = 0;
@@ -509,7 +541,7 @@ private:
         }
     }
 
-    //==================================================================================================
+    //==============================================================================
     OSStatus process (AudioUnitRenderActionFlags* flags, const AudioTimeStamp* time,
                       const UInt32 numFrames, AudioBufferList* data)
     {
@@ -518,9 +550,9 @@ private:
         if (audioInputIsAvailable && numInputChannels > 0)
             err = AudioUnitRender (audioUnit, flags, time, 1, numFrames, data);
 
-        const ScopedLock sl (callbackLock);
+        const ScopedTryLock stl (callbackLock);
 
-        if (callback != nullptr)
+        if (stl.isLocked() && callback != nullptr)
         {
             if ((int) numFrames > floatData.getNumSamples())
                 prepareFloatBuffers ((int) numFrames);
@@ -596,21 +628,23 @@ private:
         auto session = [AVAudioSession sharedInstance];
         sampleRate = session.sampleRate;
         audioInputIsAvailable = session.isInputAvailable;
-        JUCE_IOS_AUDIO_LOG ("AVAudioSession: sampleRate: " << sampleRate << "Hz, audioInputAvailable: " << (int) audioInputIsAvailable);
+        actualBufferSize = roundToInt (sampleRate * session.IOBufferDuration);
+
+        JUCE_IOS_AUDIO_LOG ("AVAudioSession: sampleRate: " << sampleRate
+                             << " Hz, audioInputAvailable: " << (int) audioInputIsAvailable
+                             << ", buffer size: " << actualBufferSize);
     }
 
     void updateCurrentBufferSize()
     {
-        auto session = [AVAudioSession sharedInstance];
-        NSTimeInterval bufferDuration = sampleRate > 0 ? (NSTimeInterval) (preferredBufferSize / sampleRate) : 0.0;
-        JUCE_NSERROR_CHECK ([session setPreferredIOBufferDuration: bufferDuration
-                                                            error: &error]);
+        NSTimeInterval bufferDuration = sampleRate > 0 ? (NSTimeInterval) ((preferredBufferSize + 1) / sampleRate) : 0.0;
 
-        bufferDuration = session.IOBufferDuration;
-        actualBufferSize = roundToInt (sampleRate * bufferDuration);
+        JUCE_NSERROR_CHECK ([[AVAudioSession sharedInstance] setPreferredIOBufferDuration: bufferDuration
+                                                                                    error: &error]);
+        updateSampleRateAndAudioInput();
     }
 
-    //==================================================================================================
+    //==============================================================================
     static OSStatus processStatic (void* client, AudioUnitRenderActionFlags* flags, const AudioTimeStamp* time,
                                    UInt32 /*busNumber*/, UInt32 numFrames, AudioBufferList* data)
     {
@@ -618,7 +652,7 @@ private:
         return static_cast<iOSAudioIODevice*> (client)->process (flags, time, numFrames, data);
     }
 
-    //==================================================================================================
+    //==============================================================================
     void resetFormat (const int numChannels) noexcept
     {
         zerostruct (format);
@@ -678,7 +712,22 @@ private:
         AudioUnitSetProperty (audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input,  0, &format, sizeof (format));
         AudioUnitSetProperty (audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &format, sizeof (format));
 
+        UInt32 framesPerSlice;
+        UInt32 dataSize = sizeof (framesPerSlice);
+
         AudioUnitInitialize (audioUnit);
+
+        updateCurrentBufferSize();
+
+        if (AudioUnitGetProperty (audioUnit, kAudioUnitProperty_MaximumFramesPerSlice,
+                                  kAudioUnitScope_Global, 0, &framesPerSlice, &dataSize) == noErr
+            && dataSize == sizeof (framesPerSlice) && static_cast<int> (framesPerSlice) != actualBufferSize)
+        {
+            prepareFloatBuffers (static_cast<int> (framesPerSlice));
+        }
+
+        AudioUnitAddPropertyListener (audioUnit, kAudioUnitProperty_StreamFormat, handleStreamFormatChangeCallback, this);
+
         return true;
     }
 
@@ -706,6 +755,39 @@ private:
                 setAudioSessionActive (true);
             }
         }
+    }
+
+    void handleStreamFormatChange()
+    {
+        AudioStreamBasicDescription desc;
+        zerostruct (desc);
+        UInt32 dataSize = sizeof (desc);
+        AudioUnitGetProperty(audioUnit,
+                             kAudioUnitProperty_StreamFormat,
+                             kAudioUnitScope_Output,
+                             0,
+                             &desc,
+                             &dataSize);
+        if (desc.mSampleRate != getCurrentSampleRate())
+        {
+            updateSampleRateAndAudioInput();
+            const ScopedLock sl (callbackLock);
+            if (callback != nullptr)
+            {
+                callback->audioDeviceStopped();
+                callback->audioDeviceAboutToStart (this);
+            }
+        }
+    }
+
+    static void handleStreamFormatChangeCallback (void* device,
+                                                  AudioUnit,
+                                                  AudioUnitPropertyID,
+                                                  AudioUnitScope scope,
+                                                  AudioUnitElement element)
+    {
+        if (scope == kAudioUnitScope_Output && element == 0)
+            static_cast<iOSAudioIODevice*> (device)->handleStreamFormatChange();
     }
 
     JUCE_DECLARE_NON_COPYABLE (iOSAudioIODevice)
@@ -742,7 +824,7 @@ AudioIODeviceType* AudioIODeviceType::createAudioIODeviceType_iOSAudio()
     return new iOSAudioIODeviceType();
 }
 
-//==================================================================================================
+//==============================================================================
 AudioSessionHolder::AudioSessionHolder()    { nativeSession = [[iOSAudioSessionNative alloc] init: this]; }
 AudioSessionHolder::~AudioSessionHolder()   { [nativeSession release]; }
 
@@ -754,8 +836,24 @@ void AudioSessionHolder::handleStatusChange (bool enabled, const char* reason) c
 
 void AudioSessionHolder::handleRouteChange (const char* reason) const
 {
-    for (auto device: activeDevices)
-        device->handleRouteChange (reason);
+    struct RouteChangeMessage : public CallbackMessage
+    {
+        RouteChangeMessage (Array<iOSAudioIODevice*> devs, const char* r)
+          : devices (devs), changeReason (r)
+        {
+        }
+
+        void messageCallback() override
+        {
+            for (auto device: devices)
+                device->handleRouteChange (changeReason);
+        }
+
+        Array<iOSAudioIODevice*> devices;
+        const char* changeReason;
+    };
+
+    (new RouteChangeMessage (activeDevices, reason))->post();
 }
 
 #undef JUCE_NSERROR_CHECK

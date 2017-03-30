@@ -17,70 +17,68 @@
 //==============================================================================
 // [BEGIN_USER_CODE_SECTION]
 
-// (You can add your own code in this section, and the Introjucer will not overwrite it)
+// (You can add your own code in this section, and the Projucer will not overwrite it)
 
 // [END_USER_CODE_SECTION]
 
 //==============================================================================
-#define JUCE_MODULE_AVAILABLE_juce_audio_basics         1
-#define JUCE_MODULE_AVAILABLE_juce_audio_devices        1
-#define JUCE_MODULE_AVAILABLE_juce_audio_formats        1
-#define JUCE_MODULE_AVAILABLE_juce_core                 1
-#define JUCE_MODULE_AVAILABLE_juce_events               1
+#define JUCE_MODULE_AVAILABLE_juce_audio_basics       1
+#define JUCE_MODULE_AVAILABLE_juce_audio_devices      1
+#define JUCE_MODULE_AVAILABLE_juce_audio_formats      1
+#define JUCE_MODULE_AVAILABLE_juce_core               1
+#define JUCE_MODULE_AVAILABLE_juce_events             1
 
 //==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
- #define   JUCE_STANDALONE_APPLICATION 1
+ #ifdef JucePlugin_Build_Standalone
+  #define  JUCE_STANDALONE_APPLICATION JucePlugin_Build_Standalone
+ #else
+  #define  JUCE_STANDALONE_APPLICATION 1
+ #endif
 #endif
+
+#define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED 1
 
 //==============================================================================
 // juce_audio_devices flags:
 
 #ifndef    JUCE_ASIO
- #define   JUCE_ASIO 0
+ //#define JUCE_ASIO
 #endif
 
 #ifndef    JUCE_WASAPI
- #define   JUCE_WASAPI 0
+ //#define JUCE_WASAPI
 #endif
 
 #ifndef    JUCE_WASAPI_EXCLUSIVE
- #define   JUCE_WASAPI_EXCLUSIVE 0
+ //#define JUCE_WASAPI_EXCLUSIVE
 #endif
 
 #ifndef    JUCE_DIRECTSOUND
- #define   JUCE_DIRECTSOUND 0
+ //#define JUCE_DIRECTSOUND
 #endif
 
 #ifndef    JUCE_ALSA
- #define   JUCE_ALSA 0
+ //#define JUCE_ALSA
 #endif
 
 #ifndef    JUCE_JACK
- #define   JUCE_JACK 0
+ //#define JUCE_JACK
 #endif
 
 #ifndef    JUCE_USE_ANDROID_OPENSLES
- #define   JUCE_USE_ANDROID_OPENSLES 0
-#endif
-
-#ifndef    JUCE_USE_CDREADER
- #define   JUCE_USE_CDREADER 0
-#endif
-
-#ifndef    JUCE_USE_CDBURNER
- #define   JUCE_USE_CDBURNER 0
+ //#define JUCE_USE_ANDROID_OPENSLES
 #endif
 
 //==============================================================================
 // juce_audio_formats flags:
 
 #ifndef    JUCE_USE_FLAC
- #define   JUCE_USE_FLAC 0
+ #define   JUCE_USE_FLAC 1
 #endif
 
 #ifndef    JUCE_USE_OGGVORBIS
- #define   JUCE_USE_OGGVORBIS 0
+ #define   JUCE_USE_OGGVORBIS 1
 #endif
 
 #ifndef    JUCE_USE_MP3AUDIOFORMAT
@@ -122,5 +120,13 @@
  //#define JUCE_USE_CURL
 #endif
 
+#ifndef    JUCE_CATCH_UNHANDLED_EXCEPTIONS
+ //#define JUCE_CATCH_UNHANDLED_EXCEPTIONS
+#endif
 
-#endif  // __JUCE_APPCONFIG_VWCOSR__
+#ifndef    JUCE_ALLOW_STATIC_NULL_VARIABLES
+ //#define JUCE_ALLOW_STATIC_NULL_VARIABLES
+#endif
+
+
+#endif  // __JUCE_APPCONFIG_JP0VAI__
