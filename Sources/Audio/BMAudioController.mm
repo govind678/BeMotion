@@ -148,7 +148,7 @@
 
 - (int)loadAudioFileIntoTrack:(int)track atIndexPath:(BMIndexPath*)indexPath {
     
-    int returnValue;
+    int returnValue = 0;
     
     if (indexPath.library == 0) { // Default Sample Sets
         
