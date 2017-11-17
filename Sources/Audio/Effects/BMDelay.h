@@ -36,12 +36,16 @@ public:
     void setParameter(int parameterID, float value) override;
     float getParameter(int parameterID) override;
     
+    void setTempo(float tempo) override;
+    void setShouldQuantizeTime(bool shouldQuantizeTime) override;
+    
 private:
     //===========================================================================
     
     float getWetDry();
     float getFeedback();
     float getDelayInSamples();
+    void computeDelayTimeParams(float newValue);
     
     CRingBuffer<float>**        _wetSignal;
     
@@ -56,7 +60,11 @@ private:
     
     float   _currentDelayInSamples;
     float   _newDelayInSamples;
-    float   _delayTime_s;
+    float   _delayTimeParam;
+    float   _currentDelayTime_s;
+    
+    float   _tempo;
+    bool    _shouldQuantizeTime;
 };
 
 

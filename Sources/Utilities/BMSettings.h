@@ -11,12 +11,24 @@
 @interface BMSettings : NSObject
 
 @property (nonatomic, readwrite, getter = didRunOnce) BOOL ranOnce;
-
+@property (nonatomic, readonly) NSString* projectName;
 
 /** Returns the current user's settings.
  @returns The current user's settings and state information. */
-+ (instancetype)userSettings;
++ (instancetype)sharedInstance;
 
-- (void)save;
+- (void)saveToUserDefaults;
+
+/* Project Settings */
+- (void)loadDefaultProject;
+- (BOOL)saveProjectWithName:(NSString*)projectName;
+- (BOOL)loadProjectAtIndex:(NSInteger)index;
+- (void)deleteProjectAtIndex:(NSInteger)index;
+- (void)renameProjectAtIndex:(NSInteger)index with:(NSString*)newTitle;
+- (NSArray*)getListOfSavedProjects;
+@property (nonatomic, readonly) NSString* projectsDirectory;
+
+/* App Settings */
+@property (nonatomic, readwrite) BOOL shouldDrawWaveform;
 
 @end

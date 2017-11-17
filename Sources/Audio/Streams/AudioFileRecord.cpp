@@ -10,24 +10,29 @@
 
 #include "AudioFileRecord.h"
 
-AudioFileRecord::AudioFileRecord()  :   backgroundThread ("Audio Recorder Thread"),
-                                        _sampleRate (0),
-                                        nextSampleNum (0),
-                                        activeWriter (nullptr)
+AudioFileRecord::AudioFileRecord(int numChannels, String threadName) :
+    _backgroundThread (threadName),
+    _sampleRate (0),
+    nextSampleNum (0),
+    activeWriter (nullptr),
+    _numChannels(numChannels)
 {
-    backgroundThread.startThread();
+    _backgroundThread.startThread(10);
     _sampleRate = 48000.0f;
 }
 
 
 AudioFileRecord::~AudioFileRecord()
 {
+    _backgroundThread.stopThread(1000);
     stopRecording();
 }
 
 
-void AudioFileRecord::startRecording(const File& file)
+bool AudioFileRecord::startRecording(const File& file)
 {
+    bool success = false;
+    
     stopRecording();
     
     if (_sampleRate > 0)
@@ -40,27 +45,28 @@ void AudioFileRecord::startRecording(const File& file)
         {
             // WAV writer object that writes to the output stream...
             WavAudioFormat wavFormat;
-            AudioFormatWriter* writer = wavFormat.createWriterFor (fileStream, _sampleRate, 2, 16, StringPairArray(), 0);
+            AudioFormatWriter* writer = wavFormat.createWriterFor (fileStream, _sampleRate, _numChannels, 16, StringPairArray(), 0);
             
             if (writer != nullptr)
             {
-                
                 fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
                 
                 
                 // Now we'll create one of these helper objects which will act as a FIFO buffer, and will
                 // write the data to disk on our background thread.
-                threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, backgroundThread, 32768);
+                threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, _backgroundThread, 32768);
                 
                 
                 // And now, swap over our active writer pointer so that the audio callback will start using it..
                 const ScopedLock sl (writerLock);
                 activeWriter = threadedWriter;
                 
+                success = true;
             }
         }
     }
     
+    return success;
 }
 
 

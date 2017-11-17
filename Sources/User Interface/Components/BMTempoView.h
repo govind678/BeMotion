@@ -11,6 +11,7 @@
 @interface BMTempoView : UIView
 
 @property (nonatomic, assign) int meter;
+@property (nonatomic, assign) float timeDuration;
 
 - (void)tick:(int)count;
 

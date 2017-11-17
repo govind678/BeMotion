@@ -7,27 +7,31 @@
 //
 
 #import "BMSequencer.h"
+#import "BMAudioController.h"
 #import <mach/mach.h>
 #import <mach/mach_time.h>
 
-static const float kMinTempo                = 60.0f;
-static const float kMaxTempo                = 240.0f;
+static const float kMinTempo                = 30.0f;
+static const float kMaxTempo                = 480.0f;
 static const float kDefaultTempo            = 140.0f;
 
 static const int kMinInterval               = 4;
-static const int kMaxInterval               = 16;
+static const int kMaxInterval               = 32;
 static const int kDefaultInterval           = 4;
 
 static const int kMinMeter                  = 2;
 static const int kMaxMeter                  = 16;
 static const int kDefaultMeter              = 8;
 
-static const BOOL kDefaultQuantization      = NO;
+static const BOOL kDefaultQuantization      = YES;
 
 
 @interface BMSequencer()
 {
-    NSUInteger      _currentTick;
+    NSUInteger                  _currentTick;
+    NSMutableArray*             _eventsArray;
+    
+    uint64_t                    _timeInterval_nanos;
 }
 @end
 
@@ -41,7 +45,10 @@ static const BOOL kDefaultQuantization      = NO;
         _meter = kDefaultMeter;
         _interval = kDefaultInterval;
         _quantization = kDefaultQuantization;
-        _timeInterval = 4.0f * (60.0f / _tempo) / _interval;
+        [self computeTimeIntervals];
+        
+        _eventsArray = [[NSMutableArray alloc] init];
+//        _queue = dispatch_queue_create("Sequencer Queue", dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT, QOS_CLASS_USER_INITIATED, 0));
     }
     
     return self;
@@ -94,7 +101,7 @@ static const BOOL kDefaultQuantization      = NO;
         _interval = interval;
     }
     
-    _timeInterval = 4.0f * (60.0f / _tempo) / _interval;
+    [self computeTimeIntervals];
 }
 
 - (void)setTempo:(float)tempo {
@@ -105,8 +112,9 @@ static const BOOL kDefaultQuantization      = NO;
     } else {
         _tempo = tempo;
     }
+    [[BMAudioController sharedController] setTempo:_tempo];
     
-    _timeInterval = 4.0f * (60.0f / _tempo) / _interval;
+    [self computeTimeIntervals];
 }
 
 - (int)minimumInterval { return kMinInterval; }
@@ -117,57 +125,74 @@ static const BOOL kDefaultQuantization      = NO;
 - (int)maximumTempo { return kMaxTempo; }
 
 
+- (void)sequenceEvent:(BMSequencerBlock)block withCompletion:(BMSequencerBlock)completionBlock {
+    if (_isClockRunning && _quantization) {
+        [_eventsArray addObject:block];
+        [_eventsArray addObject:completionBlock];
+    } else {
+        block();
+        completionBlock();
+    }
+}
+
+
 #pragma mark - Private Methods
 
-- (uint64_t) computeTimeInterval {
-    // The default interval we're working with is 1 second (1 billion nanoseconds)
-    uint64_t interval = 1000 * 1000 * 1000;
-    
-    // We find what fraction of a second the tempo really is. For example, a tempo of 60
-    // would be 60/60 == 1 second, a tempo of 61 would be 60/61 == 0.984, etc.
-    double intervalFraction = 60.0f / _tempo;
-    
-    // Turn this back into nanoseconds
-    interval = (uint64_t)(interval * intervalFraction);
-    
-    return interval;
+- (void)computeTimeIntervals {
+    @synchronized(self) {
+        // The default interval we're working with is 1 second (1 billion nanoseconds)
+        _timeInterval_nanos = 1000 * 1000 * 1000;
+        
+        // We find what fraction of a second the tempo really is. For example, a tempo of 60
+        // would be 60/60 == 1 second, a tempo of 61 would be 60/61 == 0.984, etc.
+        // scale by the interval / denominator
+        _timeInterval_s = (60.0f / _tempo) * (4.0f / _interval);
+        
+        // Turn this back into nanoseconds
+        _timeInterval_nanos = (uint64_t)(_timeInterval_nanos * _timeInterval_s);
+    }
 }
 
 
 - (void)runClock {
     
-    uint64_t interval = [self computeTimeInterval];
+    [self computeTimeIntervals];
     
-    mach_timebase_info_data_t info;
-    mach_timebase_info(&info);
+    mach_timebase_info_data_t   _timebaseInfo;
+    mach_timebase_info(&_timebaseInfo);
     
-    uint64_t currentTime = mach_absolute_time();
-    currentTime *= info.numer;
-    currentTime /= info.denom;
+    uint64_t currentTimestamp = mach_absolute_time();
+    currentTimestamp *= _timebaseInfo.numer;
+    currentTimestamp /= _timebaseInfo.denom;
     
-    uint64_t nextTime = currentTime;
+    uint64_t nextTimestamp = currentTimestamp;
     
     
     dispatch_queue_t mainQueue = dispatch_get_main_queue();
     
     while (_isClockRunning) {
         
-        if (currentTime >= nextTime) {
+        if (currentTimestamp >= nextTimestamp) {
             
             NSUInteger tick = _currentTick;
             
             dispatch_async(mainQueue, ^{
+                if (tick == 0) {
+                    for (BMSequencerBlock block in _eventsArray) {
+                        block();
+                    }
+                    [_eventsArray removeAllObjects];
+                }
                 [_delegate tick:tick];
             });
             
             _currentTick = (_currentTick + 1) % _meter;
-            interval = [self computeTimeInterval];
-            nextTime += interval / (_interval / 4);
+            nextTimestamp += _timeInterval_nanos;
         }
         
-        currentTime = mach_absolute_time();
-        currentTime *= info.numer;
-        currentTime /= info.denom;
+        currentTimestamp = mach_absolute_time();
+        currentTimestamp *= _timebaseInfo.numer;
+        currentTimestamp /= _timebaseInfo.denom;
     }
 }
 

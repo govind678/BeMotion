@@ -13,7 +13,7 @@
 #import "UIColor+Additions.h"
 
 
-static const float kTempoViewHeight                 = 5.0f;
+static const float kTempoViewHeight                 = 4.0f;
 static const float kTempoPickerHeight               = 100.0f;
 
 static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png";
@@ -41,29 +41,34 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [super viewDidLoad];
     
     // Header
-    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(0.0f, self.margin, self.view.frame.size.width, self.headerHeight)];
+    float yPos = self.margin;
+    float xMargin = self.margin;
+    
+    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - 2.0f * xMargin, self.headerHeight)];
     [_headerView setTitle:@"Time"];
     [_headerView addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_headerView];
     
     // Setup Tempo Bar
-    _tempoView = [[BMTempoView alloc] initWithFrame:CGRectMake(self.margin, (self.margin * 2.0f) + self.headerHeight, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
+    yPos += self.headerHeight + (1.5f * self.yGap);
+    _tempoView = [[BMTempoView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), kTempoViewHeight)];
     [self.view addSubview:_tempoView];
+    
     
     _clockSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     
     float switchWidth = _clockSwitch.frame.size.width;
     float switchHeight = _clockSwitch.frame.size.height;
-    float clockYPos = _tempoView.frame.origin.y + _tempoView.frame.size.height + self.margin;
+    yPos += kTempoViewHeight + self.yGap;
     
-    UILabel* clockLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.margin + 5.0f, clockYPos, 100.0f, switchHeight)];
+    UILabel* clockLabel = [[UILabel alloc] initWithFrame:CGRectMake(xMargin + 5.0f, yPos, 100.0f, switchHeight)];
     [clockLabel setTextColor:[UIColor textWhiteColor]];
     [clockLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [clockLabel setTextAlignment:NSTextAlignmentLeft];
     [clockLabel setText:@"Clock"];
     [self.view addSubview:clockLabel];
     
-    [_clockSwitch setFrame:CGRectMake(self.view.frame.size.width - switchWidth - self.margin, clockYPos, switchWidth, switchHeight)];
+    [_clockSwitch setFrame:CGRectMake(self.view.frame.size.width - switchWidth - xMargin, yPos, switchWidth, switchHeight)];
     [_clockSwitch setOnTintColor:[UIColor textWhiteColor]];
     [_clockSwitch setThumbTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
     [_clockSwitch setTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
@@ -71,34 +76,37 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [self.view addSubview:_clockSwitch];
     
     
-    UIView* separatorView1 = [[UIView alloc] initWithFrame:CGRectMake(self.margin, _clockSwitch.frame.origin.y + _clockSwitch.frame.size.height + self.margin, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
+    yPos += switchHeight + self.yGap;
+    UIView* separatorView1 = [[UIView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.verticalSeparatorHeight)];
     [separatorView1 setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kXSeparatorImage]]];
     [self.view addSubview:separatorView1];
     
     
-    UILabel* tempoLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.margin + 5.0f, separatorView1.frame.origin.y + kTempoViewHeight + self.margin - 10.0f, 100.0f, switchHeight)];
+    yPos += self.verticalSeparatorHeight + self.yGap;
+    UILabel* tempoLabel = [[UILabel alloc] initWithFrame:CGRectMake(xMargin + 5.0f, yPos, 100.0f, switchHeight)];
     [tempoLabel setTextColor:[UIColor textWhiteColor]];
     [tempoLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [tempoLabel setTextAlignment:NSTextAlignmentLeft];
     [tempoLabel setText:@"Tempo"];
     [self.view addSubview:tempoLabel];
     
-    _tempoPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(self.margin, tempoLabel.frame.origin.y + tempoLabel.frame.size.height, self.view.frame.size.width - (2.0f * self.margin), kTempoPickerHeight)];
+    yPos += switchHeight;
+    _tempoPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), kTempoPickerHeight)];
     [_tempoPicker setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.2f]];
     [_tempoPicker setDataSource:self];
     [_tempoPicker setDelegate:self];
     [self.view addSubview:_tempoPicker];
     
     
-    UIView* separatorView2 = [[UIView alloc] initWithFrame:CGRectMake(self.margin, _tempoPicker.frame.origin.y + _tempoPicker.frame.size.height + self.margin, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
+    yPos += kTempoPickerHeight + self.yGap;
+    UIView* separatorView2 = [[UIView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.verticalSeparatorHeight)];
     [separatorView2 setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kXSeparatorImage]]];
     [self.view addSubview:separatorView2];
     
     
+    yPos += self.verticalSeparatorHeight + (2.0f * self.yGap);
     
-    float meterYPos = separatorView2.frame.origin.y + kTempoViewHeight + self.margin;
-    
-    UILabel* meterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.margin + 5.0f, meterYPos, 100.0f, switchHeight)];
+    UILabel* meterLabel = [[UILabel alloc] initWithFrame:CGRectMake(xMargin + 5.0f, yPos, 100.0f, switchHeight)];
     [meterLabel setTextColor:[UIColor textWhiteColor]];
     [meterLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [meterLabel setTextAlignment:NSTextAlignmentLeft];
@@ -110,7 +118,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     float stepperWidth = _meterStepper.frame.size.width;
     float stepperHeight = _meterStepper.frame.size.height;
     
-    [_meterStepper setFrame:CGRectMake(self.view.frame.size.width/2.0f, meterYPos, stepperWidth, stepperHeight)];
+    [_meterStepper setFrame:CGRectMake(self.view.frame.size.width/2.0f, yPos, stepperWidth, stepperHeight)];
     [_meterStepper setMaximumValue:[[BMSequencer sharedSequencer] maximumMeter]];
     [_meterStepper setMinimumValue:[[BMSequencer sharedSequencer] minimumMeter]];
     [_meterStepper setContentMode:UIViewContentModeCenter];
@@ -118,28 +126,26 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [_meterStepper addTarget:self action:@selector(meterStepperChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_meterStepper];
     
-    _meterStepperLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - self.margin - 30.0f, meterYPos, 30.0f, stepperHeight)];
+    _meterStepperLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - xMargin - 30.0f, yPos, 30.0f, stepperHeight)];
     [_meterStepperLabel setTextColor:[UIColor textWhiteColor]];
     [_meterStepperLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [_meterStepperLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:_meterStepperLabel];
     
     
-    
-    float intervalYPos = meterLabel.frame.origin.y + meterLabel.frame.size.height + self.margin;
-    
-    UILabel* intervalLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.margin + 5.0f, intervalYPos, 100.0f, switchHeight)];
+    yPos += stepperHeight + (2.0f * self.yGap);
+    UILabel* intervalLabel = [[UILabel alloc] initWithFrame:CGRectMake(xMargin + 5.0f, yPos, 100.0f, switchHeight)];
     [intervalLabel setTextColor:[UIColor textWhiteColor]];
     [intervalLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [intervalLabel setTextAlignment:NSTextAlignmentLeft];
     [intervalLabel setText:@"Interval"];
     [self.view addSubview:intervalLabel];
     
-    NSArray* segments = [NSArray arrayWithObjects:@"1/4", @"1/8", @"1/16", nil];
+    NSArray* segments = [NSArray arrayWithObjects:@"1/4", @"1/8", @"1/16", @"1/32", nil];
     NSDictionary* attribute = [NSDictionary dictionaryWithObject:[UIFont lightDefaultFontOfSize:12.0f] forKey:NSFontAttributeName];
     
     _intervalSegment = [[UISegmentedControl alloc] initWithItems:segments];
-    [_intervalSegment setFrame:CGRectMake(self.view.frame.size.width/2.0f, intervalYPos, (self.view.frame.size.width / 2.0f) - self.margin, switchHeight)];
+    [_intervalSegment setFrame:CGRectMake(self.view.frame.size.width/2.0f - 30.0f, yPos, (self.view.frame.size.width / 2.0f) - xMargin + 30.0f, switchHeight)];
     [_intervalSegment setTitleTextAttributes:attribute forState:UIControlStateNormal];
     [_intervalSegment setTintColor:[UIColor elementWhiteColor]];
     [_intervalSegment setSelectedSegmentIndex:0];
@@ -147,9 +153,8 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [self.view addSubview:_intervalSegment];
     
     
-    float quantizationYPos = _intervalSegment.frame.origin.y + _intervalSegment.frame.size.height + self.margin;
-    
-    UILabel* quantizationLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.margin + 5.0f, quantizationYPos, 100.0f, switchHeight)];
+    yPos += switchHeight + (2.0f * self.yGap);
+    UILabel* quantizationLabel = [[UILabel alloc] initWithFrame:CGRectMake(xMargin + 5.0f, yPos, 100.0f, switchHeight)];
     [quantizationLabel setTextColor:[UIColor textWhiteColor]];
     [quantizationLabel setFont:[UIFont lightDefaultFontOfSize:14.0f]];
     [quantizationLabel setTextAlignment:NSTextAlignmentLeft];
@@ -157,7 +162,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [self.view addSubview:quantizationLabel];
     
     _quantizationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-    [_quantizationSwitch setFrame:CGRectMake(self.view.frame.size.width - switchWidth - self.margin, quantizationYPos, switchWidth, switchHeight)];
+    [_quantizationSwitch setFrame:CGRectMake(self.view.frame.size.width - switchWidth - xMargin, yPos, switchWidth, switchHeight)];
     [_quantizationSwitch setOnTintColor:[UIColor textWhiteColor]];
     [_quantizationSwitch setThumbTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
     [_quantizationSwitch setTintColor:[UIColor colorWithWhite:0.4f alpha:1.0f]];
@@ -182,6 +187,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     
     int meter = [[BMSequencer sharedSequencer] meter];
     [_tempoView setMeter:meter];
+    [_tempoView setTimeDuration:[[BMSequencer sharedSequencer] timeInterval_s]];
     [_meterStepper setValue:(int)meter];
     [_meterStepperLabel setText:[NSString stringWithFormat:@"%d", meter]];
     
@@ -283,6 +289,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
         [[BMSequencer sharedSequencer] setTempo:tempo];
         
         [self updatePickerWithTempo:[[BMSequencer sharedSequencer] tempo]];
+        [_tempoView setTimeDuration:[[BMSequencer sharedSequencer] timeInterval_s]];
     }
     
 }

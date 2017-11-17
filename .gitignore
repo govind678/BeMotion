@@ -1,0 +1,32 @@
+# -----------------------------------
+# Git ignore file
+# -----------------------------------
+
+
+# Mac OS X Finder
+.DS_Store
+
+
+# Xcode
+*.pbxuser
+*.xcscmblueprint
+xcuserdata/
+*.nib
+
+
+# Generated files
+*.o
+*.pyc
+*.hi
+
+
+# Build products
+build/
+*.[oa]
+DerivedData/
+
+
+# Automatic backup files
+*~.nib
+*.swp
+*~

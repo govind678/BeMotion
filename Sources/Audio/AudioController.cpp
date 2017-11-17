@@ -9,7 +9,6 @@
 */
 
 #include "AudioController.h"
-#include "BMConstants.h"
 
 
 //=======================================================================
@@ -21,34 +20,45 @@
 #include <stdio.h>
 AudioController::AudioController()
 {
+    // Device Setup
     String audioError = _deviceManager.initialise (kDefaultNumInputChannels, kDefaultNumOutputChannels, nullptr, true);
     jassert (audioError.isEmpty());
-    
     AudioDeviceManager::AudioDeviceSetup setup;
     _deviceManager.getAudioDeviceSetup(setup);
     _sampleRate = setup.sampleRate;
     _numSamplesPerBlock = setup.bufferSize;
     
     _mixerSource    = new MixerAudioSource();
-    _masterRecorder   = new AudioFileRecord();
     
-    for (int i=0; i < kNumTracks; i++)
+    // UI Button Tracks
+    for (int i=0; i < kNumButtonTracks; i++)
     {
-        AudioFileStream* fileStream = new AudioFileStream(kDefaultNumOutputChannels);
+        String playbackThreadName = "Audio File Stream Thread " + String(i);
+        AudioFileStream* fileStream = new AudioFileStream(kDefaultNumOutputChannels, true, playbackThreadName);
         _streams.add(fileStream);
         _mixerSource->addInputSource(fileStream, false);
         
-        AudioFileRecord* fileRecord = new AudioFileRecord();
-        _recorders.add(fileRecord);
-        
-        for (int j=0; j < 2; j++)
-        {
-            String filepath = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName() + "/Recordings" + String(i) + "_" + String(j) + ".wav";
-            _recorderPaths.add(filepath);
-        }
-        _recorderPathToggles.add(false);
+        String recordThreadName = "Audio Recorder Thread " + String(i);
+        _recorders.add(new AudioFileRecord(1, recordThreadName));
     }
     
+    // Motion Playback Tracks
+    for (int i=0; i < kNumMotionTracks; i++)
+    {
+        String threadName = "Audio File Stream Thread " + String(kNumButtonTracks + i);
+        AudioFileStream* fileStream = new AudioFileStream(kDefaultNumOutputChannels, false, threadName);
+        fileStream->setPlaybackMode(BMPlaybackMode_OneShot);
+        _streams.add(fileStream);
+        _mixerSource->addInputSource(fileStream, false);
+    }
+    
+    // Create Master Recorder
+    _masterRecorder   = new AudioFileRecord(kDefaultNumOutputChannels, "Master Recorder Thread");
+    
+    // Create Output Limiter
+    _limiter = new BMLimiter(kDefaultNumOutputChannels);
+    
+    // Start
     openSession();
 }
 
@@ -59,12 +69,10 @@ AudioController::~AudioController()
     
     _streams.clear();
     _recorders.clear();
-    _recorderPathToggles.clear();
-    _recorderPaths.clear();
     _mixerSource       = nullptr;
     _masterRecorder    = nullptr;
+    _limiter           = nullptr;
     
-    _deviceManager.removeAudioCallback(this);
     _deviceManager.closeAudioDevice();
 }
 
@@ -84,21 +92,28 @@ int AudioController::closeSession()
 
 
 //=======================================================================
-// Audio Track Methods
+// Audio Track Playback Methods
 //=======================================================================
 
-#pragma mark - Audio Track Methods
+#pragma mark - Audio Track Playback Methods
 
-int AudioController::loadAudioFileIntoTrack(String filepath, int track)
+bool AudioController::loadAudioFileIntoTrack(String filepath, int track)
 {
-    return _streams.getUnchecked(track)->loadAudioFile(File(filepath));
+    AudioFileStream* stream = _streams.getUnchecked(track);
+    bool success = false;
+    stream->stopPlayback();
+    stream->releaseResources();
+    success = stream->loadAudioFile(File(filepath));
+    if (success) {
+        stream->prepareToPlay(_numSamplesPerBlock, _sampleRate);
+    }
+    return success;
 }
 
 void AudioController::setPlaybackSpeedOfTrack(float speed, int track)
 {
     
 }
-
 
 void AudioController::startPlaybackOfTrack(int track)
 {
@@ -125,19 +140,17 @@ float AudioController::getTotalTimeOfTrack(int track)
     return _streams.getUnchecked(track)->getTotalTime();
 }
 
-void AudioController::saveMicRecordingForTrack(String filepath, int track)
-{
-    
-}
 
-void AudioController::startRecordingAtTrack(int track)
+//=======================================================================
+// Audio Track Recording Methods
+//=======================================================================
+
+#pragma mark - Audio Track Recording Methods
+
+bool AudioController::startRecordingAtTrack(int track, String filepath)
 {
     _streams.getUnchecked(track)->stopPlayback();
-    
-    bool recorderToggle = _recorderPathToggles.getUnchecked(track);
-    String filepath = _recorderPaths.getReference(track + int(recorderToggle));
-    _recorders.getUnchecked(track)->startRecording(File(filepath));
-    _recorderPathToggles.set(track, !recorderToggle);
+    return _recorders.getUnchecked(track)->startRecording(File(filepath));
 }
 
 void AudioController::stopRecordingAtTrack(int track)
@@ -150,11 +163,12 @@ bool AudioController::isTrackRecording(int track)
     return _recorders.getUnchecked(track)->isRecording();
 }
 
-void AudioController::loadRecordedFileIntoTrack(int track)
-{
-    String filepath = _recorderPaths.getReference(track + int(!_recorderPathToggles.getReference(track)));
-    loadAudioFileIntoTrack(filepath, track);
-}
+
+//=======================================================================
+// Audio Track Parameter Methods
+//=======================================================================
+
+#pragma mark - Audio Track Parameter Methods
 
 void AudioController::setTrackGain(int track, float gain)
 {
@@ -176,10 +190,21 @@ float AudioController::getTrackPan(int track)
     return _streams.getUnchecked(track)->getPlaybackPan();
 }
 
-float* AudioController::getSamplesForWaveformAtTrack(int track)
+void AudioController::setPlaybackModeOfTrack(int track, BMPlaybackMode mode)
+{
+    _streams.getUnchecked(track)->setPlaybackMode(mode);
+}
+
+BMPlaybackMode AudioController::getPlaybackModeOfTrack(int track)
+{
+    return _streams.getUnchecked(track)->getPlaybackMode();
+}
+
+const float* AudioController::getSamplesForWaveformAtTrack(int track)
 {
     return _streams.getUnchecked(track)->getSamplesForWaveform();
 }
+
 
 //=======================================================================
 // Audio Master Track Methods
@@ -187,22 +212,14 @@ float* AudioController::getSamplesForWaveformAtTrack(int track)
 
 #pragma mark - Audio Master Track Methods
 
-void AudioController::startRecordingMaster()
+void AudioController::startRecordingMaster(String filepath)
 {
-    _tempMasterFile.deleteFile();
-    String audioRecordFilePath = File::getSpecialLocation(File::tempDirectory).getFullPathName() + "/bm_recording.wav";
-    _tempMasterFile = File(audioRecordFilePath);
-    _masterRecorder->startRecording(_tempMasterFile);
+    _masterRecorder->startRecording(File(filepath));
 }
 
 void AudioController::stopRecordingMaster()
 {
     _masterRecorder->stopRecording();
-}
-
-bool AudioController::saveMasterRecording(String filepath)
-{
-    return _tempMasterFile.copyFileTo(File(filepath));
 }
 
 
@@ -245,6 +262,17 @@ bool AudioController::getEffectEnable(int track, int slot)
     return _streams.getUnchecked(track)->getEffectEnable(slot);
 }
 
+void AudioController::setTempo(float tempo)
+{
+    for (int i=0; i < kNumButtonTracks; i++) {
+        _streams.getUnchecked(i)->setTempo(tempo);
+    }
+}
+
+void AudioController::setShouldQuantizeTime(int track, int slot, bool shouldQuantizeTime)
+{
+    _streams.getUnchecked(track)->setShouldQuantizeTime(slot, shouldQuantizeTime);
+}
 
 
 //==============================================================================
@@ -260,7 +288,8 @@ void AudioController::audioDeviceAboutToStart(juce::AudioIODevice *device)
     
     _mixerSource->prepareToPlay (_numSamplesPerBlock, _sampleRate);
     _masterRecorder->prepareToRecord(_sampleRate);
-    for (int i=0; i < _streams.size(); i++)
+    _limiter->prepareToPlay(_numSamplesPerBlock, _sampleRate);
+    for (int i=0; i < _recorders.size(); i++)
         _recorders.getUnchecked(i)->prepareToRecord(_sampleRate);
 }
 
@@ -271,7 +300,7 @@ void AudioController::audioDeviceIOCallback(const float **inputChannelData,
                                             int numSamples)
 {
     // Record Microphone Input to File, if Enabled
-    for (int track = 0; track < kNumTracks; track++)
+    for (int track = 0; track < kNumButtonTracks; track++)
     {
         AudioFileRecord* recorder = _recorders.getUnchecked(track);
         if (recorder->isRecording())
@@ -297,9 +326,12 @@ void AudioController::audioDeviceIOCallback(const float **inputChannelData,
     {
         for (int sample = 0; sample < numSamples; sample++)
         {
-            outputChannelData[channel][sample] /= (float)kNumTracks;
+            outputChannelData[channel][sample] /= (float)kNumButtonTracks;
         }
     }
+    
+    //-- Limiter --//
+    _limiter->process(outputChannelData, totalNumOutputChannels, numSamples);
 }
 
 void AudioController::audioDeviceStopped()

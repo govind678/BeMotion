@@ -7,6 +7,7 @@
 //
 
 #import "BMTempoView.h"
+#import <QuartzCore/QuartzCore.h>
 
 static const int kDefaultMeter = 8;
 static const float kMargin = 5.0f;
@@ -14,6 +15,7 @@ static const float kMargin = 5.0f;
 @interface BMTempoView()
 {
     NSMutableArray*     _steps;
+    CALayer*           _animatedLayer;
 }
 
 @end
@@ -25,8 +27,8 @@ static const float kMargin = 5.0f;
     if (self = [super initWithFrame:frame]) {
         _steps = [[NSMutableArray alloc] init];
         [self setMeter:kDefaultMeter];
-        
         [self setBackgroundColor:[UIColor clearColor]];
+        _timeDuration = 0.5f;
     }
     
     return self;
@@ -53,6 +55,14 @@ static const float kMargin = 5.0f;
         [layer setFrame:CGRectMake(xPos, 0.0f, stepWidth, self.frame.size.height)];
         [layer setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.5f].CGColor];
         [_steps addObject:layer];
+        
+        if (i == 0) {
+            _animatedLayer = [[CALayer alloc] initWithLayer:layer];
+            [_animatedLayer setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f].CGColor];
+            [_animatedLayer setHidden:YES];
+            [self.layer addSublayer:_animatedLayer];
+        }
+        
         [self.layer addSublayer:layer];
     }
     
@@ -65,11 +75,53 @@ static const float kMargin = 5.0f;
         CALayer* layer = (CALayer*)[_steps objectAtIndex:i];
         
         if (i == count) {
+            if (i == 0) {
+                [self animateLayer:layer];
+            }
             [layer setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f].CGColor];
-        } else {
+        }
+        
+        else {
             [layer setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.5f].CGColor];
         }
     }
 }
 
+//- (void)animateLayer:(CALayer*)layer {
+//    CGRect originalFrame = layer.frame;
+//    CGRect newFrame = CGRectInset(originalFrame, -4.0f, -3.0f);
+//
+//    [CATransaction begin];
+//    [CATransaction setAnimationDuration:(_timeDuration * 0.5f)];
+//    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+//    [CATransaction setCompletionBlock:^{
+//        [CATransaction begin];
+//        [CATransaction setAnimationDuration:(_timeDuration * 0.5f)];
+//        [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+//        layer.frame = originalFrame;
+//        [CATransaction commit];
+//    }];
+//    layer.frame = newFrame;
+//    [CATransaction commit];
+//}
+
+- (void)animateLayer:(CALayer*)layer {
+    
+    CGRect fromFrame = layer.frame;
+    CGRect toFrame = CGRectInset(fromFrame, -16.0f, -12.0f);
+    
+    [_animatedLayer setHidden:NO];
+    
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:_timeDuration];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    [CATransaction setCompletionBlock:^{
+        [_animatedLayer setFrame:fromFrame];
+        [_animatedLayer setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f].CGColor];
+        [_animatedLayer setHidden:YES];
+    }];
+    [_animatedLayer setFrame:toFrame];
+    [_animatedLayer setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.0f].CGColor];
+    [CATransaction commit];
+}
 @end

@@ -19,10 +19,10 @@ class AudioFileRecord
     
 public:
     
-    AudioFileRecord();
+    AudioFileRecord(int numChannels, String threadName);
     ~AudioFileRecord();
     
-    void startRecording(const File& file);
+    bool startRecording(const File& file);
     void stopRecording();
     
     void prepareToRecord(double sampleRate);
@@ -33,7 +33,7 @@ public:
     
 private:
     
-    TimeSliceThread backgroundThread;
+    TimeSliceThread _backgroundThread;
     
     double  _sampleRate;
     
@@ -43,6 +43,7 @@ private:
     CriticalSection writerLock;
     AudioFormatWriter::ThreadedWriter* volatile activeWriter;
     
+    int     _numChannels;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioFileRecord)
 };

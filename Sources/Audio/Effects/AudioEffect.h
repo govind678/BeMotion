@@ -34,6 +34,9 @@ public:
     virtual void setParameter(int parameterID, float value) {}
     virtual float getParameter(int parameterID) = 0;
     
+    virtual void setTempo(float tempo) {}
+    virtual void setShouldQuantizeTime(bool shouldQuantizeTime) {}
+    
 private:
     //===========================================================================
     

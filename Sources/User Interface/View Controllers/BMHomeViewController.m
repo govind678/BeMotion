@@ -11,48 +11,69 @@
 #import "BMAudioController.h"
 #import "BMSequencer.h"
 #import "BMConstants.h"
+#import "BMSettings.h"
 
 #import "BMEffectsViewController.h"
 #import "BMLoadFileViewController.h"
 #import "BMTempoViewController.h"
 #import "BMSettingsViewController.h"
 
-#import "BMSampleView.h"
+#import "BMSampleButton.h"
 #import "BMTempoView.h"
-#import "BMHorizontalSlider.h"
-#import "BMPanSlider.h"
+#import "BMForceButton.h"
 
 
-static float const kTrackButtonHeight               = 100.0f;
-static float const kButtonYGap                      = 15.0f;
-static const float kOptionButtonSize                = 60.0f;
-static const float kTempoViewHeight                 = 5.0f;
+
+static float const kTrackButtonHeight               = 94.0;
+static float const kButtonYGap                      = 7.0f;
+static const float kTempoViewHeight                 = 4.0f;
+static const float kTempoAreaHeight                 = 32.0f;
 
 static const float kProgressTimeInterval            = 0.02f;
 
-static NSString* const kMasterRecordNormalImage     = @"Recording-Normal.png";
-static NSString* const kMasterRecordSelectedImage   = @"Recording-Selected.png";
-static NSString* const kMixerNormalImage            = @"Mixer-Normal.png";
-static NSString* const kMixerSelectedImage          = @"Mixer-Selected.png";
-static NSString* const kMetronomeNormalImage        = @"Metronome-Normal.png";
-static NSString* const kMetronomeSelectedImage      = @"Metronome-Selected.png";
-static NSString* const kSettingsNormalImage         = @"Settings-Normal.png";
-static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
+static NSString* const kMicRecordNormalImage        = @"Options-MicRecord-Normal.png";
+static NSString* const kMicRecordSelectedImage      = @"Options-MicRecord-Selected.png";
+static NSString* const kEffectsNormalImage          = @"Options-Fx-Normal.png";
+static NSString* const kEffectsSelectedImage        = @"Options-Fx-Selected.png";
+static NSString* const kMixerNormalImage            = @"Options-Mixer-Normal.png";
+static NSString* const kMixerSelectedImage          = @"Options-Mixer-Selected.png";
+static NSString* const kImportNormalImage           = @"Options-Import-Normal.png";
+static NSString* const kImportSelectedImage         = @"Options-Import-Selected.png";
 
-@interface BMHomeViewController() <BMSampleViewDelegate, BMSequencerDelegate>
+
+static NSString* const kSettingsNormalImage         = @"Options-Settings-Normal.png";
+static NSString* const kSettingsSelectedImage       = @"Options-Settings-Selected.png";
+static NSString* const kMetronomeNormalImage        = @"Options-Metronome-Normal.png";
+static NSString* const kMetronomeSelectedImage      = @"Options-Metronome-Selected.png";
+static NSString* const kHelpNormalImage             = @"Options-Help-Normal.png";
+static NSString* const kHelpSelectedImage           = @"Options-Help-Selected.png";
+static NSString* const kMasterRecordNormalImage     = @"Options-MasterRecord-Normal.png";
+static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Selected.png";
+
+
+@interface BMHomeViewController() <BMSampleButtonDelegate, BMSequencerDelegate, BMForceButtonDelegate, BMAudioControllerDelegate>
 {
-    NSArray*        _sampleViews;
+    NSArray*        _sampleButtons;
     
-    NSArray*        _gainSliders;
-    NSArray*        _panSliders;
-    
-    UIButton*       _masterRecordButton;
+    UIButton*       _micRecordButton;
+    UIButton*       _loadFXButton;
+    UIButton*       _loadSampleButton;
     UIButton*       _mixerButton;
-    UIButton*       _tempoButton;
-    UIButton*       _settingsButton;
     
     BMTempoView*    _tempoView;
+    
+    UIButton*       _settingsButton;
+    BMForceButton*   _metronomeButton;
+    UIButton*       _helpButton;
+    UIButton*       _masterRecordButton;
+    
     NSTimer*        _progressTimer;
+    
+    UIView*         _micRecordBackgroundView;
+    
+    UILabel*         _countdownLabel;
+    BOOL            _masterAwaitingStart;
+    BOOL            _masterAwaitingStop;
 }
 @end
 
@@ -65,82 +86,124 @@ static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
     [super viewDidLoad];
     
     // Get Color Array
-    NSArray* trackColors = [UIColor trackColors];
+//    NSArray* trackColors = [UIColor trackColors];
     
     
-    // Setup Sample Tracks, Gain and Pan Sliders
+    // Mic Recording Background View
+    _micRecordBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
+    [_micRecordBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0f green:0.1f blue:0.1f alpha:0.1f]];
+    [_micRecordBackgroundView setAlpha:0.0f];
+    [_micRecordBackgroundView setUserInteractionEnabled:NO];
+    [self.view addSubview:_micRecordBackgroundView];
     
-    NSMutableArray* sampleViews = [[NSMutableArray alloc] init];
-    NSMutableArray* gainSliders = [[NSMutableArray alloc] init];
-    NSMutableArray* panSliders = [[NSMutableArray alloc] init];
     
-    for (int i=0; i < kNumTracks; i++) {
-        
-        float yPos = self.margin + (i * (kTrackButtonHeight + kButtonYGap));
-        
-        BMSampleView* sampleView = [[BMSampleView alloc] initWithFrame:CGRectMake(0.0f, yPos, self.view.frame.size.width, kTrackButtonHeight)];
-        [sampleView setTrackID:i];
-        [sampleView setSampleDelegate:self];
-        [sampleViews addObject:sampleView];
-        [self.view addSubview:sampleView];
-        
-        BMHorizontalSlider* gainSlider = [[BMHorizontalSlider alloc] initWithFrame:CGRectMake(self.margin, yPos, sampleView.frame.size.width - (2.0f * self.margin), (kTrackButtonHeight / 2.0f) - 5.0f)];
-        [gainSlider setTag:i];
-        [gainSlider setOnTrackColor:(UIColor*)[trackColors objectAtIndex:i]];
-        [gainSlider addTarget:self action:@selector(gainSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-        [gainSlider setAlpha:0.0f];
-        [gainSlider setCenterText:@"Level"];
-        [gainSliders addObject:gainSlider];
-        [self.view addSubview:gainSlider];
-        
-        BMPanSlider* panSlider = [[BMPanSlider alloc] initWithFrame:CGRectMake(self.margin, yPos + (kTrackButtonHeight / 2.0f) + 5.0f, sampleView.frame.size.width - (2.0f * self.margin), (kTrackButtonHeight / 2.0f) - 5.0f)];
-        [panSlider setTag:i];
-        [panSlider setOnTrackColor:(UIColor*)[trackColors objectAtIndex:i]];
-        [panSlider addTarget:self action:@selector(panSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-        [panSlider setAlpha:0.0f];
-        [panSliders addObject:panSlider];
-        [self.view addSubview:panSlider];
+    float yPos = self.margin;
+    float xMargin = self.margin;
+    float optionsButtonGap = (self.view.frame.size.width - (2.0f * xMargin) - (4.0f * self.optionButtonSize)) / 3.0f;
+    
+    // Setup Sample Track Buttons
+    NSMutableArray* sampleButtons = [[NSMutableArray alloc] init];
+    for (int i=0; i < kNumButtonTracks; i++) {
+        BMSampleButton* sampleButton = [[BMSampleButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), kTrackButtonHeight)];
+        [sampleButton setTrackID:i];
+        [sampleButton setSampleDelegate:self];
+        [sampleButtons addObject:sampleButton];
+        [sampleButton updateTitle];
+        [self.view addSubview:sampleButton];
+        yPos += (kTrackButtonHeight + kButtonYGap);
     }
-    
-    _sampleViews = [[NSArray alloc] initWithArray:sampleViews];
-    
-    _gainSliders = [[NSArray alloc] initWithArray:gainSliders];
-    _panSliders = [[NSArray alloc] initWithArray:panSliders];
+    _sampleButtons = [[NSArray alloc] initWithArray:sampleButtons];
     
     
-    // Setup Tempo Bar
-    _tempoView = [[BMTempoView alloc] initWithFrame:CGRectMake(self.margin, self.view.frame.size.height - kOptionButtonSize - self.margin - kTempoViewHeight - 5.0f, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
-    [self.view addSubview:_tempoView];
     
-    // Setup Option Buttons
+    // Setup From Bottom
+    yPos = self.view.frame.size.height - self.margin - self.optionButtonSize;
     
-    float margin = 14.0f;
-    float optionsButtonGap = (self.view.frame.size.width - (2.0f * margin) - (4.0f * kOptionButtonSize)) / 3.0f;
-    
-    _masterRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(margin, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
-    [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordNormalImage] forState:UIControlStateNormal];
-    [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordSelectedImage] forState:UIControlStateSelected];
-    [_masterRecordButton addTarget:self action:@selector(masterRecordButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_masterRecordButton];
-    
-    _mixerButton = [[UIButton alloc] initWithFrame:CGRectMake(margin + kOptionButtonSize + optionsButtonGap, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
-    [_mixerButton setImage:[UIImage imageNamed:kMixerNormalImage] forState:UIControlStateNormal];
-    [_mixerButton setImage:[UIImage imageNamed:kMixerSelectedImage] forState:UIControlStateSelected];
-    [_mixerButton addTarget:self action:@selector(mixerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_mixerButton];
-    
-    _tempoButton = [[UIButton alloc] initWithFrame:CGRectMake(margin + 2.0f * (kOptionButtonSize + optionsButtonGap), self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
-    [_tempoButton setImage:[UIImage imageNamed:kMetronomeNormalImage] forState:UIControlStateNormal];
-    [_tempoButton setImage:[UIImage imageNamed:kMetronomeSelectedImage] forState:UIControlStateSelected];
-    [_tempoButton addTarget:self action:@selector(tempoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_tempoButton];
-    
-    _settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - kOptionButtonSize - margin, self.view.frame.size.height - kOptionButtonSize - self.margin, kOptionButtonSize, kOptionButtonSize)];
+    // Setup Global Options Buttons
+    _settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
     [_settingsButton setImage:[UIImage imageNamed:kSettingsNormalImage] forState:UIControlStateNormal];
     [_settingsButton setImage:[UIImage imageNamed:kSettingsSelectedImage] forState:UIControlStateSelected];
     [_settingsButton addTarget:self action:@selector(settingsButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_settingsButton];
     
+    _metronomeButton = [[BMForceButton alloc] initWithFrame:CGRectMake(xMargin + self.optionButtonSize + optionsButtonGap, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_metronomeButton setButtonDownImage:[UIImage imageNamed:kMetronomeSelectedImage]];
+    [_metronomeButton setButtonUpImage:[UIImage imageNamed:kMetronomeNormalImage]];
+    [_metronomeButton setDelegate:self];
+    [self.view addSubview:_metronomeButton];
+    
+    _helpButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin + 2.0f * (self.optionButtonSize + optionsButtonGap), yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_helpButton setImage:[UIImage imageNamed:kHelpNormalImage] forState:UIControlStateNormal];
+    [_helpButton setImage:[UIImage imageNamed:kHelpSelectedImage] forState:UIControlStateSelected];
+    [_helpButton addTarget:self action:@selector(helpButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_helpButton];
+    
+    _masterRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - self.optionButtonSize - xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordNormalImage] forState:UIControlStateNormal];
+    [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordSelectedImage] forState:UIControlStateSelected];
+    [_masterRecordButton addTarget:self action:@selector(masterRecordButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_masterRecordButton];
+    
+    
+    
+    // Setup Tempo / Meter Indicator Tracks
+    yPos -= 0.5 * (kTempoAreaHeight - kTempoViewHeight);
+    _tempoView = [[BMTempoView alloc] initWithFrame:CGRectMake(self.margin, yPos, self.view.frame.size.width - (2.0f * self.margin), kTempoViewHeight)];
+    [self.view addSubview:_tempoView];
+    
+    
+    
+    // Setup Track Options Buttons
+    yPos = yPos + (0.5 * kTempoViewHeight) - (0.5 * kTempoAreaHeight) - self.optionButtonSize;
+    
+    _micRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_micRecordButton setImage:[UIImage imageNamed:kMicRecordNormalImage] forState:UIControlStateNormal];
+    [_micRecordButton setImage:[UIImage imageNamed:kMicRecordSelectedImage] forState:UIControlStateSelected];
+    [_micRecordButton setTag:BMSampleMode_Recording];
+    [_micRecordButton addTarget:self action:@selector(trackOptionTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [_micRecordButton addTarget:self action:@selector(trackOptionTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_micRecordButton];
+    
+    _loadFXButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin + self.optionButtonSize + optionsButtonGap, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_loadFXButton setImage:[UIImage imageNamed:kEffectsNormalImage] forState:UIControlStateNormal];
+    [_loadFXButton setImage:[UIImage imageNamed:kEffectsSelectedImage] forState:UIControlStateSelected];
+    [_loadFXButton setTag:BMSampleMode_LoadFX];
+    [_loadFXButton addTarget:self action:@selector(trackOptionTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [_loadFXButton addTarget:self action:@selector(trackOptionTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loadFXButton];
+    
+    _loadSampleButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin + 2.0f * (self.optionButtonSize + optionsButtonGap), yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_loadSampleButton setImage:[UIImage imageNamed:kImportNormalImage] forState:UIControlStateNormal];
+    [_loadSampleButton setImage:[UIImage imageNamed:kImportSelectedImage] forState:UIControlStateSelected];
+    [_loadSampleButton setTag:BMSampleMode_LoadFile];
+    [_loadSampleButton addTarget:self action:@selector(trackOptionTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [_loadSampleButton addTarget:self action:@selector(trackOptionTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loadSampleButton];
+    
+    _mixerButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - self.optionButtonSize - xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_mixerButton setImage:[UIImage imageNamed:kMixerNormalImage] forState:UIControlStateNormal];
+    [_mixerButton setImage:[UIImage imageNamed:kMixerSelectedImage] forState:UIControlStateSelected];
+    [_mixerButton setTag:BMSampleMode_Mix];
+    [_mixerButton addTarget:self action:@selector(trackOptionTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [_mixerButton addTarget:self action:@selector(trackOptionTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_mixerButton];
+    
+    
+    // Master Record Countdown
+    CGRect coutdownLabelFrame = _masterRecordButton.frame;
+    _countdownLabel = [[UILabel alloc] initWithFrame:coutdownLabelFrame];
+    [_countdownLabel setTextColor:[UIColor colorWithWhite:0.0f alpha:1.0f]];
+    [_countdownLabel setFont:[UIFont lightDefaultFontOfSize:18.0f]];
+    [_countdownLabel setTextAlignment:NSTextAlignmentCenter];
+    [_countdownLabel setText:@"0"];
+    [_countdownLabel setUserInteractionEnabled:NO];
+    [_countdownLabel setAlpha:0.0f];
+    [self.view addSubview:_countdownLabel];
+    
+    _masterAwaitingStart = NO;
+    _masterAwaitingStop = NO;
+    
+    [[BMAudioController sharedController] setDelegate:self];
     
     // Register for App State Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -149,7 +212,6 @@ static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
     // Setup Progress Timer
     _progressTimer = [NSTimer timerWithTimeInterval:kProgressTimeInterval target:self selector:@selector(progressTimerCallback) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_progressTimer forMode:NSRunLoopCommonModes];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,39 +222,42 @@ static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    for (int i=0; i < kNumTracks; i++) {
-        
-        BMSampleView* sampleView = (BMSampleView*)[_sampleViews objectAtIndex:i];
-        [sampleView setContentOffset:CGPointZero animated:animated];
-        [sampleView reloadWaveform];
-        
-        BMHorizontalSlider* gainSlider = (BMHorizontalSlider*)[_gainSliders objectAtIndex:i];
-        [gainSlider setValue:[[BMAudioController sharedController] getGainOnTrack:i]];
-        
-        BMPanSlider* panSlider = (BMPanSlider*)[_panSliders objectAtIndex:i];
-        [panSlider setValue:[[BMAudioController sharedController] getPanOnTrack:i]];
+    for (int i=0; i < kNumButtonTracks; i++) {
+        BMSampleButton* sampleButton = (BMSampleButton*)[_sampleButtons objectAtIndex:i];
+        [sampleButton viewWillAppear];
+        [sampleButton updateWaveform:[[BMSettings sharedInstance] shouldDrawWaveform]];
     }
+    
+    [_micRecordButton setSelected:NO];
+    [_loadFXButton setSelected:NO];
+    [_mixerButton setSelected:NO];
+    [_loadSampleButton setSelected:NO];
+    
+    _masterAwaitingStop = NO;
+    _masterAwaitingStart = NO;
     
     // Sequencer
     [[BMSequencer sharedSequencer] setDelegate:self];
     [_tempoView setMeter:[[BMSequencer sharedSequencer] meter]];
+    [_tempoView setTimeDuration:[[BMSequencer sharedSequencer] timeInterval_s]];
     if (![[BMSequencer sharedSequencer] isClockRunning]) {
         [_tempoView tick:-1];
-        [_tempoButton setSelected:NO];
+        [_metronomeButton setSelected:NO];
     } else {
-        [_tempoButton setSelected:YES];
+        [_metronomeButton setSelected:YES];
     }
     
+    [self displayMicRecordingBackgroundView:NO];
 }
 
 
 - (void)didEnterBackground:(NSNotification*)notification {
-    for (BMSampleView* sampleView in _sampleViews) {
-        [sampleView reset];
+    for (BMSampleButton* sampleButton in _sampleButtons) {
+        [sampleButton reset];
     }
 }
 
-#pragma mark - BMSampleViewDelegate
+#pragma mark - BMSampleButtonDelegate
 
 - (void)effectsButtonTappedAtTrack:(int)trackID {
     BMEffectsViewController* vc = [[BMEffectsViewController alloc] init];
@@ -208,38 +273,57 @@ static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
 
 #pragma mark - UI Actions
 
-- (void)masterRecordButtonTapped {
-    if ([_masterRecordButton isSelected]) {
-        [[BMAudioController sharedController] stopRecordingMaster];
-        [_masterRecordButton setSelected:NO];
-        [self launchSaveRecordingDialog];
-    } else {
-        [[BMAudioController sharedController] startRecordingMaster];
-        [_masterRecordButton setSelected:YES];
+- (void)trackOptionTouchDown:(UIButton*)sender {
+    for (BMSampleButton* sampleButton in _sampleButtons) {
+        [sampleButton setCurrentMode:(BMSampleMode)sender.tag];
     }
     
-}
-
-- (void)mixerButtonTapped {
-    if ([_mixerButton isSelected]) {
-        [self displayMixerSliders:NO];
-        [_mixerButton setSelected:NO];
-    } else {
-        [self displayMixerSliders:YES];
-        [_mixerButton setSelected:YES];
+    if (sender.tag == BMSampleMode_Recording) {
+        [self displayMicRecordingBackgroundView:YES];
     }
+    
+    [sender setSelected:YES];
 }
 
-- (void)tempoButtonTapped {
-//    if ([_tempoButton isSelected]) {
-//        [[BMSequencer sharedSequencer] stopClock];
-//        [_tempoButton setSelected:NO];
-//    } else {
-//        [[BMSequencer sharedSequencer] startClock];
-//        [_tempoButton setSelected:YES];
-//    }
-    BMTempoViewController* vc = [[BMTempoViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)trackOptionTouchUpInside:(UIButton*)sender {
+    for (BMSampleButton* sampleButton in _sampleButtons) {
+        [sampleButton setCurrentMode:BMSampleMode_Playback];
+    }
+    
+    if (sender.tag == BMSampleMode_Recording) {
+        [self displayMicRecordingBackgroundView:NO];
+    }
+    
+    [sender setSelected:NO];
+}
+
+
+
+- (void)masterRecordButtonTapped {
+    
+    if ([_masterRecordButton isSelected]) {
+        [[BMSequencer sharedSequencer] sequenceEvent:^{
+            [[BMAudioController sharedController] stopRecordingMaster];
+            [self displayMicRecordingBackgroundView:NO];
+        } withCompletion:^{
+            _masterAwaitingStop = NO;
+            [_masterRecordButton setSelected:NO];
+            [self launchSaveMasterRecordingDialog];
+        }];
+        _masterAwaitingStop = YES;
+    }
+    
+    else {
+        [[BMSequencer sharedSequencer] sequenceEvent:^{
+            [[BMAudioController sharedController] startRecordingMaster];
+            [self displayMicRecordingBackgroundView:YES];
+        } withCompletion:^{
+            _masterAwaitingStart = NO;
+            [_masterRecordButton setSelected:YES];
+        }];
+        _masterAwaitingStart = YES;
+    }
+    
 }
 
 - (void)settingsButtonTapped {
@@ -247,62 +331,143 @@ static NSString* const kSettingsSelectedImage       = @"Settings-Selected.png";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
-- (void)gainSliderValueChanged:(BMHorizontalSlider*)sender {
-    [[BMAudioController sharedController] setGainOnTrack:(int)sender.tag withGain:sender.value];
+- (void)helpButtonTapped {
+    
 }
 
-- (void)panSliderValueChanged:(BMHorizontalSlider*)sender {
-    [[BMAudioController sharedController] setPanOnTrack:(int)sender.tag withPan:sender.value];
+#pragma mark - BMForceButtonDelegate
+
+- (void)forceButtonTouchUpInside:(id)sender {
+    if (sender == _metronomeButton) {
+        BMTempoViewController* vc = [[BMTempoViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
+
+- (void)forceButtonForcePressDown:(id)sender {
+    if (sender == _metronomeButton) {
+        if ([[BMSequencer sharedSequencer] isClockRunning]) {
+            [[BMSequencer sharedSequencer] stopClock];
+            [_metronomeButton setSelected:NO];
+        } else {
+            [[BMSequencer sharedSequencer] startClock];
+            [_metronomeButton setSelected:YES];
+        }
+    }
+}
+
 
 #pragma mark - BMSequencerDelegate
 
 - (void)tick:(NSUInteger)count {
-    
-    for (BMSampleView* sampleView in _sampleViews) {
-        [sampleView tick:(int)count];
+    for (BMSampleButton* sampleButton in _sampleButtons) {
+        [sampleButton tick:(int)count];
     }
     [_tempoView tick:(int)count];
+    
+    if (_masterAwaitingStart) {
+        [self startMasterPulse:count];
+    } else if (_masterAwaitingStop) {
+        [self stopMasterPulse:count];
+    }
 }
 
 #pragma mark - Private Methods
 
-- (void)launchSaveRecordingDialog {
-    
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documents = [[NSString alloc] initWithString:(NSString*)[paths objectAtIndex:0]];
-    NSString* filepath = [documents stringByAppendingString:@"/master-recording-test.wav"];
-    NSLog(@"%@",filepath);
-    if ([[BMAudioController sharedController] saveMasterRecordingAtFilepath:filepath]) {
-//        [[BMAudioController sharedController] loadAudioFileIntoTrack:3 withPath:filepath];
-    }
-}
-
-
-- (void)displayMixerSliders:(BOOL)display {
-    
-    float targetAlpha = display ? 1.0f : 0.0f;
-    
-    for (int i=0; i < kNumTracks; i++) {
-        
-        BMSampleView* sampleView = [_sampleViews objectAtIndex:i];
-        BMHorizontalSlider* gainSlider = [_gainSliders objectAtIndex:i];
-        BMPanSlider* panSlider = [_panSliders objectAtIndex:i];
-        
-        [UIView animateWithDuration:0.1f animations:^{
-            [sampleView setAlpha:1.0f - targetAlpha];
-            [gainSlider setAlpha:targetAlpha];
-            [panSlider setAlpha:targetAlpha];
-        }];
-    }
-}
-
 - (void)progressTimerCallback {
-    for (BMSampleView* sampleView in _sampleViews) {
-        [sampleView updatePlaybackProgress:kProgressTimeInterval];
+    for (BMSampleButton* sampleButton in _sampleButtons) {
+        [sampleButton updatePlaybackProgress:kProgressTimeInterval];
     }
 }
 
+- (void)displayMicRecordingBackgroundView:(BOOL)display {
+    [UIView animateWithDuration:0.1 animations:^{
+        [_micRecordBackgroundView setAlpha:(display ? 1.0f : 0.0f)];
+    }];
+}
 
+- (void)startMasterPulse:(NSUInteger)count {
+    [_countdownLabel setText:[NSString stringWithFormat:@"%d", ([[BMSequencer sharedSequencer] meter] - (int)count)]];
+    float timeInterval = [[BMSequencer sharedSequencer] timeInterval_s];
+    
+    [UIView animateWithDuration:(timeInterval / 2.0) animations:^{
+        [_countdownLabel setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:(timeInterval / 4.0f) animations:^{
+            [_countdownLabel setAlpha:0.0f];
+        }];
+    }];
+}
+
+- (void)stopMasterPulse:(NSUInteger)count {
+    [_countdownLabel setText:[NSString stringWithFormat:@"%d", ([[BMSequencer sharedSequencer] meter] - (int)count)]];
+    float timeInterval = [[BMSequencer sharedSequencer] timeInterval_s];
+    
+    [UIView animateWithDuration:(timeInterval / 4.0) animations:^{
+        [_countdownLabel setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:(timeInterval / 2.0f) animations:^{
+            [_countdownLabel setAlpha:0.0f];
+        }];
+    }];
+}
+
+
+- (void)launchSaveMasterRecordingDialog {
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd MMM HH:mm:ss"];
+    NSString* time = [dateFormatter stringFromDate:[NSDate date]];
+    NSString* filename = [NSString stringWithFormat:@"%@ - %@", [[BMSettings sharedInstance] projectName], time];
+    
+    
+    UIAlertController* saveDialog = [UIAlertController alertControllerWithTitle:@"Save Recording?"
+                                                                        message:nil
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"Save"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           NSString* filename = saveDialog.textFields.firstObject.text;
+                                                           NSString* filepath = [self masterFilepathFromName:filename];
+                                                           [[BMAudioController sharedController] saveMasterRecordingAtFilepath:filepath];
+                                                       }];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {}];
+    
+    
+    [saveDialog addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [textField setText:filename];
+    }];
+    [saveDialog addAction:saveAction];
+    [saveDialog addAction:cancelAction];
+    
+    [self presentViewController:saveDialog animated:YES completion:nil];
+}
+
+- (NSString*)masterFilepathFromName:(NSString*)name {
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documents = [NSString stringWithString:(NSString*)[paths objectAtIndex:0]];
+    NSString* recordings = [documents stringByAppendingPathComponent:@"MasterRecordings/"];
+    NSString* filepath = [recordings stringByAppendingPathComponent:[name stringByAppendingString:@".wav"]];
+    return filepath;
+}
+
+
+
+#pragma mark - BMAudioControllerDelegate
+
+- (void)didFinishLoadingAudioFileAtTrack:(int)track {
+    if (track < kNumButtonTracks) {
+        BMSampleButton* button = (BMSampleButton*)_sampleButtons[track];
+        [button updateWaveform:[[BMSettings sharedInstance] shouldDrawWaveform]];
+        [button updateTitle];
+    }
+}
+
+- (void)didReachEndOfPlayback:(int)track {
+    
+}
 @end

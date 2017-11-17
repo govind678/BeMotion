@@ -65,6 +65,7 @@ static const float kCenterWidth  = 5.0f;
         [_borderLayer setLineWidth:1.0f];
         [self.layer addSublayer:_borderLayer];
         
+        CGPathRelease(borderPath);
         
         CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI * 0.5f);
         
@@ -87,7 +88,7 @@ static const float kCenterWidth  = 5.0f;
         _centerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
         [_centerLabel setBackgroundColor:[UIColor clearColor]];
         [_centerLabel setFont:[UIFont semiboldDefaultFontOfSize:12.0f]];
-        [_centerLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+        [_centerLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.8f]];
         [_centerLabel setTextAlignment:NSTextAlignmentCenter];
         [_centerLabel setText:@"Pan"];
         [self addSubview:_centerLabel];

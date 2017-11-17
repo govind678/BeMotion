@@ -55,10 +55,12 @@
         [_borderLayer setLineWidth:1.0f];
         [self.layer addSublayer:_borderLayer];
         
+        CGPathRelease(borderPath);
+        
         _centerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
         [_centerLabel setBackgroundColor:[UIColor clearColor]];
         [_centerLabel setFont:[UIFont semiboldDefaultFontOfSize:12.0f]];
-        [_centerLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+        [_centerLabel setTextColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
         [_centerLabel setTextAlignment:NSTextAlignmentCenter];
         [self addSubview:_centerLabel];
         

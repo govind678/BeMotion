@@ -48,7 +48,7 @@
 }
 
 + (UIColor*)appBlueColor {
-    return [UIColor colorWithRed:0.17 green:0.47f blue:0.98f alpha:1.0f];
+    return [UIColor colorWithRed:0.24f green:0.54f blue:0.98f alpha:1.0f];
 }
 
 + (UIColor*)appGreenColor {
@@ -60,7 +60,7 @@
 }
 
 + (UIColor*)textWhiteColor {
-    return [UIColor colorWithWhite:0.8f alpha:1.0f];
+    return [UIColor colorWithWhite:0.85f alpha:1.0f];
 }
 
 + (UIColor*)elementWhiteColor {

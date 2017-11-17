@@ -32,10 +32,14 @@ public:
     void setParameter(int parameterID, float value) override;
     float getParameter(int parameterID) override;
     
+    void setTempo(float tempo) override;
+    void setShouldQuantizeTime(bool shouldQuantizeTime) override;
+    
 private:
     //===========================================================================
     
     float getDepth();
+    void computeTimeParams(float newValue);
     
     BMOscillator*   _lfo;
     
@@ -45,8 +49,12 @@ private:
     float           _currentDepth;
     float           _newDepth;
     
-    float           _rate;  // Normalized to Sampling Rate
+    float           _rateParam;
+    float           _currentRate;  // Normalized to Sampling Rate
     float           _shape;
+    
+    float           _tempo;
+    bool            _shouldQuantizeTime;
 };
 
 

@@ -10,8 +10,6 @@
 
 @interface BMWaveformView : UIView
 
-- (void)reloadWaveform;
-
-@property (nonatomic, assign)int trackID;
+- (void)drawWaveform:(const float*)samples;
 
 @end

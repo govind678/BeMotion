@@ -16,6 +16,10 @@
 
 @property (nonatomic, readonly) float margin;
 @property (nonatomic, readonly) float headerHeight;
+@property (nonatomic, readonly) float buttonHeight;
+@property (nonatomic, readonly) float optionButtonSize;
+@property (nonatomic, readonly) float yGap;
+@property (nonatomic, readonly) float verticalSeparatorHeight;
 
 @end
 

@@ -26,4 +26,17 @@
     return [UIFont fontWithName:@"OpenSans-Bold" size:fontSize];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
+
++ (UIFont *)systemFontOfSize:(CGFloat)fontSize {
+    return [UIFont lightDefaultFontOfSize:fontSize];
+}
+
++ (UIFont*)boldSystemFontOfSize:(CGFloat)fontSize {
+    return [UIFont semiboldDefaultFontOfSize:fontSize];
+}
+
+#pragma clang diagnostic pop
+
 @end

@@ -24,17 +24,17 @@
     [super viewDidLoad];
     
     // Header
-    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(0.0f, self.margin, self.view.frame.size.width, self.headerHeight)];
+    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(self.margin, self.margin, self.view.frame.size.width - (2.0f * self.margin), self.headerHeight)];
     [_headerView setTitle:[NSString stringWithFormat:@"FX %d", _effectSlot + 1]];
     [_headerView addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [_headerView setTitleColor:(UIColor*)[[UIColor trackColors] objectAtIndex:_trackID]];
     [self.view addSubview:_headerView];
     
     // Table View
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, self.headerHeight + self.margin + 10.0f, self.view.frame.size.width, self.view.frame.size.height - self.headerHeight - 10.0f - self.margin)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.margin, self.headerHeight + self.margin + 15.0f, self.view.frame.size.width - (2.0f * self.margin), self.view.frame.size.height - self.headerHeight - 15.0f - self.margin)];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
-    [_tableView setRowHeight:44.0f];
+    [_tableView setRowHeight:self.buttonHeight];
     [_tableView setBackgroundColor:[UIColor clearColor]];
     [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.view addSubview:_tableView];
@@ -73,8 +73,8 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_effectsObject) {
-        return _effectsObject.count;
+    if (_effectsData) {
+        return _effectsData.count;
     } else {
         return 0;
     }
@@ -97,14 +97,14 @@
         UIView* selectionColor = [[UIView alloc] init];
         [selectionColor setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.15f]];
         [cell setSelectedBackgroundView: selectionColor];
-        
-        if (_effectsObject) {
-            NSDictionary* effect = (NSDictionary*)[_effectsObject objectAtIndex:indexPath.row];
-            NSString* title = [effect objectForKey:@"Title"];
-            [[cell textLabel] setText:title];
-        } else {
-            [[cell textLabel] setText:@"Error"];
-        }
+    }
+    
+    if (_effectsData) {
+        NSDictionary* effect = (NSDictionary*)[_effectsData objectAtIndex:indexPath.row];
+        NSString* title = [effect objectForKey:@"Title"];
+        [[cell textLabel] setText:title];
+    } else {
+        [[cell textLabel] setText:@"Error"];
     }
     
     return cell;
@@ -116,6 +116,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     _selectedIndexPath = indexPath;
     [[BMAudioController sharedController] setEffectOnTrack:_trackID AtSlot:_effectSlot withEffect:(int)indexPath.row];
+    
+    if (indexPath.row == 0) {
+        for (int i=0; i < kNumParametersPerEffect; i++) {
+            [[BMAudioController sharedController] setMotionMapOnTrack:_trackID AtEffectSlot:_effectSlot ForParameter:i withMap:0];
+            [[BMAudioController sharedController] setMotionMinOnTrack:_trackID AtEffectSlot:_effectSlot ForParameter:i withValue:0.0f];
+            [[BMAudioController sharedController] setMotionMaxOnTrack:_trackID AtEffectSlot:_effectSlot ForParameter:i withValue:1.0f];
+        }
+    }
 }
 
 @end

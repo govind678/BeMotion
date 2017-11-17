@@ -14,6 +14,6 @@
 @property (nonatomic, assign) int trackID;
 @property (nonatomic, assign) int effectSlot;
 @property (nonatomic, retain) NSIndexPath* selectedIndexPath;
-@property (nonatomic, assign) NSArray*  effectsObject;
+@property (nonatomic, assign) NSArray*  effectsData;
 
 @end

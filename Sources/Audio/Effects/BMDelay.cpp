@@ -9,10 +9,11 @@
 */
 
 #include "BMDelay.h"
+#include "BMConstants.h"
 #include <math.h>
 #include <stdio.h>
 
-static const long kMaxDelaySamples = 96000;
+static const long kMaxDelaySamples = 72000;
 static const float kSmoothFactor = 0.001f;
 static const float kTimeSmoothFactor = 0.0002f;
 
@@ -25,8 +26,9 @@ BMDelay::BMDelay(int numChannels)
     _newFeedback            =   0.5f;
     _currentWetDry          =   0.5f;
     _newWetDry              =   0.5f;
-    _delayTime_s            =   0.5f;
-    _currentDelayInSamples  =   _newDelayInSamples  =  m_fSampleRate * _delayTime_s;
+    _currentDelayTime_s      =   0.5f;
+    _delayTimeParam          =  0.5f;
+    _currentDelayInSamples  =   _newDelayInSamples  =  m_fSampleRate * _currentDelayTime_s;
     
     _wetSignal  = new CRingBuffer<float>* [numChannels];
     
@@ -35,6 +37,11 @@ BMDelay::BMDelay(int numChannels)
         _wetSignal[n]    = new CRingBuffer<float> (kMaxDelaySamples);
         _wetSignal[n]->resetInstance();
     }
+    
+    _tempo  =   120;
+    _shouldQuantizeTime = true;
+    
+    computeDelayTimeParams(_delayTimeParam);
 }
 
 BMDelay::~BMDelay()
@@ -60,7 +67,8 @@ void BMDelay::reset()
 void BMDelay::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     m_fSampleRate   =   sampleRate;
-    _currentDelayInSamples  =   _newDelayInSamples  =  m_fSampleRate * _delayTime_s;
+    computeDelayTimeParams(_delayTimeParam);
+    _currentDelayInSamples  =   _newDelayInSamples;
 //    for (int n = 0; n < m_iNumChannels; n++)
 //    {
 //        _wetSignal[n]->setReadIdx(_wetSignal[n]->getWriteIdx() - (_delayTime_s * m_fSampleRate));
@@ -73,8 +81,11 @@ void BMDelay::process (float** buffer, int numChannels, int numSamples)
     for (int sample = 0; sample < numSamples; sample++)
     {
         float feedback = getFeedback();
-        float wetDry = getWetDry();
         float delaySamples = getDelayInSamples();
+        
+        float wetDry = getWetDry();
+        float dryScale = cosf(wetDry * M_PI_2);
+        float wetScale = sinf(wetDry * M_PI_2);
         
         for (int channel = 0; channel < m_iNumChannels; channel++)
         {
@@ -84,10 +95,6 @@ void BMDelay::process (float** buffer, int numChannels, int numSamples)
             float yn = _wetSignal[channel]->getAtFloatIdx(readIndex);
             
             _wetSignal[channel]->putPostInc(xn + (feedback*yn));
-            
-            float dryScale = cosf(wetDry * M_PI_2);
-            float wetScale = sinf(wetDry * M_PI_2);
-            
             buffer[channel][sample] = (dryScale * xn) + (wetScale * yn);
         }
     }
@@ -111,8 +118,7 @@ void BMDelay::setParameter(int parameterID, float value)
     switch(parameterID)
     {
         case 0:
-            _delayTime_s = value;
-            _newDelayInSamples = _delayTime_s * m_fSampleRate;
+            computeDelayTimeParams(value);
             break;
             
             
@@ -139,7 +145,7 @@ float BMDelay::getParameter(int parameterID)
     switch(parameterID)
     {
         case 0:
-            return _delayTime_s;
+            return _delayTimeParam;
             break;
             
             
@@ -157,6 +163,37 @@ float BMDelay::getParameter(int parameterID)
             break;
     }
 }
+
+void BMDelay::setTempo(float tempo)
+{
+    _tempo = tempo;
+    computeDelayTimeParams(_delayTimeParam);
+}
+
+void BMDelay::setShouldQuantizeTime(bool shouldQuantizeTime)
+{
+    _shouldQuantizeTime = shouldQuantizeTime;
+    computeDelayTimeParams(_delayTimeParam);
+}
+
+void BMDelay::computeDelayTimeParams(float newValue)
+{
+    _delayTimeParam = newValue;
+    
+    if (_shouldQuantizeTime) {
+        int idx = floorf(newValue * kLenQuantizedTimeArray);
+        if (idx >= kLenQuantizedTimeArray) {
+            idx = kLenQuantizedTimeArray - 1;
+        } else if (idx < 0) {
+            idx = 0;
+        }
+        _currentDelayTime_s = (60.f / _tempo * kQuantizedTimeArray[idx]);
+    } else {
+        _currentDelayTime_s = newValue;
+    }
+    _newDelayInSamples = _currentDelayTime_s * m_fSampleRate;
+}
+
 
 float BMDelay::getFeedback()
 {

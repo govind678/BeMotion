@@ -9,8 +9,10 @@
 */
 
 #include "BMTremolo.h"
-
-static const float kMaxRate = 30.0f;
+#include "BMConstants.h"
+#include <math.h>
+#include <stdio.h>
+static const float kMaxRate = 40.0f;
 
 BMTremolo::BMTremolo(int numChannels)
 {
@@ -19,11 +21,14 @@ BMTremolo::BMTremolo(int numChannels)
     
     _currentDepth   = 1.0;
     _newDepth       = 1.0f;
-    _rate           = 4.0f * 0.681f;
+    _rateParam      = 0.5f;
     _shape          = 0.01f;
     
+    _tempo          =   120;
+    _shouldQuantizeTime = true;
+    
     _lfo->setShape(_shape);
-    _lfo->setNormalizedFrequency(_rate / _sampleRate);
+    computeTimeParams(_rateParam);
 }
 
 BMTremolo::~BMTremolo()
@@ -44,7 +49,7 @@ void BMTremolo::reset()
 void BMTremolo::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     _sampleRate = sampleRate;
-    _lfo->setNormalizedFrequency(_rate / _sampleRate);
+    computeTimeParams(_rateParam);
 }
 
 void BMTremolo::process (float** buffer, int numChannels, int numSamples)
@@ -79,8 +84,7 @@ void BMTremolo::setParameter(int parameterID, float value)
     switch(parameterID)
     {
         case 0:
-            _rate = kMaxRate * value;
-            _lfo->setNormalizedFrequency(_rate / _sampleRate);
+            computeTimeParams(value);
             break;
             
         case 1:
@@ -103,7 +107,7 @@ float BMTremolo::getParameter(int parameterID)
     switch(parameterID)
     {
         case 0:
-            return _rate / kMaxRate;
+            return _rateParam;
             break;
             
         case 1:
@@ -119,6 +123,38 @@ float BMTremolo::getParameter(int parameterID)
             break;
     }
 }
+
+void BMTremolo::setTempo(float tempo)
+{
+    _tempo = tempo;
+    computeTimeParams(_rateParam);
+}
+
+void BMTremolo::setShouldQuantizeTime(bool shouldQuantizeTime)
+{
+    _shouldQuantizeTime = shouldQuantizeTime;
+    computeTimeParams(_rateParam);
+}
+
+void BMTremolo::computeTimeParams(float newValue)
+{
+    _rateParam = newValue;
+    
+    if (_shouldQuantizeTime) {
+        int idx = floorf(newValue * kLenQuantizedTimeArray);
+        if (idx >= kLenQuantizedTimeArray) {
+            idx = kLenQuantizedTimeArray - 1;
+        } else if (idx < 0) {
+            idx = 0;
+        }
+        _currentRate = _tempo / (60.0f * kQuantizedTimeArray[idx]);
+    } else {
+        _currentRate = kMaxRate * _rateParam;
+    }
+//    printf("Rate: %f\n", _currentRate);
+    _lfo->setNormalizedFrequency(_currentRate / _sampleRate);
+}
+
 
 float BMTremolo::getDepth()
 {

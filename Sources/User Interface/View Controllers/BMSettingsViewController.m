@@ -6,21 +6,26 @@
 //  Copyright © 2016 Plasmatio Tech. All rights reserved.
 //
 
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "BMSettingsViewController.h"
 #import "BMAudioController.h"
+#import "BMSequencer.h"
 #import "BMConstants.h"
+#import "BMSettings.h"
+
 #import "UIColor+Additions.h"
 #import "UIFont+Additions.h"
+#import "BMAppSettingsViewController.h"
 
-static const float kRowHeight = 40.0f;
+static NSString* const kHorizontalSeparatorImage        =   @"HorizontalSeparator.png";
+static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.png";
 
 @interface BMSettingsViewController() <UITableViewDataSource, UITableViewDelegate>
 {
     BMHeaderView*           _headerView;
     
     UISegmentedControl*     _segmentedControl;
-    UIScrollView*           _scrollView;
-    UITableView*            _samplesTable;
+    UITableView*            _tableView;
 }
 @end
 
@@ -31,45 +36,102 @@ static const float kRowHeight = 40.0f;
     
     [super viewDidLoad];
     
+    float xMargin = self.margin;
+    float yPos = self.margin;
+    
     // Header
-    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(0.0f, self.margin, self.view.frame.size.width, self.headerHeight)];
+    _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.headerHeight)];
     [_headerView setTitle:@"Settings"];
     [_headerView addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_headerView];
     
     
-    NSDictionary* attribute = [NSDictionary dictionaryWithObject:[UIFont semiboldDefaultFontOfSize:12.0f] forKey:NSFontAttributeName];
+    // App Settings
+    yPos += self.headerHeight + self.yGap;
+    UIButton* appSettingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.margin, yPos, self.view.frame.size.width - (2.0f * self.margin), self.buttonHeight)];
+    [appSettingsButton setBackgroundImage:[UIImage imageNamed:kSettingsOptionImage] forState:UIControlStateNormal];
+    [appSettingsButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
+    [appSettingsButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
+    [appSettingsButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [appSettingsButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)];
+    [appSettingsButton setTitle:@"App Settings" forState:UIControlStateNormal];
+    [appSettingsButton addTarget:self action:@selector(appSettingsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:appSettingsButton];
     
-    NSArray* segments = [NSArray arrayWithObjects:@"Sample Sets", @"Effect Presets", nil];
+    // User Settings
+    yPos += self.buttonHeight;
+    UIButton* userSettingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.margin, yPos, self.view.frame.size.width - (2.0f * self.margin), self.buttonHeight)];
+    [userSettingsButton setBackgroundImage:[UIImage imageNamed:kSettingsOptionImage] forState:UIControlStateNormal];
+    [userSettingsButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
+    [userSettingsButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
+    [userSettingsButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [userSettingsButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)];
+    [userSettingsButton setTitle:@"No User" forState:UIControlStateNormal];
+    [userSettingsButton addTarget:self action:@selector(userSettingsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:userSettingsButton];
+    
+    
+    // Separator
+    yPos += self.buttonHeight + self.yGap;
+    UIView* separatorView1 = [[UIView alloc] initWithFrame:CGRectMake(self.margin, yPos, self.view.frame.size.width - (2.0f * self.margin), self.verticalSeparatorHeight)];
+    [separatorView1 setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kHorizontalSeparatorImage]]];
+    [self.view addSubview:separatorView1];
+    
+    // Save Project
+    yPos += self.yGap;
+    float buttonWidth = (self.view.frame.size.width - (3.0f * xMargin)) / 2.0f;
+    UIButton* saveProjectButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, buttonWidth, 40.0f)];
+    [saveProjectButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
+    [saveProjectButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
+    [saveProjectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [saveProjectButton setTitle:@"Save Project" forState:UIControlStateNormal];
+    [saveProjectButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
+    [saveProjectButton addTarget:self action:@selector(saveProjectButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [saveProjectButton addTarget:self action:@selector(saveProjectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveProjectButton];
+    
+    UIButton* loadDefaultButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonWidth + (2.0f * xMargin), yPos, buttonWidth, 40.0f)];
+    [loadDefaultButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
+    [loadDefaultButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
+    [loadDefaultButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [loadDefaultButton setTitle:@"Load Default Project" forState:UIControlStateNormal];
+    [loadDefaultButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
+    [loadDefaultButton addTarget:self action:@selector(loadDefaultButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [loadDefaultButton addTarget:self action:@selector(loadDefaultButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:loadDefaultButton];
+    
+    
+    yPos += saveProjectButton.frame.size.height + self.yGap;
+    NSArray* segments = [NSArray arrayWithObjects:@"Projects", @"Sample Sets", nil];
+    NSDictionary* attribute = [NSDictionary dictionaryWithObject:[UIFont semiboldDefaultFontOfSize:12.0f] forKey:NSFontAttributeName];
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:segments];
-    [_segmentedControl setFrame:CGRectMake(self.margin, self.headerHeight + self.margin + 20.0f, self.view.frame.size.width - (2.0f * self.margin), 29.0f)];
+    [_segmentedControl setFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), 29.0f)];
     [_segmentedControl setTitleTextAttributes:attribute forState:UIControlStateNormal];
-    [_segmentedControl setTintColor:[UIColor darkGrayColor]];
     [_segmentedControl setSelectedSegmentIndex:0];
     [_segmentedControl setTintColor:[UIColor textWhiteColor]];
     [_segmentedControl addTarget:self action:@selector(segmentValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_segmentedControl];
     
-    float contentYPos = _segmentedControl.frame.origin.y + _segmentedControl.frame.size.height + 20.0f;
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.margin, contentYPos, self.view.frame.size.width - (2.0f * self.margin), self.view.frame.size.height - contentYPos)];
-    [_scrollView setPagingEnabled:YES];
-    [_scrollView setBackgroundColor:[UIColor colorWithWhite:0.5f alpha:0.5f]];
-    [_scrollView setShowsHorizontalScrollIndicator:NO];
-    [_scrollView setShowsVerticalScrollIndicator:NO];
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width * segments.count, _scrollView.frame.size.height)];
-    [self.view addSubview:_scrollView];
+    yPos += _segmentedControl.frame.size.height + self.yGap;
+//    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.view.frame.size.height - yPos - self.margin)];
+//    [_scrollView setPagingEnabled:YES];
+//    [_scrollView setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
+//    [_scrollView setShowsHorizontalScrollIndicator:NO];
+//    [_scrollView setShowsVerticalScrollIndicator:NO];
+//    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width * segments.count, _scrollView.frame.size.height)];
+//    [_scrollView setDelegate:self];
+//    [self.view addSubview:_scrollView];
     
-    
-    _samplesTable = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _scrollView.frame.size.width, _scrollView.frame.size.height) style:UITableViewStylePlain];
-    [_samplesTable setBackgroundColor:[UIColor clearColor]];
-    [_samplesTable setDataSource:self];
-    [_samplesTable setDelegate:self];
-    [_samplesTable setScrollEnabled:YES];
-    [_samplesTable setRowHeight:kRowHeight];
-    [_samplesTable setLayoutMargins:UIEdgeInsetsZero];
-    [_samplesTable setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-    [_scrollView addSubview:_samplesTable];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.view.frame.size.height - yPos) style:UITableViewStylePlain];
+    [_tableView setBackgroundColor:[UIColor clearColor]];
+    [_tableView setDataSource:self];
+    [_tableView setDelegate:self];
+    [_tableView setScrollEnabled:YES];
+    [_tableView setAllowsMultipleSelectionDuringEditing:NO];
+    [_tableView setRowHeight:self.buttonHeight];
+    [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    [self.view addSubview:_tableView];
     
 }
 
@@ -84,16 +146,18 @@ static const float kRowHeight = 40.0f;
 }
 
 - (void)segmentValueChanged {
-    [_scrollView scrollRectToVisible:CGRectMake(_scrollView.frame.size.width * _segmentedControl.selectedSegmentIndex, 0.0f, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
+    [_tableView reloadData];
+//    [_scrollView scrollRectToVisible:CGRectMake(_scrollView.frame.size.width * _segmentedControl.selectedSegmentIndex, 0.0f, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
 }
 
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if (tableView == _samplesTable) {
-        return [[[BMAudioController sharedController] getSampleSetTitles] count];
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        return [[[BMSettings sharedInstance] getListOfSavedProjects] count];
+    } else if (_segmentedControl.selectedSegmentIndex == 1) {
+        return [[[BMAudioController sharedController] getListOfSampleTitles] count];
     } else {
         return 0;
     }
@@ -116,12 +180,15 @@ static const float kRowHeight = 40.0f;
         UIView* selectionColor = [[UIView alloc] init];
         [selectionColor setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.15f]];
         [cell setSelectedBackgroundView: selectionColor];
-
-        if (tableView == _samplesTable) {
-            NSString* title = [[[BMAudioController sharedController] getSampleSetTitles] objectAtIndex:indexPath.row];
-            [[cell textLabel] setText:title];
-        }
     }
+    
+    NSString* title;
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        title = [[[BMSettings sharedInstance] getListOfSavedProjects] objectAtIndex:indexPath.row];
+    } else if (_segmentedControl.selectedSegmentIndex == 1) {
+        title = [[[BMAudioController sharedController] getListOfSampleTitles] objectAtIndex:indexPath.row];
+    }
+    [[cell textLabel] setText:title];
     
     return cell;
 }
@@ -130,21 +197,221 @@ static const float kRowHeight = 40.0f;
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (tableView == _samplesTable) {
-        
-        for (int track=0; track < kNumTracks; track++) {
-            
-            BMIndexPath* path = [[BMAudioController sharedController] getIndexPathForTrack:track];
-            path.library = 0;
-            path.section = indexPath.row;
-            path.index   = track;
-            
-            if ([[BMAudioController sharedController] loadAudioFileIntoTrack:track atIndexPath:path] != 0) {
-                NSLog(@"Error Loading Audio File at SettingsViewController");
-            }
-        }
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        [[BMSettings sharedInstance] loadProjectAtIndex:indexPath.row];
+    } else if (_segmentedControl.selectedSegmentIndex == 1) {
+        [self loadSampleSet:indexPath];
     }
 }
+
+- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSArray<UITableViewRowAction*>*)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction* delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [[BMSettings sharedInstance] deleteProjectAtIndex:indexPath.row];
+            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }];
+    [delete setBackgroundColor:[UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.5f]];
+    [delete setBackgroundEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    
+    UITableViewRowAction* share = share = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Share" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [self launchShareActionSheet:indexPath];
+    }];
+    [share setBackgroundColor:[UIColor colorWithRed:0.0f green:0.7f blue:0.0f alpha:0.5f]];
+    [share setBackgroundEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    
+    NSArray* array = [NSArray arrayWithObjects:delete, share, nil];
+    return array;
+}
+
+//#pragma mark - UIScrollViewDelegate
+
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    NSInteger page = roundf(_scrollView.contentOffset.x / _scrollView.frame.size.width);
+//    [_segmentedControl setSelectedSegmentIndex:page];
+//}
+
+#pragma mark - UIButton
+
+- (void)saveProjectButtonTouchDown:(UIButton*)sender {
+    [sender setBackgroundColor:[UIColor colorWithWhite:0.3f alpha:0.8f]];
+}
+- (void)saveProjectButtonTapped:(UIButton*)sender {
+    [self launchSaveProjectDialog];
+    [sender setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
+}
+
+- (void)loadDefaultButtonTouchDown:(UIButton*)sender {
+    [sender setBackgroundColor:[UIColor colorWithWhite:0.3f alpha:0.8f]];
+}
+
+- (void)loadDefaultButtonTapped:(UIButton*)sender {
+    [[BMSettings sharedInstance] loadDefaultProject];
+    [sender setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
+}
+
+
+- (void)appSettingsButtonTapped:(UIButton*)sender{
+    BMAppSettingsViewController* vc = [[BMAppSettingsViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)userSettingsButtonTapped:(UIButton*)sender {
+    
+}
+
+#pragma mark - Private
+
+- (void)saveProject:(NSString*)name {
+    if ([[BMSettings sharedInstance] saveProjectWithName:name]) {
+        [_tableView reloadData];
+    } else {
+        [self launchError:@"Could not save project."];
+    }
+}
+
+- (void)launchSaveProjectDialog {
+    
+    UIAlertController* saveDialog = [UIAlertController alertControllerWithTitle:@"Save Project?"
+                                                                        message:nil
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"Save"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           NSString* text = saveDialog.textFields.firstObject.text;
+                                                           if ([self isExistingProjectName:text]) {
+                                                               [self launchOverwriteConfirmation:text];
+                                                           } else {
+                                                               [self saveProject:text];
+                                                           }
+                                                       }];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+        
+                                                         }];
+    
+    
+    [saveDialog addTextFieldWithConfigurationHandler:nil];
+    [saveDialog addAction:saveAction];
+    [saveDialog addAction:cancelAction];
+    
+    [self presentViewController:saveDialog animated:YES completion:nil];
+}
+
+- (BOOL)isExistingProjectName:(NSString*)name {
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* projectsDirectory = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Projects"];
+    
+    NSString* filepath = [projectsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", name]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)launchOverwriteConfirmation:(NSString*)name {
+    
+    NSString* message = [NSString stringWithFormat:@"Project '%@' already exists", name];
+    
+    UIAlertController* confirmDialog = [UIAlertController alertControllerWithTitle:@"Confirm Overwrite?"
+                                                                        message:message
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"Confirm"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self saveProject:name];
+                                                       }];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             
+                                                         }];
+    
+    [confirmDialog addAction:saveAction];
+    [confirmDialog addAction:cancelAction];
+    
+    [self presentViewController:confirmDialog animated:YES completion:nil];
+}
+
+
+
+- (void)launchError:(NSString*)message {
+    
+    UIAlertController* dialog = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                           message:message
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [dialog addAction:okAction];
+    
+    [self presentViewController:dialog animated:YES completion:nil];
+}
+
+- (void)loadSampleSet:(NSIndexPath*)indexPath {
+    
+    // Stop audio controller
+    [[BMAudioController sharedController] stop];
+    
+    NSString* title = (NSString*)[[[BMAudioController sharedController] getListOfSampleTitles] objectAtIndex:indexPath.row];
+    NSArray* samples = [[BMAudioController sharedController] getAllSamplesForTitle:title];
+    int track = 0;
+    for (NSString* name in samples) {
+        if (![[BMAudioController sharedController] loadAudioFileIntoTrack:track fromLibrary:BMLibrary_BuiltIn withName:name optionalSection:BMMicLibrary_NotApplicable]) {
+            NSLog(@"SettingsViewController: Error Loading Audio File: %@", name);
+        }
+        track++;
+    }
+    
+    NSDictionary* time = [[BMAudioController sharedController] getTimeDictionaryForTitle:title];
+    [[BMSequencer sharedSequencer] setTempo:[time[@"Tempo"] floatValue]];
+    [[BMSequencer sharedSequencer] setMeter:[time[@"Meter"] intValue]];
+    [[BMSequencer sharedSequencer] setInterval:[time[@"Interval"] intValue]];
+    
+    // Restart audio controller
+    [[BMAudioController sharedController] restart];
+}
+
+
+
+- (void)launchShareActionSheet:(NSIndexPath*)indexPath {
+    
+    NSString* filename = [(NSString*)[[[BMSettings sharedInstance] getListOfSavedProjects] objectAtIndex:indexPath.row] stringByAppendingPathExtension:@"plist"];
+    NSString* filepath = [[[BMSettings sharedInstance] projectsDirectory] stringByAppendingPathComponent:filename];
+    
+    NSString* message = [NSString stringWithFormat:@"\"%@\"\n\nProject created for BeMotion on iOS", filename];
+    NSURL* fileUrl = [NSURL fileURLWithPath:filepath isDirectory:NO];
+    NSArray* items = @[message, fileUrl];
+    
+    UIActivityViewController* controller = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    
+    controller.excludedActivityTypes = @[UIActivityTypePostToFacebook,
+                                         UIActivityTypePostToTwitter,
+                                         UIActivityTypeAddToReadingList,
+                                         UIActivityTypeAssignToContact,
+                                         UIActivityTypeOpenInIBooks,
+                                         UIActivityTypePostToFlickr,
+                                         UIActivityTypePrint,
+                                         UIActivityTypeSaveToCameraRoll];
+    
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 
 @end

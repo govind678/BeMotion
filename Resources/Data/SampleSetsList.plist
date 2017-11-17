@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Dubstep</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>140</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>Dubstep Synth</string>
+			<string>Dubstep Bass</string>
+			<string>Dubstep Lead</string>
+			<string>Dubstep Drums</string>
+			<string>Dubstep Scratch</string>
+			<string>Dubstep Crash</string>
+		</array>
+	</dict>
+	<key>Embryo</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>200</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>Embryo Bass</string>
+			<string>Embryo Drums</string>
+			<string>Embryo Percussion</string>
+			<string>Embryo Synth</string>
+			<string>Embryo Crash</string>
+			<string>Embryo Crash</string>
+		</array>
+	</dict>
+	<key>E-Drum</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>120</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>E-Drum Kick</string>
+			<string>E-Drum Snare</string>
+			<string>E-Drum Hat</string>
+			<string>E-Drum Rim</string>
+			<string>E-Drum Crash</string>
+			<string>E-Drum Scratch</string>
+		</array>
+	</dict>
+	<key>Indian Percussion</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>100</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>Mridangam</string>
+			<string>Ghatam</string>
+			<string>Morsing</string>
+			<string>Mridangam Bells</string>
+			<string>Bell Hit</string>
+			<string>Bell Hit</string>
+		</array>
+	</dict>
+	<key>Mellectronic</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>100</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>Mellectronic Bass</string>
+			<string>Mellectronic Chords</string>
+			<string>Mellectronic Drums</string>
+			<string>Mellectronic Strum</string>
+			<string>Dubstep Crash</string>
+			<string>E-Drum Crash</string>
+		</array>
+	</dict>
+	<key>Signals</key>
+	<dict>
+		<key>Time</key>
+		<dict>
+			<key>Tempo</key>
+			<integer>120</integer>
+			<key>Meter</key>
+			<integer>8</integer>
+			<key>Interval</key>
+			<integer>8</integer>
+		</dict>
+		<key>Samples</key>
+		<array>
+			<string>White Noise</string>
+			<string>Tone 100</string>
+			<string>Tone 1000</string>
+			<string>Pink Noise</string>
+			<string>Impulse</string>
+			<string>Impulse</string>
+		</array>
+	</dict>
+</dict>
+</plist>

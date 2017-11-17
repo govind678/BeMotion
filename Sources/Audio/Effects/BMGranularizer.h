@@ -35,16 +35,19 @@ public:
     void setParameter(int parameterID, float value) override;
     float getParameter(int parameterID) override;
     
+    void setTempo(float tempo) override;
+    void setShouldQuantizeTime(bool shouldQuantizeTime) override;
     
 private:
     //===========================================================================
     
 //    void generateGrain();
     void calculateParameters();
+    void computeTimeParams(float newValue);
     
     float getRateInSamples();
     float getSizeInSamples();
-    float getAttackInSamples();
+    float getEnvelopeGain();
     
     CRingBuffer<float>**    _buffer;
     
@@ -52,6 +55,7 @@ private:
     int                     _numChannels;
     
     //-- Parameters --//
+    float                   _rateParameter;
     float                   _rateInSeconds;
     float                   _sizePerGrain;
     float                   _attackTime;
@@ -62,13 +66,15 @@ private:
     float                   _currentGrainSizeInSamples;
     float                   _newGrainSizeInSamples;
     
-    float                   _currentAttackSamples;
-    float                   _newAttackSamples;
-    
     int                     _rateSampleCount;
     int                     _sizeSampleCount;
     int                     _samplesBuffered;
     bool                    _finishedBuffering;
+    
+    float                   _currentPanPosition;
+    
+    float                   _tempo;
+    bool                    _shouldQuantizeTime;
 };
 
 

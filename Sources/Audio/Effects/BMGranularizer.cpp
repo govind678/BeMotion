@@ -9,7 +9,9 @@
 */
 
 #include "BMGranularizer.h"
+#include "BMConstants.h"
 #include <stdio.h>
+#include <iostream>
 
 static const float kSmoothFactor = 0.001f;
 
@@ -25,21 +27,26 @@ BMGranularizer::BMGranularizer(int numChannels)
         _buffer[channel]    = new CRingBuffer<float> (kMaxSamples);
     }
     
-    _sizePerGrain               =   0.5f; // % grain size
-    _rateInSeconds              =   0.1f;
-    _attackTime                 =   0.5f;
-    _samplesBuffered            =   0;
+    _sizePerGrain               = 0.5f; // % grain size
+    _rateInSeconds              = 0.1f;
+    _rateParameter              = 0.1f;
+    _attackTime                 = 0.5f;
+    _samplesBuffered            = 0;
     
-    _currentGrainSizeInSamples  =   0.0f;
-    _newGrainSizeInSamples      =   0.0f;
-    _currentRateInSamples       =   0.0f;
-    _newRateInSamples           =   0.0f;
+    _currentGrainSizeInSamples   = 0.0f;
+    _newGrainSizeInSamples       = 0.0f;
+    _currentRateInSamples       = 0.0f;
+    _newRateInSamples           = 0.0f;
     
-    _rateSampleCount            =   0;
-    _sizeSampleCount            =   0;
-    _finishedBuffering          =   false;
+    _rateSampleCount            = 0;
+    _sizeSampleCount            = 0;
+    _finishedBuffering          = false;
     
-    calculateParameters();
+    _currentPanPosition         = 0.5f;
+    _tempo                     = 120;
+    _shouldQuantizeTime         = true;
+    
+    computeTimeParams(_rateParameter);
 }
 
 BMGranularizer::~BMGranularizer()
@@ -65,8 +72,7 @@ void BMGranularizer::setParameter(int parameterID, float value)
             if (value < 0.02f) {
                 value = 0.02f;
             }
-            _rateInSeconds = value;
-            calculateParameters();
+            computeTimeParams(value);
             break;
             
         case 1:
@@ -91,7 +97,7 @@ float BMGranularizer::getParameter(int parameterID)
     switch (parameterID)
     {
         case 0:
-            return _rateInSeconds;
+            return _rateParameter;
             break;
             
         case 1:
@@ -125,6 +131,7 @@ void BMGranularizer::reset()
 void BMGranularizer::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
     _sampleRate = sampleRate;
+    _finishedBuffering = false;
     calculateParameters();
 }
 
@@ -168,6 +175,7 @@ void BMGranularizer::process(float** buffer, int numChannels, int numSamples)
             if (_rateSampleCount == 0)
             {
                 int randomIndex = ((double) rand() / (RAND_MAX)) * _samplesBuffered;
+                _currentPanPosition = ((double) rand() / (RAND_MAX));
                 
                 for (int channel=0; channel < numChannels; channel++)
                 {
@@ -180,15 +188,13 @@ void BMGranularizer::process(float** buffer, int numChannels, int numSamples)
             _rateSampleCount = (_rateSampleCount + 1) % (int)getRateInSamples();
             
             
+            float gain = getEnvelopeGain();
             
             // Grain Size
             if (_sizeSampleCount <= getSizeInSamples())
             {
-                for (int channel=0; channel < numChannels; channel++)
-                {
-                    buffer[channel][sample] = _buffer[channel]->getPostInc();
-                }
-                
+                buffer[0][sample] = _buffer[0]->getPostInc() * cosf(_currentPanPosition * M_PI_2) * gain;
+                buffer[1][sample] = _buffer[1]->getPostInc() * sinf(_currentPanPosition * M_PI_2) * gain;
                 _sizeSampleCount++;
             }
             
@@ -283,6 +289,24 @@ void BMGranularizer::calculateParameters()
     _newGrainSizeInSamples = ((_sizePerGrain * 0.99f) + 0.01f) * _newRateInSamples;
 }
 
+void BMGranularizer::computeTimeParams(float newValue)
+{
+    _rateParameter = newValue;
+    
+    if (_shouldQuantizeTime) {
+        int idx = floorf(newValue * kLenQuantizedTimeArray);
+        if (idx >= kLenQuantizedTimeArray) {
+            idx = kLenQuantizedTimeArray - 1;
+        } else if (idx < 0) {
+            idx = 0;
+        }
+        _rateInSeconds = (60.f / _tempo * kQuantizedTimeArray[idx]);
+    } else {
+        _rateInSeconds = newValue;
+    }
+    calculateParameters();
+}
+
 
 void BMGranularizer::releaseResources()
 {
@@ -302,3 +326,22 @@ float BMGranularizer::getSizeInSamples()
     return _currentGrainSizeInSamples;
 }
 
+
+
+void BMGranularizer::setTempo(float tempo)
+{
+    _tempo = tempo;
+    computeTimeParams(_rateParameter);
+}
+
+void BMGranularizer::setShouldQuantizeTime(bool shouldQuantizeTime)
+{
+    _shouldQuantizeTime = shouldQuantizeTime;
+    computeTimeParams(_rateParameter);
+}
+
+float BMGranularizer::getEnvelopeGain()
+{
+    float gain = _sizeSampleCount / _currentGrainSizeInSamples;
+    return gain;
+}

@@ -15,19 +15,20 @@
 #include "AudioEffect.h"
 #include "BMLimiter.h"
 #include "BMStereo.h"
+#include "BMConstants.h"
 
-static const int64 kNumWaveformSamples = 2000;
+static const int64 kReadBufferSize  = 512;
 
 class AudioFileStream   : public AudioSource
 {
 public:
     //==========================================================================
     
-    AudioFileStream(int numChannels);
+    AudioFileStream(int numChannels, bool shouldCreateWaveform, String threadName);
     ~AudioFileStream();
     
     //========= Track Methods =========//
-    int loadAudioFile(const File& audioFile);
+    bool loadAudioFile(const File& audioFile);
     void setPlaybackSpeed(float speed);
     
     void startPlayback();
@@ -42,8 +43,10 @@ public:
     void setPlaybackPan(float pan);
     float getPlaybackPan();
     
-    float* getSamplesForWaveform();
+    void setPlaybackMode(BMPlaybackMode playbackMode);
+    BMPlaybackMode getPlaybackMode();
     
+    const float* getSamplesForWaveform();
     
     //========= Effect Methods =========//
     void setEffect(int slot, int effectID);
@@ -55,6 +58,9 @@ public:
     void setEffectEnable(int slot, bool enable);
     bool getEffectEnable(int slot);
     
+    void setTempo(float tempo);
+    void setShouldQuantizeTime(int slot, bool shouldQuantizeTime);
+    
     
     //========= AudioSource =========//
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
@@ -65,7 +71,11 @@ public:
 private:
     //===========================================================================
     
-    TimeSliceThread                             _thread;
+    void setShouldLoop(bool shouldLoop);
+    bool getShouldLoop();
+    float getRMSForBlock(const float* block, int64 length);
+    
+    TimeSliceThread                             _backgroundThread;
     AudioFormatManager                          _formatManager;
     AudioTransportSource                        _transportSource;
     ScopedPointer<AudioFormatReaderSource>      _formatReaderSource;
@@ -74,12 +84,18 @@ private:
     Array<bool>                                 _effectsEnable;
     Array<int>                                  _effectIDs;
     
-    ScopedPointer<BMLimiter>                    _limiter;
     ScopedPointer<BMStereo>                     _panner;
     
-    float                                       _waveformSamples[kNumWaveformSamples];
+    float*                                      _waveformSamples;
+    ScopedPointer<AudioSampleBuffer>            _readBuffer;
     
     int                                         _numChannels;
+    
+    BMPlaybackMode                              _playbackMode;
+    bool                                        _shouldLoop;
+    
+    bool                                        _shouldCreateWaveform;
+    bool                                        _isLoading;
 
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioFileStream)

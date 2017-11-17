@@ -9,8 +9,9 @@
 #import "BMHeaderView.h"
 #import "UIFont+Additions.h"
 
-static const float kMargin              = 20.0f;
-static const float kBackButtonWidth     = 50.0f;
+static const float kBackButtonWidth             = 40.0f;
+
+static NSString* const kBackButtonImageName     =   @"BackButton.png";
 
 @interface BMHeaderView()
 {
@@ -34,8 +35,8 @@ static const float kBackButtonWidth     = 50.0f;
         [self addSubview:_titleLabel];
         
         // Back Button
-        _backButton = [[UIButton alloc] initWithFrame:CGRectMake(kMargin, 0.0f, kBackButtonWidth, frame.size.height)];
-        [_backButton setImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
+        _backButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kBackButtonWidth, frame.size.height)];
+        [_backButton setImage:[UIImage imageNamed:kBackButtonImageName] forState:UIControlStateNormal];
         [_backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_backButton];
     }

@@ -12,7 +12,7 @@
 #define AUDIOCONTROLLER_H_INCLUDED
 
 #include "JuceHeader.h"
-
+#include "BMConstants.h"
 #include "AudioFileStream.h"
 #include "AudioFileRecord.h"
 
@@ -36,7 +36,7 @@ public:
     //============================================
     // Audio Track Methods
     //============================================
-    int loadAudioFileIntoTrack(String filepath, int track);
+    bool loadAudioFileIntoTrack(String filepath, int track);
     void setPlaybackSpeedOfTrack(float speed, int track);
     
     void startPlaybackOfTrack(int track);
@@ -51,21 +51,21 @@ public:
     void setTrackPan(int track, float pan);
     float getTrackPan(int track);
     
-    void saveMicRecordingForTrack(String filepath, int track);
-    void startRecordingAtTrack(int track);
+    void setPlaybackModeOfTrack(int track, BMPlaybackMode mode);
+    BMPlaybackMode getPlaybackModeOfTrack(int track);
+    
+    bool startRecordingAtTrack(int track, String filepath);
     void stopRecordingAtTrack(int track);
     bool isTrackRecording(int track);
-    void loadRecordedFileIntoTrack(int track);
     
-    float* getSamplesForWaveformAtTrack(int track);
+    const float* getSamplesForWaveformAtTrack(int track);
     
     
     //============================================
     // Audio Master Track Methods
     //============================================
-    void startRecordingMaster();
+    void startRecordingMaster(String filepath);
     void stopRecordingMaster();
-    bool saveMasterRecording(String filepath);
     
     
     //============================================
@@ -79,6 +79,9 @@ public:
     
     void setEffectEnable(int track, int slot, bool enable);
     bool getEffectEnable(int track, int slot);
+    
+    void setTempo(float tempo);
+    void setShouldQuantizeTime(int track, int slot, bool shouldQuantizeTime);
     
     
     //============================================
@@ -98,19 +101,16 @@ public:
 private:
     //=========================================================================
     
-    AudioDeviceManager                          _deviceManager;
-    float                                       _sampleRate;
-    int                                         _numSamplesPerBlock;
+    AudioDeviceManager                               _deviceManager;
+    float                                           _sampleRate;
+    int                                             _numSamplesPerBlock;
     
-    OwnedArray<AudioFileStream>                 _streams;
-    ScopedPointer<MixerAudioSource>             _mixerSource;
+    OwnedArray<AudioFileStream>                     _streams;
+    ScopedPointer<MixerAudioSource>                 _mixerSource;
+    ScopedPointer<BMLimiter>                        _limiter;
     
-    OwnedArray<AudioFileRecord>                 _recorders;
-    StringArray                                 _recorderPaths;
-    Array<bool>                                 _recorderPathToggles;
-    
-    ScopedPointer<AudioFileRecord>              _masterRecorder;
-    File                                        _tempMasterFile;
+    OwnedArray<AudioFileRecord>                     _recorders;
+    ScopedPointer<AudioFileRecord>                  _masterRecorder;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioController)
 };

@@ -10,23 +10,28 @@
 
 #include "AudioFileStream.h"
 
-#include "BMFilter.h"
+#include "BMWah.h"
 #include "BMTremolo.h"
 #include "BMVibrato.h"
 #include "BMDelay.h"
 #include "BMGranularizer.h"
-#include "BMConstants.h"
+#include "BMLowpass.h"
+
+#include <math.h>
+
 
 static const float kGainScaleExponent = 2.0f;
+static const float kSamplesToBufferAhead = 32768;
 
-AudioFileStream::AudioFileStream(int numChannels)  : _thread("file stream")
+
+AudioFileStream::AudioFileStream(int numChannels, bool shouldCreateWaveform, String threadName)  : _backgroundThread(threadName)
 {
     _numChannels = numChannels;
+    _shouldCreateWaveform = shouldCreateWaveform;
     
     _transportSource.setSource(nullptr);
     _formatManager.registerBasicFormats();
     
-    _limiter = new BMLimiter(numChannels);
     _panner  = new BMStereo();
     
     for (int i = 0; i < kNumEffectsPerTrack; i++)
@@ -36,19 +41,36 @@ AudioFileStream::AudioFileStream(int numChannels)  : _thread("file stream")
         _effectsEnable.add(false);
     }
     
-    _thread.startThread(3);
+    _shouldLoop = true;
+    
+    _waveformSamples = nullptr;
+    if (_shouldCreateWaveform) {
+        _waveformSamples = new float[kNumWaveformSamples];
+        _readBuffer = new AudioSampleBuffer(1, kReadBufferSize);
+    }
+    
+    _isLoading = false;
+    
+    _backgroundThread.startThread(10);
 }
 
 AudioFileStream::~AudioFileStream()
 {
+    if (_shouldCreateWaveform) {
+        delete [] _waveformSamples;
+    }
+    _waveformSamples = nullptr;
+    _readBuffer = nullptr;
+    
+    _backgroundThread.stopThread(1000);
     _effects.clear();
     _effectsEnable.clear();
     _effectIDs.clear();
+    _transportSource.stop();
+    _transportSource.releaseResources();
     _transportSource.setSource(nullptr);
     _formatReaderSource  = nullptr;
-    _limiter = nullptr;
     _panner  = nullptr;
-    _thread.stopThread(20);
 }
 
 
@@ -56,8 +78,11 @@ AudioFileStream::~AudioFileStream()
 // Audio Track Methods
 //==============================================================================
 
-int AudioFileStream::loadAudioFile(const File &audioFile)
+bool AudioFileStream::loadAudioFile(const File &audioFile)
 {
+    bool success    = false;
+    _isLoading      = true;
+    
     _transportSource.stop();
     _transportSource.setSource(nullptr);
     
@@ -68,37 +93,29 @@ int AudioFileStream::loadAudioFile(const File &audioFile)
     if (reader != nullptr)
     {
         _formatReaderSource = new AudioFormatReaderSource(reader, true);
-        _formatReaderSource->setLooping(true);
+        _formatReaderSource->setLooping(_shouldLoop);
         _transportSource.setSource(_formatReaderSource,
-                                   32768,                   // tells it to buffer this many samples ahead
-                                   &_thread,                // this is the background thread to use for reading-ahead
-                                   reader->sampleRate);     // allows for sample rate correction)
+                                   kSamplesToBufferAhead,             // tells it to buffer this many samples ahead
+                                   &_backgroundThread,               // this is the background thread to use for reading-ahead
+                                   reader->sampleRate);             // allows for sample rate correction)
         
-        
-        
-        // Read Entire File and Store Reduced Set To Draw Waveform
-/*
-        int64 samplesPerBin = reader->lengthInSamples / kNumWaveformSamples;
-        int64 index = 0;
-
-        for (int64 i=0; i < reader->lengthInSamples; i += samplesPerBin) {
-
-            float leftMax, rightMax, leftMin, rightMin;
-            reader->readMaxLevels(i, samplesPerBin, leftMin, leftMax, rightMin, rightMax);
-            _waveformSamples[index] = (leftMax + rightMax) / 2.0f;
-            index++;
+        if (_shouldCreateWaveform) {
+            // Read Entire File and Store Reduced Set To Draw Waveform
+            int64 samplesPerBin = int64(ceilf(reader->lengthInSamples / kNumWaveformSamples));
+            if (samplesPerBin > kNumWaveformSamples) {
+                samplesPerBin = kNumWaveformSamples;
+            }
+            for (int64 i=0; i < kNumWaveformSamples; i++) {
+                reader->read(_readBuffer, 0, int(samplesPerBin), (i * samplesPerBin), true, false);
+                _waveformSamples[i] = getRMSForBlock(_readBuffer->getReadPointer(0), samplesPerBin);
+            }
         }
-*/        
         
-        
-        return 0;
+        success = true;
     }
     
-    else
-    {
-        return 1;
-    }
-    
+    _isLoading = false;
+    return success;
 }
 
 void AudioFileStream::setPlaybackSpeed(float speed)
@@ -166,7 +183,44 @@ float AudioFileStream::getPlaybackPan()
     return _panner->getParameter(0);
 }
 
-float* AudioFileStream::getSamplesForWaveform()
+void AudioFileStream::setShouldLoop(bool shouldLoop)
+{
+    _shouldLoop = shouldLoop;
+    if (_formatReaderSource) {
+        _formatReaderSource->setLooping(_shouldLoop);
+    }
+}
+
+bool AudioFileStream::getShouldLoop()
+{
+    return _shouldLoop;
+}
+
+void AudioFileStream::setPlaybackMode(BMPlaybackMode playbackMode)
+{
+    _playbackMode = playbackMode;
+    
+    switch (_playbackMode) {
+        case BMPlaybackMode_Loop:
+        case BMPlaybackMode_BeatRepeat:
+            setShouldLoop(true);
+            break;
+        
+        case BMPlaybackMode_OneShot:
+            setShouldLoop(false);
+            break;
+            
+        default:
+            break;
+    }
+}
+
+BMPlaybackMode AudioFileStream::getPlaybackMode()
+{
+    return _playbackMode;
+}
+
+const float* AudioFileStream::getSamplesForWaveform()
 {
     return _waveformSamples;
 }
@@ -180,8 +234,8 @@ void AudioFileStream::setEffect(int slot, int effectID)
     _effectsEnable.set(slot, false);
     
     switch (effectID) {
-        case Filter:
-            _effects.set(slot, new BMFilter(_numChannels));
+        case Wah:
+            _effects.set(slot, new BMWah(_numChannels));
             _effectsEnable.set(slot, true);
             break;
         case Tremolo:
@@ -198,6 +252,10 @@ void AudioFileStream::setEffect(int slot, int effectID)
             break;
         case Granularizer:
             _effects.set(slot, new BMGranularizer(_numChannels));
+            _effectsEnable.set(slot, true);
+            break;
+        case Lowpass:
+            _effects.set(slot, new BMLowpass(_numChannels));
             _effectsEnable.set(slot, true);
             break;
         case None:
@@ -247,6 +305,20 @@ bool AudioFileStream::getEffectEnable(int slot)
         return false;
 }
 
+void AudioFileStream::setTempo(float tempo)
+{
+    for (int i=0; i < kNumEffectsPerTrack; i++) {
+        if (_effectIDs.getUnchecked(i) > 0)
+            _effects.getUnchecked(i)->setTempo(tempo);
+    }
+}
+
+void AudioFileStream::setShouldQuantizeTime(int slot, bool shouldQuantizeTime)
+{
+    if (_effectIDs.getUnchecked(slot) > 0)
+        _effects.getUnchecked(slot)->setShouldQuantizeTime(shouldQuantizeTime);
+}
+
 
 //==============================================================================
 // AudioSource
@@ -263,12 +335,14 @@ void AudioFileStream::prepareToPlay (int samplesPerBlockExpected, double sampleR
             _effects.getUnchecked(i)->prepareToPlay(samplesPerBlockExpected, sampleRate);
         }
     }
-    
-    _limiter->prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void AudioFileStream::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
+    if (_isLoading) {
+        return;
+    }
+
     //-- Read from Transport Source --//
     _transportSource.getNextAudioBlock(bufferToFill);
     
@@ -285,9 +359,6 @@ void AudioFileStream::getNextAudioBlock (const AudioSourceChannelInfo& bufferToF
     
     //-- Stereo Panning --//
     _panner->process(bufferToFill.buffer->getArrayOfWritePointers(), bufferToFill.buffer->getNumChannels(), bufferToFill.numSamples);
-    
-    //-- Limiter --//
-    _limiter->process(bufferToFill.buffer->getArrayOfWritePointers(), bufferToFill.buffer->getNumChannels(), bufferToFill.numSamples);
 }
 
 void AudioFileStream::releaseResources()
@@ -301,4 +372,18 @@ void AudioFileStream::releaseResources()
             _effects.getUnchecked(i)->releaseResources();
         }
     }
+}
+
+
+//==============================================================================
+// Utility
+//==============================================================================
+
+float AudioFileStream::getRMSForBlock(const float* block, int64 length)
+{
+    float sum = 0.0f;
+    for (int64 i=0; i < length; i++) {
+        sum += (block[i] * block[i]);
+    }
+    return sqrtf(sum / length);
 }
