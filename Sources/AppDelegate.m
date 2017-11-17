@@ -13,6 +13,9 @@
 #import "BMSettings.h"
 #import "BMHomeViewController.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 @interface AppDelegate ()
 {
     UINavigationController*             _navController;
@@ -50,6 +53,9 @@
     [rootController addChildViewController:_navController];
     [rootController.view addSubview:_navController.view];
     [self.window setRootViewController:rootController];
+    
+    // Launch Fabric
+    [Fabric with:@[[Crashlytics class]]];
     
     return YES;
 }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		28005BE81F7A3FEF005E2746 /* BMSampleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 28005BE71F7A3FEF005E2746 /* BMSampleButton.m */; };
+		2808F27B1FBE7AF9006D26C0 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2808F2791FBE7AF8006D26C0 /* Fabric.framework */; };
+		2808F27C1FBE7AF9006D26C0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2808F27A1FBE7AF9006D26C0 /* Crashlytics.framework */; };
 		281B43AF1F855CC200E601BD /* Options-Background-Normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43AD1F855CC100E601BD /* Options-Background-Normal@3x.png */; };
 		281B43B01F855CC200E601BD /* Options-Background-Selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43AE1F855CC100E601BD /* Options-Background-Selected@3x.png */; };
 		281B43B41F85628400E601BD /* BackButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43B31F85628400E601BD /* BackButton@3x.png */; };
@@ -183,6 +185,8 @@
 /* Begin PBXFileReference section */
 		28005BE61F7A3FEF005E2746 /* BMSampleButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSampleButton.h; sourceTree = "<group>"; };
 		28005BE71F7A3FEF005E2746 /* BMSampleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMSampleButton.m; sourceTree = "<group>"; };
+		2808F2791FBE7AF8006D26C0 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		2808F27A1FBE7AF9006D26C0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		281B43AD1F855CC100E601BD /* Options-Background-Normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Background-Normal@3x.png"; sourceTree = "<group>"; };
 		281B43AE1F855CC100E601BD /* Options-Background-Selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Background-Selected@3x.png"; sourceTree = "<group>"; };
 		281B43B31F85628400E601BD /* BackButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackButton@3x.png"; sourceTree = "<group>"; };
@@ -938,6 +942,8 @@
 				2869492B1FBE708F0025FBAB /* Foundation.framework in Frameworks */,
 				2869492C1FBE708F0025FBAB /* MobileCoreServices.framework in Frameworks */,
 				2869492D1FBE708F0025FBAB /* QuartzCore.framework in Frameworks */,
+				2808F27C1FBE7AF9006D26C0 /* Crashlytics.framework in Frameworks */,
+				2808F27B1FBE7AF9006D26C0 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,6 +1125,8 @@
 		28CA9F9A1C719640009BFB7B /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				2808F27A1FBE7AF9006D26C0 /* Crashlytics.framework */,
+				2808F2791FBE7AF8006D26C0 /* Fabric.framework */,
 				28CAA04E1C71EBB7009BFB7B /* JUCE */,
 			);
 			path = Dependencies;
@@ -2418,6 +2426,7 @@
 				28CA9F3B1C71956A009BFB7B /* Sources */,
 				28CA9F3C1C71956A009BFB7B /* Frameworks */,
 				28CA9F3D1C71956A009BFB7B /* Resources */,
+				2808F2701FBE7A8C006D26C0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2632,6 +2641,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2808F2701FBE7A8C006D26C0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Dependencies/Fabric.framework/run 672d268581e7fef133850491a655656c6b111a43 8d9cf632925067e2f7a0b4e952f0b073cdcc1ee194041c392da8e645da23a6a9";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		28CA9F3B1C71956A009BFB7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -2822,6 +2847,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2856,6 +2882,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 3;
