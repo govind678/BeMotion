@@ -10,10 +10,19 @@
 		28005BE81F7A3FEF005E2746 /* BMSampleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 28005BE71F7A3FEF005E2746 /* BMSampleButton.m */; };
 		2808F27B1FBE7AF9006D26C0 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2808F2791FBE7AF8006D26C0 /* Fabric.framework */; };
 		2808F27C1FBE7AF9006D26C0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2808F27A1FBE7AF9006D26C0 /* Crashlytics.framework */; };
+		2814F7BE1FBF917900BAB095 /* ProjectsList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7BD1FBF917900BAB095 /* ProjectsList.plist */; };
+		2814F7CD1FBF9EF100BAB095 /* Indian Percs Delay.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7C71FBF9EF000BAB095 /* Indian Percs Delay.plist */; };
+		2814F7CE1FBF9EF100BAB095 /* Default.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7C81FBF9EF100BAB095 /* Default.plist */; };
+		2814F7CF1FBF9EF100BAB095 /* E-Drum Delay.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7C91FBF9EF100BAB095 /* E-Drum Delay.plist */; };
+		2814F7D01FBF9EF100BAB095 /* DubSynth.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7CA1FBF9EF100BAB095 /* DubSynth.plist */; };
+		2814F7D11FBF9EF100BAB095 /* No Effects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7CB1FBF9EF100BAB095 /* No Effects.plist */; };
+		2814F7D21FBF9EF100BAB095 /* Weird Sci-Fi.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2814F7CC1FBF9EF100BAB095 /* Weird Sci-Fi.plist */; };
 		281B43AF1F855CC200E601BD /* Options-Background-Normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43AD1F855CC100E601BD /* Options-Background-Normal@3x.png */; };
 		281B43B01F855CC200E601BD /* Options-Background-Selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43AE1F855CC100E601BD /* Options-Background-Selected@3x.png */; };
 		281B43B41F85628400E601BD /* BackButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43B31F85628400E601BD /* BackButton@3x.png */; };
 		281B43BA1F857D5400E601BD /* FXTitleBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B43B91F857D5400E601BD /* FXTitleBackground@3x.png */; };
+		281C0EA81FCCD6E70075725D /* Options-Motion-Selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C0EA61FCCD6E70075725D /* Options-Motion-Selected@3x.png */; };
+		281C0EA91FCCD6E70075725D /* Options-Motion-Normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C0EA71FCCD6E70075725D /* Options-Motion-Normal@3x.png */; };
 		282209051F85BFD500989669 /* HorizontalSeparator@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282209041F85BFD500989669 /* HorizontalSeparator@3x.png */; };
 		282209081F85DF6D00989669 /* BMMotionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 282209071F85DF6D00989669 /* BMMotionController.m */; };
 		283A35201C7457A200B4CF6F /* BMStereo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283A351E1C7457A200B4CF6F /* BMStereo.cpp */; };
@@ -25,7 +34,6 @@
 		284F360E1FBBC0E700C129AA /* BMAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284F360D1FBBC0E700C129AA /* BMAppSettingsViewController.m */; };
 		285C64B51F7F240B008A1037 /* SampleButton-Hit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 285C64B41F7F240B008A1037 /* SampleButton-Hit@3x.png */; };
 		28654C571FB2C81300F2CDAF /* Dubstep Scratch.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28654C561FB2C81300F2CDAF /* Dubstep Scratch.wav */; };
-		28654C591FB2E1FB00F2CDAF /* Default.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28654C581FB2E1FB00F2CDAF /* Default.plist */; };
 		286949231FBE708F0025FBAB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286949221FBE708B0025FBAB /* Accelerate.framework */; };
 		286949241FBE708F0025FBAB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2869491D1FBE708B0025FBAB /* AudioToolbox.framework */; };
 		286949261FBE708F0025FBAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2869491C1FBE708B0025FBAB /* AVFoundation.framework */; };
@@ -80,6 +88,8 @@
 		28A53AA31F7EF6CD002FBADE /* Sample-Option-MicRecord@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A53A9A1F7EF6CD002FBADE /* Sample-Option-MicRecord@3x.png */; };
 		28A53AA41F7EF6CD002FBADE /* SampleButton-1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A53A9B1F7EF6CD002FBADE /* SampleButton-1@3x.png */; };
 		28A67C181FB7CDA60069848C /* BMForceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A67C171FB7CDA60069848C /* BMForceButton.m */; };
+		28C31C051FBFB948006A2CEE /* BMMotionSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C31C041FBFB948006A2CEE /* BMMotionSettingsViewController.m */; };
+		28C31C081FBFC0ED006A2CEE /* BMLoadFileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C31C071FBFC0ED006A2CEE /* BMLoadFileView.m */; };
 		28CA9FB21C719640009BFB7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA9F9E1C719640009BFB7B /* AppDelegate.m */; };
 		28CA9FB31C719640009BFB7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28CA9FA21C719640009BFB7B /* Assets.xcassets */; };
 		28CA9FB71C719640009BFB7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CA9FA81C719640009BFB7B /* main.m */; };
@@ -187,10 +197,19 @@
 		28005BE71F7A3FEF005E2746 /* BMSampleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMSampleButton.m; sourceTree = "<group>"; };
 		2808F2791FBE7AF8006D26C0 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		2808F27A1FBE7AF9006D26C0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		2814F7BD1FBF917900BAB095 /* ProjectsList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProjectsList.plist; sourceTree = "<group>"; };
+		2814F7C71FBF9EF000BAB095 /* Indian Percs Delay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Indian Percs Delay.plist"; sourceTree = "<group>"; };
+		2814F7C81FBF9EF100BAB095 /* Default.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Default.plist; sourceTree = "<group>"; };
+		2814F7C91FBF9EF100BAB095 /* E-Drum Delay.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "E-Drum Delay.plist"; sourceTree = "<group>"; };
+		2814F7CA1FBF9EF100BAB095 /* DubSynth.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DubSynth.plist; sourceTree = "<group>"; };
+		2814F7CB1FBF9EF100BAB095 /* No Effects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "No Effects.plist"; sourceTree = "<group>"; };
+		2814F7CC1FBF9EF100BAB095 /* Weird Sci-Fi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Weird Sci-Fi.plist"; sourceTree = "<group>"; };
 		281B43AD1F855CC100E601BD /* Options-Background-Normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Background-Normal@3x.png"; sourceTree = "<group>"; };
 		281B43AE1F855CC100E601BD /* Options-Background-Selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Background-Selected@3x.png"; sourceTree = "<group>"; };
 		281B43B31F85628400E601BD /* BackButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackButton@3x.png"; sourceTree = "<group>"; };
 		281B43B91F857D5400E601BD /* FXTitleBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FXTitleBackground@3x.png"; sourceTree = "<group>"; };
+		281C0EA61FCCD6E70075725D /* Options-Motion-Selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Motion-Selected@3x.png"; sourceTree = "<group>"; };
+		281C0EA71FCCD6E70075725D /* Options-Motion-Normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Options-Motion-Normal@3x.png"; sourceTree = "<group>"; };
 		282209041F85BFD500989669 /* HorizontalSeparator@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HorizontalSeparator@3x.png"; sourceTree = "<group>"; };
 		282209061F85DF6D00989669 /* BMMotionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMotionController.h; sourceTree = "<group>"; };
 		282209071F85DF6D00989669 /* BMMotionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMMotionController.m; sourceTree = "<group>"; };
@@ -240,7 +259,6 @@
 		284F360D1FBBC0E700C129AA /* BMAppSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMAppSettingsViewController.m; sourceTree = "<group>"; };
 		285C64B41F7F240B008A1037 /* SampleButton-Hit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SampleButton-Hit@3x.png"; sourceTree = "<group>"; };
 		28654C561FB2C81300F2CDAF /* Dubstep Scratch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Dubstep Scratch.wav"; sourceTree = "<group>"; };
-		28654C581FB2E1FB00F2CDAF /* Default.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Default.plist; sourceTree = "<group>"; };
 		286949181FBE708B0025FBAB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2869491A1FBE708B0025FBAB /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2869491B1FBE708B0025FBAB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -298,6 +316,10 @@
 		28A53A9B1F7EF6CD002FBADE /* SampleButton-1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SampleButton-1@3x.png"; sourceTree = "<group>"; };
 		28A67C161FB7CDA60069848C /* BMForceButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMForceButton.h; sourceTree = "<group>"; };
 		28A67C171FB7CDA60069848C /* BMForceButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMForceButton.m; sourceTree = "<group>"; };
+		28C31C031FBFB948006A2CEE /* BMMotionSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMotionSettingsViewController.h; sourceTree = "<group>"; };
+		28C31C041FBFB948006A2CEE /* BMMotionSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMMotionSettingsViewController.m; sourceTree = "<group>"; };
+		28C31C061FBFC0ED006A2CEE /* BMLoadFileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLoadFileView.h; sourceTree = "<group>"; };
+		28C31C071FBFC0ED006A2CEE /* BMLoadFileView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMLoadFileView.m; sourceTree = "<group>"; };
 		28CA9F3F1C71956A009BFB7B /* BeMotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28CA9F581C71956A009BFB7B /* BeMotionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeMotionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28CA9F631C71956A009BFB7B /* BeMotionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeMotionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -964,6 +986,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2814F7BA1FBF910100BAB095 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				2814F7C81FBF9EF100BAB095 /* Default.plist */,
+				2814F7CA1FBF9EF100BAB095 /* DubSynth.plist */,
+				2814F7C91FBF9EF100BAB095 /* E-Drum Delay.plist */,
+				2814F7C71FBF9EF000BAB095 /* Indian Percs Delay.plist */,
+				2814F7CB1FBF9EF100BAB095 /* No Effects.plist */,
+				2814F7CC1FBF9EF100BAB095 /* Weird Sci-Fi.plist */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
 		282999A71E8C93D0000BB89A /* memory */ = {
 			isa = PBXGroup;
 			children = (
@@ -1056,6 +1091,8 @@
 		28A53A541F7EDCE6002FBADE /* Options Button */ = {
 			isa = PBXGroup;
 			children = (
+				281C0EA71FCCD6E70075725D /* Options-Motion-Normal@3x.png */,
+				281C0EA61FCCD6E70075725D /* Options-Motion-Selected@3x.png */,
 				28A227691F8F06D800068A7E /* Options-BeatRepeat-Normal@3x.png */,
 				28A227661F8F06D700068A7E /* Options-BeatRepeat-Selected@3x.png */,
 				28A227671F8F06D800068A7E /* Options-Loop-Normal@3x.png */,
@@ -1235,6 +1272,8 @@
 				28005BE71F7A3FEF005E2746 /* BMSampleButton.m */,
 				28A67C161FB7CDA60069848C /* BMForceButton.h */,
 				28A67C171FB7CDA60069848C /* BMForceButton.m */,
+				28C31C061FBFC0ED006A2CEE /* BMLoadFileView.h */,
+				28C31C071FBFC0ED006A2CEE /* BMLoadFileView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1256,6 +1295,8 @@
 				28F8FCB01C80428F005519C6 /* BMSettingsViewController.m */,
 				284F360C1FBBC0E700C129AA /* BMAppSettingsViewController.h */,
 				284F360D1FBBC0E700C129AA /* BMAppSettingsViewController.m */,
+				28C31C031FBFB948006A2CEE /* BMMotionSettingsViewController.h */,
+				28C31C041FBFB948006A2CEE /* BMMotionSettingsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2409,9 +2450,10 @@
 		28DEB5581C72BF0D00C78981 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				28654C581FB2E1FB00F2CDAF /* Default.plist */,
+				2814F7BA1FBF910100BAB095 /* Projects */,
 				28D82F761FA18BF30092A8A8 /* SampleSetsList.plist */,
 				28D82F721FA18BD80092A8A8 /* AudioEffectsList.plist */,
+				2814F7BD1FBF917900BAB095 /* ProjectsList.plist */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2530,11 +2572,11 @@
 				28DEB51A1C7208A400C78981 /* Embryo Synth.wav in Resources */,
 				28CAA0031C71C295009BFB7B /* Icon-57@2x.png in Resources */,
 				2876F16D1C751B0A00777009 /* Dubstep Bass.wav in Resources */,
+				2814F7D11FBF9EF100BAB095 /* No Effects.plist in Resources */,
 				28DEB5371C72A32700C78981 /* OpenSans-Bold.ttf in Resources */,
 				281B43B01F855CC200E601BD /* Options-Background-Selected@3x.png in Resources */,
 				28D82F581FA0FEAA0092A8A8 /* Mellectronic Bass.wav in Resources */,
 				28A53A911F7EF03A002FBADE /* Background@3x.png in Resources */,
-				28654C591FB2E1FB00F2CDAF /* Default.plist in Resources */,
 				28A53A6B1F7EDCE6002FBADE /* Options-MasterRecord-Normal@3x.png in Resources */,
 				28CAA0231C71C4AF009BFB7B /* LaunchImage-Retina@3x.png in Resources */,
 				28DEB5391C72A32700C78981 /* OpenSans-Regular.ttf in Resources */,
@@ -2551,10 +2593,12 @@
 				28A53A731F7EDCE6002FBADE /* Options-Settings-Normal@3x.png in Resources */,
 				28CAA0051C71C296009BFB7B /* Icon-60@2x.png in Resources */,
 				28CAA0011C71C295009BFB7B /* Icon-50@2x.png in Resources */,
+				2814F7CF1FBF9EF100BAB095 /* E-Drum Delay.plist in Resources */,
 				28D82F451FA083D40092A8A8 /* E-Drum Snare.wav in Resources */,
 				28A53A6D1F7EDCE6002FBADE /* Options-Metronome-Normal@3x.png in Resources */,
 				28850B7A1FA865F600A65525 /* Pink Noise.wav in Resources */,
 				28A2276F1F8F06D800068A7E /* Options-BeatRepeat-Normal@3x.png in Resources */,
+				2814F7D01FBF9EF100BAB095 /* DubSynth.plist in Resources */,
 				28A53A931F7EF04D002FBADE /* Background@2x.png in Resources */,
 				28CAA0081C71C296009BFB7B /* Icon-72@2x.png in Resources */,
 				28DEB5381C72A32700C78981 /* OpenSans-Light.ttf in Resources */,
@@ -2563,6 +2607,7 @@
 				281B43AF1F855CC200E601BD /* Options-Background-Normal@3x.png in Resources */,
 				28A53A6E1F7EDCE6002FBADE /* Options-Metronome-Selected@3x.png in Resources */,
 				28A53A691F7EDCE6002FBADE /* Options-Import-Normal@3x.png in Resources */,
+				2814F7CD1FBF9EF100BAB095 /* Indian Percs Delay.plist in Resources */,
 				28D82F421FA083D40092A8A8 /* E-Drum Kick.wav in Resources */,
 				28A53A9D1F7EF6CD002FBADE /* SampleButton-3@3x.png in Resources */,
 				28D82F411FA083D40092A8A8 /* E-Drum Hat.wav in Resources */,
@@ -2570,6 +2615,7 @@
 				28A53A9E1F7EF6CD002FBADE /* SampleButton-Overlay@3x.png in Resources */,
 				28A53A671F7EDCE6002FBADE /* Options-Help-Normal@3x.png in Resources */,
 				28A2276E1F8F06D800068A7E /* Options-OneShot-Selected@3x.png in Resources */,
+				2814F7D21FBF9EF100BAB095 /* Weird Sci-Fi.plist in Resources */,
 				285C64B51F7F240B008A1037 /* SampleButton-Hit@3x.png in Resources */,
 				28654C571FB2C81300F2CDAF /* Dubstep Scratch.wav in Resources */,
 				28DEB53A1C72A32700C78981 /* OpenSans-Semibold.ttf in Resources */,
@@ -2582,6 +2628,7 @@
 				28A53A661F7EDCE6002FBADE /* Options-Fx-Selected@3x.png in Resources */,
 				28A227701F8F06D800068A7E /* Options-Loop-Selected@3x.png in Resources */,
 				28CAA0061C71C296009BFB7B /* Icon-60@3x.png in Resources */,
+				2814F7CE1FBF9EF100BAB095 /* Default.plist in Resources */,
 				28D82F591FA0FEAA0092A8A8 /* Mellectronic Chords.wav in Resources */,
 				28DEB5161C7208A400C78981 /* Embryo Bass.wav in Resources */,
 				28D82F731FA18BD80092A8A8 /* AudioEffectsList.plist in Resources */,
@@ -2593,6 +2640,7 @@
 				28A2276C1F8F06D800068A7E /* Options-BeatRepeat-Selected@3x.png in Resources */,
 				28D82F4D1FA083DF0092A8A8 /* Dubstep Crash.wav in Resources */,
 				28CAA0041C71C296009BFB7B /* Icon-60.png in Resources */,
+				281C0EA81FCCD6E70075725D /* Options-Motion-Selected@3x.png in Resources */,
 				28DEB5181C7208A400C78981 /* Embryo Drums.wav in Resources */,
 				2876F1701C751B0A00777009 /* Dubstep Synth.wav in Resources */,
 				28CA9FFE1C71C295009BFB7B /* Icon-40@2x.png in Resources */,
@@ -2603,6 +2651,7 @@
 				28CAA01F1C71C2F3009BFB7B /* Launchimage-2.png in Resources */,
 				28D82F501FA083E60092A8A8 /* Embryo Crash.wav in Resources */,
 				28A53AA01F7EF6CD002FBADE /* Sample-Option-Import@3x.png in Resources */,
+				2814F7BE1FBF917900BAB095 /* ProjectsList.plist in Resources */,
 				28DEB5191C7208A400C78981 /* Embryo Percussion.wav in Resources */,
 				28D82F481FA083D40092A8A8 /* Morsing.wav in Resources */,
 				28CA9FFF1C71C295009BFB7B /* Icon-40@3x.png in Resources */,
@@ -2615,6 +2664,7 @@
 				28D82F5B1FA0FEAA0092A8A8 /* Mellectronic Strum.wav in Resources */,
 				28A53A681F7EDCE6002FBADE /* Options-Help-Selected@3x.png in Resources */,
 				28A53AA41F7EF6CD002FBADE /* SampleButton-1@3x.png in Resources */,
+				281C0EA91FCCD6E70075725D /* Options-Motion-Normal@3x.png in Resources */,
 				28CAA0021C71C295009BFB7B /* Icon-57.png in Resources */,
 				28CAA0271C71C58B009BFB7B /* Default-568h@2x.png in Resources */,
 				28D82F5A1FA0FEAA0092A8A8 /* Mellectronic Drums.wav in Resources */,
@@ -2663,6 +2713,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28CAA4991C71FA3E009BFB7B /* juce_events.mm in Sources */,
+				28C31C081FBFC0ED006A2CEE /* BMLoadFileView.m in Sources */,
 				28DEB5441C72A4B300C78981 /* UIColor+Additions.m in Sources */,
 				28CAA4941C71ECC0009BFB7B /* juce_core.mm in Sources */,
 				284E5B0E1C7AFC52002BCA0C /* BMTempoViewController.m in Sources */,
@@ -2686,6 +2737,7 @@
 				28DEB50E1C72070500C78981 /* BMOscillator.cpp in Sources */,
 				28DEB5031C72068400C78981 /* BMGranularizer.cpp in Sources */,
 				28A67C181FB7CDA60069848C /* BMForceButton.m in Sources */,
+				28C31C051FBFB948006A2CEE /* BMMotionSettingsViewController.m in Sources */,
 				284F360E1FBBC0E700C129AA /* BMAppSettingsViewController.m in Sources */,
 				282209081F85DF6D00989669 /* BMMotionController.m in Sources */,
 				28DEB5471C72A54F00C78981 /* UIFont+Additions.m in Sources */,
@@ -2859,7 +2911,7 @@
 					"JUCE_APP_VERSION_HEX=0x20000",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.plasmatio.bemotion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2895,7 +2947,7 @@
 					"JUCE_APP_VERSION=2.0.1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.plasmatio.bemotion;
