@@ -11,7 +11,7 @@
 #import "BMConstants.h"
 
 static int const kUserAccelerationBlockSize = 20;
-static float const kUserAccelerationXThreshold = 1.4f;
+static float const kUserAccelerationXThreshold = 1.8f;
 
 @interface BMMotionController()
 {
@@ -53,6 +53,10 @@ static float const kUserAccelerationXThreshold = 1.4f;
         _prevFrame.x = 0.0f;
         _prevFrame.y = 0.0f;
         _prevFrame.z = 0.0f;
+        
+        _isMotionControlRunning = NO;
+        
+        _xTriggerThreshold = kUserAccelerationXThreshold;
     }
     
     return self;
@@ -87,10 +91,13 @@ static float const kUserAccelerationXThreshold = 1.4f;
                                                         [self motionDeviceUpdate:motion withError:error];
 
     }];
+    
+    _isMotionControlRunning = YES;
 }
 
 - (void)stop {
     [_motionManager stopDeviceMotionUpdates];
+    _isMotionControlRunning = NO;
 }
 
 #pragma mark - Private Methods
@@ -144,7 +151,7 @@ static float const kUserAccelerationXThreshold = 1.4f;
     float prevSample = _prevFrame.x;
     int result = 0;
     
-    if ((currentSample < -kUserAccelerationXThreshold) && (prevSample > -kUserAccelerationXThreshold)) {
+    if ((currentSample < -_xTriggerThreshold) && (prevSample > -_xTriggerThreshold)) {
         _currentState = -1;
         if (_rightToggle == NO) {
             _leftToggle = YES;
@@ -152,11 +159,11 @@ static float const kUserAccelerationXThreshold = 1.4f;
         }
     }
     
-    else if ((currentSample > -kUserAccelerationXThreshold) && (prevSample < -kUserAccelerationXThreshold)) {
+    else if ((currentSample > -_xTriggerThreshold) && (prevSample < -_xTriggerThreshold)) {
         _currentState = -2;
     }
     
-    else if ((currentSample > kUserAccelerationXThreshold) && (prevSample < kUserAccelerationXThreshold)) {
+    else if ((currentSample > _xTriggerThreshold) && (prevSample < _xTriggerThreshold)) {
         _currentState = 1;
         if (_leftToggle == NO) {
             _rightToggle = YES;
@@ -164,7 +171,7 @@ static float const kUserAccelerationXThreshold = 1.4f;
         }
     }
     
-    else if ((currentSample < kUserAccelerationXThreshold) && (prevSample > kUserAccelerationXThreshold)) {
+    else if ((currentSample < _xTriggerThreshold) && (prevSample > _xTriggerThreshold)) {
         _currentState = 2;
     }
     
@@ -179,7 +186,7 @@ static float const kUserAccelerationXThreshold = 1.4f;
             if (_currentState == 2) {
                 _leftToggle = NO;
                 _currentFrameCount = 0;
-                result = 1;
+                result = 2;
             }
         } else if (_currentFrameCount == 0) {
             _leftToggle = NO;
@@ -192,7 +199,7 @@ static float const kUserAccelerationXThreshold = 1.4f;
             if (_currentState == -2) {
                 _rightToggle = NO;
                 _currentFrameCount = 0;
-                result = 2;
+                result = 1;
             }
         } else if (_currentFrameCount == 0) {
             _rightToggle = NO;

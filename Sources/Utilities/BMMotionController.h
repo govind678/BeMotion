@@ -23,6 +23,10 @@
 /* Motion Controller Delegate */
 @property (nonatomic, weak) id <BMMotionControllerDelegate> motionDelegate;
 
+/* Properties */
+@property (nonatomic, readonly) BOOL isMotionControlRunning;
+@property (nonatomic, assign) float xTriggerThreshold;
+
 - (void)start;
 - (void)stop;
 

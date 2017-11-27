@@ -10,12 +10,13 @@
 
 static NSString* const kBackgroundImageName     =   @"Background.png";
 
-static const float kMargin              = 13.0f;
-static const float kHeaderHeight        = 30.0f;
-static const float kButtonHeight        = 44.0f;
-static const float kOptionButtonSize    = 53.0f;
-static const float kYGap                = 14.0f;
-static const float kSeparatorHeight     = 2.0f;
+static const float kMargin                  = 13.0f;
+static const float kHeaderHeight            = 30.0f;
+static const float kButtonHeight            = 44.0f;
+static const float kOptionButtonSize        = 53.0f;
+static const float kYGap                    = 14.0f;
+static const float kSeparatorHeight         = 2.0f;
+static const float kSliderHeight            = 30.0f;
 
 @interface BMViewController ()
 
@@ -33,6 +34,7 @@ static const float kSeparatorHeight     = 2.0f;
     _yGap = kYGap;
     _verticalSeparatorHeight = kSeparatorHeight;
     _buttonHeight = kButtonHeight;
+    _sliderHeight = kSliderHeight;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kBackgroundImageName]]];
 }
@@ -40,6 +42,10 @@ static const float kSeparatorHeight     = 2.0f;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end

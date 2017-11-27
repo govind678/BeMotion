@@ -20,7 +20,6 @@
 - (void)saveToUserDefaults;
 
 /* Project Settings */
-- (void)loadDefaultProject;
 - (BOOL)saveProjectWithName:(NSString*)projectName;
 - (BOOL)loadProjectAtIndex:(NSInteger)index;
 - (void)deleteProjectAtIndex:(NSInteger)index;

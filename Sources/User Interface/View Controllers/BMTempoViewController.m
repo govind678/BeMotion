@@ -122,7 +122,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     [_meterStepper setMaximumValue:[[BMSequencer sharedSequencer] maximumMeter]];
     [_meterStepper setMinimumValue:[[BMSequencer sharedSequencer] minimumMeter]];
     [_meterStepper setContentMode:UIViewContentModeCenter];
-    [_meterStepper setTintColor:[UIColor elementWhiteColor]];
+    [_meterStepper setTintColor:[UIColor textWhiteColor]];
     [_meterStepper addTarget:self action:@selector(meterStepperChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_meterStepper];
     
@@ -147,7 +147,7 @@ static NSString* const kXSeparatorImage             = @"HorizontalSeparator.png"
     _intervalSegment = [[UISegmentedControl alloc] initWithItems:segments];
     [_intervalSegment setFrame:CGRectMake(self.view.frame.size.width/2.0f - 30.0f, yPos, (self.view.frame.size.width / 2.0f) - xMargin + 30.0f, switchHeight)];
     [_intervalSegment setTitleTextAttributes:attribute forState:UIControlStateNormal];
-    [_intervalSegment setTintColor:[UIColor elementWhiteColor]];
+    [_intervalSegment setTintColor:[UIColor textWhiteColor]];
     [_intervalSegment setSelectedSegmentIndex:0];
     [_intervalSegment addTarget:self action:@selector(intervalSegmentChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_intervalSegment];

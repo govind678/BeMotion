@@ -6,8 +6,13 @@
 //  Copyright © 2016 Plasmatio Tech. All rights reserved.
 //
 
-#import <MobileCoreServices/MobileCoreServices.h>
 #import "BMSettingsViewController.h"
+
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import "BMAppSettingsViewController.h"
+#import "BMMotionSettingsViewController.h"
+
 #import "BMAudioController.h"
 #import "BMSequencer.h"
 #import "BMConstants.h"
@@ -15,7 +20,6 @@
 
 #import "UIColor+Additions.h"
 #import "UIFont+Additions.h"
-#import "BMAppSettingsViewController.h"
 
 static NSString* const kHorizontalSeparatorImage        =   @"HorizontalSeparator.png";
 static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.png";
@@ -41,7 +45,7 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
     
     // Header
     _headerView = [[BMHeaderView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.headerHeight)];
-    [_headerView setTitle:@"Settings"];
+    [_headerView setTitle:@"Settings / Projects"];
     [_headerView addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_headerView];
     
@@ -79,26 +83,15 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
     
     // Save Project
     yPos += self.yGap;
-    float buttonWidth = (self.view.frame.size.width - (3.0f * xMargin)) / 2.0f;
-    UIButton* saveProjectButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, buttonWidth, 40.0f)];
+    UIButton* saveProjectButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), 40.0f)];
     [saveProjectButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
     [saveProjectButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
     [saveProjectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [saveProjectButton setTitle:@"Save Project" forState:UIControlStateNormal];
+    [saveProjectButton setTitle:@"Save Project As" forState:UIControlStateNormal];
     [saveProjectButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
     [saveProjectButton addTarget:self action:@selector(saveProjectButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [saveProjectButton addTarget:self action:@selector(saveProjectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveProjectButton];
-    
-    UIButton* loadDefaultButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonWidth + (2.0f * xMargin), yPos, buttonWidth, 40.0f)];
-    [loadDefaultButton.titleLabel setFont:[UIFont lightDefaultFontOfSize:12.0f]];
-    [loadDefaultButton setTitleColor:[UIColor textWhiteColor] forState:UIControlStateNormal];
-    [loadDefaultButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [loadDefaultButton setTitle:@"Load Default Project" forState:UIControlStateNormal];
-    [loadDefaultButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
-    [loadDefaultButton addTarget:self action:@selector(loadDefaultButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [loadDefaultButton addTarget:self action:@selector(loadDefaultButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:loadDefaultButton];
     
     
     yPos += saveProjectButton.frame.size.height + self.yGap;
@@ -114,14 +107,6 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
     
     
     yPos += _segmentedControl.frame.size.height + self.yGap;
-//    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.view.frame.size.height - yPos - self.margin)];
-//    [_scrollView setPagingEnabled:YES];
-//    [_scrollView setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
-//    [_scrollView setShowsHorizontalScrollIndicator:NO];
-//    [_scrollView setShowsVerticalScrollIndicator:NO];
-//    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width * segments.count, _scrollView.frame.size.height)];
-//    [_scrollView setDelegate:self];
-//    [self.view addSubview:_scrollView];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(xMargin, yPos, self.view.frame.size.width - (2.0f * xMargin), self.view.frame.size.height - yPos) style:UITableViewStylePlain];
     [_tableView setBackgroundColor:[UIColor clearColor]];
@@ -250,16 +235,6 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
     [sender setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
 }
 
-- (void)loadDefaultButtonTouchDown:(UIButton*)sender {
-    [sender setBackgroundColor:[UIColor colorWithWhite:0.3f alpha:0.8f]];
-}
-
-- (void)loadDefaultButtonTapped:(UIButton*)sender {
-    [[BMSettings sharedInstance] loadDefaultProject];
-    [sender setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.8f]];
-}
-
-
 - (void)appSettingsButtonTapped:(UIButton*)sender{
     BMAppSettingsViewController* vc = [[BMAppSettingsViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
@@ -281,8 +256,9 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
 
 - (void)launchSaveProjectDialog {
     
+    NSString* message = @"Save all current track and effect settings as ...";
     UIAlertController* saveDialog = [UIAlertController alertControllerWithTitle:@"Save Project?"
-                                                                        message:nil
+                                                                        message:message
                                                                  preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"Save"
@@ -303,7 +279,9 @@ static NSString* const kSettingsOptionImage             =   @"FXTitleBackground.
                                                          }];
     
     
-    [saveDialog addTextFieldWithConfigurationHandler:nil];
+    [saveDialog addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+         [textField setClearButtonMode:UITextFieldViewModeAlways];
+    }];
     [saveDialog addAction:saveAction];
     [saveDialog addAction:cancelAction];
     

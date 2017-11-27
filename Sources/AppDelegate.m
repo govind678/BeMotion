@@ -36,9 +36,6 @@
     // Initialize Audio Controller
     [BMAudioController sharedController];
     
-    // Hide Status Bar
-    [application setStatusBarHidden:YES];
-    
     // Load Default Settings
     [BMSettings sharedInstance];
     

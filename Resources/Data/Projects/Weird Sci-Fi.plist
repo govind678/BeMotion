@@ -3,20 +3,276 @@
 <plist version="1.0">
 <dict>
 	<key>Project</key>
-	<string>Default</string>
+	<string>Weird Sci-Fi</string>
+	<key>Time</key>
+	<dict>
+		<key>Interval</key>
+		<integer>8</integer>
+		<key>Meter</key>
+		<integer>8</integer>
+		<key>Tempo</key>
+		<real>120</real>
+	</dict>
 	<key>Tracks</key>
 	<array>
 		<dict>
-			<key>Name</key>
-			<string>E-Drum Kick</string>
-			<key>Library</key>
-			<integer>0</integer>
-			<key>Level</key>
-			<integer>1</integer>
-			<key>Pan</key>
-			<string>0.5</string>
 			<key>Effects</key>
 			<array>
+				<dict>
+					<key>EffectID</key>
+					<integer>1</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.37333333492279053</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.80000001192092896</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.89999997615814209</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>3</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>0.0</real>
+								<key>Min</key>
+								<real>1</real>
+							</dict>
+							<key>Value</key>
+							<real>0.34666666388511658</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.18666666746139526</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0099999997764825821</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>5</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>1</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.6827893853187561</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.48888888955116272</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.5</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>0</integer>
+					<key>Enable</key>
+					<false/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0</real>
+						</dict>
+					</array>
+				</dict>
+			</array>
+			<key>Level</key>
+			<real>1</real>
+			<key>Library</key>
+			<integer>0</integer>
+			<key>Mode</key>
+			<integer>0</integer>
+			<key>Name</key>
+			<string>White Noise</string>
+			<key>Pan</key>
+			<real>0.5</real>
+		</dict>
+		<dict>
+			<key>Effects</key>
+			<array>
+				<dict>
+					<key>EffectID</key>
+					<integer>3</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.25</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.041458334773778915</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0099999997764825821</real>
+						</dict>
+					</array>
+				</dict>
 				<dict>
 					<key>EffectID</key>
 					<integer>4</integer>
@@ -25,207 +281,46 @@
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<real>0.3</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>1</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<integer>1</integer>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.6827893853187561</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<real>0.5</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>2</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>0.5</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<real>0.24</real>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
 							<key>Value</key>
-							<integer>0</integer>
+							<real>0.48444443941116333</real>
+						</dict>
+						<dict>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
 								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
+								<real>0.0</real>
 							</dict>
-						</dict>
-						<dict>
 							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
+							<real>0.40444445610046387</real>
 						</dict>
 					</array>
 				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-			</array>
-			<key>Mode</key>
-			<integer>1</integer>
-			<key>Quantization</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>Name</key>
-			<string>E-Drum Snare</string>
-			<key>Library</key>
-			<integer>0</integer>
-			<key>Level</key>
-			<integer>1</integer>
-			<key>Pan</key>
-			<string>0.5</string>
-			<key>Effects</key>
-			<array>
 				<dict>
 					<key>EffectID</key>
 					<integer>4</integer>
@@ -234,43 +329,43 @@
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<real>0.3</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>1</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<real>0.5</real>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>2</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>0.5</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<real>0.24</real>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.65744906663894653</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.34666666388511658</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.46666666865348816</real>
 						</dict>
 					</array>
 				</dict>
@@ -278,163 +373,161 @@
 					<key>EffectID</key>
 					<integer>0</integer>
 					<key>Enable</key>
-					<true/>
+					<false/>
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
 								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
+								<real>0.0</real>
 							</dict>
-						</dict>
-						<dict>
 							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
+							<real>0.0</real>
 						</dict>
 					</array>
 				</dict>
 			</array>
-			<key>Mode</key>
-			<integer>1</integer>
-			<key>Quantization</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>Name</key>
-			<string>E-Drum Hat</string>
+			<key>Level</key>
+			<real>1</real>
 			<key>Library</key>
 			<integer>0</integer>
-			<key>Level</key>
-			<integer>1</integer>
+			<key>Mode</key>
+			<integer>0</integer>
+			<key>Name</key>
+			<string>Tone 100</string>
 			<key>Pan</key>
-			<string>0.5</string>
+			<real>0.5</real>
+		</dict>
+		<dict>
 			<key>Effects</key>
 			<array>
+				<dict>
+					<key>EffectID</key>
+					<integer>2</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.5</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>1</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0099999997764825821</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>3</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.20888888835906982</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.14222222566604614</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0099999997764825821</real>
+						</dict>
+					</array>
+				</dict>
 				<dict>
 					<key>EffectID</key>
 					<integer>4</integer>
@@ -443,252 +536,202 @@
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<real>0.3</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>1</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<integer>1</integer>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.6827893853187561</real>
 						</dict>
 						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
 							<key>Value</key>
 							<real>0.5</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.5</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>3</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.088888891041278839</real>
+						</dict>
+						<dict>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>2</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<real>0.5</real>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.018191363662481308</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<real>0.24</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
 								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>1</real>
+								<real>0.0</real>
 							</dict>
-						</dict>
-						<dict>
 							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>1</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
+							<real>0.0099999997764825821</real>
 						</dict>
 					</array>
 				</dict>
 			</array>
-			<key>Mode</key>
-			<integer>1</integer>
-			<key>Quantization</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>Name</key>
-			<string>E-Drum Rim</string>
+			<key>Level</key>
+			<real>1</real>
 			<key>Library</key>
 			<integer>0</integer>
-			<key>Level</key>
-			<integer>1</integer>
+			<key>Mode</key>
+			<integer>0</integer>
+			<key>Name</key>
+			<string>Tone 1000</string>
 			<key>Pan</key>
-			<string>0.5</string>
+			<real>0.5</real>
+		</dict>
+		<dict>
 			<key>Effects</key>
 			<array>
 				<dict>
 					<key>EffectID</key>
-					<integer>4</integer>
+					<integer>1</integer>
 					<key>Enable</key>
 					<true/>
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<real>0.3</real>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>1</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<real>0.5</real>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>2</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<real>0.5</real>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<real>0.24</real>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.60000002384185791</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.80000001192092896</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.89999997615814209</real>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>EffectID</key>
+					<integer>3</integer>
+					<key>Enable</key>
+					<true/>
+					<key>Parameters</key>
+					<array>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.25</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.041458334773778915</real>
+						</dict>
+						<dict>
+							<key>Motion</key>
+							<dict>
+								<key>Map</key>
+								<integer>0</integer>
+								<key>Max</key>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
+							</dict>
+							<key>Value</key>
+							<real>0.0099999997764825821</real>
 						</dict>
 					</array>
 				</dict>
@@ -696,47 +739,47 @@
 					<key>EffectID</key>
 					<integer>0</integer>
 					<key>Enable</key>
-					<true/>
+					<false/>
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<integer>1</integer>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<integer>1</integer>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 					</array>
 				</dict>
@@ -744,121 +787,70 @@
 					<key>EffectID</key>
 					<integer>0</integer>
 					<key>Enable</key>
-					<true/>
+					<false/>
 					<key>Parameters</key>
 					<array>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>EffectID</key>
-					<integer>0</integer>
-					<key>Enable</key>
-					<true/>
-					<key>Parameters</key>
-					<array>
-						<dict>
-							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
 								<integer>0</integer>
 								<key>Max</key>
 								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
+							<key>Value</key>
+							<real>0.0</real>
 						</dict>
 						<dict>
-							<key>Value</key>
-							<integer>0</integer>
 							<key>Motion</key>
 							<dict>
 								<key>Map</key>
 								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
 								<key>Max</key>
-								<integer>1</integer>
+								<real>1</real>
+								<key>Min</key>
+								<real>0.0</real>
 							</dict>
-						</dict>
-						<dict>
 							<key>Value</key>
-							<integer>0</integer>
-							<key>Motion</key>
-							<dict>
-								<key>Map</key>
-								<integer>0</integer>
-								<key>Min</key>
-								<integer>0</integer>
-								<key>Max</key>
-								<integer>1</integer>
-							</dict>
+							<real>0.0</real>
 						</dict>
 					</array>
 				</dict>
 			</array>
-			<key>Mode</key>
-			<integer>1</integer>
-			<key>Quantization</key>
+			<key>Level</key>
+			<real>1</real>
+			<key>Library</key>
 			<integer>0</integer>
+			<key>Mode</key>
+			<integer>0</integer>
+			<key>Name</key>
+			<string>Pink Noise</string>
+			<key>Pan</key>
+			<real>0.5</real>
 		</dict>
 		<dict>
 			<key>Name</key>
-			<string>E-Drum Crash</string>
+			<string>Impulse</string>
 		</dict>
 		<dict>
 			<key>Name</key>
-			<string>E-Drum Scratch</string>
+			<string>Impulse</string>
 		</dict>
 	</array>
-	<key>Time</key>
-	<dict>
-		<key>Tempo</key>
-		<integer>120</integer>
-		<key>Meter</key>
-		<integer>8</integer>
-		<key>Interval</key>
-		<integer>8</integer>
-	</dict>
 </dict>
 </plist>

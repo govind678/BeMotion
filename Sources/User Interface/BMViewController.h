@@ -20,6 +20,7 @@
 @property (nonatomic, readonly) float optionButtonSize;
 @property (nonatomic, readonly) float yGap;
 @property (nonatomic, readonly) float verticalSeparatorHeight;
+@property (nonatomic, readonly) float sliderHeight;
 
 @end
 

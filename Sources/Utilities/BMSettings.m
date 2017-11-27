@@ -10,12 +10,14 @@
 #import "BMConstants.h"
 #import "BMAudioController.h"
 #import "BMSequencer.h"
+#import "BMMotionController.h"
 
-static NSString* const kRanOnceKey          = @"settings.ranOnce";
-static NSString* const kProjectKey          = @"settings.dictionary";
-static NSString* const kDrawWaveformKey     = @"settings.drawWaveform";
+static NSString* const kRanOnceKey              = @"settings.ranOnce";
+static NSString* const kProjectKey              = @"settings.dictionary";
+static NSString* const kDrawWaveformKey         = @"settings.drawWaveform";
+static NSString* const kXTriggerThresholdKey    = @"settings.xTriggerThreshold";
 
-static NSString* const kDefaultProjectFile  = @"Default";
+static NSString* const kDefaultProjectFile      = @"Default";
 
 @interface BMSettings()
 {
@@ -32,8 +34,8 @@ static NSString* const kDefaultProjectFile  = @"Default";
     
     if ((self = [super init])) {
         
-        // Create Projects Directory
-        NSError* error = nil;
+        // Create projects directory - and install bundled project plists.
+        NSError* error;
         NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString* documentsDirectory = [paths objectAtIndex:0];
         _projectsDirectory = [[NSString alloc] initWithString:[documentsDirectory stringByAppendingPathComponent:@"Projects"]];
@@ -43,10 +45,14 @@ static NSString* const kDefaultProjectFile  = @"Default";
                 NSLog(@"Settings Init: Error! creating projectsDirectory: %@", error.description);
             }
         }
+        if (!error) {
+            [self installProjectsFromBundle];
+        }
         
         
         // Read User Defaults
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        
         _ranOnce = [defaults boolForKey:kRanOnceKey];
         _shouldDrawWaveform = [defaults boolForKey:kDrawWaveformKey];
         
@@ -60,6 +66,7 @@ static NSString* const kDefaultProjectFile  = @"Default";
             } else {
                 [self loadSettingsFromDictionary:dictionary];
             }
+            [[BMMotionController sharedController] setXTriggerThreshold:[defaults floatForKey:kXTriggerThresholdKey]];
         }
         
         [self updateSavedProjectsList];
@@ -86,16 +93,12 @@ static NSString* const kDefaultProjectFile  = @"Default";
     [defaults setObject:[NSNumber numberWithBool:_ranOnce] forKey:kRanOnceKey];
     [defaults setObject:[self getSettingsAsDictionary] forKey:kProjectKey];
     [defaults setObject:[NSNumber numberWithBool:_shouldDrawWaveform] forKey:kDrawWaveformKey];
+    [defaults setObject:[NSNumber numberWithFloat:[[BMMotionController sharedController] xTriggerThreshold]] forKey:kXTriggerThresholdKey];
     [defaults synchronize];
 }
 
 
 #pragma mark - Project Interface methods
-
-- (void)loadDefaultProject {
-    NSString* defaultProjectPath = [[NSBundle mainBundle] pathForResource:kDefaultProjectFile ofType:@"plist"];
-    [self readDictionaryFromFilepathAndLoadSettings:defaultProjectPath];
-}
 
 - (BOOL)saveProjectWithName:(NSString*)projectName {
     NSString* filepath = [_projectsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", projectName]];
@@ -135,6 +138,11 @@ static NSString* const kDefaultProjectFile  = @"Default";
 }
 
 #pragma mark - Project Utility Methods
+
+- (void)loadDefaultProject {
+    NSString* defaultProjectPath = [[NSBundle mainBundle] pathForResource:kDefaultProjectFile ofType:@"plist"];
+    [self readDictionaryFromFilepathAndLoadSettings:defaultProjectPath];
+}
 
 - (BOOL)readDictionaryFromFilepathAndLoadSettings:(NSString*)filepath {
     NSDictionary* dictionary = nil;
@@ -335,6 +343,20 @@ static NSString* const kDefaultProjectFile  = @"Default";
             NSString* filename = [filepath lastPathComponent];
             [_savedProjectsList addObject:[filename stringByDeletingPathExtension]];
         }
+    }
+}
+
+- (void)installProjectsFromBundle {
+    
+    NSError* error = nil;
+    
+    NSString* projectsListPath = [[NSBundle mainBundle] pathForResource:@"ProjectsList" ofType:@"plist"];
+    NSArray* projectsArray = [NSArray arrayWithContentsOfFile:projectsListPath];
+    
+    for (NSString* filename in projectsArray) {
+        NSString* fromPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"plist"];
+        NSString* toPath = [[_projectsDirectory stringByAppendingPathComponent:filename] stringByAppendingPathExtension:@"plist"];
+        [[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:&error];
     }
 }
 

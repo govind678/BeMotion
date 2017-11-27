@@ -12,11 +12,13 @@
 #import "BMSequencer.h"
 #import "BMConstants.h"
 #import "BMSettings.h"
+#import "BMMotionController.h"
 
 #import "BMEffectsViewController.h"
 #import "BMLoadFileViewController.h"
 #import "BMTempoViewController.h"
 #import "BMSettingsViewController.h"
+#import "BMMotionSettingsViewController.h"
 
 #import "BMSampleButton.h"
 #import "BMTempoView.h"
@@ -45,8 +47,8 @@ static NSString* const kSettingsNormalImage         = @"Options-Settings-Normal.
 static NSString* const kSettingsSelectedImage       = @"Options-Settings-Selected.png";
 static NSString* const kMetronomeNormalImage        = @"Options-Metronome-Normal.png";
 static NSString* const kMetronomeSelectedImage      = @"Options-Metronome-Selected.png";
-static NSString* const kHelpNormalImage             = @"Options-Help-Normal.png";
-static NSString* const kHelpSelectedImage           = @"Options-Help-Selected.png";
+static NSString* const kMotionSettingsNormalImage   = @"Options-Motion-Normal.png";
+static NSString* const kMotionSettingsSelectedImage = @"Options-Motion-Selected.png";
 static NSString* const kMasterRecordNormalImage     = @"Options-MasterRecord-Normal.png";
 static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Selected.png";
 
@@ -62,9 +64,8 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
     
     BMTempoView*    _tempoView;
     
-    UIButton*       _settingsButton;
     BMForceButton*   _metronomeButton;
-    UIButton*       _helpButton;
+    BMForceButton*   _motionSettingsButton;
     UIButton*       _masterRecordButton;
     
     NSTimer*        _progressTimer;
@@ -120,11 +121,11 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
     yPos = self.view.frame.size.height - self.margin - self.optionButtonSize;
     
     // Setup Global Options Buttons
-    _settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
-    [_settingsButton setImage:[UIImage imageNamed:kSettingsNormalImage] forState:UIControlStateNormal];
-    [_settingsButton setImage:[UIImage imageNamed:kSettingsSelectedImage] forState:UIControlStateSelected];
-    [_settingsButton addTarget:self action:@selector(settingsButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_settingsButton];
+    UIButton* settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
+    [settingsButton setImage:[UIImage imageNamed:kSettingsNormalImage] forState:UIControlStateNormal];
+    [settingsButton setImage:[UIImage imageNamed:kSettingsSelectedImage] forState:UIControlStateSelected];
+    [settingsButton addTarget:self action:@selector(settingsButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:settingsButton];
     
     _metronomeButton = [[BMForceButton alloc] initWithFrame:CGRectMake(xMargin + self.optionButtonSize + optionsButtonGap, yPos, self.optionButtonSize, self.optionButtonSize)];
     [_metronomeButton setButtonDownImage:[UIImage imageNamed:kMetronomeSelectedImage]];
@@ -132,11 +133,11 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
     [_metronomeButton setDelegate:self];
     [self.view addSubview:_metronomeButton];
     
-    _helpButton = [[UIButton alloc] initWithFrame:CGRectMake(xMargin + 2.0f * (self.optionButtonSize + optionsButtonGap), yPos, self.optionButtonSize, self.optionButtonSize)];
-    [_helpButton setImage:[UIImage imageNamed:kHelpNormalImage] forState:UIControlStateNormal];
-    [_helpButton setImage:[UIImage imageNamed:kHelpSelectedImage] forState:UIControlStateSelected];
-    [_helpButton addTarget:self action:@selector(helpButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_helpButton];
+    _motionSettingsButton = [[BMForceButton alloc] initWithFrame:CGRectMake(xMargin + 2.0f * (self.optionButtonSize + optionsButtonGap), yPos, self.optionButtonSize, self.optionButtonSize)];
+    [_motionSettingsButton setButtonUpImage:[UIImage imageNamed:kMotionSettingsNormalImage]];
+    [_motionSettingsButton setButtonDownImage:[UIImage imageNamed:kMotionSettingsSelectedImage]];
+    [_motionSettingsButton setDelegate:self];
+    [self.view addSubview:_motionSettingsButton];
     
     _masterRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - self.optionButtonSize - xMargin, yPos, self.optionButtonSize, self.optionButtonSize)];
     [_masterRecordButton setImage:[UIImage imageNamed:kMasterRecordNormalImage] forState:UIControlStateNormal];
@@ -331,20 +332,25 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)helpButtonTapped {
-    
-}
 
 #pragma mark - BMForceButtonDelegate
 
 - (void)forceButtonTouchUpInside:(id)sender {
+    
     if (sender == _metronomeButton) {
         BMTempoViewController* vc = [[BMTempoViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    
+    else if (sender == _motionSettingsButton) {
+        BMMotionSettingsViewController* vc = [[BMMotionSettingsViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
+
 - (void)forceButtonForcePressDown:(id)sender {
+    
     if (sender == _metronomeButton) {
         if ([[BMSequencer sharedSequencer] isClockRunning]) {
             [[BMSequencer sharedSequencer] stopClock];
@@ -352,6 +358,14 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
         } else {
             [[BMSequencer sharedSequencer] startClock];
             [_metronomeButton setSelected:YES];
+        }
+    }
+    
+    else if (sender == _motionSettingsButton) {
+        if ([[BMMotionController sharedController] isMotionControlRunning]) {
+            [[BMMotionController sharedController] stop];
+        } else {
+            [[BMMotionController sharedController] start];
         }
     }
 }
@@ -440,6 +454,8 @@ static NSString* const kMasterRecordSelectedImage   = @"Options-MasterRecord-Sel
     
     [saveDialog addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         [textField setText:filename];
+        [textField setClearButtonMode:UITextFieldViewModeAlways];
+        [textField selectAll:textField];
     }];
     [saveDialog addAction:saveAction];
     [saveDialog addAction:cancelAction];

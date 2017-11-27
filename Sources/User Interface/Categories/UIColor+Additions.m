@@ -60,7 +60,7 @@
 }
 
 + (UIColor*)textWhiteColor {
-    return [UIColor colorWithWhite:0.85f alpha:1.0f];
+    return [UIColor colorWithWhite:0.8f alpha:1.0f];
 }
 
 + (UIColor*)elementWhiteColor {
@@ -68,7 +68,7 @@
 }
 
 + (NSArray*)trackColors {
-    return [NSArray arrayWithObjects:[UIColor appRedColor], [UIColor appBlueColor], [UIColor appGreenColor], [UIColor appYellowColor], nil];
+    return [NSArray arrayWithObjects:[UIColor appRedColor], [UIColor appBlueColor], [UIColor appGreenColor], [UIColor appYellowColor], [UIColor textWhiteColor], [UIColor textWhiteColor], nil];
 }
 
 

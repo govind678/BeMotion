@@ -324,6 +324,7 @@ static float const kProgressViewWidth               = 4.0f;
             [[BMSequencer sharedSequencer] sequenceEvent:^{
                 [[BMAudioController sharedController] startRecordingAtTrack:_trackID];
                 [_recordingLabel setHidden:NO];
+                [self stopPlaybackProgress];
             } withCompletion:^{
                 _awaitingStart = NO;
             }];

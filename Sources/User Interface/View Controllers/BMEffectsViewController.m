@@ -14,20 +14,11 @@
 
 static const float kfxXMargin                       = 20.0f;
 static const float kParamLabelWidth                 = 90.0f;
-static const float kSliderHeight                    = 30.0f;
 //static const float kYMargin             = 20.0f;
 //static const float kVerticalBarWidth    = 5.0f;
 
 static NSString* const kOptionsBackgroundNormalImage    = @"Options-Background-Normal.png";
 static NSString* const kOptionsBackgroundSelectedImage  = @"Options-Background-Selected.png";
-
-//static NSString* const kFXButtonNormalPrefix            =   @"Fx-Normal-";
-//static NSString* const kFXButtonSelectedPrefix          =   @"Fx-Selected-";
-//static NSString* const kParamButtonNormalPrefix         =   @"Param-Normal-";
-//static NSString* const kParamButtonSelectedPrefix       =   @"Param-Selected-";
-
-//static NSString* const kFXButtonNormal          =   @"FXButton-Normal.png";
-//static NSString* const kFXButtonSelected        =   @"FXButton-Selected.png";
 static NSString* const kHorizontalSeparatorImage        =   @"HorizontalSeparator.png";
 //static NSString* const kYSeparatorImage         =   @"VerticalSeparator.png";
 static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
@@ -202,42 +193,6 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
         if (i == _currentFXSlot) {
             [paramButton setSelected:YES];
         }
-        
-//        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, yPos, kParamLabelWidth, kSliderHeight)];
-//        [label setTextColor:currentTrackColor];
-//        [label setFont:[UIFont lightDefaultFontOfSize:11.0f]];
-//        [label setTextAlignment:NSTextAlignmentRight];
-//        [parameterLabels addObject:label];
-//        [self.view addSubview:label];
-//
-//        UISlider* slider = [[UISlider alloc] initWithFrame:CGRectMake(kParamLabelWidth + 10.0f, yPos, 155.0f, kSliderHeight)];
-//        [slider setMinimumValue:0.0f];
-//        [slider setMaximumValue:1.0f];
-//        [slider setTintColor:currentTrackColor];
-//        [slider setThumbTintColor:[UIColor colorWithWhite:0.3f alpha:1.0f]];
-//        [slider setTag:i];
-//        [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-//        [parameterSliders addObject:slider];
-//        [self.view addSubview:slider];
-//
-//        UILabel* value = [[UILabel alloc] initWithFrame:CGRectMake(kParamLabelWidth + 170.0f, yPos, 25.0f, kSliderHeight)];
-//        [value setTextColor:[UIColor lightGrayColor]];
-//        [value setTextAlignment:NSTextAlignmentRight];
-//        [value setFont:[UIFont lightDefaultFontOfSize:10.0f]];
-//        [value setTextAlignment:NSTextAlignmentRight];
-//        [sliderLabels addObject:value];
-//        [self.view addSubview:value];
-//
-//        yPos += kYMargin + 5.0f;
-//
-//        UILabel* motionEnableTitle = [[UILabel alloc] initWithFrame:CGRectMake(kParamLabelWidth + 10.0f, yPos, kParamLabelWidth, fxCompHeight)];
-//        [motionEnableTitle setTextColor:currentTrackColor];
-//        [motionEnableTitle setFont:[UIFont lightDefaultFontOfSize:11.0f]];
-//        [motionEnableTitle setTextAlignment:NSTextAlignmentCenter];
-//        [motionEnableTitle setText:@"Motion"];
-//        [self.view addSubview:motionEnableTitle];
-//
-//        yPos += fxCompHeight + kYMargin + 10.0f;
     }
     
     _paramSelectButtons = [[NSArray alloc] initWithArray:paramSelectButtons];
@@ -249,9 +204,8 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [_paramTitleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:_paramTitleLabel];
     
-//    yPos += fxCompHeight + kYGap;
     yPos += fxCompHeight;
-    _paramSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, kSliderHeight)];
+    _paramSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, self.sliderHeight)];
     [_paramSlider setMinimumValue:0.0f];
     [_paramSlider setMaximumValue:1.0f];
     [_paramSlider setTintColor:currentTrackColor];
@@ -259,7 +213,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [_paramSlider addTarget:self action:@selector(paramSliderValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_paramSlider];
 
-    _paramValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, kSliderHeight)];
+    _paramValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, self.sliderHeight)];
     [_paramValueLabel setTextColor:[UIColor lightGrayColor]];
     [_paramValueLabel setTextAlignment:NSTextAlignmentRight];
     [_paramValueLabel setFont:[UIFont lightDefaultFontOfSize:10.0f]];
@@ -270,7 +224,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     
     // Motion Control
     NSArray* segments = [NSArray arrayWithObjects:@"Off", @"Pitch", @"Roll", @"Yaw", nil];
-    yPos += kSliderHeight + self.yGap + self.yGap;
+    yPos += self.sliderHeight + self.yGap + self.yGap;
     _motionControlSelector = [[UISegmentedControl alloc] initWithItems:segments];
     [_motionControlSelector setFrame:CGRectMake(kfxXMargin + 10.0f, yPos, self.view.frame.size.width - (2.0f * (kfxXMargin + 10.0f)), 29.0f)];
     NSDictionary* attribute = [NSDictionary dictionaryWithObject:[UIFont lightDefaultFontOfSize:12.0f] forKey:NSFontAttributeName];
@@ -282,7 +236,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [self.view addSubview:_motionControlSelector];
     
     yPos += 29.0f + self.yGap;
-    _motionLowRangeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, kSliderHeight)];
+    _motionLowRangeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, self.sliderHeight)];
     [_motionLowRangeSlider setMinimumValue:0.0f];
     [_motionLowRangeSlider setMaximumValue:1.0f];
     [_motionLowRangeSlider setTintColor:currentTrackColor];
@@ -290,7 +244,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [_motionLowRangeSlider addTarget:self action:@selector(motionLowSliderValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_motionLowRangeSlider];
     
-    _motionLowRangeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, kSliderHeight)];
+    _motionLowRangeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, self.sliderHeight)];
     [_motionLowRangeValueLabel setTextColor:[UIColor lightGrayColor]];
     [_motionLowRangeValueLabel setTextAlignment:NSTextAlignmentRight];
     [_motionLowRangeValueLabel setFont:[UIFont lightDefaultFontOfSize:10.0f]];
@@ -298,7 +252,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [self.view addSubview:_motionLowRangeValueLabel];
     
     yPos += 29.0f + self.yGap;
-    _motionHighRangeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, kSliderHeight)];
+    _motionHighRangeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kfxXMargin + 10.0f, yPos, 225.0f, self.sliderHeight)];
     [_motionHighRangeSlider setMinimumValue:0.0f];
     [_motionHighRangeSlider setMaximumValue:1.0f];
     [_motionHighRangeSlider setTintColor:currentTrackColor];
@@ -306,7 +260,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [_motionHighRangeSlider addTarget:self action:@selector(motionHighSliderValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_motionHighRangeSlider];
     
-    _motionHighRangeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, kSliderHeight)];
+    _motionHighRangeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(kfxXMargin + 240.0f, yPos, 25.0f, self.sliderHeight)];
     [_motionHighRangeValueLabel setTextColor:[UIColor lightGrayColor]];
     [_motionHighRangeValueLabel setTextAlignment:NSTextAlignmentRight];
     [_motionHighRangeValueLabel setFont:[UIFont lightDefaultFontOfSize:10.0f]];
@@ -314,29 +268,7 @@ static NSString* const kFXTitleImage            =   @"FXTitleBackground.png";
     [self.view addSubview:_motionHighRangeValueLabel];
     
     
-    
     [self enableMotionRangeSlider:NO];
-    
-//    // Separator 2
-//    UILabel* paramLabel2 = (UILabel*)[_parameterLabels objectAtIndex:2];
-//    UIView* separatorView2 = [[UIView alloc] initWithFrame:CGRectMake(self.margin, paramLabel2.frame.origin.y + paramLabel2.frame.size.height + 20.0f,self.view.frame.size.width - (2.0f * self.margin), 5.0f)];
-//    [separatorView2 setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:kXSeparatorImage]]];
-//    [self.view addSubview:separatorView2];
-
-//    _motionControlSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-//    [_motionControlSwitch setFrame:CGRectMake((self.view.frame.size.width - _fxEnableSwitch.frame.size.width) / 2.0f, separatorView2.frame.origin.y + separatorView2.frame.size.height + kYMargin, _fxEnableSwitch.frame.size.width, _fxEnableSwitch.frame.size.height)];
-//    [_motionControlSwitch setOnTintColor:currentTrackColor];
-//    [_motionControlSwitch setThumbTintColor:[UIColor colorWithWhite:0.3f alpha:1.0f]];
-//    [_motionControlSwitch setTintColor:[UIColor colorWithWhite:0.3f alpha:1.0f]];
-//    [_motionControlSwitch addTarget:self action:@selector(motionControlSwitchTapped) forControlEvents:UIControlEventValueChanged];
-//    [self.view addSubview:_motionControlSwitch];
-    
-//    UILabel* motionEnableTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.margin, separatorView2.frame.origin.y + separatorView2.frame.size.height + kYMargin, kParamLabelWidth, _fxEnableSwitch.frame.size.height)];
-//    [motionEnableTitle setTextColor:currentTrackColor];
-//    [motionEnableTitle setFont:[UIFont lightDefaultFontOfSize:11.0f]];
-//    [motionEnableTitle setTextAlignment:NSTextAlignmentCenter];
-//    [motionEnableTitle setText:@"Motion Control"];
-//    [self.view addSubview:motionEnableTitle];
 }
 
 - (void)didReceiveMemoryWarning {
